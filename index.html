@@ -19,6 +19,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
 /* required styles */
 
@@ -1487,6 +1488,17 @@ button.rl-lnk:hover { color: var(--prim); }
 .rl-gira svg { animation: rlg 1.2s linear infinite; }
 @keyframes rlg { to { transform: rotate(360deg); } }
 @media (max-width: 900px) { .rl-filtros { grid-template-columns: minmax(0, 1fr); } .rl-lista { grid-template-columns: minmax(0, 1fr); padding: 4px 12px 12px; } .rl-status .mut { margin-left: 0 !important; } }
+
+/* ---------- 3.0 documento institucional (opções de download) ---------- */
+.dx-ops { display: grid; gap: 8px; }
+.dx-op { display: flex; gap: 12px; align-items: flex-start; text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--borda); background: var(--card); cursor: pointer; font: inherit; color: inherit; }
+.dx-op:hover { border-color: var(--prim); background: var(--prim-claro); }
+.dx-op .ic { flex: none; width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; color: var(--prim); background: color-mix(in srgb, var(--prim) 12%, transparent); }
+.dx-op .ic svg { width: 18px; height: 18px; }
+.dx-op b { display: block; font-size: 14px; }
+.dx-op small { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.45; }
+.rel-palco .dx-pag { margin-bottom: 26px; }
+@media (max-width: 900px) { .rel-palco { padding: 10px; } }
 </style>
 
 </head>
@@ -1554,8 +1566,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '2.9.0+23ac8e74';
-const APP_NOTAS = 'Nova seção Release: notícias sobre escolas de MT na mídia, com números, links e cruzamento com o Livro.';
+const APP_VERSAO = '3.0.0+05fa678b';
+const APP_NOTAS = 'Relatórios com capa, selo de autenticidade com QR Code, marcas de documento restrito e aviso de sigilo; relatório do Release para baixar.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -5764,6 +5776,314 @@ if (typeof LEGENDAS !== 'undefined') LEGENDAS.release = {
     fonte: ['Google Notícias, consultado pelo servidor do sistema a cada 6 horas com buscas sobre escolas de Mato Grosso.', 'As matérias ficam guardadas na aba Noticias da planilha, sem repetir a mesma notícia.'],
     calc: ['Assunto e envolvidos: palavras-chave do título. Município: nome de um dos 142 municípios citado no texto.', 'Mídia × Livro: notícia de violência sem nenhum registro no Livro no mesmo município entre 7 dias antes e 7 dias depois.'],
     usar: ['Escolha o período no topo. Clique em assunto, município ou envolvido para filtrar.', '"Gerar release" monta o texto do período com números e links. Confirme sempre na matéria original.']
+};
+
+/* =====================================================================
+   EDUCASEG-PLUS 3.0 — Documento institucional
+   Capa, cabeçalho e rodapé em todas as páginas, marcas de DOCUMENTO RESTRITO,
+   selo de autenticidade com QR, aviso formal de sigilo e penalidades.
+   Usado pelo Relatório de inteligência e pelo relatório do Release.
+   ===================================================================== */
+const DX_CSS = `
+.dx{--dx-azul:#0b1a42;--dx-azul2:#173b8f;--dx-verm:#b91c1c;--dx-cinza:#475569;--dx-borda:#cbd5e1;font-family:'Inter',Arial,Helvetica,sans-serif;color:#0f172a;font-size:11px;line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.dx *{box-sizing:border-box}
+.dx-pag{position:relative;width:794px;max-width:100%;margin:0 auto 22px;background:#fff;padding:0 0 64px;box-shadow:0 18px 44px -20px rgba(2,6,23,.45);border-radius:3px;overflow:hidden;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='300'%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' transform='rotate(-30 210 150)' font-family='Arial' font-weight='900' font-size='30' fill='%23b91c1c' fill-opacity='0.045' letter-spacing='4'%3EDOCUMENTO RESTRITO%3C/text%3E%3C/svg%3E")}
+.dx-cab{display:flex;align-items:center;gap:12px;padding:14px 44px 12px;border-bottom:2px solid var(--dx-azul);margin-bottom:22px}
+.dx-cab .em svg{width:34px;height:34px;display:block}
+.dx-cab .org{flex:1;min-width:0;font-size:9px;line-height:1.35;color:var(--dx-cinza);text-transform:uppercase;letter-spacing:.06em}
+.dx-cab .org b{display:block;color:var(--dx-azul);font-size:10px;letter-spacing:.08em}
+.dx-cab .cl{font-size:9px;font-weight:900;letter-spacing:.16em;color:#fff;background:var(--dx-verm);padding:4px 9px;border-radius:2px;white-space:nowrap}
+.dx-cab .cod{font-family:'JetBrains Mono',Consolas,monospace;font-size:9px;color:var(--dx-azul);text-align:right;white-space:nowrap}
+.dx-rod{position:absolute;left:0;right:0;bottom:0;padding:10px 44px;border-top:1px solid var(--dx-borda);display:flex;justify-content:space-between;gap:12px;font-size:8.5px;color:#64748b;background:#fff}
+.dx-rod b{color:var(--dx-verm);letter-spacing:.08em}
+.dx-lat{position:absolute;left:8px;top:0;bottom:0;display:flex;align-items:center;writing-mode:vertical-rl;transform:rotate(180deg);font-size:7.5px;font-weight:800;letter-spacing:.22em;color:var(--dx-verm);opacity:.7;white-space:nowrap}
+.dx-mi{padding:0 44px 0 52px}
+/* capa */
+.dx-capa{min-height:1123px;display:flex;flex-direction:column;padding:0}
+.dx-tarja{background:var(--dx-verm);color:#fff;text-align:center;font-weight:900;letter-spacing:.32em;font-size:11px;padding:7px 10px}
+.dx-tarja small{display:block;font-weight:600;letter-spacing:.06em;font-size:8.5px;opacity:.92}
+.dx-capa-topo{background:linear-gradient(135deg,#060d24,var(--dx-azul) 55%,var(--dx-azul2));color:#fff;padding:34px 52px 30px;display:flex;gap:18px;align-items:center}
+.dx-capa-topo svg{width:70px;height:70px;flex:none}
+.dx-capa-topo .org{font-size:10px;letter-spacing:.14em;text-transform:uppercase;line-height:1.6;color:#cbd5e1}
+.dx-capa-topo .org b{display:block;color:#fff;font-size:12.5px;letter-spacing:.12em}
+.dx-capa-meio{flex:1;padding:44px 52px 10px;position:relative}
+.dx-tipo{font-size:11px;font-weight:800;letter-spacing:.26em;color:var(--dx-azul2);text-transform:uppercase}
+.dx-capa h1{font-size:30px;line-height:1.15;letter-spacing:-.02em;margin:10px 0 8px;color:var(--dx-azul);max-width:460px}
+.dx-capa .sub{font-size:13px;color:#334155;max-width:560px}
+.dx-carimbo{position:absolute;right:44px;top:30px;transform:rotate(-12deg);border:3px double var(--dx-verm);color:var(--dx-verm);padding:8px 14px;text-align:center;font-weight:900;letter-spacing:.14em;font-size:14px;border-radius:6px;opacity:.88;background:rgba(255,255,255,.6)}
+.dx-carimbo small{display:block;font-size:8px;letter-spacing:.1em;font-weight:700}
+.dx-ficha{width:100%;border-collapse:collapse;margin-top:30px;font-size:10.5px}
+.dx-ficha th{width:34%;text-align:left;font-weight:700;color:var(--dx-cinza);font-size:9px;text-transform:uppercase;letter-spacing:.08em;padding:7px 10px;background:#f1f5f9;border:1px solid var(--dx-borda)}
+.dx-ficha td{padding:7px 10px;border:1px solid var(--dx-borda);font-weight:600}
+.dx-autent{display:flex;gap:18px;align-items:center;margin:26px 52px 0;padding:16px 18px;border:1.5px solid var(--dx-azul);border-radius:8px;background:#f8fafc}
+.dx-autent .selo svg{width:118px;height:118px;display:block}
+.dx-autent .qr{flex:none;width:96px;height:96px;padding:5px;background:#fff;border:1px solid var(--dx-borda)}
+.dx-autent .qr svg{width:100%;height:100%;display:block}
+.dx-autent .tx{flex:1;min-width:0;font-size:9.5px;color:#334155;line-height:1.55}
+.dx-autent .tx b.t{display:block;font-size:10.5px;color:var(--dx-azul);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.dx-autent .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;color:var(--dx-azul);word-break:break-all}
+.dx-capa-pe{margin-top:24px;padding:14px 52px 16px;border-top:1px solid var(--dx-borda);font-size:9px;color:#64748b;display:flex;justify-content:space-between;gap:16px}
+/* aviso */
+.dx-aviso{border:2px solid var(--dx-verm);border-radius:8px;overflow:hidden;margin-bottom:20px}
+.dx-aviso h2{margin:0;background:var(--dx-verm);color:#fff;font-size:12px;letter-spacing:.18em;padding:9px 14px;display:flex;align-items:center;gap:8px}
+.dx-aviso h2 svg{width:16px;height:16px}
+.dx-aviso .c{padding:14px 18px;font-size:10.5px}
+.dx-aviso p{margin:0 0 8px}
+.dx-aviso h3{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dx-verm);margin:12px 0 6px}
+.dx-aviso ul{margin:0 0 6px;padding-left:16px}
+.dx-aviso li{margin-bottom:4px}
+.dx-aviso .copia{margin-top:12px;padding:10px 12px;background:#fef2f2;border:1px dashed var(--dx-verm);border-radius:6px;font-size:10px}
+.dx-sumario{margin-top:6px}
+.dx-sumario h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dx-azul);border-bottom:2px solid var(--dx-azul);padding-bottom:4px;margin:0 0 8px}
+.dx-sumario ol{margin:0;padding:0;list-style:none;counter-reset:s}
+.dx-sumario li{counter-increment:s;display:flex;gap:8px;padding:5px 0;border-bottom:1px dotted var(--dx-borda);font-size:11px}
+.dx-sumario li::before{content:counter(s) ".";font-weight:800;color:var(--dx-azul2);width:18px}
+/* corpo */
+.dx-sec{margin-bottom:22px;break-inside:auto}
+.dx-sec h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--dx-azul);margin:0 0 10px;padding:0 0 5px;border-bottom:2px solid var(--dx-azul);display:flex;gap:8px;break-after:avoid}
+.dx-sec h2 span{color:var(--dx-azul2)}
+.dx-sec p{margin:0 0 8px}
+.dx table.t{width:100%;border-collapse:collapse;font-size:10px;margin-top:6px}
+.dx table.t th{background:var(--dx-azul);color:#fff;text-align:left;padding:5px 7px;font-weight:700}
+.dx table.t td{padding:5px 7px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+.dx table.t tr:nth-child(even) td{background:#f8fafc}
+.dx table.t tr{break-inside:avoid}
+.dx .tag{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:800;color:#fff}
+.dx-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.dx-kpis div{border:1px solid var(--dx-borda);border-top:3px solid var(--c,var(--dx-azul2));border-radius:5px;padding:8px 10px}
+.dx-kpis small{display:block;font-size:8.5px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.dx-kpis b{font-size:19px;font-variant-numeric:tabular-nums;color:var(--dx-azul)}
+.dx-graf{border:1px solid var(--dx-borda);border-radius:6px;padding:10px 12px;margin:8px 0}
+.dx-graf .tt{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--dx-cinza);margin-bottom:6px}
+.dx-graf svg{width:100%;display:block}
+.dx-pilha{display:flex;height:14px;border-radius:3px;overflow:hidden}
+.dx-pilha span{display:block}
+.dx-leg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:9px;color:#334155;margin-top:6px}
+.dx-leg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.dx-barra{display:inline-block;height:7px;border-radius:2px;background:var(--dx-azul2);vertical-align:middle;margin-right:6px}
+.dx-assin{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-top:26px;padding-top:16px;border-top:2px solid var(--dx-azul);break-inside:avoid}
+.dx-assin .ln{margin-top:38px;border-top:1px solid #0f172a;padding-top:4px;font-size:10px}
+.dx-assin .ln b{display:block;font-size:11px}
+.dx-assin .val{font-size:9.5px;color:#334155;background:#f8fafc;border:1px solid var(--dx-borda);border-radius:6px;padding:10px 12px}
+.dx-fixo{display:none}
+@media screen and (max-width:700px){.dx-carimbo{position:static;display:inline-block;transform:rotate(-3deg);margin-bottom:14px;font-size:12px}.dx-capa-meio,.dx-capa-topo,.dx-capa-pe{padding-left:20px;padding-right:20px}.dx-capa-topo svg{width:48px;height:48px}.dx-autent{margin:20px 14px 0;flex-wrap:wrap}.dx-cab,.dx-rod{padding-left:16px;padding-right:16px}.dx-mi{padding:0 14px 0 22px}.dx-capa h1{font-size:24px}.dx-kpis{grid-template-columns:repeat(2,1fr)}.dx-cab .org{display:none}.dx-rod{position:static}.dx-pag{padding-bottom:0}}
+.dx a{color:var(--dx-azul2)}
+@media print{
+  html,body{background:#fff!important;padding:0!important;margin:0!important}
+  .dx-pag{width:auto;margin:0;padding:0;box-shadow:none;border-radius:0;break-after:page;overflow:visible;background:transparent!important;position:static}
+  .dx-pag:last-of-type{break-after:auto}
+  .dx-pag>.dx-cab,.dx-pag>.dx-rod,.dx-lat{display:none}
+  .dx-mi{padding:0}
+  .dx-capa{min-height:0;height:247mm}
+  .dx-capa-topo,.dx-capa-meio,.dx-capa-pe{padding-left:28px;padding-right:28px}
+  .dx-autent{margin-left:28px;margin-right:28px}
+  .dx-fixo{display:block;position:fixed;left:0;right:0;z-index:9}
+  .dx-fixo.marca{top:42%;text-align:center;font:900 54pt Arial,sans-serif;letter-spacing:.08em;color:rgba(185,28,28,.07);transform:rotate(-32deg);z-index:9}
+}`;
+(function () { const s = document.createElement('style'); s.id = 'dx-css'; s.textContent = DX_CSS; document.head.appendChild(s); })();
+
+const DX_ORG = ['GOVERNO DO ESTADO DE MATO GROSSO', 'Secretaria de Estado de Educação · SEDUC-MT', 'Unidade de Inteligência de Dados na Educação'];
+function dxImpressao(t) { const a = hashStr(t).toString(16).padStart(8, '0'), b = hashStr(t.split('').reverse().join('') + t.length).toString(16).padStart(8, '0'); return (a + b).toUpperCase().match(/.{4}/g).join('-'); }
+function dxQR(url) {
+    if (!url || typeof qrcode !== 'function') return '';
+    try { const q = qrcode(0, 'M'); q.addData(url); q.make(); return q.createSvgTag({ cellSize: 3, margin: 0, scalable: true }); } catch (e) { return ''; }
+}
+/* Selo circular de autenticidade */
+function dxSelo(codigo, registrado) {
+    const id = 'sx' + Math.random().toString(36).slice(2, 7), cor = registrado ? '#0b1a42' : '#64748b';
+    return `<svg viewBox="0 0 140 140" aria-label="Selo de autenticidade"><defs><path id="${id}" d="M70 70 m-52 0 a52 52 0 1 1 104 0 a52 52 0 1 1 -104 0"/></defs>
+        <circle cx="70" cy="70" r="67" fill="#fff" stroke="${cor}" stroke-width="3"/><circle cx="70" cy="70" r="61" fill="none" stroke="${cor}" stroke-width="1"/>
+        <circle cx="70" cy="70" r="42" fill="${registrado ? '#eef2ff' : '#f1f5f9'}" stroke="${cor}" stroke-width="1.2" stroke-dasharray="2 2.2"/>
+        <text font-family="Arial" font-size="9.2" font-weight="800" letter-spacing="2.2" fill="${cor}"><textPath href="#${id}" startOffset="0">EDUCASEG-PLUS • SEDUC-MT • ${registrado ? 'DOCUMENTO AUTÊNTICO' : 'EMISSÃO LOCAL'} •</textPath></text>
+        <path d="M58 52 l8 8 l16 -16" fill="none" stroke="${registrado ? '#15803d' : '#94a3b8'}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" transform="translate(-4 0)"/>
+        <text x="70" y="80" text-anchor="middle" font-family="Arial" font-size="8" font-weight="800" letter-spacing="1.5" fill="${cor}">${registrado ? 'VERIFICÁVEL' : 'NÃO REGISTRADO'}</text>
+        <text x="70" y="93" text-anchor="middle" font-family="Consolas,monospace" font-size="8.6" font-weight="700" fill="${cor}">${esc(codigo)}</text></svg>`;
+}
+function dxAviso(o) {
+    return `<div class="dx-aviso"><h2>${ic('shield')}AVISO DE SIGILO E RESPONSABILIDADE</h2><div class="c">
+        <p>Este documento é de <b>ACESSO RESTRITO</b>. Reúne informações de inteligência e dados pessoais, inclusive de crianças e adolescentes, produzidos para uso exclusivo da Secretaria de Estado de Educação de Mato Grosso no planejamento de ações de segurança escolar e de proteção.</p>
+        <h3>É proibido, sem autorização expressa da autoridade competente</h3>
+        <ul><li>reproduzir, fotografar, imprimir cópias, encaminhar ou compartilhar este documento, no todo ou em parte, por qualquer meio (e-mail, aplicativos de mensagem, redes sociais, mídia impressa ou digital);</li>
+        <li>revelar seu conteúdo a pessoas que não tenham necessidade de conhecê-lo para o exercício de suas atribuições;</li>
+        <li>utilizar as informações para finalidade diversa daquela para a qual foram produzidas.</li></ul>
+        <h3>Fundamento legal</h3>
+        <p>Lei nº 12.527/2011 (Lei de Acesso à Informação), arts. 25 e 31; Lei nº 13.709/2018 (Lei Geral de Proteção de Dados), arts. 6º, 14 e 46; Lei nº 8.069/1990 (Estatuto da Criança e do Adolescente), arts. 17, 18 e 143.</p>
+        <h3>Penalidades</h3>
+        <ul><li>Responsabilização administrativa disciplinar do agente público (Lei nº 12.527/2011, art. 32, e Estatuto dos Servidores Públicos do Estado de Mato Grosso, Lei Complementar nº 4/1990);</li>
+        <li>Crime de divulgação de informações sigilosas ou reservadas contidas em sistemas ou bancos de dados da Administração Pública: detenção de 1 a 4 anos e multa (Código Penal, art. 153, § 1º-A);</li>
+        <li>Crime de violação de sigilo funcional: detenção de 6 meses a 2 anos, ou multa (Código Penal, art. 325);</li>
+        <li>Divulgação de nome, ato ou documento relativo a criança ou adolescente a que se atribua ato infracional: multa de 3 a 20 salários de referência (ECA, art. 247);</li>
+        <li>Responsabilidade civil pelos danos causados e sanções da LGPD (Lei nº 13.709/2018, arts. 42 e 52).</li></ul>
+        <div class="copia"><b>CÓPIA CONTROLADA.</b> Emitida eletronicamente para <b>${esc(o.emitidoPara)}</b> em ${esc(o.emissaoTxt)}, sob o código <b>${esc(o.codigo)}</b>. ${o.registrado ? 'A emissão foi registrada na trilha de auditoria do sistema.' : 'Emissão em modo local, sem registro no servidor.'} Se este documento chegou a você por engano, não o leia nem o repasse: elimine-o e comunique a Unidade de Inteligência da SEDUC-MT.</div>
+    </div></div>`;
+}
+/* Monta o documento completo a partir das seções */
+function montarDocumento(o) {
+    const em = new Date(), emissaoTxt = em.toLocaleDateString('pt-BR') + ' às ' + em.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const quem = USUARIO ? `${USUARIO.nome || USUARIO.email}${USUARIO.email && USUARIO.nome ? ' (' + USUARIO.email + ')' : ''}` : 'usuário local';
+    const registrado = conectado();
+    const urlV = registrado ? urlApiPublica() + '?acao=verificar&codigo=' + encodeURIComponent(o.codigo) : '';
+    const conteudo = o.secoes.map(s => s.t + s.html).join('|');
+    const digital = dxImpressao(o.codigo + '|' + o.titulo + '|' + conteudo.replace(/<[^>]+>/g, ''));
+    const cls = o.cls || 'DOCUMENTO RESTRITO';
+    const ctx = Object.assign({}, o, { emitidoPara: quem, emissaoTxt, registrado });
+    const cab = `<div class="dx-cab"><span class="em">${emblema(34, 'dxc' + Math.random().toString(36).slice(2, 6))}</span><span class="org"><b>${DX_ORG[0]}</b>${DX_ORG[1]} · ${DX_ORG[2]}</span><span class="cod">${esc(o.tipo)}<br>Doc. ${esc(o.codigo)}</span><span class="cl">${esc(cls)}</span></div>`;
+    const rod = (p) => `<div class="dx-rod"><span><b>${esc(cls)}</b> · Proibida a reprodução ou o compartilhamento · Cópia de ${esc(quem)} · ${esc(emissaoTxt)}</span><span>${p}</span></div>`;
+    const lat = `<div class="dx-lat">${esc(cls)} · CÓPIA CONTROLADA · ${esc(o.codigo)} · ${esc(quem.toUpperCase())}</div>`;
+    const ficha = o.ficha.concat([['Elaborado por', quem], ['Destinatário', o.destinatario || 'Uso interno da Unidade de Inteligência']]);
+    const qr = dxQR(urlV);
+    const capa = `<section class="dx-pag dx-capa">
+        <div class="dx-tarja">${esc(cls)}<small>Acesso restrito · Lei nº 12.527/2011, art. 31 · Lei nº 13.709/2018 · Lei nº 8.069/1990</small></div>
+        <div class="dx-capa-topo">${emblema(70, 'dxk' + Math.random().toString(36).slice(2, 6))}<div class="org"><b>${DX_ORG[0]}</b>${DX_ORG[1]}<br>${DX_ORG[2]}</div></div>
+        <div class="dx-capa-meio">
+            <div class="dx-carimbo">${esc(cls)}<small>CÓPIA CONTROLADA</small></div>
+            <div class="dx-tipo">${esc(o.tipo)}</div><h1>${esc(o.titulo)}</h1><div class="sub">${esc(o.subtitulo || '')}</div>
+            <table class="dx-ficha">${ficha.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}</table>
+        </div>
+        <div class="dx-autent"><div class="selo">${dxSelo(o.codigo, registrado)}</div>${qr ? `<div class="qr">${qr}</div>` : ''}
+            <div class="tx"><b class="t">Selo de autenticidade</b>${registrado ? `Para conferir se este documento é autêntico, leia o QR Code ou acesse <span class="mono">${esc(urlV)}</span>.` : 'Documento emitido em modo local, sem registro no servidor. Para ter autenticidade verificável, emita-o conectado à base do Google Sheets.'}<br>Código do documento: <span class="mono">${esc(o.codigo)}</span><br>Impressão digital do conteúdo: <span class="mono">${digital}</span></div></div>
+        <div class="dx-capa-pe"><span>Emitido em ${esc(emissaoTxt)} pelo sistema EDUCASEG-PLUS</span><span>${esc(cls)} · não compartilhar</span></div>
+        <div class="dx-tarja">${esc(cls)}<small>Proibida a reprodução, o encaminhamento ou o compartilhamento sem autorização</small></div>
+    </section>`;
+    const aviso = `<section class="dx-pag">${cab}${lat}<div class="dx-mi">${dxAviso(Object.assign(ctx, { codigo: o.codigo }))}
+        <div class="dx-sumario"><h3>Sumário</h3><ol>${o.secoes.map(s => `<li>${esc(s.t)}</li>`).join('')}<li>Validação e responsabilidade</li></ol></div></div>${rod('Aviso e sumário')}</section>`;
+    const corpo = `<section class="dx-pag">${cab}${lat}<div class="dx-mi">${o.secoes.map((s, i) => `<div class="dx-sec"><h2><span>${i + 1}.</span>${esc(s.t)}</h2>${s.html}</div>`).join('')}
+        <div class="dx-sec"><h2><span>${o.secoes.length + 1}.</span>Validação e responsabilidade</h2>
+        <div class="dx-assin"><div><p>Documento produzido a partir dos dados disponíveis no sistema na data de emissão. As análises são indícios para orientar a ação da rede e não substituem a apuração de cada caso.</p><div class="ln"><b>${esc(USUARIO && USUARIO.nome || 'Responsável pela emissão')}</b>${esc(USUARIO ? (PERFIS[USUARIO.perfil] || USUARIO.perfil) : '')} · ${DX_ORG[2]}</div></div>
+        <div class="val"><b>Validação eletrônica</b><br>Código: <span style="font-family:Consolas,monospace;font-weight:700">${esc(o.codigo)}</span><br>Impressão digital: <span style="font-family:Consolas,monospace">${digital}</span><br>${registrado ? 'Conferência: ' + esc(urlV) : 'Emissão local, sem registro no servidor.'}</div></div></div>
+    </div>${rod('Conteúdo')}</section>`;
+    const q = t => '"' + String(t).replace(/\\/g, '').replace(/"/g, "'") + '"';
+    const pagina = `<style>@media print{@page{size:A4;margin:24mm 15mm 22mm 15mm;
+        @top-left{content:${q(DX_ORG[0] + ' · SEDUC-MT · ' + DX_ORG[2])};font:7.5pt Arial,sans-serif;color:#0b1a42;font-weight:700;vertical-align:bottom;padding-bottom:5px;border-bottom:1.5px solid #0b1a42}
+        @top-right{content:${q(cls)};font:800 7.5pt Arial,sans-serif;letter-spacing:2px;color:#fff;background:#b91c1c;vertical-align:middle;text-align:center;margin:10mm 0 5mm 6px;padding:0 8px}
+        @bottom-left{content:${q(cls + ' · Proibida a reprodução ou o compartilhamento (Lei 12.527/2011, Lei 13.709/2018, ECA e Código Penal arts. 153 e 325) · Doc. ' + o.codigo + ' · Cópia de ' + quem + ' em ' + emissaoTxt)};font:6.8pt Arial,sans-serif;color:#7f1d1d;vertical-align:top;padding-top:5px;border-top:1px solid #cbd5e1}
+        @bottom-right{content:"Página " counter(page) " de " counter(pages);font:7.5pt Arial,sans-serif;color:#475569;vertical-align:top;padding-top:5px;border-top:1px solid #cbd5e1;width:24mm}}}</style>`;
+    const fixos = `<div class="dx-fixo marca">${esc(cls)}</div>`;
+    return `${pagina}<div class="dx-fixos">${fixos}</div><div class="dx">${capa}${aviso}${corpo}</div>`;
+}
+/* Exporta: PDF (impressão), Word ou HTML */
+function exportarDocumento(html, titulo, base, fmt) {
+    const doc = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(titulo)}</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap"><style>body{margin:0;padding:24px;background:#e2e8f0;font-family:Arial,Helvetica,sans-serif}${DX_CSS}</style></head><body>${html}</body></html>`;
+    if (fmt === 'pdf') {
+        const f = document.createElement('iframe'); f.setAttribute('aria-hidden', 'true');
+        f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden';
+        document.body.appendChild(f);
+        f.onload = () => { setTimeout(() => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast('Não foi possível abrir a impressão neste ambiente. Use HTML e imprima pelo navegador.', 'alerta'); } setTimeout(() => f.remove(), 60000); }, 350); };
+        f.srcdoc = doc;
+        toast('Na janela de impressão, escolha "Salvar como PDF"', 'download');
+    } else if (fmt === 'doc') {
+        // Word não exibe SVG: troca selo e QR por texto e tira as camadas fixas de impressão
+        const w = doc.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<div class="dx-fixo[^"]*">[\s\S]*?<\/div>/g, '')
+            .replace('<html lang="pt-BR">', '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" lang="pt-BR">');
+        baixar(base + '.doc', '﻿' + w, 'application/msword');
+    } else baixar(base + '.html', doc, 'text/html;charset=utf-8');
+}
+function escolherFormato(titulo, fn) {
+    const op = (f, i, t, s) => `<button class="dx-op" onclick="fecharModal();${fn}('${f}')"><span class="ic">${ic(i)}</span><span><b>${t}</b><small>${s}</small></span></button>`;
+    abrirModal({ titulo, sub: 'O documento sai com capa, selo de autenticidade, marcas de documento restrito e aviso de sigilo.', icone: 'download', tam: 'peq',
+        corpo: `<div class="dx-ops">${op('pdf', 'doc', 'PDF', 'Abre a impressão: escolha "Salvar como PDF". Cabeçalho, rodapé e marca d’água em todas as páginas.')}${op('doc', 'doc', 'Word (.doc)', 'Para editar. O Word não mostra o selo gráfico nem o QR Code; o código e a impressão digital continuam no texto.')}${op('html', 'ext', 'Página HTML', 'Abre em qualquer navegador e pode ser impressa depois.')}</div>` });
+}
+
+/* =====================================================================
+   RELATÓRIO DE INTELIGÊNCIA
+   ===================================================================== */
+RL.cls = 'DOCUMENTO RESTRITO'; RL.dest = RL.dest || '';
+const _folhaV11 = folhaRelatorio;
+function graficosSintese() {
+    const n = REG.length || 1, ordem = ['CRÍTICO', 'ALTO', 'MÉDIO', 'BAIXO'], cores = { 'CRÍTICO': '#be123c', 'ALTO': '#ea580c', 'MÉDIO': '#ca8a04', 'BAIXO': '#0f9488' };
+    const cnt = ordem.map(c => [c, REG.filter(r => r.crit === c).length]);
+    const meses = []; const h = new Date(A.hoje); for (let i = 11; i >= 0; i--) meses.push(chaveMes(new Date(h.getFullYear(), h.getMonth() - i, 1)));
+    const pm = meses.map(m => REG.filter(r => r.dt && chaveMes(r.dt) === m).length), pc = meses.map(m => REG.filter(r => r.dt && r.crit === 'CRÍTICO' && chaveMes(r.dt) === m).length), mx = Math.max(1, ...pm);
+    const W = 660, H = 120, bw = W / 12;
+    const cols = pm.map((v, i) => { const hh = v / mx * (H - 26), hc = pc[i] / mx * (H - 26); return `<rect x="${i * bw + 8}" y="${H - 16 - hh}" width="${bw - 16}" height="${hh}" fill="#93a8d6"/><rect x="${i * bw + 8}" y="${H - 16 - hc}" width="${bw - 16}" height="${hc}" fill="#be123c"/><text x="${i * bw + bw / 2}" y="${H - 18 - hh - 2}" text-anchor="middle" font-size="8" fill="#334155" font-family="Arial">${v || ''}</text><text x="${i * bw + bw / 2}" y="${H - 3}" text-anchor="middle" font-size="8" fill="#64748b" font-family="Arial">${MES_ABR[+meses[i].slice(5) - 1]}</text>`; }).join('');
+    return `<div class="dx-graf"><div class="tt">Distribuição por criticidade</div><div class="dx-pilha">${cnt.map(([c, v]) => v ? `<span style="flex:${v};background:${cores[c]}" title="${c}"></span>` : '').join('')}</div><div class="dx-leg">${cnt.map(([c, v]) => `<span><i style="background:${cores[c]}"></i>${c.charAt(0) + c.slice(1).toLowerCase()}: ${fmtN(v)} (${fmtP(v, n)})</span>`).join('')}</div></div>
+        <div class="dx-graf"><div class="tt">Ocorrências por mês · últimos 12 meses (vermelho = críticas)</div><svg viewBox="0 0 ${W} ${H}">${cols}<line x1="0" x2="${W}" y1="${H - 16}" y2="${H - 16}" stroke="#cbd5e1"/></svg></div>`;
+}
+folhaRelatorio = function () {
+    _folhaV11();
+    const f = $('rl-folha'); if (!f) return;
+    // aproveita as seções já calculadas e remonta no formato institucional
+    const secoes = [...f.querySelectorAll('.rel-sec')].map(s => { const h2 = s.querySelector('h2'); const t = h2 ? h2.textContent.replace(/^\d+\.\s*/, '') : ''; if (h2) h2.remove(); return { t, html: s.innerHTML.replace(/<table(?! class)/g, '<table class="t"') }; });
+    const iS = secoes.findIndex(s => s.t === 'Síntese'); if (iS >= 0) secoes[iS].html = secoes[iS].html.replace('class="rel-kpis"', 'class="dx-kpis"').replace('<ul', graficosSintese() + '<ul');
+    if (FONTE.demo) secoes.unshift({ t: 'Observação', html: '<p style="background:#fef3c7;border:1px solid #f59e0b;padding:8px 10px;border-radius:6px"><b>Atenção:</b> relatório gerado com dados de demonstração fictícios.</p>' });
+    const o = { tipo: 'Relatório de Inteligência', titulo: RL.titulo, subtitulo: 'Segurança escolar na rede estadual de Mato Grosso · ' + descRecorte(), cls: RL.cls, codigo: RL.codigo, destinatario: RL.dest, secoes,
+        ficha: [['Nº do documento', RL.codigo], ['Data de referência dos dados', fmtD(A.hoje)], ['Recorte analisado', descRecorte()], ['Registros analisados', fmtN(REG.length)], ['Fonte', FONTE.nome + (FONTE.selo ? ' · ' + FONTE.selo : '')]] };
+    RL.html = montarDocumento(o);
+    f.innerHTML = RL.html;
+};
+rRelatorio = function () {
+    $('acoes-relatorio').innerHTML = `<button class="btn btn-v btn-sm" onclick="copiar(resumoTexto())">${ic('copy')}Copiar resumo</button><button class="btn btn-p btn-sm" onclick="escolherFormato('Baixar relatório', 'baixarRelatorio')">${ic('download')}Baixar documento</button>`;
+    if (!$('rl-titulo') || !$('rl-dest')) {
+        $('cont-relatorio').innerHTML = `<div class="card card-pad"><div class="form-grade">
+            <div><label class="rot" for="rl-titulo">Título</label><input class="campo" id="rl-titulo" value="${esc(RL.titulo)}"></div>
+            <div><label class="rot" for="rl-cls">Classificação</label><select class="campo" id="rl-cls"><option>DOCUMENTO RESTRITO</option><option>RESERVADO</option><option>USO INTERNO</option></select></div>
+            <div class="inteiro"><label class="rot" for="rl-dest">Destinatário</label><input class="campo" id="rl-dest" placeholder="Ex.: Gabinete da Secretaria · Coordenadoria de Segurança Escolar" value="${esc(RL.dest)}"></div>
+            <div class="inteiro"><div class="rot">Seções</div><div class="chk-linha" id="rl-sec">${[['sintese', 'Síntese e indicadores'], ['frag', 'Fragilidades'], ['rec', 'Recorrências e reincidência'], ['verif', 'Verificação de consistência'], ['rec2', 'Recomendações'], ['livro', 'Anexo: ocorrências críticas']].map(([k, t]) => `<label><input type="checkbox" data-s="${k}" ${RL.sec[k] ? 'checked' : ''}> ${t}</label>`).join('')}</div>
+            <p class="dica">O documento usa o recorte da barra superior e sai com capa, selo de autenticidade, cabeçalho e rodapé em todas as páginas, marcas de documento restrito e aviso de sigilo com as penalidades. Nomes de crianças e adolescentes não entram no relatório.</p></div></div></div>
+            <div class="rel-palco"><div id="rl-folha"></div></div>`;
+        $('rl-titulo').oninput = () => { RL.titulo = $('rl-titulo').value; folhaRelatorio(); };
+        $('rl-dest').oninput = () => { RL.dest = $('rl-dest').value; folhaRelatorio(); };
+        $('rl-cls').onchange = () => { RL.cls = $('rl-cls').value; folhaRelatorio(); };
+        $('rl-sec').onchange = e => { const i = e.target.closest('input'); if (i) { RL.sec[i.dataset.s] = i.checked; folhaRelatorio(); } };
+    }
+    $('rl-cls').value = RL.cls;
+    folhaRelatorio();
+};
+baixarRelatorio = function (fmt) {
+    autenticarRelatorio();
+    if (!RL.html) folhaRelatorio();
+    exportarDocumento(RL.html, RL.titulo, 'EDUCASEG-PLUS_relatorio_' + RL.codigo + '_' + hojeArq(), fmt || 'pdf');
+};
+
+/* =====================================================================
+   RELATÓRIO DO RELEASE
+   ===================================================================== */
+function documentoRelease() {
+    const agora = Date.now(), ini = new Date(agora - NWS.dias * DIA), iniAnt = new Date(agora - 2 * NWS.dias * DIA);
+    const todas = NWS.d.noticias.filter(n => n.data >= ini), ant = NWS.d.noticias.filter(n => n.data >= iniAnt && n.data < ini);
+    const lista = (window.NWS_LISTA || todas).slice();
+    const viol = lista.filter(rlViol), prof = lista.filter(n => n.env.includes('Professores'));
+    const cont = (arr, f) => { const m = new Map(); arr.forEach(x => f(x).forEach(k => k && m.set(k, (m.get(k) || 0) + 1))); return [...m.entries()].sort((a, b) => b[1] - a[1]); };
+    const filtros = [NWS.cat, NWS.mun && nomeMun(NWS.mun), NWS.env, NWS.q && '"' + NWS.q + '"'].filter(Boolean).join(', ');
+    const pct = (a, b) => b ? ((a > b ? '+' : '') + Math.round(100 * (a - b) / b) + '% em relação aos ' + NWS.dias + ' dias anteriores') : 'sem base de comparação';
+    const corC = c => ({ 'Arma': '#be123c', 'Ameaça de ataque': '#be123c', 'Violência sexual': '#be123c', 'Morte': '#be123c', 'Violência física': '#ea580c', 'Drogas': '#ea580c', 'Saúde mental': '#7c3aed', 'Bullying e discriminação': '#7c3aed', 'Crime e polícia': '#ca8a04', 'Estrutura e gestão': '#0f9488' }[c] || '#64748b');
+    const barras = (arr, cor) => { const mx = Math.max(1, ...arr.map(x => x[1])); return `<table class="t"><thead><tr><th>Item</th><th style="width:48%"></th><th style="text-align:right">Qtd.</th></tr></thead><tbody>${arr.map(([k, v]) => `<tr><td>${esc(k)}</td><td><span class="dx-barra" style="width:${Math.max(2, 100 * v / mx)}%;background:${cor ? cor(k) : '#173b8f'}"></span></td><td style="text-align:right">${v}</td></tr>`).join('')}</tbody></table>`; };
+    // evolução (SVG com cores fixas para funcionar fora do sistema)
+    const semana = NWS.dias > 45, passo = semana ? 7 * DIA : DIA, cols = []; for (let t = +ini; t < agora; t += passo) cols.push({ t, n: 0, v: 0 });
+    lista.forEach(n => { const i = Math.floor((n.data - ini) / passo); if (cols[i]) { cols[i].n++; if (rlViol(n)) cols[i].v++; } });
+    const mx = Math.max(1, ...cols.map(c => c.n)), W = 660, H = 120, bw = W / cols.length;
+    const svg = `<svg viewBox="0 0 ${W} ${H}">${cols.map((c, i) => { const h = c.n / mx * (H - 20), hv = c.v / mx * (H - 20); return `<rect x="${i * bw + bw * .15}" y="${H - 14 - h}" width="${bw * .7}" height="${h}" fill="#93a8d6"/><rect x="${i * bw + bw * .15}" y="${H - 14 - hv}" width="${bw * .7}" height="${hv}" fill="#be123c"/>`; }).join('')}<line x1="0" x2="${W}" y1="${H - 14}" y2="${H - 14}" stroke="#cbd5e1"/><text x="0" y="${H - 2}" font-size="8" fill="#64748b" font-family="Arial">${ini.toLocaleDateString('pt-BR')}</text><text x="${W}" y="${H - 2}" font-size="8" text-anchor="end" fill="#64748b" font-family="Arial">${new Date().toLocaleDateString('pt-BR')}</text></svg>`;
+    const semLivro = viol.filter(n => n.munK && !rlLivro(n).length);
+    const secoes = [
+        { t: 'Síntese', html: `<div class="dx-kpis"><div><small>Notícias</small><b>${fmtN(lista.length)}</b></div><div style="--c:#be123c"><small>Casos de violência</small><b>${fmtN(viol.length)}</b></div><div style="--c:#7c3aed"><small>Com professores</small><b>${fmtN(prof.length)}</b></div><div style="--c:#0f9488"><small>Municípios citados</small><b>${fmtN(new Set(lista.map(n => n.munK).filter(Boolean)).size)}</b></div></div>
+            <ul style="margin:6px 0 0;padding-left:16px"><li>${fmtN(todas.length)} notícias sobre escolas de Mato Grosso nos últimos ${NWS.dias} dias (${pct(todas.length, ant.length)}).</li>
+            <li>${fmtN(todas.filter(rlViol).length)} tratam de casos de violência (${pct(todas.filter(rlViol).length, ant.filter(rlViol).length)}).</li>
+            <li>${fmtN(new Set(todas.map(n => n.fonte)).size)} veículos de imprensa publicaram sobre o tema no período.</li>
+            ${semLivro.length ? `<li><b>${semLivro.length}</b> notícia(s) de violência não têm registro correspondente no Livro de Ocorrências no mesmo município (±7 dias).</li>` : ''}
+            ${filtros ? `<li>Filtros aplicados neste documento: ${esc(filtros)}.</li>` : ''}</ul>
+            <div class="dx-graf"><div class="tt">Notícias por ${semana ? 'semana' : 'dia'} (vermelho = violência)</div>${svg}</div>` },
+        { t: 'Assuntos das notícias', html: `<p>Uma notícia pode tratar de mais de um assunto.</p>${barras(cont(lista, n => n.cats), corC)}` },
+        { t: 'Municípios e veículos', html: `<table style="width:100%;border-collapse:collapse"><tr><td style="width:50%;vertical-align:top;padding-right:8px"><b>Municípios mais citados</b>${barras(cont(lista, n => [n.mun]).slice(0, 12), () => '#0f9488')}</td><td style="vertical-align:top;padding-left:8px"><b>Veículos de imprensa</b>${barras(cont(lista, n => [n.fonte]).slice(0, 12), () => '#7c3aed')}</td></tr></table>` },
+        { t: 'Mídia × Livro de Ocorrências', html: semLivro.length ? `<p>Casos de violência noticiados sem nenhum registro no Livro no mesmo município entre 7 dias antes e 7 dias depois da notícia. Podem indicar subnotificação e devem ser conferidos com a DRE.</p><table class="t"><thead><tr><th>Data</th><th>Município</th><th>Notícia</th><th>Veículo</th></tr></thead><tbody>${semLivro.map(n => `<tr><td>${n.data.toLocaleDateString('pt-BR')}</td><td>${esc(n.mun)}</td><td><a href="${esc(n.link)}">${esc(n.titulo)}</a></td><td>${esc(n.fonte)}</td></tr>`).join('')}</tbody></table>` : '<p>Toda notícia de violência com município identificado tem registro no Livro na mesma semana.</p>' },
+        { t: 'Notícias do período', html: `<p>${lista.length} notícia(s), da mais recente para a mais antiga${lista.length > 300 ? ' (mostrando as 300 primeiras)' : ''}. O título leva à matéria original.</p><table class="t"><thead><tr><th style="width:62px">Data</th><th>Notícia</th><th>Município</th><th>Assuntos</th></tr></thead><tbody>${lista.slice(0, 300).map(n => `<tr><td>${n.data.toLocaleDateString('pt-BR')}</td><td><a href="${esc(n.link)}">${esc(n.titulo)}</a><br><span style="color:#64748b">${esc(n.fonte)}</span></td><td>${esc(n.mun || '—')}</td><td>${n.cats.map(c => `<span class="tag" style="background:${corC(c)};margin:0 2px 2px 0">${esc(c)}</span>`).join('')}</td></tr>`).join('')}</tbody></table>` },
+        { t: 'Nota metodológica', html: `<p>As notícias são coletadas automaticamente no Google Notícias pelo servidor do sistema, a cada 6 horas, com ${NWS.d.consultas || 'várias'} buscas sobre escolas de Mato Grosso. A última coleta foi em ${NWS.d.ultimaColeta ? fmtDH(new Date(NWS.d.ultimaColeta)) : '—'}.</p><p>Assunto, envolvidos e município são identificados por palavras-chave no título e podem conter erros. Cada caso deve ser confirmado na matéria original e, quando for o caso, com a escola e a DRE.</p>` }
+    ];
+    const codigo = codigoVerificacao('release|' + NWS.dias + '|' + lista.map(n => n.id).join(','));
+    const titulo = 'Release · Escolas de Mato Grosso na mídia';
+    const html = montarDocumento({ tipo: 'Relatório de Release', titulo, subtitulo: `Monitoramento de imprensa · últimos ${NWS.dias} dias (${ini.toLocaleDateString('pt-BR')} a ${new Date().toLocaleDateString('pt-BR')})`, cls: 'DOCUMENTO RESTRITO', codigo, destinatario: NWS.dest || '', secoes,
+        ficha: [['Nº do documento', codigo], ['Período', `${ini.toLocaleDateString('pt-BR')} a ${new Date().toLocaleDateString('pt-BR')} (${NWS.dias} dias)`], ['Filtros', filtros || 'nenhum'], ['Notícias no documento', fmtN(lista.length)], ['Fonte', 'Google Notícias (coleta automática) e Livro de Ocorrências']] });
+    return { html, codigo, titulo, n: lista.length };
+}
+function baixarRelatorioRelease(fmt) {
+    if (!NWS.d) return;
+    const D = documentoRelease();
+    if (conectado()) api('registrarRelatorio', { codigo: D.codigo, titulo: D.titulo, classificacao: 'DOCUMENTO RESTRITO', recorte: 'Release · ' + NWS.dias + ' dias', registros: D.n }).catch(e => toast('Documento gerado, mas o código não foi registrado no servidor: ' + e.message, 'alerta'));
+    exportarDocumento(D.html, D.titulo, 'EDUCASEG-PLUS_release_' + D.codigo + '_' + hojeArq(), fmt);
+}
+const _rReleaseV11 = rRelease;
+rRelease = function () {
+    _rReleaseV11();
+    if (NWS.d) { const a = $('acoes-release'); if (a && !a.querySelector('[data-rel-doc]')) a.insertAdjacentHTML('beforeend', `<button class="btn btn-p btn-sm" data-rel-doc onclick="escolherFormato('Baixar relatório do Release', 'baixarRelatorioRelease')">${ic('download')}Baixar relatório</button>`); }
 };
 
 </script>
