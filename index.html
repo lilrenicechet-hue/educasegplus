@@ -2794,7 +2794,7 @@ function pintarPaleta() {
 
 /* Endereço da API (implantação do Apps Script como "App da Web").
    Pode ser preenchido aqui antes de publicar no GitHub ou informado na tela de login. */
-const API_PADRAO = '';
+const API_PADRAO = 'https://script.google.com/a/edu.mt.gov.br/macros/s/AKfycbz6AgqsRF82gj3VCRTxNEd_R6lwkCjSbVu4GsXDXTr73l3cKiQ7/exec';
 
 const API = { url: '', token: '' };
 let USUARIO = null;
@@ -2807,16 +2807,27 @@ const ss = { get(k) { try { return sessionStorage.getItem(k); } catch (e) { retu
 const EM_ARTEFATO = !!window.ESP_ARTEFATO;
 
 /* ---------- Cliente da API ---------- */
+/* Endereços equivalentes da mesma implantação: com domínio (/a/edu.mt.gov.br/) e sem domínio.
+   O formato sem domínio costuma funcionar melhor para acesso fora da conta Google do usuário. */
+function urlsApi(u) {
+    const alt = /\/a\/[^/]+\/macros\//.test(u) ? u.replace(/\/a\/[^/]+\/macros\//, '/macros/') : null;
+    return alt ? [u, alt] : [u];
+}
 async function api(acao, dados) {
     if (!API.url) throw new Error('Informe o endereço da API do Google Sheets.');
-    let resp;
-    try {
-        resp = await fetch(API.url, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ acao, token: API.token }, dados || {})) });
-    } catch (e) { throw new Error('Não foi possível falar com o servidor. Confira a conexão e o endereço da API.'); }
-    let j = null; try { j = await resp.json(); } catch (e) {}
-    if (!j) throw new Error('O servidor respondeu em formato inesperado. Confira se a implantação está como "Qualquer pessoa".');
-    if (!j.ok) { if (j.codigo === 'SESSAO') { encerrarSessao(); } throw new Error(j.erro || 'Erro no servidor.'); }
-    return j;
+    const corpo = JSON.stringify(Object.assign({ acao, token: API.token }, dados || {}));
+    let ultimoErro = null;
+    for (const url of urlsApi(API.url)) {
+        let resp, j = null;
+        try { resp = await fetch(url, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: corpo }); }
+        catch (e) { ultimoErro = 'rede'; continue; }
+        try { j = await resp.json(); } catch (e) { ultimoErro = 'formato'; continue; }
+        if (url !== API.url) { API.url = url; try { ls.set('esp_api', url); } catch (e) {} }
+        if (!j.ok) { if (j.codigo === 'SESSAO') { encerrarSessao(); } throw new Error(j.erro || 'Erro no servidor.'); }
+        return j;
+    }
+    if (ultimoErro === 'formato') throw new Error('O servidor pediu login do Google em vez de responder. Na implantação do Apps Script, use "Executar como: Eu" e "Quem pode acessar: Qualquer pessoa".');
+    throw new Error('Não foi possível falar com o servidor. Confira a conexão e se a implantação do Apps Script está com acesso para "Qualquer pessoa".');
 }
 function salvarSessao(lembrar) {
     const v = JSON.stringify({ token: API.token, url: API.url, usuario: USUARIO });
