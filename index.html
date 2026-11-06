@@ -1116,6 +1116,97 @@ kbd { font-family: var(--f-dado); font-size: 10.5px; padding: 1px 6px; border-ra
 .lat-acoes { flex-wrap: wrap; justify-content: flex-end; max-width: 100px; }
 .lat-acoes button { width: 30px; height: 30px; }
 html.menu-recolhido .lat-acoes { max-width: none; flex-direction: column; }
+
+/* ===== Login 2.3: tema escuro azul-marinho e branco (independe do tema do sistema) ===== */
+.lat-emblema { background: none !important; box-shadow: none !important; width: 40px; height: 40px; }
+.lat-emblema svg { display: block; filter: drop-shadow(0 4px 10px rgba(37,99,235,.35)); }
+#login.login-v2 { --lg-fundo: #050b1a; --lg-painel: #0a1430; --lg-campo: #0e1c3f; --lg-borda: #223563; --lg-borda2: #2f4a85; --lg-texto: #f4f7ff; --lg-mut: #9db0d6; --lg-azul: #3b82f6; --lg-azul2: #60a5fa;
+    background: var(--lg-fundo); color: var(--lg-texto); color-scheme: dark; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+#login.login-v2 .login-arte { position: relative; overflow: hidden; background: radial-gradient(900px 500px at 75% 10%, rgba(37,99,235,.28), transparent 65%), radial-gradient(700px 400px at 0% 100%, rgba(56,189,248,.14), transparent 70%), #061029; }
+#login.login-v2 .login-arte::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(96,165,250,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(96,165,250,.07) 1px, transparent 1px); background-size: 34px 34px; mask-image: radial-gradient(ellipse at 55% 45%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at 55% 45%, #000 30%, transparent 75%); pointer-events: none; }
+#login.login-v2 .login-arte > * { position: relative; }
+#login.login-v2 .marca-txt { color: #fff; }
+#login.login-v2 .marca-txt span { color: var(--lg-azul2); }
+#login.login-v2 .marca-txt small { color: var(--lg-mut); }
+#login.login-v2 .login-mt { width: min(470px, 86%); }
+#login.login-v2 .login-mt .uf { fill: rgba(37,99,235,.10); stroke: var(--lg-azul2); stroke-width: 1.8; stroke-linejoin: round; }
+#login.login-v2 .login-mt .muns { fill: none; stroke: rgba(147,197,253,.16); stroke-width: .5; }
+#login.login-v2 .login-mt .rede line { stroke: rgba(147,197,253,.45); stroke-width: 1; stroke-dasharray: 3 4; }
+#login.login-v2 .login-mt .no circle { fill: #fff; stroke: #2563eb; stroke-width: 2; }
+#login.login-v2 .login-mt .no .halo { fill: rgba(96,165,250,.25); stroke: none; transform-box: fill-box; transform-origin: center; animation: pulso 3s ease-out infinite; animation-delay: inherit; }
+#login.login-v2 .login-mt .varredura { animation: varrer 7s linear infinite; }
+#login.login-v2 .login-mt .varredura path { stroke: none; }
+@keyframes pulso { 0% { transform: scale(.4); opacity: .9; } 100% { transform: scale(1.8); opacity: 0; } }
+@keyframes varrer { to { transform: rotate(360deg); } }
+#login.login-v2 .login-tese .eyebrow { display: block; font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--lg-azul2); margin-bottom: 10px; }
+#login.login-v2 .login-tese b { font-size: 30px; color: #fff; }
+#login.login-v2 .login-tese > span:not(.eyebrow) { color: var(--lg-mut); }
+.login-numeros { display: flex; gap: 28px; margin-top: 22px; flex-wrap: wrap; }
+.login-numeros div { border-left: 2px solid #2563eb; padding-left: 12px; }
+.login-numeros b { display: block; font-size: 22px !important; font-variant-numeric: tabular-nums; color: #fff; }
+.login-numeros small { color: var(--lg-mut, #9db0d6); font-size: 11.5px; letter-spacing: .04em; }
+#login.login-v2 .login-form { background: linear-gradient(180deg, #0a1430, #071026); border-left: 1px solid var(--lg-borda); }
+#login.login-v2 .login-caixa { background: rgba(14,28,63,.55); border: 1px solid var(--lg-borda); border-radius: 18px; padding: 28px 26px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.04); }
+#login.login-v2 .login-caixa h1 { color: #fff; display: flex; align-items: center; gap: 10px; font-size: 24px; }
+.login-cadeado { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: rgba(59,130,246,.18); color: var(--lg-azul2, #60a5fa); font-size: 17px; }
+#login.login-v2 .login-caixa > p, #login.login-v2 .dica, #login.login-v2 .mut { color: var(--lg-mut); }
+#login.login-v2 .rot { color: #dbe6ff; }
+#login.login-v2 .rot small { color: var(--lg-mut); }
+#login.login-v2 .campo { background: var(--lg-campo); border-color: var(--lg-borda2); color: #fff; height: 44px; }
+#login.login-v2 .campo::placeholder { color: #6f86b5; }
+#login.login-v2 .campo:focus { border-color: var(--lg-azul2); box-shadow: 0 0 0 3px rgba(96,165,250,.25); }
+#login.login-v2 .chk-linha label { color: #dbe6ff; }
+#login.login-v2 .btn-p { background: linear-gradient(180deg, #3b82f6, #2563eb); box-shadow: 0 10px 24px -10px rgba(37,99,235,.9); height: 46px; font-size: 14px; }
+#login.login-v2 .btn-p:hover { filter: brightness(1.08); }
+#login.login-v2 .btn-s { background: transparent; border-color: var(--lg-borda2); color: #dbe6ff; }
+#login.login-v2 .btn-s:hover { background: rgba(96,165,250,.08); border-color: var(--lg-azul2); }
+#login.login-v2 details { background: rgba(5,11,26,.5); border-color: var(--lg-borda); }
+#login.login-v2 summary { color: #dbe6ff; }
+#login.login-v2 .login-ou { color: var(--lg-mut); }
+#login.login-v2 .login-ou::before, #login.login-v2 .login-ou::after { background: var(--lg-borda); }
+#login.login-v2 .aviso { background: rgba(245,158,11,.1); border-color: rgba(245,158,11,.4); color: #fde68a; }
+.campo-senha { position: relative; }
+.lg-ver { position: absolute; right: 6px; top: 27px; width: 34px; height: 34px; border-radius: 8px; color: var(--lg-mut, #9db0d6); display: inline-flex; align-items: center; justify-content: center; }
+.lg-ver:hover, .lg-ver.on { color: #fff; background: rgba(96,165,250,.12); }
+.lg-caps { color: #fbbf24 !important; display: flex; gap: 6px; align-items: center; margin: 6px 0 0; }
+.login-rodape { margin: 4px 0 0; font-size: 11.5px; line-height: 1.45; color: var(--lg-mut, #9db0d6); display: flex; gap: 8px; align-items: flex-start; }
+.login-rodape svg.i { margin-top: 2px; color: var(--lg-azul2, #60a5fa); }
+@media (max-width: 860px) { #login.login-v2 { grid-template-columns: minmax(0,1fr); grid-template-rows: auto auto; align-content: start; } #login.login-v2 .login-arte { overflow: visible; min-height: auto; padding: 18px 16px 20px; display: block; } #login.login-v2 .login-form { min-height: auto; } #login.login-v2 .login-tese { margin-top: 18px; } #login.login-v2 .login-tese > span:not(.eyebrow) { font-size: 13px; } #login.login-v2 .login-form { border-left: 0; border-top: 1px solid var(--lg-borda); } #login.login-v2 .login-tese b { font-size: 21px; } .login-numeros { gap: 18px; margin-top: 14px; } #login.login-v2 .login-caixa { padding: 22px 18px; } }
+@media (prefers-reduced-motion: reduce) { #login.login-v2 .login-mt .varredura, #login.login-v2 .login-mt .no .halo { animation: none; } }
+
+/* ===== Problemas detectados 2.3 ===== */
+.pd-priores { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.pd-prior { display: grid; grid-template-columns: 42px minmax(0,1fr) auto; gap: 12px; align-items: center; text-align: left; background: var(--card); border: 1px solid var(--borda); border-radius: 14px; padding: 14px 16px; box-shadow: var(--sombra); position: relative; overflow: hidden; transition: border-color .15s, transform .15s; }
+.pd-prior::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c); }
+.pd-prior:hover { transform: translateY(-1px); border-color: var(--c); }
+.pd-prior.ativo { border-color: var(--c); box-shadow: 0 0 0 2px color-mix(in srgb, var(--c) 35%, transparent), var(--sombra); }
+.pd-prior-ic { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); font-size: 19px; }
+.pd-prior-tx b { display: block; font-size: 15px; }
+.pd-prior-tx small, .pd-prior-n small { display: block; font-size: 11.5px; color: var(--muted); line-height: 1.35; }
+.pd-prior-n { text-align: right; }
+.pd-prior-n b { font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1; }
+.pd-lista { display: grid; gap: 10px; }
+.pd-grupo { background: var(--card); border: 1px solid var(--borda); border-radius: 14px; box-shadow: var(--sombra); overflow: hidden; }
+.pd-cab { width: 100%; display: grid; grid-template-columns: 4px minmax(0,1fr) 78px 86px 28px; gap: 14px; align-items: center; padding: 0 16px 0 0; text-align: left; min-height: 74px; }
+.pd-cab:hover { background: var(--suave); }
+.pd-faixa { align-self: stretch; background: var(--c); }
+.pd-tit { padding: 12px 0; min-width: 0; }
+.pd-selos { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 5px; }
+.pd-tit b { display: block; font-size: 15px; }
+.pd-tit small { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; line-height: 1.45; max-width: 90ch; }
+.pd-num { text-align: right; }
+.pd-num b { display: block; font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.pd-num small { font-size: 11px; color: var(--muted); }
+.pd-seta { color: var(--muted); transition: transform .2s; display: flex; justify-content: center; }
+.pd-grupo.aberto .pd-seta { transform: rotate(90deg); }
+.pd-corpo { border-top: 1px solid var(--borda); }
+.pd-acao { display: flex; gap: 10px; align-items: flex-start; margin: 12px 14px; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--c) 8%, var(--card)); border: 1px solid color-mix(in srgb, var(--c) 30%, var(--borda)); font-size: 13px; line-height: 1.5; }
+.pd-acao svg.i { color: var(--c); margin-top: 3px; }
+.pd-acao b { display: block; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--c); }
+.pd-evid { max-width: 520px; line-height: 1.45; color: var(--texto2); }
+.pd-ajuda summary { cursor: pointer; }
+@media (max-width: 900px) { .pd-priores { grid-template-columns: minmax(0,1fr); } }
+@media (max-width: 640px) { .pd-cab { grid-template-columns: 4px minmax(0,1fr) 54px 22px; gap: 10px; } .pd-cab .pd-num:nth-of-type(2) { display: none; } .pd-tit small { display: none; } .pd-evid { min-width: 220px; } }
 </style>
 
 </head>
@@ -4232,6 +4323,159 @@ if (typeof L !== 'undefined') {
     $('f-toggle').onclick = () => { const a = r.classList.toggle('aberto'); $('f-toggle').setAttribute('aria-expanded', a); };
     r.addEventListener('change', atual); r.addEventListener('click', e => { if (e.target.id === 'f-limpar') setTimeout(atual, 0); });
 })();
+
+/* =====================================================================
+   EDUCASEG-PLUS 2.3 — emblema de inteligência, nova tela de login
+   e página "Problemas detectados" reorganizada
+   ===================================================================== */
+
+/* ---------- Emblema: hexágono com radar e rede de dados ---------- */
+function emblema(tam, id) {
+    id = id || 'em' + Math.random().toString(36).slice(2, 7);
+    return `<svg viewBox="0 0 64 64" width="${tam}" height="${tam}" aria-hidden="true" class="emblema">
+    <defs><linearGradient id="${id}f" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d3a8a"/><stop offset="1" stop-color="#0a1430"/></linearGradient>
+    <linearGradient id="${id}l" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#93c5fd"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <radialGradient id="${id}r" cx="32" cy="32" r="18" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#60a5fa" stop-opacity=".55"/><stop offset="1" stop-color="#60a5fa" stop-opacity="0"/></radialGradient></defs>
+    <path d="M32 3.5 56.5 17.5v29L32 60.5 7.5 46.5v-29Z" fill="url(#${id}f)" stroke="url(#${id}l)" stroke-width="2.4" stroke-linejoin="round"/>
+    <circle cx="32" cy="32" r="18" fill="none" stroke="#60a5fa" stroke-opacity=".35" stroke-width="1.2"/>
+    <circle cx="32" cy="32" r="10.5" fill="none" stroke="#60a5fa" stroke-opacity=".45" stroke-width="1.2"/>
+    <path d="M32 32V14a18 18 0 0 1 15.6 9Z" fill="url(#${id}r)"/>
+    <g stroke="#bfdbfe" stroke-opacity=".75" stroke-width="1.3" stroke-linecap="round"><path d="M32 32 21 22M32 32l13.5-8.5M32 32l12 10M32 32l-9.5 11M21 22l-1.5 11.5L22.5 43M45.5 23.5 44 42"/></g>
+    <g fill="#fff"><circle cx="21" cy="22" r="2.4"/><circle cx="45.5" cy="23.5" r="2.4"/><circle cx="44" cy="42" r="2.4"/><circle cx="22.5" cy="43" r="2.4"/><circle cx="19.5" cy="33.5" r="1.8"/></g>
+    <circle cx="32" cy="32" r="4.6" fill="#38bdf8" stroke="#fff" stroke-width="1.6"/></svg>`;
+}
+(function aplicarEmblema() {
+    document.querySelectorAll('.lat-ic').forEach(el => { el.removeAttribute('data-ico'); el.innerHTML = emblema(38); el.classList.add('lat-emblema'); });
+    try {
+        let l = document.querySelector('link[rel="icon"]');
+        if (!l) { l = document.createElement('link'); l.rel = 'icon'; document.head.appendChild(l); }
+        l.type = 'image/svg+xml'; l.href = 'data:image/svg+xml,' + encodeURIComponent(emblema(64, 'fav').replace(' class="emblema"', ' xmlns="http://www.w3.org/2000/svg"'));
+    } catch (e) { }
+})();
+
+/* ---------- Tela de login ---------- */
+contornoMT = function () {
+    const g = GEO_MT.uf, polys = g.type === 'Polygon' ? [g.coordinates] : g.coordinates;
+    let x0 = 180, x1 = -180, y0 = 90, y1 = -90;
+    polys.forEach(p => p[0].forEach(([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }));
+    const W = 400, H = W * (y1 - y0) / (x1 - x0), px = x => (x - x0) / (x1 - x0) * W, py = y => (y1 - y) / (y1 - y0) * H;
+    const d = polys.map(p => p.map(r => 'M' + r.map(([x, y]) => px(x).toFixed(1) + ',' + py(y).toFixed(1)).join('L') + 'Z').join('')).join('');
+    const munD = MUNS.map(m => { const gg = m.g, ps = gg.type === 'Polygon' ? [gg.coordinates] : gg.coordinates; return ps.map(p => 'M' + p[0].map(([x, y]) => px(x).toFixed(1) + ',' + py(y).toFixed(1)).join('L') + 'Z').join(''); }).join('');
+    const S = SEDES.filter((s, i, a) => a.findIndex(o => o.sede === s.sede) === i).map(s => ({ x: px(s.lng), y: py(s.lat), n: s.sede }));
+    const lig = new Set(); let linhas = '';
+    S.forEach((a, i) => S.map((b, j) => ({ j, d: (a.x - b.x) ** 2 + (a.y - b.y) ** 2 })).filter(o => o.j !== i).sort((p, q) => p.d - q.d).slice(0, 2).forEach(o => { const k = Math.min(i, o.j) + '-' + Math.max(i, o.j); if (lig.has(k)) return; lig.add(k); const b = S[o.j]; linhas += `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}"/>`; }));
+    const nos = S.map((s, i) => `<g class="no" style="animation-delay:${(i * 0.37 % 3).toFixed(2)}s"><circle class="halo" cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="9"/><circle cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="3.6"/></g>`).join('');
+    const cx = W * 0.52, cy = H * 0.52;
+    return `<svg viewBox="-10 -10 ${W + 20} ${(H + 20).toFixed(0)}" class="login-mt" aria-hidden="true">
+        <defs><linearGradient id="lg-rad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#60a5fa" stop-opacity="0"/><stop offset="1" stop-color="#60a5fa" stop-opacity=".22"/></linearGradient>
+        <clipPath id="lg-clip"><path d="${d}"/></clipPath></defs>
+        <path class="uf" d="${d}"/>
+        <path class="muns" d="${munD}"/>
+        <g clip-path="url(#lg-clip)"><g class="varredura" style="transform-origin:${cx.toFixed(0)}px ${cy.toFixed(0)}px"><path d="M${cx},${cy} L${cx},${cy - 520} A520,520 0 0 1 ${(cx + 520 * Math.sin(0.6)).toFixed(0)},${(cy - 520 * Math.cos(0.6)).toFixed(0)} Z" fill="url(#lg-rad)"/><line x1="${cx}" y1="${cy}" x2="${(cx + 520 * Math.sin(0.6)).toFixed(0)}" y2="${(cy - 520 * Math.cos(0.6)).toFixed(0)}" stroke="#93c5fd" stroke-opacity=".45" stroke-width="1.2"/></g></g>
+        <g class="rede">${linhas}</g>${nos}</svg>`;
+};
+const _mostrarLoginV5 = mostrarLogin;
+mostrarLogin = function (msg) {
+    _mostrarLoginV5(msg);
+    const l = $('login'); if (!l) return;
+    l.classList.add('login-v2');
+    const marca = l.querySelector('.login-marca .lat-ic'); if (marca) { marca.innerHTML = emblema(46); marca.classList.add('lat-emblema'); }
+    const tese = l.querySelector('.login-tese');
+    if (tese) tese.innerHTML = `<span class="eyebrow">Unidade de Inteligência de Dados na Educação</span><b>Dados que protegem quem aprende.</b><span>Verificação de rotas, fragilidades, recorrências e problemas da segurança escolar nos 142 municípios de Mato Grosso.</span>
+        <div class="login-numeros"><div><b>142</b><small>municípios</small></div><div><b>15</b><small>DREs</small></div><div><b>${fmtN(ESC_REF.length)}</b><small>escolas mapeadas</small></div></div>`;
+    const h1 = l.querySelector('.login-caixa h1'); if (h1) h1.innerHTML = `<span class="login-cadeado">${ic('shield')}</span>Acesso restrito`;
+    const p = l.querySelector('.login-caixa > p'); if (p) p.textContent = 'Entre com o e-mail e a senha cadastrados pela Unidade de Inteligência.';
+    // mostrar/ocultar senha e aviso de Caps Lock
+    const s = $('lg-senha');
+    if (s && !$('lg-ver')) {
+        s.parentElement.classList.add('campo-senha');
+        s.insertAdjacentHTML('afterend', `<button type="button" class="lg-ver" id="lg-ver" aria-label="Mostrar senha" title="Mostrar senha">${ic('eye')}</button><p class="dica lg-caps" id="lg-caps" hidden>${ic('alerta')} Caps Lock ativado</p>`);
+        $('lg-ver').onclick = () => { const v = s.type === 'password'; s.type = v ? 'text' : 'password'; $('lg-ver').setAttribute('aria-label', v ? 'Ocultar senha' : 'Mostrar senha'); $('lg-ver').classList.toggle('on', v); s.focus(); };
+        const caps = e => { if (e.getModifierState) $('lg-caps').hidden = !e.getModifierState('CapsLock'); };
+        s.addEventListener('keyup', caps); s.addEventListener('keydown', caps);
+    }
+    if (!l.querySelector('.login-rodape')) l.querySelector('.login-caixa').insertAdjacentHTML('beforeend', `<p class="login-rodape">${ic('shield')}Acesso monitorado e registrado. Informações protegidas pela LGPD e pelo ECA.</p>`);
+};
+
+/* =====================================================================
+   PROBLEMAS DETECTADOS — reorganizado por prioridade e por tipo de problema
+   ===================================================================== */
+const PRIOR = {
+    critico: { nome: 'Agir hoje', sub: 'Risco à integridade de estudantes ou da equipe', cor: 'var(--c-crit)', ico: 'alerta' },
+    alto: { nome: 'Agir nesta semana', sub: 'Situações que tendem a se agravar', cor: 'var(--c-alto)', ico: 'trend' },
+    medio: { nome: 'Acompanhar', sub: 'Sinais de atenção e falhas de processo', cor: 'var(--c-medio)', ico: 'eye' }
+};
+const POR_QUE = {
+    'Violência sexual com autor adulto ou profissional': 'Possível violência institucional. Exige apuração formal e proteção imediata da vítima.',
+    'Agrupamento de autoagressão ou ideação suicida': 'Casos próximos no tempo e no território podem indicar efeito de contágio entre estudantes.',
+    'Indícios de atuação criminosa organizada': 'Facção, tráfico e arma na mesma escola indicam presença do crime organizado no ambiente escolar.',
+    'Porte de arma recorrente': 'Armas aparecem mais de uma vez na mesma escola: o controle de acesso não está funcionando.',
+    'Autor reincidente em mais de uma escola': 'O mesmo autor circula entre escolas, muitas vezes por transferência, sem acompanhamento contínuo.',
+    'Mesmo autor contra a mesma vítima': 'Agressão repetida contra a mesma pessoa caracteriza perseguição e pede medida protetiva.',
+    'Vítima recorrente': 'Quem é vítima várias vezes tem mais risco de evasão, autoagressão e queda no aprendizado.',
+    'Fragilidade de segurança patrimonial': 'Invasão, furto e dano fora do horário mostram falha de vigilância do prédio.',
+    'Horário crítico concentrado': 'A maior parte dos fatos acontece na mesma faixa horária: é ali que a presença de adultos precisa aumentar.',
+    'Violência concentrada contra meninas': 'Predomínio de vítimas do sexo feminino sugere violência de gênero.',
+    'Ocorrências críticas sem validação há mais de 7 dias': 'Casos graves parados no fluxo de validação atrasam o encaminhamento à rede de proteção.',
+    'Possível subnotificação': 'Escolas sem nenhum registro em regiões com muitos casos podem não estar usando o Livro de Ocorrências.',
+    'Escola em escalada': 'O volume dos últimos 30 dias está muito acima do ritmo anterior da própria escola.',
+    'Possível rota de difusão regional': 'O mesmo tipo de fato sensível passa de um município para o vizinho repetidas vezes.'
+};
+const porQue = t => POR_QUE[t] || (/^Alta abrupta/.test(t) ? 'Um tipo de fato cresceu bruscamente na rede nos últimos 30 dias.' : '');
+const PD = { nivel: '', cat: '', q: '', abertos: new Set(), modo: 'grupos' };
+function gruposAlertas(lista) {
+    const g = new Map();
+    lista.forEach(a => { const k = a.nivel + '|' + (/^Alta abrupta/.test(a.titulo) ? 'Alta abrupta de um tipo de fato' : a.titulo); if (!g.has(k)) g.set(k, { k, nivel: a.nivel, titulo: k.split('|')[1], cat: a.cat, rec: a.rec, itens: [] }); g.get(k).itens.push(a); });
+    const ord = { critico: 0, alto: 1, medio: 2 };
+    return [...g.values()].map(x => Object.assign(x, { regs: new Set(x.itens.flatMap(a => a.regs)).size, ultima: Math.max(...x.itens.flatMap(a => a.regs.map(r => +r.dt || 0))) })).sort((a, b) => ord[a.nivel] - ord[b.nivel] || b.itens.length - a.itens.length || b.regs - a.regs);
+}
+const ultimaData = a => { const t = Math.max(0, ...a.regs.map(r => +r.dt || 0)); return t ? new Date(t) : null; };
+rAlertas = function () {
+    const q = chave(PD.q);
+    const filtrados = AL.filter(a => (!PD.nivel || a.nivel === PD.nivel) && (!PD.cat || a.cat === PD.cat) && (!q || chave(a.titulo + ' ' + a.local + ' ' + (a.mun ? nomeMun(a.mun) : '') + ' ' + a.texto).includes(q)));
+    const G = window.PD_G = gruposAlertas(filtrados);
+    const cats = [...new Set(AL.map(a => a.cat))].sort();
+    $('acoes-alertas').innerHTML = `<button class="btn btn-v btn-sm" onclick="copiar(textoAlertas())">${ic('copy')}Copiar resumo</button><button class="btn btn-v btn-sm" onclick="exportarAlertas()">${ic('download')}Exportar CSV</button>`;
+    if (!PD.abertos.size && G.length) G.filter(g => g.nivel === 'critico').slice(0, 2).forEach(g => PD.abertos.add(g.k));
+    const coluna = nv => { const ls = AL.filter(a => a.nivel === nv), P = PRIOR[nv], ativo = PD.nivel === nv; const tipos = new Set(ls.map(a => a.titulo)).size;
+        return `<button class="pd-prior${ativo ? ' ativo' : ''}" style="--c:${P.cor}" onclick="PD.nivel=PD.nivel==='${nv}'?'':'${nv}';PD.abertos.clear();rAlertas()" aria-pressed="${ativo}">
+            <span class="pd-prior-ic">${ic(P.ico)}</span><span class="pd-prior-tx"><b>${P.nome}</b><small>${P.sub}</small></span>
+            <span class="pd-prior-n"><b>${ls.length}</b><small>${ls.length === 1 ? 'situação' : 'situações'} · ${tipos} ${tipos === 1 ? 'tipo' : 'tipos'}</small></span></button>`; };
+    const linhaItem = a => { const i = AL.indexOf(a), u = ultimaData(a); return `<tr class="clic" onclick="abrirAlerta(${i})"><td class="esc-cel"><b>${esc(a.local)}</b><span>${a.mun && a.local !== nomeMun(a.mun) ? esc(nomeMun(a.mun)) : esc(a.cat)}</span></td><td class="peq pd-evid">${esc(a.texto)}</td><td class="dir num"><b>${a.regs.length}</b></td><td class="num peq" style="white-space:nowrap">${u ? fmtD(u) : '—'}</td><td><button class="btn btn-s btn-sm" onclick="event.stopPropagation();abrirAlerta(${i})">Analisar</button></td></tr>`; };
+    const cartao = (g, gi) => {
+        const P = PRIOR[g.nivel], aberto = PD.abertos.has(g.k);
+        return `<section class="pd-grupo${aberto ? ' aberto' : ''}" style="--c:${P.cor}">
+            <button class="pd-cab" onclick="alternarGrupo(${gi})" aria-expanded="${aberto}">
+                <span class="pd-faixa"></span>
+                <span class="pd-tit"><span class="pd-selos"><span class="selo" style="--c:${P.cor}">${P.nome}</span><span class="selo" style="--c:var(--muted)">${esc(g.cat)}</span></span><b>${esc(g.titulo)}</b><small>${esc(porQue(g.titulo) || g.itens[0].texto)}</small></span>
+                <span class="pd-num"><b>${g.itens.length}</b><small>${g.itens.length === 1 ? 'local' : 'locais'}</small></span>
+                <span class="pd-num"><b>${fmtN(g.regs)}</b><small>registros</small></span>
+                <span class="pd-seta">${ic('chevR')}</span>
+            </button>
+            ${aberto ? `<div class="pd-corpo"><div class="pd-acao">${ic('check')}<div><b>O que fazer</b><span>${esc(g.rec)}</span></div></div>
+                <div class="tab-wrap"><table class="tab"><thead><tr><th>Onde / quem</th><th>Evidência</th><th class="dir">Registros</th><th>Último fato</th><th></th></tr></thead><tbody>${g.itens.slice(0, 60).map(linhaItem).join('')}</tbody></table></div>${g.itens.length > 60 ? `<p class="peq mut" style="padding:0 14px">Mostrando 60 de ${g.itens.length}. Use a busca ou o recorte para refinar.</p>` : ''}</div>` : ''}
+        </section>`;
+    };
+    $('cont-alertas').innerHTML = `
+    <div class="pd-priores">${['critico', 'alto', 'medio'].map(coluna).join('')}</div>
+    <div class="card card-pad barra-filtros">
+        <div class="busca">${ic('search')}<input class="campo" id="pd-q" placeholder="Buscar escola, município, pessoa ou tipo de problema" value="${esc(PD.q)}"></div>
+        <select class="campo" id="pd-cat" style="width:auto"><option value="">Todas as categorias</option>${cats.map(c => `<option ${PD.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
+        <button class="btn btn-s btn-sm" onclick="G_ALL_ABRIR()">${ic('grid')}Abrir todos</button>
+        ${PD.nivel || PD.cat || PD.q ? `<button class="btn btn-s btn-sm" onclick="PD.nivel='';PD.cat='';PD.q='';PD.abertos.clear();rAlertas()">Limpar filtros</button>` : ''}
+        <span class="peq mut" style="margin-left:auto">${filtrados.length} situação(ões) em ${G.length} tipo(s) de problema · ${fmtN(new Set(filtrados.flatMap(a => a.regs)).size)} registros</span>
+    </div>
+    ${G.length ? `<div class="pd-lista">${G.map((g, i) => cartao(g, i)).join('')}</div>` : `<div class="card"><div class="vazio">${ic('check')}Nenhum problema encontrado com esses filtros.</div></div>`}
+    <details class="card card-pad pd-ajuda"><summary><b>Como o sistema detecta cada problema</b></summary><div class="peq" style="line-height:1.65;color:var(--texto2);columns:2 320px;column-gap:28px;margin-top:10px">${Object.entries(POR_QUE).map(([t, d]) => `<p style="margin:0 0 8px;break-inside:avoid"><b>${esc(t)}:</b> ${esc(d)}</p>`).join('')}<p style="margin:0;break-inside:avoid"><b>Alta abrupta de um tipo de fato:</b> 10 ou mais casos em 30 dias e pelo menos o dobro da média mensal anterior.</p></div></details>`;
+    let t; $('pd-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { PD.q = $('pd-q').value; PD.abertos.clear(); rAlertas(); const i = $('pd-q'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 300); };
+    $('pd-cat').onchange = () => { PD.cat = $('pd-cat').value; PD.abertos.clear(); rAlertas(); };
+    window.G_ALL_ABRIR = () => { G.forEach(g => PD.abertos.add(g.k)); rAlertas(); };
+};
+function alternarGrupo(i) {
+    const g = (window.PD_G || [])[i]; if (!g) return;
+    PD.abertos.has(g.k) ? PD.abertos.delete(g.k) : PD.abertos.add(g.k);
+    rAlertas();
+}
 
 </script>
 </body>
