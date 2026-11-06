@@ -1290,6 +1290,50 @@ html.menu-recolhido .lat-acoes { max-width: none; flex-direction: column; }
 .av-bt { display: flex; gap: 8px; flex-shrink: 0; }
 #aviso-versao .btn-s { background: transparent; color: #dbe6ff; border-color: #2f4a85; }
 @media (max-width: 560px) { #aviso-versao { flex-wrap: wrap; } .av-bt { width: 100%; justify-content: flex-end; } }
+
+/* ===== 2.6: rotas, vínculos e termos ===== */
+.df-frase { display: flex; gap: 14px; align-items: flex-start; }
+.df-frase .ico { width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent); font-size: 18px; }
+.df-frase p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--texto2); max-width: 110ch; }
+.df-frase b { color: var(--texto); }
+#mapa-dif2 { height: 100%; width: 100%; background: var(--mapa-fundo); }
+.seta-rota { background: none; border: 0; }
+.fluxo { display: grid; grid-template-columns: 220px 36px minmax(0,1fr); gap: 12px; align-items: center; }
+.fluxo-de { border: 2px solid var(--prim); border-radius: 14px; padding: 16px; background: var(--prim-claro); }
+.fluxo-de small { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--prim); }
+.fluxo-de b { display: block; font-size: 17px; margin: 4px 0; }
+.fluxo-de span { font-size: 12px; color: var(--muted); }
+.fluxo-seta { color: var(--prim); font-size: 26px; display: flex; justify-content: center; }
+.fluxo-para { display: grid; gap: 6px; }
+.fluxo-l { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr) 70px; gap: 12px; align-items: center; padding: 7px 10px; border: 1px solid var(--borda); border-radius: 10px; background: var(--card); }
+.fluxo-n { font-size: 13px; font-weight: 600; }
+.fluxo-b { height: 9px; border-radius: 999px; background: var(--suave2); overflow: hidden; } .fluxo-b span { display: block; height: 100%; border-radius: 999px; }
+.fluxo-v { text-align: right; } .fluxo-v b { font-variant-numeric: tabular-nums; } .fluxo-v small { display: block; font-size: 10.5px; color: var(--muted); }
+@media (max-width: 760px) { .fluxo { grid-template-columns: minmax(0,1fr); } .fluxo-seta { transform: rotate(90deg); } }
+.cam { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.cam-p { display: inline-flex; flex-direction: column; padding: 3px 8px; border-radius: 8px; background: var(--suave2); font-size: 12px; font-weight: 600; line-height: 1.2; }
+.cam-p small { font-weight: 500; color: var(--muted); font-size: 10px; }
+.cam-s { color: var(--muted2); }
+.sel-vn { background: var(--prim-claro) !important; box-shadow: inset 3px 0 0 var(--prim); }
+.vn2-tela { position: relative; height: 470px; border-radius: 12px; background: var(--suave); overflow: hidden; border: 1px solid var(--borda); }
+.vn2-tela.alta { height: 600px; }
+.vn2-tela canvas { width: 100%; height: 100%; display: block; }
+.vn2-leg { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; font-size: 11.5px; color: var(--texto2); margin-top: 10px; }
+.vn2-leg span { display: inline-flex; align-items: center; gap: 6px; }
+.vn2-leg i { display: inline-block; }
+.radar-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.radar-c { text-align: left; border: 1px solid var(--borda); border-radius: 12px; padding: 11px 13px 9px; background: var(--suave); transition: border-color .15s, transform .15s; min-width: 0; }
+.radar-c:hover { border-color: var(--prim); transform: translateY(-1px); }
+.radar-c.alta { border-color: color-mix(in srgb, var(--c-crit) 45%, var(--borda)); background: color-mix(in srgb, var(--c-crit) 5%, var(--suave)); }
+.radar-top { display: flex; justify-content: space-between; gap: 6px; font-size: 13px; } .radar-top span { font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.radar-v { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; margin: 2px 0; } .radar-v small { font-size: 10.5px; font-weight: 500; color: var(--muted); }
+.radar-c .spark { height: 36px; }
+.radar-esc { font-size: 10.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 3px; }
+.tr-alta .tx em { display: block; font-style: normal; font-size: 11.5px; color: var(--texto2); white-space: normal; line-height: 1.45; margin-top: 3px; }
+.tr-ex { margin: 0 0 10px; padding: 8px 10px; border-left: 3px solid var(--prim); background: var(--suave); border-radius: 0 8px 8px 0; cursor: pointer; line-height: 1.5; }
+mark { background: color-mix(in srgb, var(--ambar) 35%, transparent); color: inherit; padding: 0 2px; border-radius: 3px; }
+.tr-alta .tx b .selo { display: inline-flex; width: auto; margin-left: 6px; vertical-align: 1px; padding: 1px 7px; font-size: 10.5px; }
+.tr-alta .tx b { white-space: normal; }
 </style>
 
 </head>
@@ -1357,8 +1401,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '2.5.0+dcb50176';
-const APP_NOTAS = 'Nova tela de entrada, novo logo e aviso automático de atualização.';
+const APP_VERSAO = '2.6.0+4abdb28f';
+const APP_NOTAS = 'Rotas prováveis, Rede de vínculos e Termos e tendências reformulados.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -4903,6 +4947,310 @@ registrarSW = function () {
 document.addEventListener('DOMContentLoaded', () => {
     let ok = false; try { ok = sessionStorage.getItem('esp_atualizado') === '1'; sessionStorage.removeItem('esp_atualizado'); } catch (e) { }
     if (ok) setTimeout(() => toast('Sistema atualizado para a versão ' + APP_VERSAO.split('+')[0], 'check'), 1200);
+});
+
+/* =====================================================================
+   EDUCASEG-PLUS 2.6 — Rotas prováveis, Rede de vínculos e Termos e
+   tendências reescritos: leitura em frases, foco, busca e explicação
+   ===================================================================== */
+const fmt1 = v => (v == null || isNaN(v)) ? '—' : v.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
+const PAPEL_COR = { 'Polo emissor': 'var(--c-crit)', 'Receptor': 'var(--prim)', 'Corredor': 'var(--roxo)', 'Isolado': 'var(--muted2)' };
+const selTipos = (atual) => {
+    const tipos = [...new Set(REG.map(r => r.tipo))].sort((a, b) => tipoCurto(a).localeCompare(tipoCurto(b), 'pt'));
+    return `<option value="__SEV" ${atual === '__SEV' ? 'selected' : ''}>Todos os tipos sensíveis</option><option value="" ${atual === '' ? 'selected' : ''}>Todos os tipos</option>${tipos.map(t => `<option value="${esc(t)}" ${t === atual ? 'selected' : ''}>${esc(tipoCurto(t))}</option>`).join('')}`;
+};
+
+/* =====================================================================
+   ROTAS PROVÁVEIS
+   ===================================================================== */
+const DF2 = { aba: 'territorio', todas: false, sel: null, deTipo: '' };
+let MAPA_R2 = null, CAM_R2 = null;
+function pressaoMunicipios(D) {
+    // municípios sem registro na janela, próximos de focos ativos (últimos 30 dias)
+    const hoje = A.hoje, raio = DF.raio;
+    const focos = [...D.nos.values()].map(n => ({ n, rec: REG.filter(r => r.mun === n.k && r.dt && diasEntre(r.dt, hoje) <= 30 && (DF.tipo === '' ? true : DF.tipo === '__SEV' ? ehSevero(r.tipo) : r.tipo === DF.tipo)).length })).filter(f => f.rec > 0);
+    const ativos = new Set(focos.map(f => f.n.k));
+    const L = MUNS.filter(m => !ativos.has(m.k)).map(m => {
+        let p = 0, via = null, vd = 0, km = 0;
+        focos.forEach(f => { const d = hav(m, f.n); if (d > raio) return; const v = f.rec * Math.exp(-d / (raio / 2)); p += v; if (v > vd) { vd = v; via = f.n; km = d; } });
+        return { m, p, via, km };
+    }).filter(x => x.p > 0).sort((a, b) => b.p - a.p);
+    const mx = L.length ? L[0].p : 1;
+    L.forEach(x => { x.nivel = x.p / mx >= .6 ? 'alta' : x.p / mx >= .3 ? 'média' : 'baixa'; });
+    return L.slice(0, 10);
+}
+rDifusao = function () {
+    $('acoes-difusao').innerHTML = `<select class="campo" id="df2-tipo" style="width:auto;height:34px">${selTipos(DF.tipo)}</select>
+        <select class="campo" id="df2-jan" style="width:auto;height:34px">${[15, 30, 60].map(j => `<option value="${j}" ${DF.janela === j ? 'selected' : ''}>passagem em até ${j} dias</option>`).join('')}</select>
+        <select class="campo" id="df2-raio" style="width:auto;height:34px">${[80, 150, 250].map(r => `<option value="${r}" ${DF.raio === r ? 'selected' : ''}>vizinhos até ${r} km</option>`).join('')}</select>`;
+    $('df2-tipo').onchange = () => { DF.tipo = $('df2-tipo').value; DF2.sel = null; rDifusao(); };
+    $('df2-jan').onchange = () => { DF.janela = +$('df2-jan').value; DF2.sel = null; rDifusao(); };
+    $('df2-raio').onchange = () => { DF.raio = +$('df2-raio').value; DF2.sel = null; rDifusao(); };
+    const D = window.DIF2 = difusao(REG, { tipo: DF.tipo, janela: DF.janela, raio: DF.raio }, A);
+    const ativas = D.arestas.filter(a => a.recente), top = D.arestas.slice(0, DF2.todas ? 80 : 15);
+    const P = window.PRESS = pressaoMunicipios(D);
+    const nomeTipo = DF.tipo === '__SEV' ? 'tipos sensíveis' : DF.tipo === '' ? 'ocorrências de todos os tipos' : tipoCurto(DF.tipo).toLowerCase();
+    const r1 = D.arestas[0], prim = D.ordemChegada[0];
+    const frase = !D.arestas.length ? `Com ${fmtN(D.total)} registros de ${nomeTipo} em ${D.nos.size} municípios, nenhuma passagem se repetiu entre municípios vizinhos. Tente uma janela maior ou um raio maior.`
+        : `Foram analisados <b>${fmtN(D.total)}</b> registros de <b>${esc(nomeTipo)}</b> em <b>${D.nos.size}</b> municípios. O sistema encontrou <b>${D.arestas.length}</b> rotas que se repetiram, <b>${ativas.length}</b> delas com passagem nos últimos 60 dias. A mais forte vai de <b>${esc(nomeMun(r1.de))}</b> para <b>${esc(nomeMun(r1.para))}</b>: ${r1.n} passagens, com intervalo médio de ${fmt1(r1.lag)} dias.${P[0] ? ` O município sem registro recente sob maior pressão é <b>${esc(P[0].m.nome)}</b>, a ${Math.round(P[0].km)} km de ${esc(P[0].via.nome)}.` : ''}`;
+    const papeis = { 'Polo emissor': 0, 'Receptor': 0, 'Corredor': 0 }; D.nos.forEach(n => { if (papeis[n.papel] != null) papeis[n.papel]++; });
+    const abas = [['territorio', 'Rotas entre municípios'], ['agravamento', 'Agravamento entre tipos'], ['autores', 'Autores que circulam']];
+    $('cont-difusao').innerHTML = `
+    <div class="card card-pad df-frase"><div class="ico" style="--c:var(--c-crit)">${ic('trend')}</div><p>${frase}</p></div>
+    <div class="card"><div class="abas-int" style="padding:0 10px;margin:0" id="df2-abas">${abas.map(([k, t]) => `<button data-a="${k}" class="${DF2.aba === k ? 'ativo' : ''}">${t}</button>`).join('')}</div><div id="df2-corpo"></div></div>`;
+    $('df2-abas').onclick = e => { const b = e.target.closest('button'); if (b) { DF2.aba = b.dataset.a; rDifusao(); } };
+    const corpo = $('df2-corpo');
+    if (DF2.aba === 'territorio') {
+        corpo.innerHTML = `<div class="kpis" style="padding:14px 14px 0">
+            <div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('trend')}Rotas ativas</div><div class="v">${fmtN(ativas.length)}</div><div class="s">de ${fmtN(D.arestas.length)} rotas que se repetiram</div></div>
+            <div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('target')}Polos emissores</div><div class="v">${papeis['Polo emissor']}</div><div class="s">de onde os fatos mais saem</div></div>
+            <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('pin')}Receptores</div><div class="v">${papeis['Receptor']}</div><div class="s">aonde os fatos mais chegam</div></div>
+            <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('alerta')}Sob pressão</div><div class="v">${P.length}</div><div class="s">vizinhos de focos, sem registro recente</div></div></div>
+        <div class="grade g32" style="padding:14px;align-items:start">
+            <div style="min-width:0"><div class="mapa-box" style="height:560px;min-height:420px"><div id="mapa-dif2" role="application" aria-label="Mapa das rotas prováveis"></div>
+                <div class="mapa-painel mapa-legenda" style="max-width:240px"><b>Papel do município</b>${Object.entries(PAPEL_COR).map(([p, c]) => `<div style="display:flex;gap:6px;align-items:center;margin-top:4px"><i style="width:10px;height:10px;border-radius:50%;background:${c}"></i>${p}</div>`).join('')}<div style="display:flex;gap:6px;align-items:center;margin-top:6px"><i style="width:12px;height:12px;border-radius:50%;border:2px dashed var(--c-alto)"></i>Sob pressão</div><div class="mut" style="margin-top:6px">Seta: sentido da rota · espessura: força · vermelho: ativa</div></div></div>
+                <label class="peq" style="display:flex;gap:6px;align-items:center;margin-top:8px"><input type="checkbox" id="df2-todas" ${DF2.todas ? 'checked' : ''}> Mostrar todas as rotas (padrão: 15 mais fortes)</label></div>
+            <div class="pilha" style="min-width:0">
+                <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('nav')}</div><div><h3>Rotas mais fortes</h3><p>Passe o mouse para destacar no mapa</p></div></div></div>
+                    <div class="lista" style="max-height:330px;overflow:auto">${top.slice(0, 15).map((a, i) => `<button class="item df-rota" data-i="${i}" onclick="listaModal('${esc(nomeMun(a.de))} → ${esc(nomeMun(a.para))}', DIF2.arestas[${i}].regs)"><span class="ic" style="--c:${a.recente ? 'var(--c-crit)' : 'var(--muted)'}">${a.n}</span><span class="tx"><b>${esc(nomeMun(a.de))} → ${esc(nomeMun(a.para))}</b><span>${Math.round(a.km)} km · intervalo médio ${fmt1(a.lag)} dias · ${esc(tipoCurto(a.tipoPred))}</span></span><span class="fim">${a.recente ? '<span class="selo" style="--c:var(--c-crit)">ativa</span>' : '<span class="selo" style="--c:var(--muted)">antiga</span>'}</span></button>`).join('') || '<div class="vazio peq">Nenhuma rota repetida com estes parâmetros.</div>'}</div></div>
+                <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-alto)">${ic('alerta')}</div><div><h3>Próximos municípios sob pressão</h3><p>Sem registro nos últimos 30 dias, mas vizinhos de focos ativos</p></div></div></div>
+                    <div class="lista">${P.slice(0, 8).map(x => `<button class="item" onclick="abrirMun('${esc(x.m.k)}')"><span class="ic" style="--c:${x.nivel === 'alta' ? 'var(--c-crit)' : x.nivel === 'média' ? 'var(--c-alto)' : 'var(--c-medio)'}">${ic('pin')}</span><span class="tx"><b>${esc(x.m.nome)}</b><span>pressão ${x.nivel} · a ${Math.round(x.km)} km de ${esc(x.via.nome)}</span></span></button>`).join('') || '<div class="vazio peq">Nenhum município sob pressão.</div>'}</div></div>
+            </div></div>`;
+        $('df2-todas').onchange = e => { DF2.todas = e.target.checked; rDifusao(); };
+        setTimeout(() => desenharDif2(D, top, P), 30);
+    } else if (DF2.aba === 'agravamento') {
+        const S = window.SEQ2 = sequenciasTipos(REG, DF.janela * 2);
+        const origens = [...S.saidas.entries()].filter(([, n]) => n >= 3).sort((a, b) => b[1] - a[1]).map(x => x[0]);
+        if (!origens.includes(DF2.deTipo)) DF2.deTipo = origens[0] || '';
+        const prox = S.L.filter(t => t.de === DF2.deTipo).sort((a, b) => b.n - a.n).slice(0, 8);
+        const agr = S.L.filter(t => t.agrava && t.n >= 3).sort((a, b) => b.n - a.n).slice(0, 10);
+        corpo.innerHTML = `<div class="card-pad">
+            <p class="peq mut" style="margin-top:0">Quando um fato acontece, qual costuma ser o próximo? O sistema olha o fato seguinte do <b>mesmo autor</b> (até ${DF.janela * 2} dias) e o fato seguinte de outro tipo na <b>mesma escola</b> (até 14 dias).</p>
+            <div class="barra-filtros" style="margin-bottom:12px"><label class="rot" style="margin:0" for="df2-de">Depois de</label><select class="campo" id="df2-de" style="width:auto;max-width:360px">${origens.map(t => `<option value="${esc(t)}" ${t === DF2.deTipo ? 'selected' : ''}>${esc(tipoCurto(t))} (${S.saidas.get(t)})</option>`).join('')}</select></div>
+            <div class="fluxo"><div class="fluxo-de"><small>Fato inicial</small><b>${esc(tipoCurto(DF2.deTipo || '—'))}</b><span>${fmtN(S.saidas.get(DF2.deTipo) || 0)} sequências observadas</span></div><div class="fluxo-seta">${ic('chevR')}</div>
+                <div class="fluxo-para">${prox.map(t => `<div class="fluxo-l"><span class="fluxo-n">${esc(tipoCurto(t.para))}${t.agrava ? ' <span class="selo" style="--c:var(--c-crit)">agrava</span>' : ''}</span><span class="fluxo-b"><span style="width:${Math.max(3, 100 * t.p).toFixed(1)}%;background:${t.agrava ? 'var(--c-crit)' : 'var(--prim)'}"></span></span><span class="fluxo-v"><b>${Math.round(100 * t.p)}%</b><small>${t.n} vezes</small></span></div>`).join('') || '<div class="vazio peq">Sem sequências suficientes.</div>'}</div></div>
+            <h4 style="margin:22px 0 8px">Caminhos de agravamento mais comuns</h4>
+            <div class="lista">${agr.map(t => `<div class="item" style="cursor:default"><span class="ic" style="--c:var(--c-crit)">${t.n}</span><span class="tx"><b>${esc(tipoCurto(t.de))} → ${esc(tipoCurto(t.para))}</b><span>em ${Math.round(100 * t.p)}% das vezes em que houve ${esc(tipoCurto(t.de)).toLowerCase()} · ${t.autor} pelo mesmo autor, ${t.escola} na mesma escola</span></span></div>`).join('') || '<div class="vazio peq">Nenhum caminho de agravamento com 3 ou mais ocorrências.</div>'}</div></div>`;
+        $('df2-de').onchange = () => { DF2.deTipo = $('df2-de').value; rDifusao(); };
+    } else {
+        const pode = podeVerPessoas();
+        const porA = new Map();
+        REG.forEach(r => { if (!r.dt) return; r.agr.forEach(n => { const k = chave(n); if (k.length < 5 || !k.includes(' ') || /^(DESCONHECID|NAO IDENTIFICAD|SEM IDENTIFICA|ANONIM|PADRAST|MADRAST|MAE|PAI|AVO|TIO|TIA|IRMAO|IRMA|ALUNO|ALUNA|ESTUDANTE|PROFESSOR|RESPONSAVEL|VIZINHO|TERCEIRO|INDIVIDUO|ELEMENTO)\b/.test(k)) return; if (!porA.has(k)) porA.set(k, { k, nome: n, regs: [] }); porA.get(k).regs.push(r); }); });
+        const L = [...porA.values()].map(p => { p.regs.sort((a, b) => a.dt - b.dt); const cam = []; p.regs.forEach(r => { if (!cam.length || cam[cam.length - 1].mun !== r.mun) cam.push({ mun: r.mun, dt: r.dt, esc: r.esc }); }); p.cam = cam; p.muns = new Set(p.regs.map(r => r.mun)).size; p.km = cam.reduce((s, c, i) => i ? s + hav(MUN_POR_K.get(cam[i - 1].mun) || {}, MUN_POR_K.get(c.mun) || {}) : 0, 0) || 0; return p; }).filter(p => p.muns >= 2).sort((a, b) => b.muns - a.muns || b.regs.length - a.regs.length);
+        corpo.innerHTML = `<div class="card-pad"><p class="peq mut" style="margin-top:0">Autores citados em registros de <b>municípios diferentes</b>, na ordem em que apareceram. Indica transferência entre escolas ou atuação em mais de uma cidade.${pode ? '' : ' Nomes ocultos: disponível para Administrador e Inteligência.'}</p>
+            <div class="tab-wrap" style="max-height:540px"><table class="tab"><thead><tr><th>Autor</th><th class="dir">Municípios</th><th class="dir">Registros</th><th>Caminho</th></tr></thead><tbody>${L.slice(0, 60).map((p, i) => `<tr class="${pode ? 'clic' : ''}" ${pode ? `onclick="abrirPessoa('${esc(p.k)}')"` : ''}><td><b>${pode ? esc(p.nome) : 'Autor ' + (i + 1)}</b></td><td class="dir num">${p.muns}</td><td class="dir num">${p.regs.length}</td><td><div class="cam">${p.cam.map((c, j) => `${j ? `<span class="cam-s">${ic('chevR')}</span>` : ''}<span class="cam-p" title="${esc(c.esc)} · ${fmtD(c.dt)}">${esc(nomeMun(c.mun))}<small>${fmtD(c.dt).slice(0, 5)}</small></span>`).join('')}</div></td></tr>`).join('') || '<tr><td colspan="4"><div class="vazio">Nenhum autor citado em mais de um município.</div></td></tr>'}</tbody></table></div></div>`;
+    }
+};
+function desenharDif2(D, top, P) {
+    if (typeof L === 'undefined' || !$('mapa-dif2')) return;
+    if (MAPA_R2) { try { MAPA_R2.remove(); } catch (e) { } MAPA_R2 = null; }
+    MAPA_R2 = L.map('mapa-dif2', { attributionControl: false, zoomSnap: .25, preferCanvas: false });
+    L.geoJSON(GEO_MT.uf, { style: { fillColor: css('--mapa-vazio'), fillOpacity: 1, color: css('--texto2'), weight: 1.4 }, interactive: false }).addTo(MAPA_R2);
+    L.geoJSON({ type: 'FeatureCollection', features: MUNS.map(m => ({ type: 'Feature', properties: {}, geometry: m.g })) }, { style: { fill: false, color: css('--borda2'), weight: .5 }, interactive: false }).addTo(MAPA_R2);
+    MAPA_R2.fitBounds([[-18.1, -61.7], [-7.3, -50.2]]);
+    const g = L.layerGroup().addTo(MAPA_R2), linhas = [];
+    const maxW = Math.max(1, ...top.map(a => a.w));
+    top.forEach((a, i) => {
+        const p1 = MUN_POR_K.get(a.de), p2 = MUN_POR_K.get(a.para); if (!p1 || !p2) return;
+        const cor = a.recente ? css('--c-crit') : css('--muted2'), w = 1.5 + 5 * a.w / maxW;
+        const ln = L.polyline([[p1.lat, p1.lng], [p2.lat, p2.lng]], { color: cor, weight: w, opacity: a.recente ? .85 : .5 }).bindTooltip(`<b>${esc(p1.nome)} → ${esc(p2.nome)}</b><br>${a.n} passagens · ${Math.round(a.km)} km · intervalo médio ${fmt1(a.lag)} dias<br>${esc(tipoCurto(a.tipoPred))}`).on('click', () => listaModal(p1.nome + ' → ' + p2.nome, a.regs)).addTo(g);
+        const ang = Math.atan2(-(p2.lat - p1.lat), p2.lng - p1.lng) * 180 / Math.PI;
+        const mx = p1.lat + (p2.lat - p1.lat) * .62, my = p1.lng + (p2.lng - p1.lng) * .62;
+        L.marker([mx, my], { interactive: false, icon: L.divIcon({ className: 'seta-rota', html: `<svg width="16" height="16" viewBox="0 0 16 16" style="transform:rotate(${ang.toFixed(0)}deg)"><path d="M2 3 14 8 2 13 5 8Z" fill="${cor}"/></svg>`, iconSize: [16, 16], iconAnchor: [8, 8] }) }).addTo(g);
+        linhas[i] = { ln, w, cor };
+    });
+    D.nos.forEach(n => { if (n.papel === 'Isolado' && !DF2.todas) return; L.circleMarker([n.lat, n.lng], { radius: Math.min(13, 4 + Math.sqrt(n.n) * 1.3), color: '#fff', weight: 1.5, fillColor: css(PAPEL_COR[n.papel].slice(4, -1)), fillOpacity: .95 }).bindTooltip(`<b>${esc(n.nome)}</b><br>${n.papel} · ${fmtN(n.n)} registro(s)<br>saídas ${fmt1(n.out)} · chegadas ${fmt1(n.inn)}`).on('click', () => abrirMun(n.k)).addTo(g); });
+    P.forEach(x => L.circleMarker([x.m.lat, x.m.lng], { radius: 9, color: css('--c-alto'), weight: 2, dashArray: '3 3', fillOpacity: 0 }).bindTooltip(`<b>${esc(x.m.nome)}</b><br>Sob pressão ${x.nivel} · a ${Math.round(x.km)} km de ${esc(x.via.nome)}`).on('click', () => abrirMun(x.m.k)).addTo(g));
+    document.querySelectorAll('.df-rota').forEach(b => {
+        const l = linhas[+b.dataset.i]; if (!l) return;
+        b.onmouseenter = () => { linhas.forEach(o => o && o.ln.setStyle({ opacity: .12 })); l.ln.setStyle({ opacity: 1, weight: l.w + 3 }); l.ln.bringToFront(); };
+        b.onmouseleave = () => linhas.forEach(o => o && o.ln.setStyle({ opacity: .8, weight: o.w }));
+    });
+}
+
+/* =====================================================================
+   REDE DE VÍNCULOS
+   ===================================================================== */
+const VN2 = { modo: 'grupos', grupo: 0, pessoa: '', busca: '', hover: null };
+rVinculos = function () {
+    if (!podeVerPessoas()) { $('acoes-vinculos').innerHTML = ''; $('cont-vinculos').innerHTML = `<div class="card"><div class="vazio">${ic('shield')}A rede de vínculos mostra nomes de crianças e adolescentes e está liberada só para os perfis Administrador e Inteligência.</div></div>`; return; }
+    $('acoes-vinculos').innerHTML = `<div class="seg" style="background:rgba(255,255,255,.08)" id="vn2-modo">${[['grupos', 'Grupos'], ['pessoa', 'Explorar pessoa'], ['geral', 'Visão geral']].map(([k, t]) => `<button data-m="${k}" class="${VN2.modo === k ? 'ativo' : ''}" style="${VN2.modo === k ? '' : 'color:#cbd5e1'}">${t}</button>`).join('')}</div>`;
+    $('vn2-modo').onclick = e => { const b = e.target.closest('button'); if (b) { VN2.modo = b.dataset.m; rVinculos(); } };
+    VN.min = 1; VN.lig = 'todas';
+    const G = GRAFO = montarGrafo();
+    const nCo = G.E.filter(e => e.coaut).length;
+    const kpis = `<div class="kpis">
+        <div class="kpi" style="--c:var(--roxo)"><div class="r">${ic('grid')}Grupos</div><div class="v">${fmtN(G.grupos.length)}</div><div class="s">3 ou mais pessoas ligadas entre si</div></div>
+        <div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('repeat')}Coautorias</div><div class="v">${fmtN(nCo)}</div><div class="s">pares que agiram juntos</div></div>
+        <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('escola')}Pontes entre escolas</div><div class="v">${fmtN(G.pontes.length)}</div><div class="s">autores em 2 ou mais escolas</div></div>
+        <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('target')}Vítimas de vários autores</div><div class="v">${fmtN(G.imas.length)}</div><div class="s">2 ou mais autores diferentes</div></div></div>`;
+    const aviso = `<div class="aviso info">${ic('shield')}<div>Uso restrito à proteção de crianças e adolescentes (ECA e LGPD). Uma ligação indica que as pessoas aparecem no mesmo registro, não comprova relação entre elas.</div></div>`;
+    let corpo = '';
+    if (VN2.modo === 'grupos') {
+        if (VN2.grupo >= G.grupos.length) VN2.grupo = 0;
+        const g = G.grupos[VN2.grupo];
+        corpo = `<div class="grade" style="grid-template-columns:minmax(0,340px) minmax(0,1fr);align-items:start" id="vn2-grade">
+            <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--roxo)">${ic('grid')}</div><div><h3>Grupos encontrados</h3><p>Ordenados por coautoria e tamanho. Clique para ver o grupo.</p></div></div></div>
+                <div class="lista" style="max-height:560px;overflow:auto">${G.grupos.slice(0, 60).map((x, i) => `<button class="item${i === VN2.grupo ? ' sel-vn' : ''}" onclick="VN2.grupo=${i};rVinculos()"><span class="ic" style="--c:${x.coaut ? 'var(--c-crit)' : 'var(--roxo)'}">${x.membros.length}</span><span class="tx"><b>Grupo ${i + 1} · ${x.membros.length} pessoas</b><span>${x.escolas.size} escola(s) · ${x.regs.length} registros${x.coaut ? ' · ' + x.coaut + ' coautoria(s)' : ''}${x.sev ? ' · ' + x.sev + ' sensíveis' : ''}</span></span></button>`).join('') || '<div class="vazio peq">Nenhum grupo com 3 ou mais pessoas no recorte.</div>'}</div></div>
+            ${g ? `<div class="pilha" style="min-width:0"><div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('users')}</div><div><h3>Grupo ${VN2.grupo + 1}</h3><p>${g.membros.length} pessoas · ${g.regs.length} registros · ${g.escolas.size} escola(s) · ${g.coaut} coautoria(s)</p></div><div class="dir"><button class="btn btn-s btn-sm" onclick="listaModal('Registros do grupo ${VN2.grupo + 1}', GRAFO.grupos[${VN2.grupo}].regs)">${ic('book')}Registros</button></div></div>
+                <div class="vn2-tela"><canvas id="vn-canvas" aria-label="Grafo do grupo"></canvas><div class="mapa-painel" id="vn-dica" style="display:none;pointer-events:none"></div></div>
+                ${legendaGrafo()}</div>
+                <div class="grade g2"><div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('bar')}</div><div><h3>O que o grupo fez</h3></div></div>${hbar(g.tipos.slice(0, 6).map(([t, v]) => ({ t, v, c: 'var(--roxo)' })))}</div>
+                <div class="card card-pad"><div class="card-tit"><div class="ico">${ic('escola')}</div><div><h3>Onde atuou</h3></div></div><div class="lista">${[...g.escolas].slice(0, 6).map(k => { const e = A.escolas.get(k); return e ? `<button class="item" onclick="abrirEscola('${esc(k)}')"><span class="ic" style="--c:${corIdx(e.idx)}">${e.idx}</span><span class="tx"><b>${esc(e.nome)}</b><span>${esc(nomeMun(e.mun))}</span></span></button>` : ''; }).join('')}</div></div></div></div>` : '<div class="card"><div class="vazio">Sem grupos.</div></div>'}</div>`;
+        $('cont-vinculos').innerHTML = aviso + kpis + corpo;
+        if (g) setTimeout(() => desenharSub(g.membros.map(n => n.k)), 30);
+    } else if (VN2.modo === 'pessoa') {
+        const lista = [...A.pessoas.values()].filter(p => p.regs.length >= 1 && (!VN2.busca || p.k.includes(chave(VN2.busca)))).sort((a, b) => b.regs.length - a.regs.length).slice(0, 40);
+        const grau = new Map(); G.E.forEach(e => { grau.set(e.a, (grau.get(e.a) || 0) + 1); grau.set(e.b, (grau.get(e.b) || 0) + 1); });
+        lista.forEach(x => x.grau = grau.get(x.k) || 0);
+        if (!VN2.pessoa && lista[0]) VN2.pessoa = (VN2.busca ? lista[0] : lista.slice().sort((a, b) => b.grau - a.grau || b.regs.length - a.regs.length)[0]).k;
+        const p = A.pessoas.get(VN2.pessoa);
+        let ego = [];
+        if (p) { const viz = new Set([p.k]); G.E.forEach(e => { if (e.a === p.k) viz.add(e.b); if (e.b === p.k) viz.add(e.a); }); const n2 = new Set(viz); G.E.forEach(e => { if (viz.has(e.a)) n2.add(e.b); if (viz.has(e.b)) n2.add(e.a); }); ego = [...(n2.size <= 60 ? n2 : viz)]; }
+        corpo = `<div class="grade" style="grid-template-columns:minmax(0,320px) minmax(0,1fr);align-items:start" id="vn2-grade">
+            <div class="card"><div class="card-pad" style="padding-bottom:8px"><div class="busca">${ic('search')}<input class="campo" id="vn2-q" placeholder="Buscar pessoa pelo nome" value="${esc(VN2.busca)}"></div></div>
+                <div class="lista" style="max-height:540px;overflow:auto">${lista.map(x => `<button class="item${x.k === VN2.pessoa ? ' sel-vn' : ''}" onclick="VN2.pessoa='${esc(x.k)}';rVinculos()"><span class="ic" style="--c:${x.agr && x.vit ? 'var(--roxo)' : x.agr >= x.vit ? 'var(--c-crit)' : 'var(--prim)'}">${x.regs.length}</span><span class="tx"><b>${esc(x.nome)}</b><span>${x.agr} como autor · ${x.vit} como vítima · ${x.escolas.size} escola(s)</span></span></button>`).join('') || '<div class="vazio peq">Ninguém encontrado.</div>'}</div></div>
+            ${p ? `<div class="card card-pad" style="min-width:0"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('user')}</div><div><h3>${esc(p.nome)}</h3><p>${p.agr} registro(s) como autor · ${p.vit} como vítima · ${ego.length - 1} pessoa(s) ligada(s) · até 2 passos de distância</p></div><div class="dir"><button class="btn btn-s btn-sm" onclick="abrirPessoa('${esc(p.k)}')">${ic('clock')}Histórico</button></div></div>
+                <div class="vn2-tela"><canvas id="vn-canvas" aria-label="Rede da pessoa"></canvas><div class="mapa-painel" id="vn-dica" style="display:none;pointer-events:none"></div></div>${legendaGrafo(true)}</div>` : '<div class="card"><div class="vazio">Escolha uma pessoa.</div></div>'}</div>`;
+        $('cont-vinculos').innerHTML = aviso + kpis + corpo;
+        let t; $('vn2-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { VN2.busca = $('vn2-q').value; VN2.pessoa = ''; rVinculos(); const i = $('vn2-q'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 300); };
+        if (p) setTimeout(() => desenharSub(ego, p.k), 30);
+    } else {
+        corpo = `<div class="card card-pad"><div class="card-tit"><div class="ico">${ic('users')}</div><div><h3>Visão geral da rede</h3><p>As ${Math.min(150, G.N.length)} pessoas mais conectadas. Para ler um grupo específico, use a aba Grupos.</p></div></div><div class="vn2-tela alta"><canvas id="vn-canvas" aria-label="Rede geral"></canvas><div class="mapa-painel" id="vn-dica" style="display:none;pointer-events:none"></div></div>${legendaGrafo()}</div>
+            <div class="grade g2"><div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-alto)">${ic('escola')}</div><div><h3>Pontes entre escolas</h3><p>Autores citados em mais de uma escola</p></div></div></div><div class="lista" style="max-height:300px;overflow:auto">${G.pontes.slice(0, 30).map(n => `<button class="item" onclick="VN2.modo='pessoa';VN2.pessoa='${esc(n.k)}';rVinculos()"><span class="ic" style="--c:var(--c-alto)">${n.escolas.size}</span><span class="tx"><b>${esc(n.nome)}</b><span>${n.agr} como autor · ${n.vit} como vítima</span></span></button>`).join('') || '<div class="vazio peq">Nenhum.</div>'}</div></div>
+            <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico">${ic('target')}</div><div><h3>Vítimas de vários autores</h3><p>Prioridade para busca ativa e proteção</p></div></div></div><div class="lista" style="max-height:300px;overflow:auto">${G.imas.slice(0, 30).map(n => `<button class="item" onclick="VN2.modo='pessoa';VN2.pessoa='${esc(n.k)}';rVinculos()"><span class="ic" style="--c:var(--prim)">${n.autores}</span><span class="tx"><b>${esc(n.nome)}</b><span>${n.vit} registros como vítima · ${n.autores} autores diferentes</span></span></button>`).join('') || '<div class="vazio peq">Nenhuma.</div>'}</div></div></div>`;
+        $('cont-vinculos').innerHTML = aviso + kpis + corpo;
+        setTimeout(() => desenharSub(G.N.map(n => n.k)), 30);
+    }
+    if (matchMedia('(max-width: 900px)').matches && $('vn2-grade')) $('vn2-grade').style.gridTemplateColumns = 'minmax(0,1fr)';
+};
+function legendaGrafo(ego) {
+    const it = (c, t, linha) => `<span>${linha ? `<i style="width:18px;height:${linha}px;background:${c}"></i>` : `<i style="width:10px;height:10px;border-radius:50%;background:${c}"></i>`}${t}</span>`;
+    return `<div class="vn2-leg">${ego ? it('var(--marca)', 'Pessoa escolhida') : ''}${it('var(--c-crit)', 'Mais vezes autor')}${it('var(--prim)', 'Mais vezes vítima')}${it('var(--roxo)', 'Autor e vítima')}${it('var(--c-crit)', 'agiram juntos', 3)}${it('var(--muted2)', 'autor e vítima no mesmo fato', 1.5)}${it('var(--prim)', 'vítimas no mesmo fato (tracejado)', 1.5)}<span class="mut">Tamanho = nº de registros · passe o mouse para destacar · clique para abrir</span></div>`;
+}
+/* Desenha um subgrafo com layout próprio (mais legível que o grafo inteiro) */
+function desenharSub(chaves, centro) {
+    const cv = $('vn-canvas'); if (!cv || !GRAFO) return;
+    const ks = new Set(chaves);
+    const base = new Map(); [...GRAFO.N].forEach(n => base.set(n.k, n));
+    A.pessoas.forEach(p => { if (ks.has(p.k) && !base.has(p.k)) base.set(p.k, { k: p.k, nome: p.nome, agr: p.agr, vit: p.vit, regs: new Set(p.regs), escolas: p.escolas }); });
+    const N = [...ks].map(k => base.get(k)).filter(Boolean).map(n => ({ k: n.k, nome: n.nome, agr: n.agr, vit: n.vit, regs: n.regs instanceof Set ? n.regs : new Set(n.regs || []), escolas: n.escolas }));
+    const ok = new Set(N.map(n => n.k));
+    const E = []; const vistos = new Set();
+    REG.forEach(r => {
+        const ag = r.agr.map(chave).filter(k => ok.has(k)), vi = r.vit.map(chave).filter(k => ok.has(k));
+        const add = (a, b, t) => { if (a === b) return; const k = (a < b ? a + '§' + b : b + '§' + a); let e = vistos.has(k) ? E.find(x => x.k === k) : null; if (!e) { e = { k, a, b, n: 0, coaut: 0, agrv: 0, covit: 0 }; E.push(e); vistos.add(k); } e.n++; e[t]++; };
+        for (let i = 0; i < ag.length; i++) for (let j = i + 1; j < ag.length; j++) add(ag[i], ag[j], 'coaut');
+        ag.forEach(a => vi.forEach(v => add(a, v, 'agrv')));
+        for (let i = 0; i < vi.length; i++) for (let j = i + 1; j < vi.length; j++) add(vi[i], vi[j], 'covit');
+    });
+    const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    const Lk = simular(N, E, W, H);
+    // ajusta o desenho para ocupar a tela (grafos pequenos ficavam espremidos no meio)
+    if (N.length > 1) { const xs = N.map(n => n.x), ys = N.map(n => n.y), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+        const esc_ = Math.min((W - 220) / Math.max(1, x1 - x0), (H - 70) / Math.max(1, y1 - y0), 4);
+        N.forEach(n => { n.x = W / 2 - 40 + (n.x - (x0 + x1) / 2) * esc_; n.y = H / 2 + (n.y - (y0 + y1) / 2) * esc_; }); }
+    if (false && centro) { const c = N.find(n => n.k === centro); if (c) { const dx = W / 2 - c.x, dy = H / 2 - c.y; N.forEach(n => { n.x = Math.max(40, Math.min(W - 70, n.x + dx)); n.y = Math.max(28, Math.min(H - 28, n.y + dy)); }); } }
+    const viz = new Map(N.map(n => [n.k, new Set()])); E.forEach(e => { viz.get(e.a).add(e.b); viz.get(e.b).add(e.a); });
+    const x = cv.getContext('2d');
+    const cor = { a: css('--c-crit'), v: css('--prim'), m: css('--roxo'), l: css('--muted2'), t: css('--texto'), c: css('--marca'), card: css('--card') };
+    const fonte = css('--f-corpo') || 'sans-serif';
+    const desenhar = () => {
+        x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, W, H);
+        const h = VN2.hover, foco = h ? new Set([h, ...viz.get(h)]) : null;
+        E.forEach((e, i) => { const a = N.find(n => n.k === e.a), b = N.find(n => n.k === e.b); if (!a || !b) return; const on = !foco || (foco.has(a.k) && foco.has(b.k) && (a.k === h || b.k === h)); x.globalAlpha = on ? (e.coaut ? .9 : .55) : .07; x.strokeStyle = e.coaut ? cor.a : e.agrv ? cor.l : cor.v; x.lineWidth = e.coaut ? 1.6 + Math.min(4, e.n * .8) : 1.2; x.setLineDash(!e.coaut && !e.agrv ? [4, 4] : []); x.beginPath(); x.moveTo(a.x, a.y); x.lineTo(b.x, b.y); x.stroke(); }); x.setLineDash([]);
+        const caixas = [], cabe = (bx) => !caixas.some(c => bx.x < c.x + c.w && bx.x + bx.w > c.x && bx.y < c.y + c.h && bx.y + bx.h > c.y);
+        N.forEach(n => {
+            const on = !foco || foco.has(n.k); n.r = 5 + Math.min(12, Math.sqrt(n.regs.size || 1) * 2.4);
+            x.globalAlpha = on ? 1 : .15;
+            x.fillStyle = n.k === centro ? cor.c : n.agr && n.vit ? cor.m : n.agr >= n.vit ? cor.a : cor.v;
+            x.beginPath(); x.arc(n.x, n.y, n.r, 0, 6.283); x.fill(); x.lineWidth = n.k === centro ? 3 : 1.5; x.strokeStyle = n.k === centro ? cor.t : cor.card; x.stroke();
+        });
+        // rótulos: prioridade para foco, centro e quem tem mais registros; pula os que encostariam em outro
+        const ordem = N.filter(n => !foco || foco.has(n.k)).sort((a, b) => (b.k === h) - (a.k === h) || (b.k === centro) - (a.k === centro) || b.regs.size - a.regs.size);
+        x.globalAlpha = 1;
+        ordem.forEach(n => {
+            const nm = n.nome.split(' '), t = nm[0] + (nm[1] ? ' ' + nm[nm.length - 1] : ''), forte = n.k === centro || n.k === h;
+            x.font = `${forte ? 700 : 600} 11px ${fonte}`;
+            const w = x.measureText(t).width, bx = { x: n.x + n.r + 3, y: n.y - 8, w: w + 6, h: 16 };
+            if (bx.x + bx.w > W) bx.x = n.x - n.r - 3 - bx.w;
+            if (!forte && !cabe(bx)) return;
+            caixas.push(bx);
+            x.fillStyle = cor.card; x.globalAlpha = .85; x.fillRect(bx.x, bx.y, bx.w, bx.h); x.globalAlpha = 1;
+            x.fillStyle = cor.t; x.fillText(t, bx.x + 3, n.y + 4);
+        });
+        x.globalAlpha = 1;
+    };
+    desenhar();
+    const achar = ev => { const b = cv.getBoundingClientRect(), px = ev.clientX - b.left, py = ev.clientY - b.top; return N.find(n => (n.x - px) ** 2 + (n.y - py) ** 2 <= (n.r + 4) ** 2); };
+    cv.onmousemove = ev => { const n = achar(ev), d = $('vn-dica'); const k = n ? n.k : null; if (k !== VN2.hover) { VN2.hover = k; desenhar(); } cv.style.cursor = n ? 'pointer' : 'default'; if (!n) { d.style.display = 'none'; return; } d.style.display = 'block'; d.style.left = Math.min(W - 240, ev.offsetX + 14) + 'px'; d.style.top = (ev.offsetY + 10) + 'px'; d.innerHTML = `<b>${esc(n.nome)}</b><br>${n.agr} como autor · ${n.vit} como vítima<br>${(n.escolas && n.escolas.size) || 0} escola(s) · ${viz.get(n.k).size} ligação(ões)`; };
+    cv.onmouseleave = () => { VN2.hover = null; desenhar(); $('vn-dica').style.display = 'none'; };
+    cv.onclick = ev => { const n = achar(ev); if (!n) return; if (VN2.modo === 'pessoa' && n.k !== centro) { VN2.pessoa = n.k; rVinculos(); } else abrirPessoa(n.k); };
+}
+
+
+/* Vocabulário administrativo dos relatos: não diz nada sobre o fato em si */
+('fisica ciencia boletim dependencias instituicao disciplinar disciplinares comparecеu comparecer compareceu gravidade pedagogica pedagogicas pedagogico encaminhamento encaminhamentos contato conhecimento conselho adocao convivencia ensino legais legal tutelar adotadas adotada adotado pais escolares regimento relatar reuniao presenca autorizacao horario integridade gestora gestor seguida alem tipo nada fins servidores psicossocial visando realizada realizadas registra registrar acolhimento devidamente profissionais situado elevar documentado documentada irregularidades irregularidade determinam vigentes vigente desacordo autorizado autorizada unide ponto contraria constam proibicoes regulamenta presencial janeiro fevereiro marco abril maio junho julho agosto setembro outubro novembro dezembro segunda terca quarta quinta sexta sabado domingo manha tarde noite imediata imediato necessario necessaria adequada adequado adequadas providencia tomadas tomada solicitado solicitada solicitou ciente cientes ciencia termo termos normas norma regras regra conduta dever deveres direitos direito protocolo ficha livro advertencia advertido advertida assinada assinou assinatura convocado convocada convocacao comparecimento esclarecimentos esclarecer verificacao verificou verificado constatado constatou observado observou identificado identificada identificou visto vista objetivo garantir garantia possivel possibilidade inclusive referido referida referente demais mediante atraves sentido grande pequeno pequena maior menor primeiro primeira segunda segundo novo nova novos novas inicialmente imediatamente encaminhar encaminhou acompanhar acompanhada acompanhado orientar orientou comunicar comunicou relatado relatada ocorrencias registros estudantil institucional educacional educativa educativas medida fora encontrava relatos presentes educacao aulas palavras serao atitudes codigo apresentou matriculado matriculada interior realizar intervencao dirigiu dirigiu-se ressalta ressaltar apuracao acerca orientados orientadas comunicacao disciplina necessarias necessarios dialogo estabelecidas estabelecido manter cumprimento especialmente falta enquanto havendo eecm cepi atitude discente discentes definido definida documentar artigo instrucao faltando alinhamento assegurar recreacao focal fundamentacao ministrava penalidade conscientizacao comportamental graves grave leve leves praticado praticada pratica praticou cometido envolvido envolvida estabelece prevista previsto aplicada aplicado aplicacao sancao sancoes registrou relatando informando afirmando alegou alegando declarou ressaltou destacou destacar explicou explicar solicitar sala salas').split(' ').forEach(w => STOP.add(w));
+
+/* =====================================================================
+   TERMOS E TENDÊNCIAS
+   ===================================================================== */
+const TR2 = { q: '' };
+function trechoCom(txt, re) {
+    // procura no texto normalizado (sem acento, maiúsculo) e devolve o trecho original com a posição exata
+    const s = String(txt || '').replace(/\*\*/g, '').replace(/\s+/g, ' ');
+    let n = '', map = [];
+    for (let i = 0; i < s.length; i++) {
+        let c = semAcento(s[i]).toUpperCase();
+        if (/[’'`´]/.test(c)) continue;
+        for (const ch of c) { const o = /[A-Z0-9]/.test(ch) ? ch : ' '; if (o === ' ' && n.endsWith(' ')) continue; n += o; map.push(i); }
+    }
+    const m = n.match(re); if (!m) return '';
+    const i = map[m.index], f = map[m.index + m[0].length - 1] + 1;
+    const a = Math.max(0, i - 70), b = Math.min(s.length, f + 70);
+    return (a ? '…' : '') + esc(s.slice(a, i)) + '<mark>' + esc(s.slice(i, f)) + '</mark>' + esc(s.slice(f, b)) + (b < s.length ? '…' : '');
+}
+rTermos = function () {
+    $('acoes-termos').innerHTML = `<span class="peq" style="color:#9fb0c4">Comparar últimos</span><div class="seg" style="background:rgba(255,255,255,.08)" id="tr-jan">${[15, 30, 60].map(j => `<button data-j="${j}" class="${TR.janela === j ? 'ativo' : ''}" style="${TR.janela === j ? '' : 'color:#cbd5e1'}">${j} dias</button>`).join('')}</div>`;
+    $('tr-jan').onclick = e => { const b = e.target.closest('button'); if (b) { TR.janela = +b.dataset.j; rTermos(); } };
+    const T = window.TERMOS = analisarTermos();
+    const J = TR.janela, hoje = A.hoje, pode = podeVerPessoas();
+    const radar = T.radar.map(x => { const ant = x.regs.filter(r => r.dt && diasEntre(r.dt, hoje) > J && diasEntre(r.dt, hoje) <= 2 * J).length; const esc_ = new Map(); x.regs.filter(r => r.dt && diasEntre(r.dt, hoje) <= J).forEach(r => esc_.set(r.esc, (esc_.get(r.esc) || 0) + 1)); return Object.assign(x, { ant, var_: ant ? (x.rec - ant) / ant : (x.rec ? 1 : 0), escRec: [...esc_.entries()].sort((a, b) => b[1] - a[1]) }); }).sort((a, b) => b.rec - a.rec || b.regs.length - a.regs.length);
+    // busca livre
+    let busca = '';
+    if (TR2.q.trim().length >= 3) {
+        const q = chave(TR2.q), re = new RegExp('\\b' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+        const rs = REG.filter(r => re.test(chave(r.resumo))).sort((a, b) => (b.dt || 0) - (a.dt || 0));
+        const porMes = T.meses.map(m => rs.filter(r => r.dt && chaveMes(r.dt) === m).length);
+        const escs = new Map(); rs.forEach(r => escs.set(r.escK, (escs.get(r.escK) || 0) + 1));
+        window.BUSCA_TR = rs;
+        busca = `<div class="card card-pad"><div class="card-tit"><div class="ico">${ic('search')}</div><div><h3>"${esc(TR2.q)}" nos relatos</h3><p>${fmtN(rs.length)} registro(s) em ${escs.size} escola(s) · ${rs.filter(r => r.dt && diasEntre(r.dt, hoje) <= J).length} nos últimos ${J} dias</p></div><div class="dir">${rs.length ? `<button class="btn btn-s btn-sm" onclick="listaModal('Relatos com &quot;${esc(TR2.q)}&quot;', BUSCA_TR)">${ic('book')}Ver todos</button>` : ''}</div></div>
+            ${rs.length ? `<div class="grade g2" style="align-items:start"><div>${sparkline(porMes, css('--prim'), 70)}<div class="pulso-rod"><span>${T.meses[0] ? MES_ABR[+T.meses[0].slice(5) - 1] + '/' + T.meses[0].slice(2, 4) : ''}</span><span>últimos 12 meses</span></div></div>
+            <div class="peq">${pode ? rs.slice(0, 3).map(r => `<p class="tr-ex" onclick="abrirOcorrencia('${esc(r.id)}')"><b>${fmtD(r.dt)} · ${esc(r.esc)}</b><br>${trechoCom(r.resumo, re)}</p>`).join('') : '<p class="mut">Trechos dos relatos disponíveis para Administrador e Inteligência.</p>'}</div></div>` : '<p class="mut">Nenhum relato contém este termo no recorte.</p>'}</div>`;
+    }
+    const emerg = T.emerg.slice(0, 12).map(x => { const rs = T.regsDe.get(x.w) || []; const re = new RegExp('\\b' + x.w + '\\b'); const ult = rs.slice().sort((a, b) => (b.dt || 0) - (a.dt || 0))[0]; return Object.assign(x, { ex: ult ? trechoCom(ult.resumo, re) : '', escs: new Set(rs.map(r => r.escK)).size }); });
+    const top = T.top.slice(0, 20);
+    $('cont-termos').innerHTML = `
+    <div class="card card-pad"><div class="busca" style="max-width:640px">${ic('search')}<input class="campo" id="tr2-q" placeholder="Pesquisar uma palavra ou expressão nos relatos (ex.: vape, faca, desafio, pix)" value="${esc(TR2.q)}"></div><p class="dica" style="margin-bottom:0">Mostra quantas vezes aparece por mês, em quantas escolas e os trechos mais recentes.</p></div>
+    ${busca}
+    <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('target')}</div><div><h3>Radar de temas de risco</h3><p>Cada cartão conta os relatos que mencionam o tema. A seta compara os últimos ${J} dias com os ${J} anteriores. Clique para ver os relatos.</p></div></div>
+        <div class="radar-grade">${radar.map((x, i) => { const sobe = x.var_ > .1 && x.rec >= 2, desce = x.var_ < -.1; return `<button class="radar-c${sobe ? ' alta' : ''}" onclick="listaModal('Tema: ${esc(x.t)}', TERMOS.radar.find(y=>y.t==='${esc(x.t)}').regs)"><div class="radar-top"><b>${esc(x.t)}</b><span style="color:${sobe ? 'var(--c-crit)' : desce ? 'var(--verde)' : 'var(--muted)'}">${sobe ? '▲' : desce ? '▼' : '■'} ${x.ant ? Math.abs(Math.round(x.var_ * 100)) + '%' : x.rec ? 'novo' : '—'}</span></div><div class="radar-v">${fmtN(x.rec)}<small> em ${J} dias · ${fmtN(x.regs.length)} no total</small></div>${sparkline(x.porMes, sobe ? css('--c-crit') : css('--prim'), 36)}<div class="radar-esc">${x.escRec[0] ? esc(x.escRec[0][0]) + (x.escRec.length > 1 ? ' e mais ' + (x.escRec.length - 1) : '') : 'sem registros recentes'}</div></button>`; }).join('')}</div></div>
+    <div class="grade g2" style="align-items:start">
+        <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('trend')}</div><div><h3>Palavras em alta</h3><p>Frequência nos últimos ${J} dias pelo menos 2× maior que antes, em 3 ou mais escolas</p></div></div></div>
+            <div class="lista">${emerg.map(x => `<button class="item tr-alta" onclick="verTermo('${x.w}')"><span class="ic" style="--c:var(--c-crit)">${x.n}</span><span class="tx"><b>${x.w.toLowerCase()} <span class="selo" style="--c:var(--c-crit)">${x.novo ? 'novo' : '×' + fmt1(x.cresc)}</span></b><span>${x.escs} escola(s)${pode && x.ex ? ' · ' : ''}</span>${pode && x.ex ? `<em>${x.ex}</em>` : ''}</span></button>`).join('') || '<div class="vazio peq">Nenhuma palavra em alta nesta janela.</div>'}</div></div>
+        <div class="card card-pad"><div class="card-tit"><div class="ico">${ic('bar')}</div><div><h3>Palavras mais frequentes</h3><p>Cada relato conta uma vez. Palavras genéricas e nomes ficam de fora.</p></div></div>
+            ${hbar(top.map(([w, n]) => ({ t: w.toLowerCase(), v: n, c: T.emerg.some(e => e.w === w) ? 'var(--c-crit)' : 'var(--prim)', on: `verTermo('${w}')` })))}
+            <div class="rot" style="margin-top:14px">Expressões que aparecem juntas</div><div style="display:flex;flex-wrap:wrap;gap:6px">${T.bigr.slice(0, 14).map(([b, n]) => `<button class="chip" style="--c:var(--roxo)" onclick="TR2.q='${esc(b.toLowerCase())}';rTermos();$('aba-termos').scrollTop=0"><span class="pt"></span>${esc(b.toLowerCase())} <span class="q">${n}</span></button>`).join('') || '<span class="mut peq">Sem expressões recorrentes.</span>'}</div></div>
+    </div>`;
+    let t; $('tr2-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { TR2.q = $('tr2-q').value; rTermos(); const i = $('tr2-q'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 450); };
+};
+
+/* Legendas atualizadas das três páginas */
+Object.assign(LEGENDAS, {
+    difusao: { mostra: ['Frase-resumo, mapa das rotas entre municípios, rotas mais fortes e municípios sob pressão.', 'Abas: agravamento entre tipos e autores que circulam entre cidades.'], fonte: ['Datas, municípios, tipos e autores do Livro; distância entre os centros dos municípios (IBGE).'], calc: ['Passagem: o mesmo tipo aparece num município vizinho (até o raio) dentro da janela. Rota: passagem que se repete 2+ vezes.', 'Pressão: vizinho sem registro em 30 dias, pesado pela quantidade de casos recentes ao redor e pela distância.'], usar: ['Escolha tipo, janela e raio no topo. Passe o mouse nas rotas da lista para destacar no mapa.', 'É indício estatístico, não prova de ligação entre os casos.'] },
+    vinculos: { mostra: ['Grupos de pessoas ligadas entre si, a rede de uma pessoa (até 2 passos) e a visão geral.'], fonte: ['Campos Vítima(s) e Agressor(es) do Livro, pelo nome digitado.'], calc: ['Vermelho grosso: autores no mesmo registro (agiram juntos). Cinza: autor e vítima no mesmo registro.', 'Grupo: 3 ou mais pessoas conectadas. Grafias diferentes do mesmo nome contam como pessoas diferentes.'], usar: ['Grupos: escolha um grupo na lista. Explorar pessoa: busque pelo nome e clique em outra pessoa para navegar.', 'Passe o mouse para destacar as ligações; restrito a Administrador e Inteligência.'] },
+    termos: { mostra: ['Pesquisa livre nos relatos, radar de temas de risco, palavras em alta e mais frequentes.'], fonte: ['Texto do campo Resumo dos Fatos.'], calc: ['Radar: relatos que citam palavras ligadas a cada tema, comparando a janela recente com a anterior do mesmo tamanho.', 'Em alta: 2× mais frequente que antes e presente em 3 ou mais escolas. Genéricas e nomes são ignorados.'], usar: ['Digite um termo na pesquisa para ver a evolução mensal e os trechos.', 'Clique num tema, palavra ou expressão para abrir os relatos.'] }
 });
 
 </script>
