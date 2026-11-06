@@ -1499,6 +1499,25 @@ button.rl-lnk:hover { color: var(--prim); }
 .dx-op small { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.45; }
 .rel-palco .dx-pag { margin-bottom: 26px; }
 @media (max-width: 900px) { .rel-palco { padding: 10px; } }
+
+/* ---------- 3.1 monitoramento institucional no Release ---------- */
+.rl-mon { padding: 16px 18px; border-left: 4px solid var(--marca2); }
+.rl-mon-cab { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.rl-mon-ic { flex: none; width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, var(--marca2), #0b1a42); }
+.rl-mon-ic svg { width: 20px; height: 20px; }
+.rl-mon h3 { margin: 0; font-size: 15px; }
+.rl-mon p { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
+.rl-mon-n { text-align: right; }
+.rl-mon-n b { display: block; font-size: 24px; font-family: var(--f-dado); color: var(--marca2); line-height: 1; }
+.rl-mon-n small { font-size: 11px; color: var(--muted); }
+.rl-mon-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 8px; margin-top: 12px; }
+.rl-mon-lista a { display: flex; gap: 10px; align-items: flex-start; padding: 9px 11px; border-radius: 10px; border: 1px solid var(--borda); text-decoration: none; color: var(--texto); background: var(--suave); }
+.rl-mon-lista a:hover { border-color: var(--marca2); }
+.rl-mon-lista .d { flex: none; font-family: var(--f-dado); font-size: 11px; font-weight: 700; color: var(--marca2); padding-top: 1px; }
+.rl-mon-lista .t { flex: 1; min-width: 0; font-size: 12.5px; font-weight: 600; line-height: 1.4; }
+.rl-mon-lista .t small { display: block; font-weight: 500; font-size: 11px; color: var(--muted); margin-top: 2px; }
+.rl-mon-lista svg { width: 13px; height: 13px; flex: none; color: var(--muted); margin-top: 2px; }
+.rl-mon-rod { font-size: 11px; margin-top: 8px; }
 </style>
 
 </head>
@@ -1566,8 +1585,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '3.0.0+05fa678b';
-const APP_NOTAS = 'Relatórios com capa, selo de autenticidade com QR Code, marcas de documento restrito e aviso de sigilo; relatório do Release para baixar.';
+const APP_VERSAO = '3.1.0+f4f42307';
+const APP_NOTAS = 'Release passa a monitorar menções à Secretária de Estado de Educação de MT.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -6085,6 +6104,46 @@ rRelease = function () {
     _rReleaseV11();
     if (NWS.d) { const a = $('acoes-release'); if (a && !a.querySelector('[data-rel-doc]')) a.insertAdjacentHTML('beforeend', `<button class="btn btn-p btn-sm" data-rel-doc onclick="escolherFormato('Baixar relatório do Release', 'baixarRelatorioRelease')">${ic('download')}Baixar relatório</button>`); }
 };
+
+/* =====================================================================
+   RELEASE — monitoramento institucional (Secretária de Educação e outros nomes da aba Config)
+   ===================================================================== */
+const _rReleaseMon = rRelease;
+rRelease = function () {
+    const mons = NWS.d && NWS.d.monitorados ? [...new Set(NWS.d.monitorados.map(m => m.rotulo))] : [];
+    mons.forEach(r => { NWS_COR[r] = NWS_COR[r] || 'var(--marca2)'; });
+    _rReleaseMon();
+    if (!NWS.d || !mons.length) return;
+    const k = document.querySelector('#cont-release .kpis'); if (!k) return;
+    const agora = Date.now(), ini = agora - NWS.dias * DIA, iniAnt = agora - 2 * NWS.dias * DIA;
+    const cards = mons.map(r => {
+        const termos = NWS.d.monitorados.filter(m => m.rotulo === r).map(m => m.termo);
+        const todas = NWS.d.noticias.filter(n => n.cats.includes(r));
+        const per = todas.filter(n => n.data >= ini), ant = todas.filter(n => n.data >= iniAnt && n.data < ini);
+        const fontes = new Set(per.map(n => n.fonte)).size;
+        return `<div class="card rl-mon"><div class="rl-mon-cab"><span class="rl-mon-ic">${ic('user')}</span><div style="flex:1;min-width:0"><h3>${esc(r)}</h3><p>Monitorando: ${termos.map(t => `<b>${esc(t)}</b>`).join(' · ')}</p></div>
+            <div class="rl-mon-n"><b>${fmtN(per.length)}</b><small>menções em ${NWS.dias} dias${ant.length ? ` · ${per.length >= ant.length ? '▲' : '▼'} ${Math.abs(Math.round(100 * (per.length - ant.length) / ant.length))}%` : ''}</small></div>
+            ${per.length ? `<button class="btn btn-s btn-sm" onclick="NWS.cat='${esc(r)}';NWS.lim=30;rRelease();setTimeout(()=>{const l=document.querySelector('#cont-release .rl-lista');if(l)l.scrollIntoView({behavior:'smooth',block:'start'})},50)">Ver todas</button>` : ''}</div>
+            ${per.length ? `<div class="rl-mon-lista">${per.slice(0, 4).map(n => `<a href="${esc(n.link)}" target="_blank" rel="noopener noreferrer"><span class="d">${n.data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}</span><span class="t">${esc(n.titulo)}<small>${esc(n.fonte)}${n.cats.filter(c => c !== r).length ? ' · ' + esc(n.cats.filter(c => c !== r).join(', ')) : ''}</small></span>${ic('link')}</a>`).join('')}</div><div class="rl-mon-rod mut">${fontes} veículo(s) no período</div>` : `<div class="vazio peq">Nenhuma menção nos últimos ${NWS.dias} dias.</div>`}</div>`;
+    }).join('');
+    k.insertAdjacentHTML('afterend', cards);
+};
+/* Seção própria no relatório do Release */
+const _docReleaseMon = documentoRelease;
+documentoRelease = function () {
+    const D = _docReleaseMon();
+    const mons = NWS.d && NWS.d.monitorados ? [...new Set(NWS.d.monitorados.map(m => m.rotulo))] : [];
+    if (!mons.length) return D;
+    const ini = Date.now() - NWS.dias * DIA;
+    const html = mons.map(r => { const per = NWS.d.noticias.filter(n => n.cats.includes(r) && n.data >= ini); const termos = NWS.d.monitorados.filter(m => m.rotulo === r).map(m => m.termo).join('; ');
+        return `<p><b>${esc(r)}</b> (termos: ${esc(termos)}): ${per.length} menção(ões) nos últimos ${NWS.dias} dias, em ${new Set(per.map(n => n.fonte)).size} veículo(s).</p>${per.length ? `<table class="t"><thead><tr><th style="width:62px">Data</th><th>Notícia</th><th>Veículo</th></tr></thead><tbody>${per.slice(0, 60).map(n => `<tr><td>${n.data.toLocaleDateString('pt-BR')}</td><td><a href="${esc(n.link)}">${esc(n.titulo)}</a></td><td>${esc(n.fonte)}</td></tr>`).join('')}</tbody></table>` : ''}`; }).join('');
+    // insere como seção 2 (depois da Síntese), refazendo o documento
+    const sec = { t: 'Monitoramento institucional', html };
+    const m = D.html.match(/<div class="dx-sec"><h2><span>1\.<\/span>Síntese<\/h2>/);
+    if (!m) return D;
+    return Object.assign(D, { html: renumerar(D.html.replace(/(<div class="dx-sec"><h2><span>2\.<\/span>)/, `<div class="dx-sec"><h2><span>2.</span>${esc(sec.t)}</h2>${sec.html}</div>$1`).replace('<li>Síntese</li>', '<li>Síntese</li><li>' + esc(sec.t) + '</li>')) });
+};
+function renumerar(h) { let i = 0; return h.replace(/<h2><span>\d+\.<\/span>/g, () => `<h2><span>${++i}.</span>`); }
 
 </script>
 </body>
