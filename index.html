@@ -17,6 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 /* required styles */
@@ -3457,6 +3458,617 @@ function formOcorrencia() {
         } catch (e) { $('ro-ok').disabled = false; erro(e.message); }
     };
 }
+
+/* =====================================================================
+   EDUCASEG-PLUS 2.1 — vínculos, mapa de calor, contexto educacional,
+   calendário, perfil demográfico, rede de proteção, comparativo e termos
+   ===================================================================== */
+
+/* ---------- Novas páginas no menu ---------- */
+(function () {
+    const pos = ABAS.findIndex(a => a.id === 'difusao') + 1;
+    ABAS.splice(pos, 0,
+        { id: 'vinculos', t: 'Rede de vínculos', ico: 'users', h: 'Rede de vínculos entre pessoas', p: 'Quem aparece junto nas mesmas ocorrências: grupos que agem em conjunto, pessoas que ligam escolas diferentes e vítimas que concentram autores.' },
+        { id: 'termos', t: 'Termos e tendências', ico: 'search', h: 'Termos e tendências nos relatos', p: 'Palavras mais frequentes no Resumo dos Fatos e termos em alta. Radar para fenômenos novos antes que virem uma categoria.' },
+        { id: 'comparar', t: 'Comparativo', ico: 'grid', h: 'Comparativo lado a lado', p: 'Duas ou três DREs, municípios ou escolas com os mesmos gráficos e a mesma escala. Inclui o modo antes e depois de uma data.' });
+    const posR = ABAS.findIndex(a => a.id === 'municipios') + 1;
+    ABAS.splice(posR, 0,
+        { g: 'Contexto' },
+        { id: 'contexto', t: 'Contexto educacional', ico: 'activity', h: 'Contexto educacional', p: 'Ocorrências por mil estudantes e cruzamento com IDEB, abandono, distorção idade-série, nível socioeconômico e indicadores de segurança do município.' },
+        { id: 'rede', t: 'Rede de proteção', ico: 'shield', h: 'Rede de proteção', p: 'Conselhos Tutelares, CAPS, delegacias, Patrulha Escolar e demais órgãos de cada município, com os contatos de emergência.' });
+})();
+const _renderAbaV2 = renderAba;
+renderAba = function () {
+    if (!A) return;
+    const f = { vinculos: rVinculos, termos: rTermos, comparar: rComparar, contexto: rContexto, rede: rRede }[ABA];
+    if (f) return f();
+    _renderAbaV2();
+};
+const podeVerPessoas = () => !!USUARIO && ['ADMIN', 'INTELIGENCIA', 'LOCAL'].includes(USUARIO.perfil);
+const podeEditarComp = () => !!USUARIO && ['ADMIN', 'INTELIGENCIA', 'LOCAL'].includes(USUARIO.perfil);
+const SERIE3 = ['--s1', '--s2', '--s3', '--s4', '--s5', '--s6'];
+
+/* =====================================================================
+   DADOS COMPLEMENTARES (matrículas, IDEB, segurança municipal, rede)
+   ===================================================================== */
+let COMP = null, COMP_ORIGEM = '';
+const CAMPOS_ESC = { matriculas: ['MATRICULAS', 'MATRICULA', 'ALUNOS', 'ESTUDANTES', 'QTD ALUNOS'], ideb: ['IDEB'], abandono: ['ABANDONO', 'TAXA DE ABANDONO', 'EVASAO'], distorcao: ['DISTORCAO', 'DISTORCAO IDADE SERIE', 'TDI'], inse: ['INSE', 'NIVEL SOCIOECONOMICO'], aprovacao: ['APROVACAO', 'TAXA DE APROVACAO'] };
+const ROT_IND = { matriculas: 'Matrículas', ideb: 'IDEB', abandono: 'Abandono (%)', distorcao: 'Distorção idade-série (%)', inse: 'INSE', aprovacao: 'Aprovação (%)' };
+const CAMPOS_REDE = ['Município', 'Órgão', 'Nome', 'Telefone', 'Endereço', 'E-mail', 'Horário', 'Latitude', 'Longitude'];
+const TIPOS_ORGAO = ['Conselho Tutelar', 'CAPS / CAPSi', 'Delegacia (Polícia Civil)', 'Polícia Militar / Patrulha Escolar', 'CREAS / CRAS', 'Ministério Público', 'Defensoria Pública', 'Vara da Infância', 'Unidade de Saúde', 'Outro'];
+const EMERGENCIA = [['190', 'Polícia Militar'], ['197', 'Polícia Civil'], ['192', 'SAMU'], ['193', 'Corpo de Bombeiros'], ['100', 'Disque Direitos Humanos (violência contra criança e adolescente)'], ['180', 'Central de Atendimento à Mulher'], ['188', 'CVV — apoio emocional e prevenção do suicídio']];
+
+function compVazio() { return { escolas: [], muns: [], rede: [], atualizado: '' }; }
+function compDemo() {
+    let s = 7; const rnd = () => { s = (s * 1103515245 + 12345) >>> 0; return s / 4294967296; };
+    const escolas = ESC_REF.map(e => ({ cod: e.cod, escola: e.nome, mun: e.mun, matriculas: Math.round(120 + rnd() * 1300), ideb: +(3.2 + rnd() * 2.8).toFixed(1), abandono: +(rnd() * 9).toFixed(1), distorcao: +(5 + rnd() * 30).toFixed(1), inse: +(3.5 + rnd() * 2.2).toFixed(2) }));
+    const muns = MUNS.map(m => ({ mun: m.k, nome: m.nome, 'CVLI por 100 mil hab.': +(5 + rnd() * 45).toFixed(1), 'Roubos por 100 mil hab.': +(40 + rnd() * 400).toFixed(0) }));
+    return { escolas, muns, rede: [], atualizado: 'demonstração' };
+}
+async function garantirComp() {
+    if (COMP) return COMP;
+    if (FONTE.demo) { COMP = compDemo(); COMP_ORIGEM = 'demo'; return COMP; }
+    if (conectado()) {
+        try { const j = await api('complementos'); COMP = Object.assign(compVazio(), j.complementos || {}); COMP_ORIGEM = 'servidor'; return COMP; }
+        catch (e) { toast('Não foi possível ler os dados complementares: ' + e.message, 'alerta'); }
+    }
+    try {
+        const db = await idb();
+        const v = await new Promise(ok => { const q = db.transaction('dados').objectStore('dados').get('complementos'); q.onsuccess = () => ok(q.result); q.onerror = () => ok(null); });
+        COMP = Object.assign(compVazio(), v || {}); COMP_ORIGEM = 'local';
+    } catch (e) { COMP = compVazio(); COMP_ORIGEM = 'local'; }
+    return COMP;
+}
+async function salvarComp(tipo) {
+    COMP.atualizado = new Date().toISOString();
+    if (conectado()) { await api('salvarComplementos', { tipo, linhas: COMP[tipo] }); return; }
+    try { const db = await idb(); db.transaction('dados', 'readwrite').objectStore('dados').put(JSON.parse(JSON.stringify(COMP)), 'complementos'); } catch (e) {}
+}
+const numBR = v => { if (v == null || v === '') return null; const n = Number(String(v).replace(/\s/g, '').replace(/\.(?=\d{3}(\D|$))/g, '').replace(',', '.').replace('%', '')); return isFinite(n) ? n : null; };
+/* índice de matrículas e indicadores por escola do recorte */
+function indEscola(e) {
+    if (!COMP || !COMP.escolas.length) return null;
+    if (!COMP._idx) {
+        COMP._idx = new Map();
+        COMP.escolas.forEach(x => {
+            const ref = ESC_REF.find(r => r.cod && String(r.cod) === String(x.cod)) || (x.escola ? resolverEscola(x.escola, x.mun || '') : null);
+            const k = ref ? chave(ref.nome) + '|' + ref.mun : chave(x.escola || '') + '|' + (x.mun || '');
+            COMP._idx.set(k, x);
+        });
+    }
+    const k = e.ref ? chave(e.ref.nome) + '|' + e.ref.mun : e.k;
+    return COMP._idx.get(k) || COMP._idx.get(e.k) || null;
+}
+function indMun(k) { if (!COMP || !COMP.muns.length) return null; if (!COMP._im) { COMP._im = new Map(); COMP.muns.forEach(m => COMP._im.set(m.mun, m)); } return COMP._im.get(k) || null; }
+function camposMun() { const s = new Set(); (COMP ? COMP.muns : []).forEach(m => Object.keys(m).forEach(k => { if (!['mun', 'nome'].includes(k) && typeof m[k] === 'number') s.add(k); })); return [...s]; }
+
+/* Importação de dados complementares (detecta o tipo pelas colunas) */
+async function importarComp(f) {
+    try {
+        let linhas;
+        if (/\.xlsx?$/i.test(f.name)) linhas = await lerArquivoXlsx(f);
+        else linhas = lerCSV(await lerArquivoTexto(f)).linhas;
+        const h = linhas.findIndex(l => l.some(c => /ESCOLA|MUNICIPIO|INEP|ORGAO/.test(chave(c))));
+        if (h < 0) throw new Error('Não encontrei cabeçalho com Escola, Município ou Órgão.');
+        const cab = linhas[h].map(c => chave(c)), dados = linhas.slice(h + 1).filter(l => l.some(c => String(c).trim()));
+        const col = (...n) => cab.findIndex(c => n.includes(c));
+        let tipo, lista = [];
+        if (col('ORGAO', 'TIPO DE ORGAO', 'TIPO') >= 0 && col('TELEFONE', 'FONE', 'CONTATO') >= 0) {
+            tipo = 'rede';
+            const ix = CAMPOS_REDE.map(c => cab.indexOf(chave(c)));
+            lista = dados.map(l => { const o = {}; CAMPOS_REDE.forEach((c, i) => { o[c] = ix[i] >= 0 ? String(l[ix[i]] || '').trim() : ''; }); const m = resolverMun(o['Município']); o.mun = m ? m.k : chave(o['Município']); o.lat = numBR(o.Latitude); o.lng = numBR(o.Longitude); return o; }).filter(o => o.Nome || o['Órgão']);
+        } else if (col('ESCOLA', 'UNIDADE ESCOLAR', 'NOME DA ESCOLA') >= 0 || col('CODIGO INEP', 'INEP', 'CODIGO', 'COD INEP') >= 0) {
+            tipo = 'escolas';
+            const iE = col('ESCOLA', 'UNIDADE ESCOLAR', 'NOME DA ESCOLA'), iC = col('CODIGO INEP', 'INEP', 'CODIGO', 'COD INEP', 'CODIGO SEDUC'), iM = col('MUNICIPIO', 'CIDADE');
+            const ix = {}; Object.entries(CAMPOS_ESC).forEach(([k, ns]) => { ix[k] = cab.findIndex(c => ns.includes(c)); });
+            lista = dados.map(l => { const m = iM >= 0 ? resolverMun(l[iM]) : null; const o = { cod: iC >= 0 ? String(l[iC]).trim() : '', escola: iE >= 0 ? String(l[iE]).trim() : '', mun: m ? m.k : '' }; Object.keys(ix).forEach(k => { if (ix[k] >= 0) o[k] = numBR(l[ix[k]]); }); return o; }).filter(o => o.cod || o.escola);
+        } else if (col('MUNICIPIO', 'CIDADE') >= 0) {
+            tipo = 'muns';
+            const iM = col('MUNICIPIO', 'CIDADE'), cabOrig = linhas[h];
+            lista = dados.map(l => { const m = resolverMun(l[iM]); if (!m) return null; const o = { mun: m.k, nome: m.nome }; cabOrig.forEach((c, i) => { if (i === iM) return; const v = numBR(l[i]); if (v != null) o[String(c).trim()] = v; }); return o; }).filter(Boolean);
+        } else throw new Error('Formato não reconhecido. Use um dos modelos desta página.');
+        if (!lista.length) throw new Error('Nenhuma linha válida encontrada.');
+        await garantirComp();
+        if (COMP_ORIGEM === 'demo') { COMP = compVazio(); COMP_ORIGEM = conectado() ? 'servidor' : 'local'; }
+        COMP[tipo] = lista; delete COMP._idx; delete COMP._im;
+        await salvarComp(tipo);
+        toast(`${fmtN(lista.length)} linhas de ${{ rede: 'rede de proteção', escolas: 'indicadores por escola', muns: 'indicadores municipais' }[tipo]} importadas`);
+        renderAba();
+    } catch (e) { toast(e.message, 'alerta'); }
+}
+function escolherArquivoComp() {
+    const i = document.createElement('input'); i.type = 'file'; i.accept = '.csv,.txt,.xlsx,.xls';
+    i.onchange = () => { if (i.files[0]) importarComp(i.files[0]); }; i.click();
+}
+function baixarModelo(tipo) {
+    const m = {
+        escolas: [['Código INEP', 'Escola', 'Município', 'Matrículas', 'IDEB', 'Abandono', 'Distorção idade-série', 'INSE'], ['51012345', 'EE EXEMPLO', 'Cuiabá', '850', '4,8', '3,2', '18,5', '4,9']],
+        muns: [['Município', 'CVLI por 100 mil hab.', 'Roubos por 100 mil hab.', 'População'], ['Cuiabá', '', '', '']],
+        rede: [CAMPOS_REDE, ['Cuiabá', 'Conselho Tutelar', 'Conselho Tutelar Região Norte', '(65) 0000-0000', 'Endereço', 'email@exemplo', '8h às 18h', '-15.60', '-56.09']]
+    }[tipo];
+    baixar('modelo_' + tipo + '.csv', '﻿' + m.map(l => l.map(csvCampo).join(';')).join('\r\n'), 'text/csv;charset=utf-8');
+}
+
+/* =====================================================================
+   1. REDE DE VÍNCULOS
+   ===================================================================== */
+const VN = { min: 2, lig: 'todas', escopo: 'recorte', foco: null, grupo: null };
+function montarGrafo() {
+    const nos = new Map(), arestas = new Map();
+    const no = (n, papel, r) => { const k = chave(n); if (k.length < 5) return null; let o = nos.get(k); if (!o) { o = { k, nome: n.trim(), agr: 0, vit: 0, regs: new Set(), escolas: new Set() }; nos.set(k, o); } o[papel]++; o.regs.add(r); o.escolas.add(r.escK); return o; };
+    const lig = (a, b, tipo, r) => { if (!a || !b || a === b) return; const k = a.k < b.k ? a.k + '§' + b.k : b.k + '§' + a.k; let e = arestas.get(k); if (!e) { e = { a: a.k, b: b.k, n: 0, coaut: 0, agrv: 0, covit: 0, regs: [] }; arestas.set(k, e); } e.n++; e[tipo]++; e.regs.push(r); };
+    REG.forEach(r => {
+        const ag = r.agr.map(n => no(n, 'agr', r)).filter(Boolean), vi = r.vit.map(n => no(n, 'vit', r)).filter(Boolean);
+        if (VN.lig !== 'agrv') for (let i = 0; i < ag.length; i++) for (let j = i + 1; j < ag.length; j++) lig(ag[i], ag[j], 'coaut', r);
+        if (VN.lig !== 'coaut') ag.forEach(a => vi.forEach(v => lig(a, v, 'agrv', r)));
+        if (VN.lig === 'todas') for (let i = 0; i < vi.length; i++) for (let j = i + 1; j < vi.length; j++) lig(vi[i], vi[j], 'covit', r);
+    });
+    // mantém só pessoas com ligação e com o mínimo de registros (ou ligadas a alguém que tenha)
+    const grau = new Map(); arestas.forEach(e => { grau.set(e.a, (grau.get(e.a) || 0) + 1); grau.set(e.b, (grau.get(e.b) || 0) + 1); });
+    let E = [...arestas.values()].filter(e => nos.get(e.a).regs.size >= VN.min || nos.get(e.b).regs.size >= VN.min);
+    const usados = new Set(); E.forEach(e => { usados.add(e.a); usados.add(e.b); });
+    let N = [...usados].map(k => Object.assign(nos.get(k), { grau: grau.get(k) || 0 }));
+    // componentes (grupos)
+    const pai = new Map(N.map(n => [n.k, n.k])); const raiz = k => { while (pai.get(k) !== k) { pai.set(k, pai.get(pai.get(k))); k = pai.get(k); } return k; };
+    E.forEach(e => { const a = raiz(e.a), b = raiz(e.b); if (a !== b) pai.set(a, b); });
+    const comps = new Map(); N.forEach(n => { const r = raiz(n.k); if (!comps.has(r)) comps.set(r, []); comps.get(r).push(n); });
+    const grupos = [...comps.values()].filter(c => c.length >= 3).map((c, i) => {
+        const ks = new Set(c.map(n => n.k)); const es = E.filter(e => ks.has(e.a));
+        const regs = new Set(); c.forEach(n => n.regs.forEach(r => regs.add(r)));
+        const escs = new Set(); c.forEach(n => n.escolas.forEach(x => escs.add(x)));
+        const tipos = new Map(); regs.forEach(r => tipos.set(tipoCurto(r.tipo), (tipos.get(tipoCurto(r.tipo)) || 0) + 1));
+        return { id: i, membros: c.sort((a, b) => b.regs.size - a.regs.size), arestas: es, regs: [...regs], escolas: escs, tipos: [...tipos.entries()].sort((a, b) => b[1] - a[1]), coaut: es.reduce((s, e) => s + e.coaut, 0), sev: [...regs].filter(r => ehSevero(r.tipo)).length };
+    }).sort((a, b) => (b.coaut - a.coaut) || (b.membros.length - a.membros.length));
+    grupos.forEach((g, i) => { g.id = i; g.membros.forEach(n => { n.grupo = i; }); });
+    // limita o desenho às 260 pessoas mais conectadas
+    if (N.length > 150) { const top = new Set(N.sort((a, b) => b.grau - a.grau || b.regs.size - a.regs.size).slice(0, 150).map(n => n.k)); N = N.filter(n => top.has(n.k)); E = E.filter(e => top.has(e.a) && top.has(e.b)); const comL = new Set(); E.forEach(e => { comL.add(e.a); comL.add(e.b); }); N = N.filter(n => comL.has(n.k)); }
+    const pontes = [...nos.values()].filter(n => n.escolas.size >= 2 && n.agr >= 1).sort((a, b) => b.escolas.size - a.escolas.size || b.agr - a.agr);
+    const imas = [...nos.values()].filter(n => n.vit >= 2).map(n => { const autores = new Set(); E.forEach(e => { if (e.agrv && (e.a === n.k || e.b === n.k)) autores.add(e.a === n.k ? e.b : e.a); }); return Object.assign(n, { autores: autores.size }); }).filter(n => n.autores >= 2).sort((a, b) => b.autores - a.autores);
+    return { N, E, grupos, pontes, imas, total: nos.size };
+}
+function simular(N, E, W, H) {
+    const idx = new Map(N.map((n, i) => [n.k, i]));
+    N.forEach((n, i) => { const a = (hashStr(n.k) % 6283) / 1000, r = 20 + (hashStr(n.k + 'r') % 1000) / 1000 * Math.min(W, H) * 0.3; n.x = W / 2 + Math.cos(a) * r; n.y = H / 2 + Math.sin(a) * r; n.vx = 0; n.vy = 0; });
+    const L = E.map(e => [idx.get(e.a), idx.get(e.b), e.n]);
+    for (let t = 0; t < 320; t++) {
+        const alfa = 1 - t / 320;
+        for (let i = 0; i < N.length; i++) for (let j = i + 1; j < N.length; j++) {
+            const a = N[i], b = N[j]; let dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy || 0.01;
+            if (d2 > 14400) continue;
+            const f = 260 / d2 * alfa; a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f;
+        }
+        L.forEach(([i, j]) => { const a = N[i], b = N[j]; const dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1, f = (d - 26) * 0.06 * alfa; a.vx += dx / d * f; a.vy += dy / d * f; b.vx -= dx / d * f; b.vy -= dy / d * f; });
+        N.forEach(n => { n.vx += (W / 2 - n.x) * 0.012 * alfa; n.vy += (H / 2 - n.y) * 0.012 * alfa; n.x += Math.max(-12, Math.min(12, n.vx)); n.y += Math.max(-12, Math.min(12, n.vy)); n.vx *= 0.55; n.vy *= 0.55; n.x = Math.max(40, Math.min(W - 70, n.x)); n.y = Math.max(28, Math.min(H - 28, n.y)); });
+    }
+    return L;
+}
+let GRAFO = null;
+function rVinculos() {
+    if (!podeVerPessoas()) { $('acoes-vinculos').innerHTML = ''; $('cont-vinculos').innerHTML = `<div class="card"><div class="vazio">${ic('shield')}A rede de vínculos mostra nomes de crianças e adolescentes e está liberada só para os perfis Administrador e Inteligência.</div></div>`; return; }
+    $('acoes-vinculos').innerHTML = `<select class="campo" id="vn-lig" style="width:auto;height:34px"><option value="todas">Todas as ligações</option><option value="coaut">Só coautoria</option><option value="agrv">Só autor → vítima</option></select><select class="campo" id="vn-min" style="width:auto;height:34px">${[1, 2, 3, 4].map(n => `<option value="${n}" ${VN.min === n ? 'selected' : ''}>${n === 1 ? 'Todas as pessoas' : 'Pessoas com ' + n + '+ registros'}</option>`).join('')}</select>`;
+    $('vn-lig').value = VN.lig;
+    $('vn-lig').onchange = () => { VN.lig = $('vn-lig').value; VN.grupo = null; rVinculos(); };
+    $('vn-min').onchange = () => { VN.min = +$('vn-min').value; VN.grupo = null; rVinculos(); };
+    const G = GRAFO = montarGrafo();
+    const nCo = G.E.filter(e => e.coaut).length;
+    $('cont-vinculos').innerHTML = `
+    <div class="aviso info">${ic('shield')}<div>Dados de crianças e adolescentes, para uso exclusivo da proteção (ECA, arts. 17, 18 e 247; LGPD, art. 14). Pessoas são identificadas pelo nome digitado: grafias diferentes aparecem separadas. Ligação no grafo indica presença no mesmo registro, não comprova relação entre as pessoas.</div></div>
+    <div class="kpis">
+        <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('users')}Pessoas no grafo</div><div class="v">${fmtN(G.N.length)}</div><div class="s">de ${fmtN(G.total)} citadas · máximo 150 no desenho</div></div>
+        <div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('repeat')}Ligações de coautoria</div><div class="v">${fmtN(nCo)}</div><div class="s">pares que agiram juntos</div></div>
+        <div class="kpi" style="--c:var(--roxo)"><div class="r">${ic('grid')}Grupos</div><div class="v">${fmtN(G.grupos.length)}</div><div class="s">3 ou mais pessoas conectadas</div></div>
+        <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('escola')}Pontes entre escolas</div><div class="v">${fmtN(G.pontes.length)}</div><div class="s">autores em 2+ escolas</div></div>
+        <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('target')}Vítimas de vários autores</div><div class="v">${fmtN(G.imas.length)}</div><div class="s">2+ autores diferentes</div></div>
+    </div>
+    <div class="grade g32" style="align-items:start">
+        <div class="card" style="padding:6px;position:relative">
+            <canvas id="vn-canvas" style="width:100%;height:560px;display:block;border-radius:10px;background:var(--suave);cursor:grab" aria-label="Grafo de vínculos entre pessoas"></canvas>
+            <div class="mapa-painel" style="left:14px;bottom:14px;display:grid;gap:4px">
+                <span style="display:flex;gap:6px;align-items:center"><i style="width:10px;height:10px;border-radius:50%;background:var(--c-crit)"></i>Mais vezes autor</span>
+                <span style="display:flex;gap:6px;align-items:center"><i style="width:10px;height:10px;border-radius:50%;background:var(--prim)"></i>Mais vezes vítima</span>
+                <span style="display:flex;gap:6px;align-items:center"><i style="width:10px;height:10px;border-radius:50%;background:var(--roxo)"></i>Autor e vítima</span>
+                <span style="display:flex;gap:6px;align-items:center"><i style="width:18px;height:3px;background:var(--c-crit)"></i>coautoria · <i style="width:18px;height:2px;background:var(--muted2)"></i>autor → vítima</span>
+                <span class="mut">Tamanho = nº de registros. Clique para abrir a pessoa.</span>
+            </div>
+            <div class="mapa-painel" id="vn-dica" style="display:none;pointer-events:none"></div>
+        </div>
+        <div class="pilha">
+            <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--roxo)">${ic('grid')}</div><div><h3>Grupos</h3><p>Clique para destacar no grafo</p></div>${VN.grupo != null ? `<div class="dir"><button class="btn btn-s btn-sm" onclick="VN.grupo=null;desenharGrafo()">Limpar</button></div>` : ''}</div></div>
+                <div class="lista" style="max-height:300px;overflow:auto">${G.grupos.slice(0, 40).map(g => `<button class="item" onclick="VN.grupo=${g.id};desenharGrafo();detalheGrupo(${g.id})"><span class="ic" style="--c:${g.coaut ? 'var(--c-crit)' : 'var(--roxo)'}">${g.membros.length}</span><span class="tx"><b>${esc(g.membros.slice(0, 2).map(n => n.nome).join(', '))}${g.membros.length > 2 ? '…' : ''}</b><span>${g.regs.length} registros · ${g.escolas.size} escola(s) · ${g.coaut} coautoria(s)${g.sev ? ' · ' + g.sev + ' sensíveis' : ''}</span></span></button>`).join('') || '<div class="vazio peq">Nenhum grupo com 3+ pessoas.</div>'}</div></div>
+            <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-alto)">${ic('escola')}</div><div><h3>Pontes entre escolas</h3><p>Autores citados em mais de uma escola</p></div></div></div>
+                <div class="lista" style="max-height:220px;overflow:auto">${G.pontes.slice(0, 30).map(n => `<button class="item" onclick="abrirPessoa('${esc(n.k)}')"><span class="ic" style="--c:var(--c-alto)">${n.escolas.size}</span><span class="tx"><b>${esc(n.nome)}</b><span>${n.agr} como autor · ${n.vit} como vítima</span></span></button>`).join('') || '<div class="vazio peq">Nenhum.</div>'}</div></div>
+            <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico">${ic('target')}</div><div><h3>Vítimas de vários autores</h3><p>Prioridade para busca ativa e proteção</p></div></div></div>
+                <div class="lista" style="max-height:220px;overflow:auto">${G.imas.slice(0, 30).map(n => `<button class="item" onclick="abrirPessoa('${esc(n.k)}')"><span class="ic" style="--c:var(--prim)">${n.autores}</span><span class="tx"><b>${esc(n.nome)}</b><span>${n.vit} registros como vítima · ${n.autores} autores diferentes</span></span></button>`).join('') || '<div class="vazio peq">Nenhuma.</div>'}</div></div>
+        </div>
+    </div>`;
+    setTimeout(desenharGrafo, 20);
+}
+function desenharGrafo() {
+    const cv = $('vn-canvas'); if (!cv || !GRAFO) return;
+    const G = GRAFO, dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    if (!G.L || G.W !== W) { G.L = simular(G.N, G.E, W, H); G.W = W; }
+    const x = cv.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, W, H);
+    const cor = { a: css('--c-crit'), v: css('--prim'), m: css('--roxo'), l: css('--muted2'), t: css('--texto') };
+    const foco = VN.grupo != null ? new Set(G.grupos[VN.grupo].membros.map(n => n.k)) : null;
+    G.L.forEach(([i, j, n], k) => { const a = G.N[i], b = G.N[j], e = G.E[k]; const on = !foco || (foco.has(a.k) && foco.has(b.k)); x.globalAlpha = on ? (e.coaut ? .9 : .45) : .06; x.strokeStyle = e.coaut ? cor.a : cor.l; x.lineWidth = e.coaut ? 1.4 + Math.min(3, n * .6) : 1; x.beginPath(); x.moveTo(a.x, a.y); x.lineTo(b.x, b.y); x.stroke(); });
+    G.N.forEach(n => {
+        const on = !foco || foco.has(n.k); n.r = 3.5 + Math.min(11, Math.sqrt(n.regs.size) * 2.2);
+        x.globalAlpha = on ? 1 : .12; x.fillStyle = n.agr && n.vit ? cor.m : n.agr >= n.vit ? cor.a : cor.v;
+        x.beginPath(); x.arc(n.x, n.y, n.r, 0, 6.283); x.fill(); x.lineWidth = 1.5; x.strokeStyle = css('--card'); x.stroke();
+        if (on && (foco || n.regs.size >= 4)) { x.fillStyle = cor.t; x.font = '600 10.5px ' + (css('--f-corpo') || 'sans-serif'); x.fillText(n.nome.split(' ')[0] + (n.nome.split(' ')[1] ? ' ' + n.nome.split(' ')[1][0] + '.' : ''), n.x + n.r + 3, n.y + 3); }
+    });
+    x.globalAlpha = 1;
+    const achar = ev => { const b = cv.getBoundingClientRect(), px = ev.clientX - b.left, py = ev.clientY - b.top; return G.N.find(n => (n.x - px) ** 2 + (n.y - py) ** 2 <= (n.r + 3) ** 2); };
+    cv.onmousemove = ev => { const n = achar(ev), d = $('vn-dica'); cv.style.cursor = n ? 'pointer' : 'grab'; if (!n) { d.style.display = 'none'; return; } d.style.display = 'block'; d.style.left = Math.min(W - 230, ev.offsetX + 14) + 'px'; d.style.top = (ev.offsetY + 10) + 'px'; d.innerHTML = `<b>${esc(n.nome)}</b><br>${n.agr} como autor · ${n.vit} como vítima<br>${n.escolas.size} escola(s) · ${n.grau} ligação(ões)`; };
+    cv.onclick = ev => { const n = achar(ev); if (n) abrirPessoa(n.k); };
+}
+function detalheGrupo(i) {
+    const g = GRAFO.grupos[i]; if (!g) return;
+    abrirModal({ titulo: 'Grupo com ' + g.membros.length + ' pessoas', sub: g.regs.length + ' registros · ' + g.escolas.size + ' escola(s)', icone: 'users', cor: 'var(--roxo)', tam: 'grd',
+        corpo: `<div class="grade g2"><div><div class="rot">Pessoas</div>${g.membros.map(n => `<span class="pessoa-chip" style="--c:${n.agr && n.vit ? 'var(--roxo)' : n.agr >= n.vit ? 'var(--c-crit)' : 'var(--prim)'}" onclick="abrirPessoa('${esc(n.k)}')"><span class="av">${esc(n.nome[0])}</span>${esc(n.nome)} <em>${n.regs.size}×</em></span>`).join('')}</div>
+            <div><div class="rot">Tipos de fato</div>${hbar(g.tipos.slice(0, 8).map(([t, v]) => ({ t, v })))}<div class="rot" style="margin-top:10px">Escolas</div><div class="peq">${[...g.escolas].map(k => { const e = A.escolas.get(k); return e ? `<a href="#" onclick="abrirEscola('${esc(k)}');return false">${esc(e.nome)}</a> (${esc(nomeMun(e.mun))})` : ''; }).join('<br>')}</div></div></div>
+            <div class="rot" style="margin-top:12px">Registros</div>${linhaTempo(g.regs, 30)}`,
+        pe: `<button class="btn btn-p" data-fechar>Fechar</button>` });
+}
+
+/* =====================================================================
+   2. MAPA DE CALOR E PONTOS QUENTES DO ENTORNO
+   ===================================================================== */
+CAMADAS.calor = false; CAMADAS.redeP = false;
+const _rMapaV2 = rMapa;
+rMapa = function () {
+    _rMapaV2();
+    const pn = document.querySelector('#cont-mapa .mapa-camadas');
+    if (pn && !$('cm-calor')) {
+        pn.insertAdjacentHTML('beforeend', `<label><input type="checkbox" id="cm-calor" ${CAMADAS.calor ? 'checked' : ''}> Mapa de calor</label><label><input type="checkbox" id="cm-redeP" ${CAMADAS.redeP ? 'checked' : ''}> Rede de proteção</label>`);
+        $('cm-calor').onchange = e => { CAMADAS.calor = e.target.checked; desenharMapa(); };
+        $('cm-redeP').onchange = async e => { CAMADAS.redeP = e.target.checked; await garantirComp(); desenharMapa(); };
+    }
+    if (!$('hot-card')) $('cont-mapa').insertAdjacentHTML('beforeend', `<div class="card" id="hot-card"></div>`);
+    pontosQuentes();
+};
+const _desenharMapaV2 = desenharMapa;
+desenharMapa = function () {
+    _desenharMapaV2();
+    if (!MAPA) return;
+    if (CAMADAS.calor && $('mapa-geral') && $('mapa-geral').offsetWidth) {
+        const pts = REG.filter(r => r.lat != null).map(r => [r.lat, r.lng, r.peso / 4]);
+        if (L.heatLayer) CAM.calor = L.heatLayer(pts, { radius: 22, blur: 18, maxZoom: 11, minOpacity: .3, gradient: { .2: '#fde68a', .45: '#fb923c', .7: '#e11d48', 1: '#4c0519' } }).addTo(MAPA);
+        else { const g = new Map(); pts.forEach(p => { const k = p[0].toFixed(2) + ',' + p[1].toFixed(2); g.set(k, (g.get(k) || 0) + p[2]); }); CAM.calor = L.layerGroup([...g.entries()].map(([k, v]) => { const [a, b] = k.split(',').map(Number); return L.circleMarker([a, b], { radius: 6 + Math.sqrt(v) * 2, stroke: false, fillColor: '#e11d48', fillOpacity: .25 }); })).addTo(MAPA); }
+    }
+    if (CAMADAS.redeP && COMP) {
+        const os = COMP.rede.filter(o => o.lat != null && o.lng != null);
+        CAM.redeP = L.layerGroup(os.map(o => L.circleMarker([o.lat, o.lng], { radius: 6, color: '#fff', weight: 2, fillColor: '#15803d', fillOpacity: 1 }).bindTooltip(`<b>${esc(o.Nome || o['Órgão'])}</b><br>${esc(o['Órgão'])} · ${esc(nomeMun(o.mun))}<br>${esc(o.Telefone || '')}`))).addTo(MAPA);
+        if (!os.length) toast('Nenhum órgão da rede de proteção com latitude e longitude cadastradas', 'info');
+    }
+};
+/* Pontos quentes: escolas próximas (até 3 km) somadas, com pesos de gravidade e recência */
+function pontosQuentes() {
+    const es = [...A.escolas.values()].filter(e => e.lat != null && !e.aprox);
+    const cand = es.map(e => { const viz = es.filter(o => hav(e, o) <= 3); return { e, viz, peso: viz.reduce((s, o) => s + o.pontos, 0), n: viz.reduce((s, o) => s + o.n, 0) }; }).sort((a, b) => b.peso - a.peso);
+    const usados = new Set(), H = [];
+    cand.forEach(c => { if (H.length >= 12 || usados.has(c.e.k) || c.viz.length < 2) return; c.viz.forEach(o => usados.add(o.k)); H.push(c); });
+    const el = $('hot-card'); if (!el) return;
+    el.innerHTML = `<div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('target')}</div><div><h3>Pontos quentes do entorno</h3><p>Agrupamentos de escolas a até 3 km umas das outras, somando gravidade e recência. Indicam território, não só a escola.</p></div></div></div>
+    <div class="tab-wrap"><table class="tab"><thead><tr><th>#</th><th>Centro do agrupamento</th><th class="dir">Escolas</th><th class="dir">Ocorrências</th><th>Tipos principais</th><th></th></tr></thead><tbody>${H.map((h, i) => { const t = new Map(); h.viz.forEach(o => o.tipos.forEach((v, k) => t.set(tipoCurto(k), (t.get(tipoCurto(k)) || 0) + v))); return `<tr><td class="num mut">${i + 1}</td><td class="esc-cel"><b>${esc(h.e.nome)}</b><span>${esc(nomeMun(h.e.mun))} · ${esc(h.viz.filter(o => o !== h.e).map(o => o.nome).slice(0, 3).join(', '))}</span></td><td class="dir num">${h.viz.length}</td><td class="dir num">${fmtN(h.n)}</td><td class="peq">${[...t.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, v]) => esc(k) + ' (' + v + ')').join(', ')}</td><td><button class="btn btn-s btn-sm" onclick="MAPA&&MAPA.setView([${h.e.lat},${h.e.lng}],13)">${ic('pin')}Ver</button></td></tr>`; }).join('') || '<tr><td colspan="6"><div class="vazio">Nenhum agrupamento de escolas com ocorrências no recorte.</div></td></tr>'}</tbody></table></div>`;
+}
+
+/* =====================================================================
+   3 e 4. CONTEXTO EDUCACIONAL (taxa por mil e cruzamentos)
+   ===================================================================== */
+const CX = { ind: 'ideb', eixo: 'taxa', nivel: 'escolas' };
+function pearson(xs, ys) { const n = xs.length; if (n < 5) return null; const mx = xs.reduce((s, v) => s + v, 0) / n, my = ys.reduce((s, v) => s + v, 0) / n; let a = 0, b = 0, c = 0; for (let i = 0; i < n; i++) { a += (xs[i] - mx) * (ys[i] - my); b += (xs[i] - mx) ** 2; c += (ys[i] - my) ** 2; } return b && c ? a / Math.sqrt(b * c) : null; }
+const lerR = r => r == null ? 'amostra insuficiente' : (Math.abs(r) < .1 ? 'sem relação' : Math.abs(r) < .3 ? 'relação fraca' : Math.abs(r) < .5 ? 'relação moderada' : 'relação forte') + (Math.abs(r) >= .1 ? (r > 0 ? ', no mesmo sentido' : ', em sentido inverso') : '');
+function linhasTaxa() {
+    const L = [];
+    if (CX.nivel === 'escolas') A.escolas.forEach(e => { const i = indEscola(e); if (i && i.matriculas) L.push({ k: e.k, nome: e.nome, sub: nomeMun(e.mun), n: e.n, mat: i.matriculas, taxa: 1000 * e.n / i.matriculas, idx: e.idx, ind: i, abrir: `abrirEscola('${esc(e.k)}')` }); });
+    else {
+        const agg = new Map();
+        (COMP.escolas || []).forEach(x => { const ref = ESC_REF.find(r => String(r.cod) === String(x.cod)) || (x.escola ? resolverEscola(x.escola, x.mun) : null); const mun = ref ? ref.mun : x.mun; if (!mun || !x.matriculas) return; const k = CX.nivel === 'muns' ? mun : (DRE_DO_MUN.get(mun) || ''); if (!k) return; agg.set(k, (agg.get(k) || 0) + x.matriculas); });
+        const grupo = CX.nivel === 'muns' ? A.muns : A.dres;
+        agg.forEach((mat, k) => { const g = grupo.get(k); const n = g ? g.n : 0; if (CX.nivel === 'muns' && F.dre && DRE_DO_MUN.get(k) !== F.dre) return; L.push({ k, nome: CX.nivel === 'muns' ? nomeMun(k) : nomeDre(k), sub: CX.nivel === 'muns' ? nomeDre(DRE_DO_MUN.get(k) || '') : '', n, mat, taxa: 1000 * n / mat, idx: g ? g.idx : 0, ind: CX.nivel === 'muns' ? indMun(k) : null, abrir: CX.nivel === 'muns' ? `abrirMun('${esc(k)}')` : `filtrarPor('dre','${esc(k)}')` }); });
+    }
+    return L.sort((a, b) => b.taxa - a.taxa);
+}
+async function rContexto() {
+    $('acoes-contexto').innerHTML = podeEditarComp() ? `<button class="btn btn-v btn-sm" onclick="escolherArquivoComp()">${ic('upload')}Importar indicadores</button>` : '';
+    if (!COMP) { $('cont-contexto').innerHTML = '<div class="card"><div class="vazio">Carregando indicadores…</div></div>'; await garantirComp(); if (ABA !== 'contexto') return; }
+    const temEsc = COMP.escolas.some(x => x.matriculas), camposM = camposMun();
+    const modelos = `<div class="card card-pad"><div class="card-tit"><div class="ico">${ic('database')}</div><div><h3>Dados complementares</h3><p>${COMP_ORIGEM === 'demo' ? 'Valores fictícios de demonstração' : COMP_ORIGEM === 'servidor' ? 'Guardados na planilha do Google (aba Complementos)' : 'Guardados neste navegador'}${COMP.atualizado && COMP_ORIGEM !== 'demo' ? ' · atualizado em ' + fmtD(new Date(COMP.atualizado)) : ''}</p></div></div>
+        <div class="peq" style="line-height:1.6;color:var(--texto2)">Importe uma planilha (.csv ou .xlsx). O tipo é reconhecido pelas colunas:
+        <br>• <b>Por escola</b> (Censo Escolar/INEP, QEdu): Código INEP ou Escola, Município, Matrículas, IDEB, Abandono, Distorção idade-série, INSE. <button class="btn btn-s btn-sm" onclick="baixarModelo('escolas')">Modelo</button>
+        <br>• <b>Por município</b> (Sesp-MT, IBGE): Município e quaisquer colunas numéricas, como CVLI por 100 mil hab. ou População. <button class="btn btn-s btn-sm" onclick="baixarModelo('muns')">Modelo</button>
+        <br>• <b>Rede de proteção</b>: veja a página Rede de proteção.</div></div>`;
+    if (!temEsc && !camposM.length) { $('cont-contexto').innerHTML = `<div class="card"><div class="vazio">${ic('database')}Ainda não há matrículas nem indicadores. Importe os dados do Censo Escolar para ver a taxa por mil estudantes e os cruzamentos.</div></div>` + modelos; return; }
+    const T = temEsc ? linhasTaxa() : [];
+    const totMat = T.reduce((s, x) => s + x.mat, 0), totN = T.reduce((s, x) => s + x.n, 0);
+    const opcInd = Object.keys(ROT_IND).filter(k => k !== 'matriculas' && COMP.escolas.some(x => x[k] != null));
+    if (!opcInd.includes(CX.ind)) CX.ind = opcInd[0] || '';
+    // dispersão por escola
+    const P = [];
+    A.escolas.forEach(e => { const i = indEscola(e); if (!i || i[CX.ind] == null) return; const y = CX.eixo === 'taxa' ? (i.matriculas ? 1000 * e.n / i.matriculas : null) : e.idx; if (y == null) return; P.push({ x: i[CX.ind], y, nome: e.nome, k: e.k }); });
+    const r = pearson(P.map(p => p.x), P.map(p => p.y));
+    // quadrante crítico
+    const med = a => { const s = a.slice().sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
+    const mx = P.length ? med(P.map(p => p.x)) : 0, my = P.length ? med(P.map(p => p.y)) : 0;
+    const invertido = ['abandono', 'distorcao'].includes(CX.ind); // valores altos são piores
+    const crit = P.filter(p => p.y > my && (invertido ? p.x > mx : p.x < mx)).sort((a, b) => b.y - a.y);
+    // municipal
+    const campoM = camposM[0];
+    const PM = campoM ? [...A.muns.values()].map(m => { const i = indMun(m.k); return i && i[campoM] != null ? { x: i[campoM], y: m.n, nome: m.nome, k: m.k } : null; }).filter(Boolean) : [];
+    const rM = pearson(PM.map(p => p.x), PM.map(p => p.y));
+    $('cont-contexto').innerHTML = `
+    ${COMP_ORIGEM === 'demo' ? `<div class="aviso alerta">${ic('info')}<div>Indicadores fictícios de demonstração. Importe os dados reais do Censo Escolar e da Sesp-MT para usar esta página.</div></div>` : ''}
+    ${temEsc ? `<div class="kpis">
+        <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('users')}Matrículas cobertas</div><div class="v">${fmtN(totMat)}</div><div class="s">${T.length} ${CX.nivel === 'escolas' ? 'escolas com ocorrências e matrícula' : 'unidades'}</div></div>
+        <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('activity')}Taxa média</div><div class="v">${totMat ? (1000 * totN / totMat).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) : '—'}</div><div class="s">ocorrências por mil estudantes</div></div>
+        <div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('target')}Maior taxa</div><div class="v">${T[0] ? T[0].taxa.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) : '—'}</div><div class="s trunc">${T[0] ? esc(T[0].nome) : ''}</div></div>
+        <div class="kpi" style="--c:var(--roxo)"><div class="r">${ic('trend')}Relação com ${esc(ROT_IND[CX.ind] || '')}</div><div class="v">${r == null ? '—' : r.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}</div><div class="s">${lerR(r)}</div></div></div>` : ''}
+    ${temEsc ? `<div class="grade g2" style="align-items:start">
+        <div class="card"><div class="card-pad" style="padding-bottom:6px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-alto)">${ic('activity')}</div><div><h3>Ocorrências por mil estudantes</h3><p>Corrige o efeito do tamanho da escola nos rankings</p></div><div class="dir"><div class="seg" id="cx-nivel">${[['escolas', 'Escolas'], ['muns', 'Municípios'], ['dres', 'DREs']].map(([k, t]) => `<button data-n="${k}" class="${CX.nivel === k ? 'ativo' : ''}">${t}</button>`).join('')}</div></div></div></div>
+            <div class="tab-wrap" style="max-height:470px"><table class="tab"><thead><tr><th>#</th><th>Nome</th><th class="dir">Matrículas</th><th class="dir">Ocorrências</th><th class="dir">Por mil</th><th>Índice</th></tr></thead><tbody>${T.slice(0, 200).map((x, i) => `<tr class="clic" onclick="${x.abrir}"><td class="mut num">${i + 1}</td><td class="esc-cel"><b>${esc(x.nome)}</b><span>${esc(x.sub)}</span></td><td class="dir num">${fmtN(x.mat)}</td><td class="dir num">${fmtN(x.n)}</td><td class="dir num"><b>${x.taxa.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}</b></td><td>${medidor(x.idx)}</td></tr>`).join('') || '<tr><td colspan="6"><div class="vazio">Sem matrículas para o recorte.</div></td></tr>'}</tbody></table></div></div>
+        <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('trend')}</div><div><h3>Violência × indicador educacional</h3><p>Cada ponto é uma escola. r = ${r == null ? '—' : r.toFixed(2)} (${lerR(r)}). Correlação não indica causa.</p></div></div>
+            <div class="barra-filtros" style="margin-bottom:8px"><select class="campo" id="cx-ind" style="width:auto">${opcInd.map(k => `<option value="${k}" ${k === CX.ind ? 'selected' : ''}>${ROT_IND[k]}</option>`).join('')}</select><select class="campo" id="cx-eixo" style="width:auto"><option value="taxa">contra ocorrências por mil</option><option value="idx" ${CX.eixo === 'idx' ? 'selected' : ''}>contra índice de fragilidade</option></select></div>
+            <div class="grafico alto"><canvas id="cx-disp" aria-label="Dispersão entre indicador e violência"></canvas></div></div></div>
+    <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('alerta')}</div><div><h3>Prioridade para ação integrada</h3><p>Escolas acima da mediana de violência e ${invertido ? 'acima' : 'abaixo'} da mediana de ${esc(ROT_IND[CX.ind] || '')} — onde segurança e aprendizagem precisam andar juntas</p></div></div></div>
+        <div class="lista" style="max-height:320px;overflow:auto">${crit.slice(0, 40).map(p => { const e = A.escolas.get(p.k); return `<button class="item" onclick="abrirEscola('${esc(p.k)}')"><span class="ic" style="--c:var(--c-crit)">${e.idx}</span><span class="tx"><b>${esc(p.nome)}</b><span>${esc(nomeMun(e.mun))} · ${esc(ROT_IND[CX.ind])} ${p.x.toLocaleString('pt-BR')} · ${CX.eixo === 'taxa' ? p.y.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' por mil' : 'índice ' + p.y}</span></span></button>`; }).join('') || '<div class="vazio peq">Nenhuma escola neste quadrante.</div>'}</div></div>` : ''}
+    ${PM.length ? `<div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-crit)">${ic('map')}</div><div><h3>Violência escolar × segurança pública do município</h3><p>Eixo X: ${esc(campoM)} · eixo Y: ocorrências escolares. r = ${rM == null ? '—' : rM.toFixed(2)} (${lerR(rM)}). Mostra se o problema acompanha o território.</p></div></div><div class="grafico alto"><canvas id="cx-mun" aria-label="Dispersão municipal"></canvas></div></div>` : ''}
+    ${modelos}`;
+    if ($('cx-nivel')) $('cx-nivel').onclick = e => { const b = e.target.closest('button'); if (b) { CX.nivel = b.dataset.n; rContexto(); } };
+    if ($('cx-ind')) { $('cx-ind').onchange = () => { CX.ind = $('cx-ind').value; rContexto(); }; $('cx-eixo').onchange = () => { CX.eixo = $('cx-eixo').value; rContexto(); }; }
+    const disp = (id, pts, tx, ty, cor) => grafico(id, { type: 'scatter', data: { datasets: [{ label: 'Pontos', data: pts, backgroundColor: cor + 'aa', borderColor: css('--card'), borderWidth: 1, pointRadius: 4.5, pointHoverRadius: 7 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.raw.nome}: ${tx} ${c.raw.x.toLocaleString('pt-BR')} · ${ty} ${c.raw.y.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}` } } }, scales: { x: { title: { display: true, text: tx } }, y: { title: { display: true, text: ty }, beginAtZero: true } }, onClick: (ev, el) => { if (el[0]) { const p = pts[el[0].index]; id === 'cx-mun' ? abrirMun(p.k) : abrirEscola(p.k); } } } });
+    if (P.length) disp('cx-disp', P, ROT_IND[CX.ind], CX.eixo === 'taxa' ? 'Ocorrências por mil estudantes' : 'Índice de fragilidade', css('--s1'));
+    if (PM.length) disp('cx-mun', PM, campoM, 'Ocorrências escolares', css('--s2'));
+}
+
+/* =====================================================================
+   5 e 7. CALENDÁRIO E PERFIL DEMOGRÁFICO (na página Gráficos)
+   ===================================================================== */
+let CAL_ANO = null;
+const _rGraficosV2 = rGraficos;
+rGraficos = function () {
+    _rGraficosV2();
+    const anos = [...new Set(REG.filter(r => r.dt && +r.dt <= Date.now() + DIA).map(r => r.dt.getFullYear()))].sort((a, b) => b - a);
+    if (!anos.includes(CAL_ANO)) CAL_ANO = anos[0] || new Date().getFullYear();
+    $('cont-graficos').insertAdjacentHTML('beforeend', `
+    <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--prim)">${ic('clock')}</div><div><h3>Calendário do ano</h3><p>Cada quadrado é um dia, colorido pelo número de ocorrências. Mostra semanas críticas, vésperas de feriado e períodos de prova.</p></div><div class="dir"><div class="seg" id="cal-anos">${anos.slice(0, 4).map(a => `<button data-a="${a}" class="${a === CAL_ANO ? 'ativo' : ''}">${a}</button>`).join('')}</div></div></div><div id="cal-grade" style="overflow-x:auto"></div></div>
+    <div class="grade g2">${cardGraf('gf-dem-vit', 'Vítimas por sexo e tipo de fato', 'Pessoas citadas como vítimas nos 10 tipos mais frequentes', true)}${cardGraf('gf-dem-agr', 'Autores por sexo e tipo de fato', 'Pessoas citadas como autoras nos 10 tipos mais frequentes', true)}</div>
+    <div class="grade g2">${cardGraf('gf-dem-env', 'Quem agride quem', 'Combinação entre o tipo de autor e o tipo de vítima', true)}${cardGraf('gf-dem-prop', 'Participação feminina por tipo de fato', 'Percentual de mulheres entre vítimas e entre autores', true)}</div>`);
+    $('cal-anos').onclick = e => { const b = e.target.closest('button'); if (b) { CAL_ANO = +b.dataset.a; document.querySelectorAll('#cal-anos button').forEach(x => x.classList.toggle('ativo', x === b)); calendario(); } };
+    calendario(); demografia();
+};
+function calendario() {
+    const ano = CAL_ANO, cont = new Map();
+    REG.forEach(r => { if (r.dt && r.dt.getFullYear() === ano) { const k = r.dt.toDateString(); cont.set(k, (cont.get(k) || 0) + 1); } });
+    const mx = Math.max(1, ...cont.values());
+    const ini = new Date(ano, 0, 1), dias = [];
+    for (let d = new Date(ini); d.getFullYear() === ano; d.setDate(d.getDate() + 1)) dias.push(new Date(d));
+    const sem0 = ini.getDay();
+    const cel = 13, gap = 3, W = Math.ceil((dias.length + sem0) / 7) * (cel + gap) + 34;
+    const MES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    let svg = `<svg width="${W}" height="${7 * (cel + gap) + 26}" role="img" aria-label="Calendário de ocorrências de ${ano}" style="display:block;font-family:var(--f-corpo)">`;
+    ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].forEach((t, i) => { if (i % 2) svg += `<text x="0" y="${22 + i * (cel + gap) + 10}" font-size="9.5" fill="var(--muted)">${t}</text>`; });
+    dias.forEach((d, i) => {
+        const p = i + sem0, c = Math.floor(p / 7), l = p % 7, v = cont.get(d.toDateString()) || 0;
+        if (d.getDate() === 1) svg += `<text x="${34 + c * (cel + gap)}" y="12" font-size="10" fill="var(--muted)">${MES[d.getMonth()]}</text>`;
+        const op = v ? .18 + .82 * Math.sqrt(v / mx) : 0;
+        svg += `<rect x="${34 + c * (cel + gap)}" y="${20 + l * (cel + gap)}" width="${cel}" height="${cel}" rx="3" fill="${v ? 'var(--c-crit)' : 'var(--suave2)'}" fill-opacity="${v ? op.toFixed(2) : 1}" data-d="${d.toISOString()}" style="cursor:${v ? 'pointer' : 'default'}"><title>${d.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' })}: ${v} ocorrência(s)</title></rect>`;
+    });
+    svg += '</svg>';
+    // semanas mais críticas
+    const sem = new Map(); REG.forEach(r => { if (r.dt && r.dt.getFullYear() === ano) { const s = new Date(r.dt); s.setHours(0, 0, 0, 0); s.setDate(s.getDate() - s.getDay()); const k = +s; const o = sem.get(k) || { n: 0, c: 0 }; o.n++; if (r.crit === 'CRÍTICO') o.c++; sem.set(k, o); } });
+    const top = [...sem.entries()].sort((a, b) => b[1].n - a[1].n).slice(0, 5);
+    $('cal-grade').innerHTML = svg + `<div class="peq" style="margin-top:10px;display:flex;gap:8px 18px;flex-wrap:wrap;color:var(--texto2)"><b>Semanas com mais registros:</b>${top.map(([k, o]) => `<span>${new Date(k).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}: <b>${o.n}</b> (${o.c} críticas)</span>`).join('')}</div>`;
+    $('cal-grade').querySelectorAll('rect[data-d]').forEach(rc => rc.onclick = () => { const d = new Date(rc.dataset.d).toDateString(); const rs = REG.filter(r => r.dt && r.dt.toDateString() === d); if (rs.length) listaModal('Ocorrências de ' + new Date(rc.dataset.d).toLocaleDateString('pt-BR'), rs); });
+}
+const normSexo = s => /^F/i.test(chave(s)) ? 'Feminino' : /^M/i.test(chave(s)) ? 'Masculino' : 'Não informado';
+const normEnv = s => { const k = chave(s); return /ALUN|ESTUD/.test(k) ? 'Estudante' : /PROF|SERVID|DIRET|COORD|FUNCION|PROFISSIONAL/.test(k) ? 'Profissional' : /EXTERN|COMUNID|RESPONS|FAMIL|PAI|MAE/.test(k) ? 'Externo/família' : 'Não informado'; };
+function demografia() {
+    const tipos = tiposOrd().slice(0, 10).map(t => t[0]);
+    const contar = (lista, sexos) => { const m = new Map(tipos.map(t => [t, { Feminino: 0, Masculino: 0, 'Não informado': 0 }])); REG.forEach(r => { if (!m.has(r.tipo)) return; r[lista].forEach((n, i) => { m.get(r.tipo)[normSexo(r[sexos][i])]++; }); }); return m; };
+    const mv = contar('vit', 'sVit'), ma = contar('agr', 'sAgr');
+    const cores = { Feminino: css('--s5'), Masculino: css('--s1'), 'Não informado': css('--muted2') };
+    const barra = (id, m) => grafico(id, { type: 'bar', data: { labels: tipos.map(tipoCurto), datasets: ['Feminino', 'Masculino', 'Não informado'].map(sx => ({ label: sx, data: tipos.map(t => m.get(t)[sx]), backgroundColor: cores[sx], borderRadius: 3, borderSkipped: false, borderColor: css('--card'), borderWidth: { left: 0, right: 2, top: 0, bottom: 0 } })) }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, usePointStyle: true } } }, scales: { x: { stacked: true, ticks: { precision: 0 } }, y: { stacked: true, grid: { display: false } } } } });
+    barra('gf-dem-vit', mv); barra('gf-dem-agr', ma);
+    // autor × vítima
+    const ENV = ['Estudante', 'Profissional', 'Externo/família', 'Não informado'], par = new Map();
+    REG.forEach(r => { const as = new Set(r.tAgr.map(normEnv)), vs = new Set(r.tVit.map(normEnv)); as.forEach(a => vs.forEach(v => { const k = a + '|' + v; par.set(k, (par.get(k) || 0) + 1); })); });
+    grafico('gf-dem-env', { type: 'bar', data: { labels: ENV.map(a => 'Autor: ' + a), datasets: ENV.slice(0, 3).map((v, i) => ({ label: 'Vítima: ' + v, data: ENV.map(a => par.get(a + '|' + v) || 0), backgroundColor: css(SERIE3[i]), borderRadius: 3 })) }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, usePointStyle: true } } }, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { precision: 0 } } } } });
+    const pct = (m, t) => { const o = m.get(t), s = o.Feminino + o.Masculino; return s ? Math.round(100 * o.Feminino / s) : 0; };
+    grafico('gf-dem-prop', { type: 'bar', data: { labels: tipos.map(tipoCurto), datasets: [{ label: 'Entre vítimas (%)', data: tipos.map(t => pct(mv, t)), backgroundColor: css('--s5'), borderRadius: 3 }, { label: 'Entre autores (%)', data: tipos.map(t => pct(ma, t)), backgroundColor: css('--s4'), borderRadius: 3 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, usePointStyle: true } } }, scales: { x: { min: 0, max: 100, ticks: { callback: v => v + '%' } }, y: { grid: { display: false } } } } });
+}
+
+/* =====================================================================
+   8. REDE DE PROTEÇÃO
+   ===================================================================== */
+const RD = { q: '' };
+async function rRede() {
+    $('acoes-rede').innerHTML = podeEditarComp() ? `<button class="btn btn-v btn-sm" onclick="escolherArquivoComp()">${ic('upload')}Importar planilha</button><button class="btn btn-l btn-sm" onclick="formOrgao()">${ic('plus')}Adicionar órgão</button>` : '';
+    if (!COMP) { $('cont-rede').innerHTML = '<div class="card"><div class="vazio">Carregando…</div></div>'; await garantirComp(); if (ABA !== 'rede') return; }
+    const lista = COMP.rede.map((o, i) => Object.assign(o, { _i: i })).filter(o => (!F.mun || o.mun === F.mun) && (!F.dre || DRE_DO_MUN.get(o.mun) === F.dre) && (!RD.q || chave(Object.values(o).join(' ')).includes(chave(RD.q))));
+    const cobertos = new Set(COMP.rede.map(o => o.mun));
+    const semCT = MUNS.filter(m => !COMP.rede.some(o => o.mun === m.k && /CONSELHO TUTELAR/.test(chave(o['Órgão'])))).filter(m => !F.dre || DRE_DO_MUN.get(m.k) === F.dre);
+    $('cont-rede').innerHTML = `
+    <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-crit)">${ic('alerta')}</div><div><h3>Emergência e denúncia</h3><p>Números nacionais, gratuitos, 24 horas</p></div></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px">${EMERGENCIA.map(([n, t]) => `<div style="display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--borda);border-radius:10px"><b style="font-size:20px;font-variant-numeric:tabular-nums;color:var(--c-crit);user-select:all">${n}</b><span class="peq">${t}</span></div>`).join('')}</div></div>
+    <div class="kpis">
+        <div class="kpi" style="--c:var(--verde)"><div class="r">${ic('shield')}Órgãos cadastrados</div><div class="v">${fmtN(COMP.rede.length)}</div><div class="s">${cobertos.size} de 142 municípios</div></div>
+        <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('alerta')}Sem Conselho Tutelar cadastrado</div><div class="v">${fmtN(semCT.length)}</div><div class="s">municípios${F.dre ? ' da DRE' : ''}</div></div>
+        <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('pin')}Com localização</div><div class="v">${fmtN(COMP.rede.filter(o => o.lat != null).length)}</div><div class="s">aparecem no mapa e na ocorrência</div></div>
+    </div>
+    <div class="card"><div class="card-pad barra-filtros" style="border-bottom:1px solid var(--borda)"><div class="busca">${ic('search')}<input class="campo" id="rd-q" placeholder="Buscar órgão, município ou telefone" value="${esc(RD.q)}"></div><button class="btn btn-s btn-sm" onclick="baixarModelo('rede')">${ic('download')}Modelo de planilha</button></div>
+        <div class="tab-wrap" style="max-height:60vh"><table class="tab"><thead><tr><th>Município</th><th>Órgão</th><th>Nome</th><th>Telefone</th><th>Endereço</th><th>Horário</th>${podeEditarComp() ? '<th></th>' : ''}</tr></thead><tbody>${lista.sort((a, b) => nomeMun(a.mun).localeCompare(nomeMun(b.mun), 'pt')).map(o => `<tr><td>${esc(nomeMun(o.mun))}</td><td class="peq">${esc(o['Órgão'])}</td><td><b>${esc(o.Nome)}</b>${o['E-mail'] ? `<br><span class="peq mut">${esc(o['E-mail'])}</span>` : ''}</td><td class="num" style="white-space:nowrap;user-select:all">${esc(o.Telefone)}</td><td class="peq">${esc(o['Endereço'])}</td><td class="peq">${esc(o['Horário'])}</td>${podeEditarComp() ? `<td><button class="btn btn-s btn-sm" onclick="formOrgao(${o._i})">Editar</button></td>` : ''}</tr>`).join('') || `<tr><td colspan="7"><div class="vazio">${ic('shield')}Nenhum órgão cadastrado${F.mun || F.dre ? ' no recorte' : ''}. Use "Adicionar órgão" ou importe a planilha da rede (modelo acima).</div></td></tr>`}</tbody></table></div></div>
+    ${semCT.length && COMP.rede.length ? `<div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('pin')}</div><div><h3>Municípios sem Conselho Tutelar cadastrado</h3><p>Complete o cadastro para que o contato apareça nas ocorrências</p></div></div><div class="peq" style="line-height:1.7">${semCT.map(m => esc(m.nome)).join(' · ')}</div></div>` : ''}`;
+    let t; $('rd-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { RD.q = $('rd-q').value; rRede(); setTimeout(() => { const i = $('rd-q'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 0); }, 300); };
+}
+function formOrgao(i) {
+    const o = i != null ? COMP.rede[i] : { mun: F.mun || '' };
+    abrirModal({ titulo: i != null ? 'Editar órgão' : 'Adicionar órgão da rede de proteção', icone: 'shield', cor: 'var(--verde)',
+        corpo: `<div class="form-grade">
+            <div><label class="rot" for="og-mun">Município</label><select class="campo" id="og-mun">${MUNS.slice().sort((a, b) => a.nome.localeCompare(b.nome, 'pt')).map(m => `<option value="${m.k}" ${m.k === o.mun ? 'selected' : ''}>${esc(m.nome)}</option>`).join('')}</select></div>
+            <div><label class="rot" for="og-tipo">Órgão</label><select class="campo" id="og-tipo">${TIPOS_ORGAO.map(t => `<option ${t === o['Órgão'] ? 'selected' : ''}>${t}</option>`).join('')}</select></div>
+            <div class="inteiro"><label class="rot" for="og-nome">Nome</label><input class="campo" id="og-nome" value="${esc(o.Nome || '')}"></div>
+            <div><label class="rot" for="og-tel">Telefone</label><input class="campo" id="og-tel" value="${esc(o.Telefone || '')}"></div>
+            <div><label class="rot" for="og-hor">Horário</label><input class="campo" id="og-hor" value="${esc(o['Horário'] || '')}"></div>
+            <div class="inteiro"><label class="rot" for="og-end">Endereço</label><input class="campo" id="og-end" value="${esc(o['Endereço'] || '')}"></div>
+            <div class="inteiro"><label class="rot" for="og-email">E-mail</label><input class="campo" id="og-email" value="${esc(o['E-mail'] || '')}"></div>
+            <div><label class="rot" for="og-lat">Latitude <small>(opcional)</small></label><input class="campo" id="og-lat" value="${o.lat ?? ''}" placeholder="-15.6010"></div>
+            <div><label class="rot" for="og-lng">Longitude <small>(opcional)</small></label><input class="campo" id="og-lng" value="${o.lng ?? ''}" placeholder="-56.0974"></div></div>`,
+        pe: `${i != null ? `<button class="btn btn-d" id="og-del">${ic('lixo')}Remover</button>` : ''}<button class="btn btn-s" data-fechar>Cancelar</button><button class="btn btn-p" id="og-ok">${ic('check')}Salvar</button>` });
+    const salvar = async (remover) => {
+        const novo = { 'Município': nomeMun($('og-mun').value), mun: $('og-mun').value, 'Órgão': $('og-tipo').value, Nome: $('og-nome').value.trim(), Telefone: $('og-tel').value.trim(), 'Endereço': $('og-end').value.trim(), 'E-mail': $('og-email').value.trim(), 'Horário': $('og-hor').value.trim(), lat: numBR($('og-lat').value), lng: numBR($('og-lng').value) };
+        if (!remover && !novo.Nome) return toast('Informe o nome do órgão', 'alerta');
+        if (COMP_ORIGEM === 'demo') { COMP.rede = COMP.rede.slice(); }
+        if (remover) COMP.rede.splice(i, 1); else if (i != null) COMP.rede[i] = novo; else COMP.rede.push(novo);
+        try { await salvarComp('rede'); fecharModal(); toast(remover ? 'Órgão removido' : 'Órgão salvo'); rRede(); } catch (e) { toast(e.message, 'alerta'); }
+    };
+    $('og-ok').onclick = () => salvar(false);
+    if ($('og-del')) $('og-del').onclick = () => salvar(true);
+}
+/* Contatos da rede na gaveta da ocorrência */
+const _abrirOcV3 = abrirOcorrencia;
+abrirOcorrencia = function (id) {
+    _abrirOcV3(id);
+    const r = acharReg(id); if (!r) return;
+    garantirComp().then(() => {
+        const corpo = document.querySelector('#gaveta .gaveta-corpo'); if (!corpo || corpo.querySelector('#oc-rede')) return;
+        const locais = COMP.rede.filter(o => o.mun === r.mun);
+        const prox = r.lat != null ? COMP.rede.filter(o => o.lat != null && o.mun !== r.mun).map(o => Object.assign({ d: hav(r, o) }, o)).sort((a, b) => a.d - b.d).slice(0, 3) : [];
+        const sens = ehSevero(r.tipo);
+        const linha = (o, d) => `<div class="item" style="cursor:default"><span class="ic" style="--c:var(--verde)">${ic('shield')}</span><span class="tx"><b>${esc(o.Nome || o['Órgão'])}</b><span>${esc(o['Órgão'])}${d != null ? ' · ' + esc(nomeMun(o.mun)) + ' · ' + Math.round(d) + ' km' : ''}${o['Endereço'] ? ' · ' + esc(o['Endereço']) : ''}</span></span><span class="fim num" style="user-select:all"><b>${esc(o.Telefone || '')}</b></span></div>`;
+        const envC = [...corpo.querySelectorAll('.card')].find(c => /Envolvidos/.test((c.querySelector('h3') || {}).textContent || ''));
+        (envC || corpo.lastElementChild).insertAdjacentHTML('afterend', `<div class="card" id="oc-rede"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--verde)">${ic('shield')}</div><div><h3>Rede de proteção de ${esc(nomeMun(r.mun))}</h3><p>${sens ? 'Tipo sensível: o acionamento da rede é obrigatório.' : 'Contatos para encaminhamento.'}</p></div></div></div>
+            <div class="lista">${locais.map(o => linha(o)).join('') || `<div class="vazio peq" style="padding:14px">Nenhum órgão cadastrado neste município.${podeEditarComp() ? ' <a href="#rede" onclick="fecharGaveta();irPara(\'rede\');return false">Cadastrar</a>' : ''}</div>`}${prox.length && locais.length < 2 ? `<div class="peq mut" style="padding:8px 14px 0">Mais próximos com localização:</div>${prox.map(o => linha(o, o.d)).join('')}` : ''}</div>
+            <div class="peq" style="padding:10px 14px;display:flex;gap:6px 14px;flex-wrap:wrap;border-top:1px solid var(--borda)">${EMERGENCIA.filter(([n]) => sens ? true : ['190', '192', '100'].includes(n)).map(([n, t]) => `<span><b style="color:var(--c-crit)">${n}</b> ${esc(t.split(' (')[0].split(' —')[0])}</span>`).join('')}</div></div>`);
+    });
+};
+
+/* =====================================================================
+   9. COMPARATIVO LADO A LADO
+   ===================================================================== */
+const CP = { nivel: 'dres', sel: [], modo: 'lado', corte: '', alvo: '' };
+function regsSemLocal() { const s = { dre: F.dre, mun: F.mun }; F.dre = ''; F.mun = ''; const r = filtrar(BASE); F.dre = s.dre; F.mun = s.mun; return r; }
+function opcoesComp() {
+    if (CP.nivel === 'dres') return [...new Set(BASE.map(r => r.dre))].filter(Boolean).sort().map(k => [k, nomeDre(k)]);
+    if (CP.nivel === 'muns') return [...new Set(BASE.map(r => r.mun))].sort((a, b) => nomeMun(a).localeCompare(nomeMun(b), 'pt')).map(k => [k, nomeMun(k)]);
+    const m = new Map(); BASE.forEach(r => { if (!m.has(r.escK)) m.set(r.escK, r.esc + ' (' + nomeMun(r.mun) + ')'); }); return [...m.entries()].sort((a, b) => a[1].localeCompare(b[1], 'pt'));
+}
+function rComparar() {
+    const op = opcoesComp(), campo = { dres: 'dre', muns: 'mun', escolas: 'escK' }[CP.nivel];
+    if (!CP.sel.length || !CP.sel.every(k => op.some(o => o[0] === k))) {
+        const base = regsSemLocal(), cnt = new Map(); base.forEach(r => cnt.set(r[campo], (cnt.get(r[campo]) || 0) + 1));
+        CP.sel = [...cnt.entries()].sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => x[0]);
+    }
+    if (!CP.alvo || !op.some(o => o[0] === CP.alvo)) CP.alvo = CP.sel[0] || '';
+    $('acoes-comparar').innerHTML = `<div class="seg" style="background:rgba(255,255,255,.08)" id="cp-modo">${[['lado', 'Lado a lado'], ['antes', 'Antes e depois']].map(([k, t]) => `<button data-m="${k}" class="${CP.modo === k ? 'ativo' : ''}" style="${CP.modo === k ? '' : 'color:#cbd5e1'}">${t}</button>`).join('')}</div>`;
+    $('cp-modo').onclick = e => { const b = e.target.closest('button'); if (b) { CP.modo = b.dataset.m; rComparar(); } };
+    const selNivel = `<div class="seg" id="cp-nivel">${[['dres', 'DREs'], ['muns', 'Municípios'], ['escolas', 'Escolas']].map(([k, t]) => `<button data-n="${k}" class="${CP.nivel === k ? 'ativo' : ''}">${t}</button>`).join('')}</div>`;
+    const sel = (id, v, vazio) => `<select class="campo" id="${id}" style="width:auto;max-width:300px"><option value="">${vazio}</option>${op.map(([k, t]) => `<option value="${esc(k)}" ${k === v ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>`;
+    const base = regsSemLocal();
+    if (CP.modo === 'antes') {
+        if (!CP.corte) { const h = refHoje(base); CP.corte = new Date(+h - 60 * DIA).toISOString().slice(0, 10); }
+        const corte = new Date(CP.corte + 'T00:00'), JAN = 90;
+        const rs = base.filter(r => r[campo] === CP.alvo && r.dt);
+        const antes = rs.filter(r => r.dt < corte && r.dt >= new Date(+corte - JAN * DIA)), depois = rs.filter(r => r.dt >= corte && r.dt < new Date(+corte + JAN * DIA));
+        const dd = Math.max(1, Math.min(JAN, diasEntre(corte, refHoje(base))));
+        const nome = (op.find(o => o[0] === CP.alvo) || ['', ''])[1];
+        $('cont-comparar').innerHTML = `<div class="card card-pad barra-filtros">${selNivel}${sel('cp-alvo', CP.alvo, 'Escolha')}<label class="peq" style="display:flex;gap:6px;align-items:center">Data da intervenção <input class="campo" type="date" id="cp-corte" value="${CP.corte}" style="width:auto"></label><span class="peq mut">Compara até 90 dias antes com até 90 dias depois, em média por 30 dias.</span></div>
+            ${linhaComp([{ t: 'Antes', regs: antes, dias: JAN }, { t: 'Depois', regs: depois, dias: dd }], nome)}`;
+        $('cp-alvo').onchange = () => { CP.alvo = $('cp-alvo').value; rComparar(); };
+        $('cp-corte').onchange = () => { CP.corte = $('cp-corte').value; rComparar(); };
+    } else {
+        const grupos = CP.sel.filter(Boolean).map(k => ({ t: (op.find(o => o[0] === k) || ['', k])[1], k, regs: base.filter(r => r[campo] === k), dias: null }));
+        $('cont-comparar').innerHTML = `<div class="card card-pad barra-filtros">${selNivel}${[0, 1, 2].map(i => sel('cp-s' + i, CP.sel[i] || '', i < 2 ? 'Escolha' : '+ terceiro (opcional)')).join('')}<span class="peq mut">Usa o período, a criticidade e o tipo da barra de recorte.</span></div>${linhaComp(grupos)}`;
+        [0, 1, 2].forEach(i => { $('cp-s' + i).onchange = () => { CP.sel[i] = $('cp-s' + i).value; CP.sel = CP.sel.filter((v, j, a) => v || j < 2); rComparar(); }; });
+    }
+    $('cp-nivel').onclick = e => { const b = e.target.closest('button'); if (b) { CP.nivel = b.dataset.n; CP.sel = []; CP.alvo = ''; rComparar(); } };
+}
+function linhaComp(G, nomeAlvo) {
+    if (G.length < 2 || G.some(g => !g)) return '<div class="card"><div class="vazio">Escolha ao menos duas opções.</div></div>';
+    const An = G.map(g => analisar(g.regs, { janela: JANELA }));
+    const norm = (g, v) => g.dias ? v * 30 / g.dias : v;
+    const fmt1 = v => v.toLocaleString('pt-BR', { maximumFractionDigits: 1 });
+    const metr = [
+        ['Ocorrências' + (G[0].dias ? ' por 30 dias' : ''), (g, a) => norm(g, g.regs.length)],
+        ['Críticas (%)', g => g.regs.length ? 100 * g.regs.filter(r => r.crit === 'CRÍTICO').length / g.regs.length : 0],
+        ['Tipos sensíveis' + (G[0].dias ? ' por 30 dias' : ''), g => norm(g, g.regs.filter(r => ehSevero(r.tipo)).length)],
+        ['Escolas com registro', (g, a) => a.escolas.size],
+        ['Índice de fragilidade', (g, a) => { if (CP.nivel === 'escolas') { const e = [...a.escolas.values()][0]; return e ? e.idx : 0; } const x = (CP.nivel === 'dres' ? a.dres : a.muns).values().next().value; return x ? x.idx : 0; }],
+        ['Recorrências', (g, a) => a.recorrencias.length],
+        ['Autores reincidentes', (g, a) => a.reincidentes.length]
+    ];
+    if (COMP && COMP.escolas.some(x => x.matriculas)) metr.splice(1, 0, ['Ocorrências por mil estudantes', (g, a) => { let mat = 0; a.escolas.forEach(e => { const i = indEscola(e); if (i && i.matriculas) mat += i.matriculas; }); return mat ? 1000 * g.regs.length / mat : NaN; }]);
+    const val = metr.map(([t, f]) => G.map((g, i) => f(g, An[i])));
+    const tab = `<div class="card"><div class="tab-wrap"><table class="tab"><thead><tr><th>${nomeAlvo ? esc(nomeAlvo) : 'Indicador'}</th>${G.map((g, i) => `<th class="dir"><span style="display:inline-flex;gap:6px;align-items:center"><i style="width:10px;height:10px;border-radius:3px;background:var(${SERIE3[i]})"></i>${esc(g.t)}</span></th>`).join('')}${G.length === 2 ? '<th class="dir">Diferença</th>' : ''}</tr></thead><tbody>${metr.map(([t], j) => `<tr><td>${t}</td>${val[j].map(v => `<td class="dir num"><b>${isNaN(v) ? '—' : fmt1(v)}</b></td>`).join('')}${G.length === 2 ? `<td class="dir num">${isNaN(val[j][0]) || !val[j][0] ? '—' : (val[j][1] >= val[j][0] ? '▲ ' : '▼ ') + fmt1(Math.abs(100 * (val[j][1] - val[j][0]) / val[j][0])) + '%'}</td>` : ''}</tr>`).join('')}</tbody></table></div></div>`;
+    setTimeout(() => graficosComp(G), 20);
+    return tab + `<div class="grade g2">${cardGraf('cp-mes', G[0].dias ? 'Ocorrências por semana' : 'Ocorrências por mês', 'Mesma escala para todos', true)}${cardGraf('cp-tipos', 'Perfil dos tipos de fato', 'Participação de cada tipo no total de cada um (%)', true)}</div><div class="grade g2">${cardGraf('cp-crit', 'Criticidade', 'Participação de cada nível (%)')}${cardGraf('cp-hora', 'Hora do fato', 'Participação de cada faixa horária (%)')}</div>`;
+}
+function graficosComp(G) {
+    const semana = !!G[0].dias;
+    const chaveT = d => { if (semana) { const s = new Date(d); s.setHours(0, 0, 0, 0); s.setDate(s.getDate() - s.getDay()); return s.toISOString().slice(0, 10); } return chaveMes(d); };
+    const ks = [...new Set(G.flatMap(g => g.regs.filter(r => r.dt && +r.dt <= Date.now() + DIA).map(r => chaveT(r.dt))))].sort();
+    const ks2 = semana ? ks : ks.slice(-18);
+    const dsLinha = semana ? [{ label: 'Antes', data: [], borderColor: css(SERIE3[0]) }, { label: 'Depois', data: [], borderColor: css(SERIE3[1]) }] : G.map((g, i) => ({ label: g.t, data: ks2.map(k => g.regs.filter(r => r.dt && chaveT(r.dt) === k).length), borderColor: css(SERIE3[i]), backgroundColor: css(SERIE3[i]), tension: .3, pointRadius: 2.5, borderWidth: 2 }));
+    if (semana) { const todas = G[0].regs.concat(G[1].regs); const lab = ks2; G.forEach((g, i) => { dsLinha[i] = { label: g.t, data: lab.map(k => g.regs.filter(r => chaveT(r.dt) === k).length || null), borderColor: css(SERIE3[i]), backgroundColor: css(SERIE3[i]), tension: .3, pointRadius: 2.5, borderWidth: 2, spanGaps: false }; }); }
+    grafico('cp-mes', { type: 'line', data: { labels: ks2.map(k => semana ? k.slice(8, 10) + '/' + k.slice(5, 7) : k.slice(5) + '/' + k.slice(2, 4)), datasets: dsLinha }, options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, usePointStyle: true } } }, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { precision: 0 } } } } });
+    const tot = new Map(); G.forEach(g => g.regs.forEach(r => tot.set(tipoCurto(r.tipo), (tot.get(tipoCurto(r.tipo)) || 0) + 1)));
+    const tps = [...tot.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8).map(x => x[0]);
+    const pc = (g, f) => g.regs.length ? Math.round(1000 * g.regs.filter(f).length / g.regs.length) / 10 : 0;
+    const barras = (id, labels, fn, horiz) => grafico(id, { type: 'bar', data: { labels, datasets: G.map((g, i) => ({ label: g.t, data: labels.map(l => fn(g, l)), backgroundColor: css(SERIE3[i]), borderRadius: 3 })) }, options: { indexAxis: horiz ? 'y' : 'x', responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, usePointStyle: true } } }, scales: { [horiz ? 'x' : 'y']: { beginAtZero: true, ticks: { callback: v => v + '%' } }, [horiz ? 'y' : 'x']: { grid: { display: false } } } } });
+    barras('cp-tipos', tps, (g, t) => pc(g, r => tipoCurto(r.tipo) === t), true);
+    barras('cp-crit', CRIT_ORD, (g, c) => pc(g, r => r.crit === c));
+    const FX = [['6h–9h', 6, 9], ['9h–12h', 9, 12], ['12h–15h', 12, 15], ['15h–18h', 15, 18], ['18h–23h', 18, 23]];
+    barras('cp-hora', FX.map(f => f[0]), (g, l) => { const f = FX.find(x => x[0] === l); const com = g.regs.filter(r => r.dt && !(r.dt.getHours() === 0 && r.dt.getMinutes() === 0)); return com.length ? Math.round(1000 * com.filter(r => r.dt.getHours() >= f[1] && r.dt.getHours() < f[2]).length / com.length) / 10 : 0; });
+}
+
+/* =====================================================================
+   10. TERMOS E TENDÊNCIAS NOS RELATOS
+   ===================================================================== */
+const STOP = new Set(('diante quanto dois tres seis vinte teria tomar demais dentro fazendo considerando realizado realizou presente necessidade importancia ocasiao posteriormente situacoes volta tratar respeito razao natureza informado imediatamente utilizando envolvendo envolvidos acompanhamento conduta comportamento orientacao orientacoes procedimentos atendimento atividades ambiente a o e de da do das dos em no na nos nas um uma uns umas para por com sem sobre entre ate apos que se ao aos as os foi era sao ser esta estava estavam estao tem tinha havia houve pela pelo pelas pelos mais menos muito muita muitos muitas como quando onde qual quais quem seu sua seus suas ele ela eles elas lhe lhes isso isto esse essa este esta aquele aquela tambem ja nao sim mas ou nem porem pois porque entao assim apenas ainda depois antes durante dia dias hoje ontem horas hora momento vez vezes forma parte local fato fatos caso ocorrido ocorreu ocorrencia relato relatou relata informou informa disse diz afirmou conforme segundo devido apos todos todas todo toda outro outra outros outras mesmo mesma cada alguns algumas algum alguma nenhum nenhuma qualquer onde aonde aqui ali la sendo sido estar ficou fica foram tendo teve tiveram fez fazer feito pode podem poderia deve devem seria sera estudante estudantes aluno aluna alunos alunas escola unidade escolar professor professora professores coordenacao coordenador coordenadora direcao diretor diretora gestao sala aula turma ano serie periodo matutino vespertino noturno colega colegas responsavel responsaveis mae pai familia equipe servidor servidora ambos tanto pessoa pessoas nome nomes contra junto frente partir data meio fim inicio situacao medidas providencias registro registrado registrada encaminhado encaminhada comunicado comunicada acionado acionada orientado orientada conversa conversou chamado chamada').split(' '));
+const RADAR = [['Armas', /\b(ARMA|FACA|CANIVETE|FACAO|REVOLVER|PISTOLA|SIMULACRO|MUNICAO|ESTILETE|TESOURA)\b/], ['Ameaça de ataque', /\b(MASSACRE|ATAQUE|ATENTADO|MATAR TODOS|LISTA DE)\b/], ['Drogas', /\b(MACONHA|COCAINA|CRACK|DROGA|DROGAS|ENTORPECENTE|PINO|BALA|LSD|SKANK)\b/], ['Cigarro eletrônico', /\b(VAPE|POD|CIGARRO ELETRONICO|NARGUILE)\b/], ['Redes sociais', /\b(INSTAGRAM|TIKTOK|WHATSAPP|FACEBOOK|DISCORD|GRUPO|STORY|STORIES|PERFIL FALSO)\b/], ['Imagens íntimas', /\b(NUDE|NUDES|FOTO INTIMA|FOTOS INTIMAS|VIDEO INTIMO|SEXTORSAO)\b/], ['Desafios', /\b(DESAFIO|CHALLENGE|JOGO|BRINCADEIRA)\b/], ['Autolesão', /\b(CORTE|CORTES|AUTOMUTILACAO|SE CORTAR|LAMINA|GILETE|SUICIDIO|SE MATAR)\b/], ['Facções', /\b(FACCAO|COMANDO|SALVE|PICHACAO|SIGLA|TRIBUNAL)\b/], ['Bebida alcoólica', /\b(BEBIDA|ALCOOL|CERVEJA|EMBRIAGADO|EMBRIAGADA|VODKA|CACHACA)\b/]];
+const TR = { foco: '', janela: 30 };
+function tokens(txt, nomes) { return chave(String(txt || '').replace(/\*\*/g, ' ')).split(' ').filter(w => w.length >= 4 && !/\d/.test(w) && !STOP.has(w.toLowerCase()) && !nomes.has(w)); }
+function analisarTermos() {
+    const hoje = A.hoje, J = TR.janela;
+    const nomes = new Set(); A.pessoas.forEach(p => p.k.split(' ').forEach(w => nomes.add(w)));
+    const tot = new Map(), rec = new Map(), ant = new Map(), bi = new Map(), regsDe = new Map(), escRec = new Map();
+    let nRec = 0, nAnt = 0;
+    REG.forEach(r => {
+        const d = r.dt ? diasEntre(r.dt, hoje) : 999; const emRec = d <= J, emAnt = d > J && d <= J * 4;
+        if (emRec) nRec++; if (emAnt) nAnt++;
+        const ws = tokens(r.resumo, nomes), vistos = new Set();
+        ws.forEach((w, i) => {
+            if (!vistos.has(w)) { vistos.add(w); tot.set(w, (tot.get(w) || 0) + 1); if (emRec) rec.set(w, (rec.get(w) || 0) + 1); if (emAnt) ant.set(w, (ant.get(w) || 0) + 1); if (!regsDe.has(w)) regsDe.set(w, []); regsDe.get(w).push(r); if (emRec) { if (!escRec.has(w)) escRec.set(w, new Set()); escRec.get(w).add(r.escK); } }
+            if (i && ws[i - 1] !== w) { const b = ws[i - 1] + ' ' + w; bi.set(b, (bi.get(b) || 0) + 1); }
+        });
+    });
+    const emerg = [...rec.entries()].filter(([w, n]) => n >= 4 && (escRec.get(w) || new Set()).size >= 3).map(([w, n]) => { const base = (ant.get(w) || 0) / 3; const taxa = nRec ? n / nRec : 0, taxaAnt = nAnt ? (ant.get(w) || 0) / nAnt : 0; return { w, n, base, cresc: taxaAnt ? taxa / taxaAnt : 99, novo: !ant.get(w) }; }).filter(x => x.cresc >= 2).sort((a, b) => (b.cresc === 99) - (a.cresc === 99) || b.n * Math.log(b.cresc + 1) - a.n * Math.log(a.cresc + 1)).slice(0, 25);
+    const lim = REG.length * 0.2; const top = [...tot.entries()].filter(([, n]) => n <= lim).sort((a, b) => b[1] - a[1]).slice(0, 80);
+    const bigr = [...bi.entries()].filter(([, n]) => n >= 5).sort((a, b) => b[1] - a[1]).slice(0, 20);
+    const meses = [...new Set(REG.filter(r => r.dt && +r.dt <= Date.now() + DIA).map(r => chaveMes(r.dt)))].sort().slice(-12);
+    const radar = RADAR.map(([t, re]) => { const rs = REG.filter(r => re.test(chave(r.resumo))); return { t, re, regs: rs, porMes: meses.map(m => rs.filter(r => r.dt && chaveMes(r.dt) === m).length), rec: rs.filter(r => r.dt && diasEntre(r.dt, hoje) <= J).length }; });
+    return { top, emerg, bigr, radar, meses, regsDe, nRec, nAnt };
+}
+function rTermos() {
+    $('acoes-termos').innerHTML = `<span class="peq" style="color:#9fb0c4">Janela recente</span><div class="seg" style="background:rgba(255,255,255,.08)" id="tr-jan">${[15, 30, 60].map(j => `<button data-j="${j}" class="${TR.janela === j ? 'ativo' : ''}" style="${TR.janela === j ? '' : 'color:#cbd5e1'}">${j} dias</button>`).join('')}</div>`;
+    $('tr-jan').onclick = e => { const b = e.target.closest('button'); if (b) { TR.janela = +b.dataset.j; rTermos(); } };
+    const T = window.TERMOS = analisarTermos();
+    const mx = T.top.length ? T.top[0][1] : 1, emSet = new Map(T.emerg.map(x => [x.w, x]));
+    const nuvem = T.top.slice().sort((a, b) => a[0].localeCompare(b[0])).map(([w, n]) => { const s = 11 + 22 * Math.sqrt(n / mx), em = emSet.get(w); return `<button onclick="verTermo('${w}')" style="font-size:${s.toFixed(1)}px;font-weight:${n / mx > .3 ? 700 : 600};color:${em ? 'var(--c-crit)' : n / mx > .3 ? 'var(--texto)' : 'var(--texto2)'};padding:2px 5px;line-height:1.25" title="${n} registros${em ? ' · em alta' : ''}">${w.toLowerCase()}</button>`; }).join(' ');
+    $('cont-termos').innerHTML = `
+    <div class="grade g32" style="align-items:start">
+        <div class="card card-pad"><div class="card-tit"><div class="ico">${ic('search')}</div><div><h3>Nuvem de termos</h3><p>80 palavras mais frequentes nos relatos (cada registro conta uma vez). Palavras genéricas, presentes em mais de 20% dos relatos, e nomes de pessoas ficam de fora. Em vermelho, termos em alta.</p></div></div><div style="text-align:center;line-height:1.6">${nuvem || '<div class="vazio">Sem relatos no recorte.</div>'}</div></div>
+        <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('trend')}</div><div><h3>Termos em alta</h3><p>Frequência nos últimos ${TR.janela} dias ao menos 2× maior que nos ${TR.janela * 3} dias anteriores, em 3 ou mais escolas</p></div></div></div>
+            <div class="lista" style="max-height:440px;overflow:auto">${T.emerg.map(x => `<button class="item" onclick="verTermo('${x.w}')"><span class="ic" style="--c:var(--c-crit)">${x.n}</span><span class="tx"><b>${x.w.toLowerCase()}</b><span>${x.novo ? 'novo: não aparecia antes' : '×' + x.cresc.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' em relação ao período anterior'}</span></span></button>`).join('') || `<div class="vazio peq">Nenhum termo em alta na janela.</div>`}</div></div>
+    </div>
+    <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('target')}</div><div><h3>Radar de temas</h3><p>Grupos de palavras ligados a riscos conhecidos, contados nos relatos dos últimos 12 meses. Clique para ver os registros.</p></div></div>
+        <div class="tab-wrap"><table class="tab"><thead><tr><th>Tema</th>${T.meses.map(m => `<th class="dir">${m.slice(5)}/${m.slice(2, 4)}</th>`).join('')}<th class="dir">Últimos ${TR.janela} dias</th><th class="dir">Total</th></tr></thead><tbody>${T.radar.map((x, i) => { const m = Math.max(1, ...x.porMes); return `<tr class="clic" onclick="listaModal('Radar: ${x.t}', TERMOS.radar[${i}].regs)"><td><b>${x.t}</b></td>${x.porMes.map(v => `<td class="dir num" style="background:${v ? `color-mix(in srgb, var(--c-alto) ${Math.round(8 + 60 * v / m)}%, transparent)` : 'transparent'}">${v || ''}</td>`).join('')}<td class="dir num"><b>${x.rec}</b></td><td class="dir num">${x.regs.length}</td></tr>`; }).join('')}</tbody></table></div></div>
+    <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('repeat')}</div><div><h3>Expressões frequentes</h3><p>Pares de palavras que aparecem juntos nos relatos</p></div></div><div style="display:flex;flex-wrap:wrap;gap:6px">${T.bigr.map(([b, n]) => `<span class="chip" style="--c:var(--roxo)"><span class="pt"></span>${esc(b.toLowerCase())} <span class="q">${n}</span></span>`).join('') || '<span class="mut peq">Sem expressões recorrentes.</span>'}</div></div>`;
+}
+function verTermo(w) { const rs = (window.TERMOS && TERMOS.regsDe.get(w)) || []; listaModal('Relatos com "' + w.toLowerCase() + '"', rs); }
+/* Mapa de calor: não redesenha quando o mapa está oculto (evita erro de canvas com largura zero) */
+if (typeof L !== 'undefined' && L.HeatLayer) { const _rd = L.HeatLayer.prototype._redraw; L.HeatLayer.prototype._redraw = function () { if (!this._map || !this._canvas || !this._canvas.width || !this._canvas.height) return; try { return _rd.call(this); } catch (e) { } }; }
 
 </script>
 </body>

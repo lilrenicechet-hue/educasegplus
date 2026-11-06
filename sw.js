@@ -6,13 +6,14 @@
    e funcionamento offline do sistema. Os dados da API (Google Sheets)
    nunca são guardados pelo service worker.
    ===================================================================== */
-const VERSAO = 'educaseg-plus-v2.0.0';
+const VERSAO = 'educaseg-plus-v2.1.0';
 const CACHE_APP = VERSAO + '-app';
 const CACHE_LIB = VERSAO + '-lib';
 
 const BIBLIOTECAS = [
     'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js',
     'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
 ];
 
