@@ -1263,6 +1263,33 @@ html.menu-recolhido .lat-acoes { max-width: none; flex-direction: column; }
 .qd-b i { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--texto2); opacity: .5; }
 .qd-v { text-align: right; } .qd-v b { font-variant-numeric: tabular-nums; } .qd-v small { display: block; font-size: 10.5px; color: var(--muted); }
 @media (max-width: 640px) { .qd-l { grid-template-columns: minmax(0,1fr) 70px; } .qd-b { grid-column: 1 / -1; grid-row: 2; } .qd-v small { display: none; } .ag-dia { grid-template-columns: minmax(0,1fr); } }
+
+/* ===== 2.5: tela inicial enxuta, logo e aviso de versão ===== */
+#login.login-v3 .login-arte { justify-content: flex-start; gap: 0; }
+#login.login-v3 .login-marca { gap: 16px; }
+.lg3-logo svg { display: block; filter: drop-shadow(0 8px 24px rgba(56,189,248,.35)); }
+.lg3-nome b { display: block; font-size: 30px; font-weight: 900; letter-spacing: -.03em; color: #fff; line-height: 1; }
+.lg3-nome b span { background: linear-gradient(90deg, #7dd3fc, #3b82f6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lg3-nome small { display: block; margin-top: 7px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #9db0d6; }
+#login.login-v3 .login-mt { width: min(600px, 92%); margin: auto; }
+#login.login-v3 .login-caixa { gap: 16px; padding: 32px 30px; }
+#login.login-v3 .login-caixa h1 { font-size: 28px; }
+#login.login-v3 .login-caixa > p { margin-top: -10px; }
+.lg-mais { border: 0 !important; background: none !important; padding: 0 !important; }
+.lg-mais > summary { list-style: none; cursor: pointer; text-align: center; font-size: 12.5px; font-weight: 600; color: var(--lg-mut, #9db0d6) !important; padding: 4px; }
+.lg-mais > summary::-webkit-details-marker { display: none; }
+.lg-mais > summary::after { content: ' ▾'; }
+.lg-mais[open] > summary::after { content: ' ▴'; }
+.lg-mais-corpo { display: grid; gap: 10px; margin-top: 10px; }
+@media (max-width: 860px) { #login.login-v3 .login-mt { display: block; width: min(230px, 62%); margin: 12px auto 0; } #login.login-v3 .lg3-nome small { font-size: 10.5px; letter-spacing: .1em; } .lg3-nome b { font-size: 24px; } .lg3-logo svg { width: 52px; height: 52px; } }
+.lat-emblema svg { width: 40px; height: 40px; }
+#aviso-versao { position: fixed; z-index: 450; left: 50%; bottom: max(18px, env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 140%); width: min(620px, calc(100vw - 32px)); display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 16px; background: #0b1630; color: #fff; border: 1px solid #2f4a85; box-shadow: 0 24px 60px -18px rgba(0,0,0,.7); transition: transform .35s cubic-bezier(.16,1,.3,1); }
+#aviso-versao.on { transform: translate(-50%, 0); }
+.av-ic { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: rgba(59,130,246,.2); color: #93c5fd; font-size: 19px; flex-shrink: 0; }
+.av-tx { min-width: 0; flex: 1; } .av-tx b { display: block; font-size: 14px; } .av-tx span { display: block; font-size: 12.5px; color: #9db0d6; margin-top: 2px; line-height: 1.4; }
+.av-bt { display: flex; gap: 8px; flex-shrink: 0; }
+#aviso-versao .btn-s { background: transparent; color: #dbe6ff; border-color: #2f4a85; }
+@media (max-width: 560px) { #aviso-versao { flex-wrap: wrap; } .av-bt { width: 100%; justify-content: flex-end; } }
 </style>
 
 </head>
@@ -1330,6 +1357,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
+const APP_VERSAO = '2.5.0+dcb50176';
+const APP_NOTAS = 'Nova tela de entrada, novo logo e aviso automático de atualização.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -4748,6 +4777,133 @@ rVerif = function () {
         <div class="qd">${L.map(x => `<button class="qd-l" onclick="filtrarPor('dre','${esc(x.k)}')"><span class="qd-n">${esc(nomeDre(x.k).replace(/^DRE /, ''))}</span><span class="qd-b"><span style="width:${x.q.toFixed(1)}%;background:${cor(x.q)}"></span><i style="left:80%" title="Meta: 80%"></i></span><span class="qd-v"><b>${Math.round(x.q)}%</b><small>${fmtN(x.p)} de ${fmtN(x.n)} com pendência</small></span></button>`).join('')}</div>
         <p class="dica">A marca vertical indica 80%, referência mínima de qualidade sugerida.</p></div>`);
 };
+
+/* =====================================================================
+   EDUCASEG-PLUS 2.5 — logo de inteligência, tela inicial enxuta e
+   aviso de nova versão com "Atualizar agora"
+   ===================================================================== */
+
+/* ---------- Logo: selo de radar com retícula e rede de dados ---------- */
+function emblemaV2(tam, id) {
+    id = id || 'ev' + Math.random().toString(36).slice(2, 7);
+    const c = 32, tic = [];
+    for (let a = 0; a < 360; a += 10) { const r = a % 90 === 0 ? 23.2 : 24.8, t = (a - 90) * Math.PI / 180; tic.push(`M${(c + Math.cos(t) * r).toFixed(2)} ${(c + Math.sin(t) * r).toFixed(2)}L${(c + Math.cos(t) * 26.6).toFixed(2)} ${(c + Math.sin(t) * 26.6).toFixed(2)}`); }
+    const N = [[21.5, 23], [40.5, 19.5], [45.5, 36], [33, 45.5], [19, 38.5]];
+    const ar = (a1, a2, r) => { const p = a => [(c + Math.cos((a - 90) * Math.PI / 180) * r).toFixed(2), (c + Math.sin((a - 90) * Math.PI / 180) * r).toFixed(2)]; const [x1, y1] = p(a1), [x2, y2] = p(a2); return `M${c} ${c}L${x1} ${y1}A${r} ${r} 0 0 1 ${x2} ${y2}Z`; };
+    return `<svg viewBox="0 0 64 64" width="${tam}" height="${tam}" aria-hidden="true" class="emblema">
+    <defs>
+      <radialGradient id="${id}f" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#173b8f"/><stop offset=".65" stop-color="#0b1a42"/><stop offset="1" stop-color="#060d24"/></radialGradient>
+      <linearGradient id="${id}a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7dd3fc"/><stop offset=".5" stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient>
+      <linearGradient id="${id}s" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#38bdf8" stop-opacity="0"/><stop offset="1" stop-color="#38bdf8" stop-opacity=".55"/></linearGradient>
+      <radialGradient id="${id}g" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#7dd3fc" stop-opacity=".9"/><stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/></radialGradient>
+    </defs>
+    <circle cx="32" cy="32" r="30.5" fill="url(#${id}f)"/>
+    <circle cx="32" cy="32" r="30.5" fill="none" stroke="url(#${id}a)" stroke-width="2.2"/>
+    <path d="${tic.join('')}" stroke="#93c5fd" stroke-opacity=".7" stroke-width="1.1" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="15.5" fill="none" stroke="#60a5fa" stroke-opacity=".35" stroke-width="1" stroke-dasharray="2 2.4"/>
+    <path d="M32 8.5V25M32 39V55.5M8.5 32H25M39 32H55.5" stroke="#60a5fa" stroke-opacity=".28" stroke-width=".9"/>
+    <path d="${ar(0, 62, 22)}" fill="url(#${id}s)"/>
+    <path d="M32 32 ${(c + Math.cos((62 - 90) * Math.PI / 180) * 22).toFixed(2)} ${(c + Math.sin((62 - 90) * Math.PI / 180) * 22).toFixed(2)}" stroke="#bae6fd" stroke-width="1.2" stroke-linecap="round"/>
+    <g stroke="#dbeafe" stroke-opacity=".8" stroke-width="1.15" stroke-linecap="round" fill="none"><path d="M${N.map(p => p.join(' ')).join('L')}Z"/><path d="M32 32L${N[0].join(' ')}M32 32L${N[2].join(' ')}M32 32L${N[3].join(' ')}"/></g>
+    <g fill="#fff">${N.map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="2.1"/>`).join('')}</g>
+    <circle cx="32" cy="32" r="7.5" fill="url(#${id}g)"/>
+    <circle cx="32" cy="32" r="3.9" fill="#38bdf8" stroke="#fff" stroke-width="1.5"/>
+  </svg>`;
+}
+emblema = emblemaV2;
+(function () {
+    document.querySelectorAll('.lat-ic').forEach(el => { el.removeAttribute('data-ico'); el.innerHTML = emblema(40); el.classList.add('lat-emblema'); });
+    try {
+        const l = document.querySelector('link[rel="icon"]') || document.head.appendChild(Object.assign(document.createElement('link'), { rel: 'icon' }));
+        l.type = 'image/svg+xml'; l.href = 'data:image/svg+xml,' + encodeURIComponent(emblema(64, 'fav').replace(' class="emblema"', ' xmlns="http://www.w3.org/2000/svg"'));
+    } catch (e) { }
+})();
+
+/* ---------- Tela inicial enxuta: nome do sistema + mapa | login ---------- */
+const _mostrarLoginV7 = mostrarLogin;
+mostrarLogin = function (msg) {
+    _mostrarLoginV7(msg);
+    const l = $('login'); if (!l) return;
+    l.classList.add('login-v3');
+    const arte = l.querySelector('.login-arte');
+    if (arte) {
+        const tese = arte.querySelector('.login-tese'); if (tese) tese.remove();
+        const marca = arte.querySelector('.login-marca');
+        if (marca) marca.innerHTML = `<div class="lg3-logo">${emblema(64, 'lgo')}</div><div class="lg3-nome"><b>EDUCASEG<span>-PLUS</span></b><small>Inteligência em Segurança Escolar · SEDUC-MT</small></div>`;
+    }
+    const cx = l.querySelector('.login-caixa'); if (!cx) return;
+    const h1 = cx.querySelector('h1'); if (h1) h1.textContent = 'Entrar';
+    const p = cx.querySelector(':scope > p'); if (p) p.textContent = 'Acesso restrito a usuários cadastrados.';
+    // agrupa as opções secundárias num bloco recolhido
+    const srv = $('lg-srv'), ou = cx.querySelector('.login-ou'), loc = $('lg-local'), inst = $('lg-instalar');
+    const dicaLocal = loc && loc.nextElementSibling && loc.nextElementSibling.classList.contains('dica') ? loc.nextElementSibling : null;
+    if (srv && !$('lg-mais')) {
+        const mais = document.createElement('details'); mais.id = 'lg-mais'; mais.className = 'lg-mais';
+        mais.innerHTML = '<summary>Outras opções de acesso</summary><div class="lg-mais-corpo"></div>';
+        const corpo = mais.querySelector('.lg-mais-corpo');
+        srv.parentNode.insertBefore(mais, srv);
+        [srv, loc, dicaLocal, inst].forEach(el => { if (el) corpo.appendChild(el); });
+        if (ou) ou.remove();
+        if (srv.hasAttribute('open') && !(API_PADRAO || ls.get('esp_api'))) mais.open = true;
+        const rod = cx.querySelector('.login-rodape'); if (rod) cx.appendChild(rod);
+    }
+    const form = $('form-login');
+    if (form) form.addEventListener('submit', () => { if (!$('lg-api').value.trim()) $('lg-mais').open = true; }, true);
+};
+
+/* ---------- Aviso de nova versão ---------- */
+const ATUALIZACAO = { reg: null, aviso: false, notas: '' };
+function mostrarAvisoAtualizacao(notas) {
+    if (ATUALIZACAO.aviso || EM_ARTEFATO) return;
+    ATUALIZACAO.aviso = true;
+    const d = document.createElement('div');
+    d.id = 'aviso-versao'; d.setAttribute('role', 'alertdialog'); d.setAttribute('aria-label', 'Nova versão disponível');
+    d.innerHTML = `<div class="av-ic">${ic('download')}</div><div class="av-tx"><b>Nova versão do EDUCASEG-PLUS disponível</b><span>${esc(notas || 'Melhorias e correções foram publicadas.')}</span></div><div class="av-bt"><button class="btn btn-s btn-sm" id="av-depois">Depois</button><button class="btn btn-p btn-sm" id="av-agora">${ic('repeat')}Atualizar agora</button></div>`;
+    document.body.appendChild(d);
+    requestAnimationFrame(() => d.classList.add('on'));
+    $('av-depois').onclick = () => { d.classList.remove('on'); setTimeout(() => d.remove(), 300); ATUALIZACAO.aviso = false; ATUALIZACAO.adiadoAte = Date.now() + 30 * 60000; };
+    $('av-agora').onclick = atualizarAgora;
+}
+function atualizarAgora() {
+    const b = $('av-agora'); if (b) { b.disabled = true; b.innerHTML = ic('clock') + 'Atualizando…'; }
+    const reg = ATUALIZACAO.reg;
+    const recarregar = () => { try { sessionStorage.setItem('esp_atualizado', '1'); } catch (e) { } location.reload(); };
+    if (reg && reg.waiting) {
+        navigator.serviceWorker.addEventListener('controllerchange', recarregar, { once: true });
+        reg.waiting.postMessage('ATUALIZAR');
+        setTimeout(recarregar, 2500);
+    } else recarregar();
+}
+async function verificarVersao() {
+    if (EM_ARTEFATO || !/^https?:$/.test(location.protocol)) return;
+    if (ATUALIZACAO.adiadoAte && Date.now() < ATUALIZACAO.adiadoAte) return;
+    try { if (ATUALIZACAO.reg) ATUALIZACAO.reg.update(); } catch (e) { }
+    try {
+        const r = await fetch(location.pathname + '?v=' + Date.now(), { cache: 'no-store' });
+        if (!r.ok) return;
+        const t = await r.text(), m = t.match(/APP_VERSAO = '([^']+)'/), n = t.match(/APP_NOTAS = '([^']*)'/);
+        if (m && m[1] !== APP_VERSAO) mostrarAvisoAtualizacao(n ? n[1] : '');
+    } catch (e) { }
+}
+registrarSW = function () {
+    if (EM_ARTEFATO || !('serviceWorker' in navigator) || !/^https?:$/.test(location.protocol)) return;
+    navigator.serviceWorker.register('sw.js').then(reg => {
+        ATUALIZACAO.reg = reg;
+        const reforcarManifesto = () => { const l = document.querySelector('link[rel=manifest]'); if (l && !l.dataset.ok) { l.dataset.ok = '1'; l.href = 'manifest.webmanifest?v=' + Date.now(); } };
+        if (navigator.serviceWorker.controller) reforcarManifesto();
+        navigator.serviceWorker.addEventListener('controllerchange', reforcarManifesto);
+        const vigiar = w => w && w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) mostrarAvisoAtualizacao(); });
+        if (reg.waiting && navigator.serviceWorker.controller) mostrarAvisoAtualizacao();
+        reg.addEventListener('updatefound', () => vigiar(reg.installing));
+    }).catch(() => { });
+    setTimeout(verificarVersao, 60000);
+    setInterval(verificarVersao, 15 * 60000);
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') verificarVersao(); });
+};
+document.addEventListener('DOMContentLoaded', () => {
+    let ok = false; try { ok = sessionStorage.getItem('esp_atualizado') === '1'; sessionStorage.removeItem('esp_atualizado'); } catch (e) { }
+    if (ok) setTimeout(() => toast('Sistema atualizado para a versão ' + APP_VERSAO.split('+')[0], 'check'), 1200);
+});
 
 </script>
 </body>
