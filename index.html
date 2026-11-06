@@ -1518,6 +1518,54 @@ button.rl-lnk:hover { color: var(--prim); }
 .rl-mon-lista .t small { display: block; font-weight: 500; font-size: 11px; color: var(--muted); margin-top: 2px; }
 .rl-mon-lista svg { width: 13px; height: 13px; flex: none; color: var(--muted); margin-top: 2px; }
 .rl-mon-rod { font-size: 11px; margin-top: 8px; }
+
+/* ---------- 3.2 janela de emissão de documentos ---------- */
+.dx-fontes { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 8px; margin-top: 6px; }
+.dx-fop { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--borda); background: var(--card); cursor: pointer; }
+.dx-fop input, .dx-fmt input { position: absolute; opacity: 0; pointer-events: none; }
+.dx-fop b { font-size: 15px; }
+.dx-fop small { font-size: 11px; color: var(--muted); }
+.dx-fop span { font-size: 20px; color: var(--texto2); margin-top: 4px; }
+.dx-fop.on, .dx-fmt.on { border-color: var(--prim); background: var(--prim-claro); box-shadow: inset 0 0 0 1px var(--prim); }
+.dx-fop:hover, .dx-fmt:hover { border-color: var(--prim); }
+.dx-fmts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 6px; }
+.dx-fmt { position: relative; display: flex; gap: 10px; align-items: flex-start; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--borda); background: var(--card); cursor: pointer; }
+.dx-fmt .ic { flex: none; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: var(--prim); background: color-mix(in srgb, var(--prim) 12%, transparent); }
+.dx-fmt .ic svg { width: 16px; height: 16px; }
+.dx-fmt b { display: block; font-size: 13.5px; }
+.dx-fmt small { display: block; font-size: 11.5px; color: var(--muted); line-height: 1.4; margin-top: 2px; }
+@media (max-width: 700px) { .dx-fmts { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- 3.3 verificação pública e anonimização ---------- */
+.dx-anon { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--verde) 35%, var(--borda)); background: color-mix(in srgb, var(--verde) 6%, var(--card)); cursor: pointer; }
+.dx-anon input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--verde); flex: none; }
+.dx-anon b { display: block; font-size: 13px; }
+.dx-anon small { display: block; font-size: 12px; color: var(--muted); line-height: 1.45; margin-top: 2px; }
+#verif-pub { position: fixed; inset: 0; z-index: 3000; display: grid; place-items: center; padding: 16px; background: radial-gradient(circle at 30% 20%, #173b8f, #060d24 70%); overflow-y: auto; }
+.vp-caixa { width: 100%; max-width: 520px; background: var(--card); color: var(--texto); border-radius: 18px; padding: 22px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.7); }
+.vp-cab { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; }
+.vp-cab svg { width: 44px; height: 44px; }
+.vp-cab div { flex: 1; }
+.vp-cab b { display: block; font-size: 17px; }
+.vp-cab small { color: var(--muted); font-size: 12.5px; }
+.vp-form { display: flex; gap: 8px; }
+.vp-form .campo { flex: 1; text-transform: uppercase; }
+.vp-res { display: flex; gap: 12px; align-items: flex-start; margin-top: 16px; padding: 14px; border-radius: 12px; background: var(--suave); }
+.vp-res svg { width: 22px; height: 22px; flex: none; }
+.vp-res b { display: block; font-size: 15px; }
+.vp-res span { font-size: 13px; color: var(--texto2); }
+.vp-res.ok { background: color-mix(in srgb, var(--verde) 10%, var(--card)); color: var(--verde); }
+.vp-res.nao { background: color-mix(in srgb, var(--c-crit) 9%, var(--card)); color: var(--c-crit); }
+.vp-dados { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 14px 0 0; font-size: 13px; }
+.vp-dados dt { color: var(--muted); font-weight: 600; }
+.vp-dados dd { margin: 0; font-weight: 600; word-break: break-all; }
+.vp-dica { font-size: 12.5px; color: var(--muted); margin: 12px 0 0; }
+.vp-nota { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; color: var(--muted); margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--borda); }
+.vp-nota svg { width: 15px; height: 15px; flex: none; margin-top: 1px; }
+.vp-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; background: none; border: 0; padding: 0; font: inherit; font-size: 12.5px; color: var(--prim); cursor: pointer; }
+.vp-link svg { width: 14px; height: 14px; }
+.vp-cab .ic-btn { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; border: 0; background: var(--suave); color: var(--muted); cursor: pointer; }
+.vp-cab .ic-btn svg { width: 18px; height: 18px; }
 </style>
 
 </head>
@@ -1585,8 +1633,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '3.1.0+f4f42307';
-const APP_NOTAS = 'Release passa a monitorar menções à Secretária de Estado de Educação de MT.';
+const APP_VERSAO = '3.3.0+219ba4a4';
+const APP_NOTAS = 'Documentos com emissor anonimizado e QR Code sem o endereço da base; verificação pública de autenticidade.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -5803,104 +5851,151 @@ if (typeof LEGENDAS !== 'undefined') LEGENDAS.release = {
    selo de autenticidade com QR, aviso formal de sigilo e penalidades.
    Usado pelo Relatório de inteligência e pelo relatório do Release.
    ===================================================================== */
+/* ---------- Fontes e preferências de emissão ---------- */
+const DX_FONTES = [
+    { id: 'inter', nome: 'Inter', tipo: 'Sem serifa · moderna', css: "'Inter', Arial, sans-serif", g: 'Inter:wght@400;500;600;700;800' },
+    { id: 'roboto', nome: 'Roboto', tipo: 'Sem serifa · neutra', css: "'Roboto', Arial, sans-serif", g: 'Roboto:wght@400;500;700;900' },
+    { id: 'opensans', nome: 'Open Sans', tipo: 'Sem serifa · leitura longa', css: "'Open Sans', Arial, sans-serif", g: 'Open+Sans:wght@400;600;700;800' },
+    { id: 'arial', nome: 'Arial', tipo: 'Sem serifa · padrão do sistema', css: 'Arial, Helvetica, sans-serif' },
+    { id: 'source', nome: 'Source Serif', tipo: 'Com serifa · institucional', css: "'Source Serif 4', Georgia, serif", g: 'Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700' },
+    { id: 'merri', nome: 'Merriweather', tipo: 'Com serifa · jornalística', css: "'Merriweather', Georgia, serif", g: 'Merriweather:wght@400;700;900' },
+    { id: 'times', nome: 'Times New Roman', tipo: 'Com serifa · ofício tradicional', css: "'Times New Roman', Times, serif" }
+];
+const DXP = (() => { let p = {}; try { p = JSON.parse(localStorage.getItem('esp_doc_pref') || '{}'); } catch (e) { } return Object.assign({ anon: true, autor: '', cargo: '', fonte: 'inter', tam: 'normal' }, p); })();
+const dxSalvarPref = () => { try { localStorage.setItem('esp_doc_pref', JSON.stringify(DXP)); } catch (e) { } };
+const dxFonte = () => DX_FONTES.find(f => f.id === DXP.fonte) || DX_FONTES[0];
+const dxLinkFonte = f => f.g ? `https://fonts.googleapis.com/css2?family=${f.g}&family=JetBrains+Mono:wght@500;700&display=swap` : 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&display=swap';
+function dxCarregarFonte(f) { if (!f.g || document.querySelector(`link[data-dxf="${f.id}"]`)) return; const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = dxLinkFonte(f); l.dataset.dxf = f.id; document.head.appendChild(l); }
+/* Identificador do emissor: pseudônimo estável calculado a partir da conta. A identidade real fica só na auditoria. */
+function idEmissor(conta) { const k = String(conta || (USUARIO && (USUARIO.email || USUARIO.nome)) || 'local').trim().toLowerCase(); const h = hashStr(k).toString(16).toUpperCase().padStart(8, '0'); return 'U-' + h.slice(0, 4) + '-' + h.slice(4); }
+const dxAnon = () => DXP.anon !== false;
+/* Link de conferência que não expõe o endereço da base: aponta para a página do sistema */
+function dxLinkVerif(cod) { if (typeof EM_ARTEFATO !== 'undefined' && EM_ARTEFATO) return ''; if (!/^https?:$/.test(location.protocol)) return ''; return location.origin + location.pathname + '#verificar=' + encodeURIComponent(cod); }
+const dxAutor = () => (DXP.autor || '').trim() || (USUARIO && USUARIO.nome) || 'Responsável pela emissão';
+const dxCargo = () => (DXP.cargo || '').trim() || (USUARIO ? (PERFIS[USUARIO.perfil] || USUARIO.perfil) : '');
+
 const DX_CSS = `
-.dx{--dx-azul:#0b1a42;--dx-azul2:#173b8f;--dx-verm:#b91c1c;--dx-cinza:#475569;--dx-borda:#cbd5e1;font-family:'Inter',Arial,Helvetica,sans-serif;color:#0f172a;font-size:11px;line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.dx{--dx-azul:#0b1a42;--dx-azul2:#1e3a8a;--dx-azul3:#2563eb;--dx-verm:#b91c1c;--dx-tx:#1e293b;--dx-tx2:#475569;--dx-borda:#d8dee8;--dx-suave:#f5f7fb;font-family:var(--dx-fonte,'Inter',Arial,sans-serif);color:var(--dx-tx);font-size:calc(12.5px * var(--dx-esc,1));line-height:1.6;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-variant-numeric:tabular-nums}
 .dx *{box-sizing:border-box}
-.dx-pag{position:relative;width:794px;max-width:100%;margin:0 auto 22px;background:#fff;padding:0 0 64px;box-shadow:0 18px 44px -20px rgba(2,6,23,.45);border-radius:3px;overflow:hidden;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='300'%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' transform='rotate(-30 210 150)' font-family='Arial' font-weight='900' font-size='30' fill='%23b91c1c' fill-opacity='0.045' letter-spacing='4'%3EDOCUMENTO RESTRITO%3C/text%3E%3C/svg%3E")}
-.dx-cab{display:flex;align-items:center;gap:12px;padding:14px 44px 12px;border-bottom:2px solid var(--dx-azul);margin-bottom:22px}
-.dx-cab .em svg{width:34px;height:34px;display:block}
-.dx-cab .org{flex:1;min-width:0;font-size:9px;line-height:1.35;color:var(--dx-cinza);text-transform:uppercase;letter-spacing:.06em}
-.dx-cab .org b{display:block;color:var(--dx-azul);font-size:10px;letter-spacing:.08em}
-.dx-cab .cl{font-size:9px;font-weight:900;letter-spacing:.16em;color:#fff;background:var(--dx-verm);padding:4px 9px;border-radius:2px;white-space:nowrap}
-.dx-cab .cod{font-family:'JetBrains Mono',Consolas,monospace;font-size:9px;color:var(--dx-azul);text-align:right;white-space:nowrap}
-.dx-rod{position:absolute;left:0;right:0;bottom:0;padding:10px 44px;border-top:1px solid var(--dx-borda);display:flex;justify-content:space-between;gap:12px;font-size:8.5px;color:#64748b;background:#fff}
-.dx-rod b{color:var(--dx-verm);letter-spacing:.08em}
-.dx-lat{position:absolute;left:8px;top:0;bottom:0;display:flex;align-items:center;writing-mode:vertical-rl;transform:rotate(180deg);font-size:7.5px;font-weight:800;letter-spacing:.22em;color:var(--dx-verm);opacity:.7;white-space:nowrap}
-.dx-mi{padding:0 44px 0 52px}
+.dx .mono{font-family:'JetBrains Mono',Consolas,monospace}
+/* folhas na tela */
+.dx-pag{position:relative;width:794px;max-width:100%;margin:0 auto 26px;background:#fff;box-shadow:0 1px 2px rgba(2,6,23,.08),0 22px 48px -24px rgba(2,6,23,.45);border-radius:2px;overflow:hidden}
+.dx-pag:not(.dx-capa){padding:0 0 70px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='360'%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' transform='rotate(-30 260 180)' font-family='Arial' font-weight='900' font-size='34' fill='%23b91c1c' fill-opacity='0.035' letter-spacing='6'%3EDOCUMENTO RESTRITO%3C/text%3E%3C/svg%3E")}
+.dx-cab{display:flex;align-items:center;gap:12px;margin:0 56px 26px;padding:22px 0 10px;border-bottom:1.5px solid var(--dx-azul)}
+.dx-cab .em svg{width:30px;height:30px;display:block}
+.dx-cab .org{flex:1;min-width:0;font-size:.72em;line-height:1.35;color:var(--dx-tx2)}
+.dx-cab .org b{display:block;color:var(--dx-azul);font-size:1.08em;letter-spacing:.04em}
+.dx-cab .cod{font-size:.7em;color:var(--dx-tx2);text-align:right;white-space:nowrap;line-height:1.4}
+.dx-cab .cl{font-size:.68em;font-weight:800;letter-spacing:.14em;color:var(--dx-verm);border:1.5px solid var(--dx-verm);padding:3px 8px;border-radius:3px;white-space:nowrap}
+.dx-rod{position:absolute;left:56px;right:56px;bottom:18px;padding-top:8px;border-top:1px solid var(--dx-borda);display:flex;justify-content:space-between;gap:16px;font-size:.66em;color:#64748b}
+.dx-rod b{color:var(--dx-verm)}
+.dx-mi{padding:0 56px}
 /* capa */
-.dx-capa{min-height:1123px;display:flex;flex-direction:column;padding:0}
-.dx-tarja{background:var(--dx-verm);color:#fff;text-align:center;font-weight:900;letter-spacing:.32em;font-size:11px;padding:7px 10px}
-.dx-tarja small{display:block;font-weight:600;letter-spacing:.06em;font-size:8.5px;opacity:.92}
-.dx-capa-topo{background:linear-gradient(135deg,#060d24,var(--dx-azul) 55%,var(--dx-azul2));color:#fff;padding:34px 52px 30px;display:flex;gap:18px;align-items:center}
-.dx-capa-topo svg{width:70px;height:70px;flex:none}
-.dx-capa-topo .org{font-size:10px;letter-spacing:.14em;text-transform:uppercase;line-height:1.6;color:#cbd5e1}
-.dx-capa-topo .org b{display:block;color:#fff;font-size:12.5px;letter-spacing:.12em}
-.dx-capa-meio{flex:1;padding:44px 52px 10px;position:relative}
-.dx-tipo{font-size:11px;font-weight:800;letter-spacing:.26em;color:var(--dx-azul2);text-transform:uppercase}
-.dx-capa h1{font-size:30px;line-height:1.15;letter-spacing:-.02em;margin:10px 0 8px;color:var(--dx-azul);max-width:460px}
-.dx-capa .sub{font-size:13px;color:#334155;max-width:560px}
-.dx-carimbo{position:absolute;right:44px;top:30px;transform:rotate(-12deg);border:3px double var(--dx-verm);color:var(--dx-verm);padding:8px 14px;text-align:center;font-weight:900;letter-spacing:.14em;font-size:14px;border-radius:6px;opacity:.88;background:rgba(255,255,255,.6)}
-.dx-carimbo small{display:block;font-size:8px;letter-spacing:.1em;font-weight:700}
-.dx-ficha{width:100%;border-collapse:collapse;margin-top:30px;font-size:10.5px}
-.dx-ficha th{width:34%;text-align:left;font-weight:700;color:var(--dx-cinza);font-size:9px;text-transform:uppercase;letter-spacing:.08em;padding:7px 10px;background:#f1f5f9;border:1px solid var(--dx-borda)}
-.dx-ficha td{padding:7px 10px;border:1px solid var(--dx-borda);font-weight:600}
-.dx-autent{display:flex;gap:18px;align-items:center;margin:26px 52px 0;padding:16px 18px;border:1.5px solid var(--dx-azul);border-radius:8px;background:#f8fafc}
-.dx-autent .selo svg{width:118px;height:118px;display:block}
-.dx-autent .qr{flex:none;width:96px;height:96px;padding:5px;background:#fff;border:1px solid var(--dx-borda)}
-.dx-autent .qr svg{width:100%;height:100%;display:block}
-.dx-autent .tx{flex:1;min-width:0;font-size:9.5px;color:#334155;line-height:1.55}
-.dx-autent .tx b.t{display:block;font-size:10.5px;color:var(--dx-azul);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
-.dx-autent .mono{font-family:'JetBrains Mono',Consolas,monospace;font-weight:700;color:var(--dx-azul);word-break:break-all}
-.dx-capa-pe{margin-top:24px;padding:14px 52px 16px;border-top:1px solid var(--dx-borda);font-size:9px;color:#64748b;display:flex;justify-content:space-between;gap:16px}
+.dx-capa{height:1123px;display:flex;flex-direction:column;padding:0;background:#fff}
+.cp-faixa{background:var(--dx-verm);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 40px;font-size:.7em;font-weight:800;letter-spacing:.26em}
+.cp-faixa span{font-weight:600;letter-spacing:.02em;opacity:.92}
+.cp-heroi{position:relative;background:#0b1a42;background-image:radial-gradient(circle at 85% 20%,rgba(56,189,248,.18),transparent 45%),linear-gradient(160deg,#060d24 0%,#0b1a42 55%,#173b8f 100%);color:#fff;padding:40px 56px 46px;min-height:470px;display:flex;flex-direction:column;overflow:hidden}
+.cp-heroi:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(148,163,184,.16) 1px,transparent 1.2px);background-size:18px 18px;opacity:.6}
+.cp-heroi>*{position:relative}
+.cp-org{display:flex;align-items:center;gap:16px}
+.cp-org svg{width:62px;height:62px;flex:none}
+.cp-org div{font-size:.78em;line-height:1.6;color:#cbd5e1;letter-spacing:.04em}
+.cp-org b{display:block;color:#fff;font-size:1.18em;letter-spacing:.1em}
+.cp-tit{margin-top:auto;padding-top:40px}
+.cp-tipo{display:inline-block;font-size:.74em;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#7dd3fc;border-bottom:2px solid #38bdf8;padding-bottom:4px}
+.cp-tit h1{font-size:2.9em;line-height:1.1;letter-spacing:-.02em;margin:16px 0 12px;max-width:600px;font-weight:800;color:#fff}
+.cp-tit p{margin:0;font-size:1.05em;color:#cbd5e1;max-width:560px}
+.cp-carimbo{position:absolute;right:52px;top:120px;transform:rotate(-10deg);border:3px double #fca5a5;color:#fecaca;padding:9px 16px;text-align:center;font-weight:900;letter-spacing:.16em;font-size:.95em;border-radius:6px;background:rgba(185,28,28,.22)}
+.cp-carimbo small{display:block;font-size:.62em;letter-spacing:.14em;font-weight:700;margin-top:2px}
+.cp-corpo{flex:1;padding:30px 56px 0;display:flex;flex-direction:column;gap:22px}
+.cp-ficha{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--dx-borda);border-radius:8px;overflow:hidden}
+.cp-ficha div{padding:9px 14px;border-bottom:1px solid var(--dx-borda)}
+.cp-ficha div:nth-child(odd){border-right:1px solid var(--dx-borda)}
+.cp-ficha div:nth-last-child(-n+2){border-bottom:0}
+.cp-ficha small{display:block;font-size:.66em;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#64748b}
+.cp-ficha b{display:block;font-size:.92em;font-weight:600;color:var(--dx-tx);margin-top:1px}
+.cp-ficha div.l{grid-column:1/-1;border-right:0}
+.cp-autent{display:flex;gap:18px;align-items:center;padding:14px 16px;border-radius:8px;background:var(--dx-suave);border:1px solid var(--dx-borda);margin-top:auto}
+.cp-autent .selo svg{width:104px;height:104px;display:block}
+.cp-autent .qr{flex:none;width:86px;height:86px;padding:5px;background:#fff;border:1px solid var(--dx-borda);border-radius:4px}
+.cp-autent .qr svg{width:100%;height:100%;display:block}
+.cp-autent .tx{flex:1;min-width:0;font-size:.74em;color:var(--dx-tx2);line-height:1.6}
+.cp-autent .tx b.t{display:block;font-size:1.15em;color:var(--dx-azul);margin-bottom:2px}
+.cp-autent .mono{font-weight:700;color:var(--dx-azul);word-break:break-all}
+.cp-rodape{display:flex;justify-content:space-between;gap:16px;padding:14px 56px 16px;font-size:.68em;color:#64748b}
 /* aviso */
-.dx-aviso{border:2px solid var(--dx-verm);border-radius:8px;overflow:hidden;margin-bottom:20px}
-.dx-aviso h2{margin:0;background:var(--dx-verm);color:#fff;font-size:12px;letter-spacing:.18em;padding:9px 14px;display:flex;align-items:center;gap:8px}
-.dx-aviso h2 svg{width:16px;height:16px}
-.dx-aviso .c{padding:14px 18px;font-size:10.5px}
-.dx-aviso p{margin:0 0 8px}
-.dx-aviso h3{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dx-verm);margin:12px 0 6px}
-.dx-aviso ul{margin:0 0 6px;padding-left:16px}
-.dx-aviso li{margin-bottom:4px}
-.dx-aviso .copia{margin-top:12px;padding:10px 12px;background:#fef2f2;border:1px dashed var(--dx-verm);border-radius:6px;font-size:10px}
-.dx-sumario{margin-top:6px}
-.dx-sumario h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dx-azul);border-bottom:2px solid var(--dx-azul);padding-bottom:4px;margin:0 0 8px}
+.dx-aviso{border:1px solid #fecaca;border-radius:10px;overflow:hidden;margin-bottom:24px;background:#fff}
+.dx-aviso h2{margin:0;background:var(--dx-verm);color:#fff;font-size:.95em;letter-spacing:.14em;padding:11px 16px;display:flex;align-items:center;gap:9px}
+.dx-aviso h2 svg{width:17px;height:17px}
+.dx-aviso .c{padding:16px 20px 18px;font-size:.9em}
+.dx-aviso p{margin:0 0 10px}
+.dx-aviso h3{font-size:.8em;letter-spacing:.1em;text-transform:uppercase;color:var(--dx-verm);margin:14px 0 6px}
+.dx-aviso ul{margin:0 0 6px;padding-left:18px}
+.dx-aviso li{margin-bottom:5px}
+.dx-aviso li::marker{color:var(--dx-verm)}
+.dx-aviso .copia{margin-top:14px;padding:11px 14px;background:#fef2f2;border-left:4px solid var(--dx-verm);border-radius:0 6px 6px 0;font-size:.95em}
+.dx-sumario h3{font-size:1.05em;color:var(--dx-azul);margin:6px 0 10px;padding-bottom:6px;border-bottom:1.5px solid var(--dx-azul)}
 .dx-sumario ol{margin:0;padding:0;list-style:none;counter-reset:s}
-.dx-sumario li{counter-increment:s;display:flex;gap:8px;padding:5px 0;border-bottom:1px dotted var(--dx-borda);font-size:11px}
-.dx-sumario li::before{content:counter(s) ".";font-weight:800;color:var(--dx-azul2);width:18px}
+.dx-sumario li{counter-increment:s;display:flex;align-items:baseline;gap:10px;padding:7px 0;border-bottom:1px dotted #b6c2d4}
+.dx-sumario li::before{content:counter(s);display:inline-grid;place-items:center;width:22px;height:22px;border-radius:5px;background:var(--dx-azul);color:#fff;font-size:.78em;font-weight:700;flex:none}
 /* corpo */
-.dx-sec{margin-bottom:22px;break-inside:auto}
-.dx-sec h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--dx-azul);margin:0 0 10px;padding:0 0 5px;border-bottom:2px solid var(--dx-azul);display:flex;gap:8px;break-after:avoid}
-.dx-sec h2 span{color:var(--dx-azul2)}
-.dx-sec p{margin:0 0 8px}
-.dx table.t{width:100%;border-collapse:collapse;font-size:10px;margin-top:6px}
-.dx table.t th{background:var(--dx-azul);color:#fff;text-align:left;padding:5px 7px;font-weight:700}
-.dx table.t td{padding:5px 7px;border-bottom:1px solid #e2e8f0;vertical-align:top}
-.dx table.t tr:nth-child(even) td{background:#f8fafc}
-.dx table.t tr{break-inside:avoid}
-.dx .tag{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:800;color:#fff}
-.dx-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
-.dx-kpis div{border:1px solid var(--dx-borda);border-top:3px solid var(--c,var(--dx-azul2));border-radius:5px;padding:8px 10px}
-.dx-kpis small{display:block;font-size:8.5px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
-.dx-kpis b{font-size:19px;font-variant-numeric:tabular-nums;color:var(--dx-azul)}
-.dx-graf{border:1px solid var(--dx-borda);border-radius:6px;padding:10px 12px;margin:8px 0}
-.dx-graf .tt{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--dx-cinza);margin-bottom:6px}
+.dx-sec{margin-bottom:28px}
+.dx-sec h2{font-size:1.25em;font-weight:800;color:var(--dx-azul);margin:0 0 14px;padding:0 0 8px;border-bottom:1.5px solid var(--dx-azul);display:flex;align-items:center;gap:10px;break-after:avoid;page-break-after:avoid}
+.dx-sec h2 span{display:inline-grid;place-items:center;min-width:28px;height:28px;padding:0 4px;border-radius:6px;background:var(--dx-azul);color:#fff;font-size:.66em;font-weight:800}
+.dx-sec p{margin:0 0 10px}
+.dx-sec>ul{margin:12px 0;padding:12px 16px 12px 34px;background:var(--dx-suave);border-left:4px solid var(--dx-azul3);border-radius:0 8px 8px 0}
+.dx-sec>ul li{margin-bottom:5px}
+.dx-sec>ul li::marker{color:var(--dx-azul3)}
+.dx-sec ol{padding-left:20px}
+.dx-sec ol li{margin-bottom:7px;padding-left:4px}
+.dx-sec ol li::marker{font-weight:800;color:var(--dx-azul2)}
+.dx table.t{width:100%;border-collapse:collapse;font-size:.84em;margin:10px 0 4px;border:1px solid var(--dx-borda)}
+.dx table.t thead{display:table-header-group}
+.dx table.t th{background:var(--dx-azul);color:#fff;text-align:left;padding:7px 9px;font-weight:700;font-size:.95em}
+.dx table.t td{padding:6px 9px;border-top:1px solid #e6ebf2;vertical-align:top}
+.dx table.t tr:nth-child(even) td{background:#f7f9fc}
+.dx table.t tr{break-inside:avoid;page-break-inside:avoid}
+.dx .tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.82em;font-weight:700;color:#fff}
+.dx-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.dx-kpis div{border:1px solid var(--dx-borda);border-radius:8px;padding:10px 12px;background:#fff;position:relative;overflow:hidden}
+.dx-kpis div:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,var(--dx-azul3))}
+.dx-kpis small{display:block;font-size:.68em;color:#64748b;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.dx-kpis b{font-size:1.75em;color:var(--dx-azul);line-height:1.2}
+.dx-graf{border:1px solid var(--dx-borda);border-radius:8px;padding:12px 14px;margin:10px 0;break-inside:avoid}
+.dx-graf .tt{font-size:.72em;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dx-tx2);margin-bottom:8px}
 .dx-graf svg{width:100%;display:block}
-.dx-pilha{display:flex;height:14px;border-radius:3px;overflow:hidden}
+.dx-pilha{display:flex;height:16px;border-radius:4px;overflow:hidden;gap:2px}
 .dx-pilha span{display:block}
-.dx-leg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:9px;color:#334155;margin-top:6px}
-.dx-leg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
-.dx-barra{display:inline-block;height:7px;border-radius:2px;background:var(--dx-azul2);vertical-align:middle;margin-right:6px}
-.dx-assin{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-top:26px;padding-top:16px;border-top:2px solid var(--dx-azul);break-inside:avoid}
-.dx-assin .ln{margin-top:38px;border-top:1px solid #0f172a;padding-top:4px;font-size:10px}
-.dx-assin .ln b{display:block;font-size:11px}
-.dx-assin .val{font-size:9.5px;color:#334155;background:#f8fafc;border:1px solid var(--dx-borda);border-radius:6px;padding:10px 12px}
+.dx-leg{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.74em;color:var(--dx-tx2);margin-top:8px}
+.dx-leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.dx-barra{display:inline-block;height:8px;border-radius:2px;background:var(--dx-azul2);vertical-align:middle}
+.dx-assin{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;break-inside:avoid}
+.dx-assin .nota{font-size:.88em;color:var(--dx-tx2)}
+.dx-assin .ln{margin-top:44px;border-top:1px solid var(--dx-tx);padding-top:6px;font-size:.86em;color:var(--dx-tx2)}
+.dx-assin .ln b{display:block;font-size:1.08em;color:var(--dx-tx)}
+.dx-assin .val{display:flex;gap:12px;align-items:flex-start;font-size:.78em;color:var(--dx-tx2);background:var(--dx-suave);border:1px solid var(--dx-borda);border-radius:8px;padding:12px 14px;line-height:1.6}
+.dx-assin .val .qr{flex:none;width:76px;height:76px;background:#fff;padding:4px;border:1px solid var(--dx-borda);border-radius:4px}
+.dx-assin .val .qr svg{width:100%;height:100%;display:block}
+.dx-assin .val b{color:var(--dx-azul);font-size:1.1em}
+.dx-assin .val .mono{word-break:break-all;color:var(--dx-azul);font-weight:700}
 .dx-fixo{display:none}
-@media screen and (max-width:700px){.dx-carimbo{position:static;display:inline-block;transform:rotate(-3deg);margin-bottom:14px;font-size:12px}.dx-capa-meio,.dx-capa-topo,.dx-capa-pe{padding-left:20px;padding-right:20px}.dx-capa-topo svg{width:48px;height:48px}.dx-autent{margin:20px 14px 0;flex-wrap:wrap}.dx-cab,.dx-rod{padding-left:16px;padding-right:16px}.dx-mi{padding:0 14px 0 22px}.dx-capa h1{font-size:24px}.dx-kpis{grid-template-columns:repeat(2,1fr)}.dx-cab .org{display:none}.dx-rod{position:static}.dx-pag{padding-bottom:0}}
-.dx a{color:var(--dx-azul2)}
+.dx a{color:var(--dx-azul3);text-decoration:none}
+@media screen and (max-width:700px){.dx{font-size:calc(11px * var(--dx-esc,1))}.dx-cab,.dx-mi{margin-left:0;margin-right:0;padding-left:18px;padding-right:18px}.dx-cab{margin:0 0 18px}.dx-cab .org,.dx-cab .cod{display:none}.dx-rod{position:static;margin:16px 18px 0;flex-wrap:wrap}.dx-pag:not(.dx-capa){padding-bottom:16px}.dx-capa{height:auto}.cp-heroi{padding:26px 20px 30px;min-height:0}.cp-carimbo{position:static;display:inline-block;transform:rotate(-3deg);margin-top:18px;align-self:flex-start}.cp-tit h1{font-size:2em}.cp-corpo{padding:20px 18px 0}.cp-ficha{grid-template-columns:1fr}.cp-ficha div{border-right:0!important;border-bottom:1px solid var(--dx-borda)!important}.cp-autent{flex-wrap:wrap}.cp-rodape,.cp-faixa{padding-left:18px;padding-right:18px;flex-wrap:wrap}.dx-kpis{grid-template-columns:repeat(2,1fr)}.dx-assin{grid-template-columns:1fr}}
 @media print{
   html,body{background:#fff!important;padding:0!important;margin:0!important}
-  .dx-pag{width:auto;margin:0;padding:0;box-shadow:none;border-radius:0;break-after:page;overflow:visible;background:transparent!important;position:static}
-  .dx-pag:last-of-type{break-after:auto}
-  .dx-pag>.dx-cab,.dx-pag>.dx-rod,.dx-lat{display:none}
+  .dx{font-size:calc(9.6pt * var(--dx-esc,1))}
+  .dx-pag{width:auto;margin:0;box-shadow:none;border-radius:0;overflow:visible;background:transparent!important;position:static;break-after:page;page-break-after:always}
+  .dx-pag:not(.dx-capa){padding:0}
+  .dx-pag:last-of-type{break-after:auto;page-break-after:auto}
+  .dx-pag>.dx-cab,.dx-pag>.dx-rod{display:none}
   .dx-mi{padding:0}
-  .dx-capa{min-height:0;height:247mm}
-  .dx-capa-topo,.dx-capa-meio,.dx-capa-pe{padding-left:28px;padding-right:28px}
-  .dx-autent{margin-left:28px;margin-right:28px}
+  .dx-capa{width:210mm;height:296.5mm;overflow:hidden;position:relative}
   .dx-fixo{display:block;position:fixed;left:0;right:0;z-index:9}
-  .dx-fixo.marca{top:42%;text-align:center;font:900 54pt Arial,sans-serif;letter-spacing:.08em;color:rgba(185,28,28,.07);transform:rotate(-32deg);z-index:9}
+  .dx-fixo.marca{top:44%;text-align:center;font:900 50pt Arial,sans-serif;letter-spacing:.1em;color:rgba(185,28,28,.055);transform:rotate(-32deg)}
 }`;
 (function () { const s = document.createElement('style'); s.id = 'dx-css'; s.textContent = DX_CSS; document.head.appendChild(s); })();
 
+const DX_DIG = {};
 const DX_ORG = ['GOVERNO DO ESTADO DE MATO GROSSO', 'Secretaria de Estado de Educação · SEDUC-MT', 'Unidade de Inteligência de Dados na Educação'];
 function dxImpressao(t) { const a = hashStr(t).toString(16).padStart(8, '0'), b = hashStr(t.split('').reverse().join('') + t.length).toString(16).padStart(8, '0'); return (a + b).toUpperCase().match(/.{4}/g).join('-'); }
 function dxQR(url) {
@@ -5933,74 +6028,122 @@ function dxAviso(o) {
         <li>Crime de violação de sigilo funcional: detenção de 6 meses a 2 anos, ou multa (Código Penal, art. 325);</li>
         <li>Divulgação de nome, ato ou documento relativo a criança ou adolescente a que se atribua ato infracional: multa de 3 a 20 salários de referência (ECA, art. 247);</li>
         <li>Responsabilidade civil pelos danos causados e sanções da LGPD (Lei nº 13.709/2018, arts. 42 e 52).</li></ul>
-        <div class="copia"><b>CÓPIA CONTROLADA.</b> Emitida eletronicamente para <b>${esc(o.emitidoPara)}</b> em ${esc(o.emissaoTxt)}, sob o código <b>${esc(o.codigo)}</b>. ${o.registrado ? 'A emissão foi registrada na trilha de auditoria do sistema.' : 'Emissão em modo local, sem registro no servidor.'} Se este documento chegou a você por engano, não o leia nem o repasse: elimine-o e comunique a Unidade de Inteligência da SEDUC-MT.</div>
+        <div class="copia"><b>CÓPIA CONTROLADA.</b> ${o.anon ? `Documento emitido eletronicamente pelo emissor <b>${esc(o.idE)}</b> em ${esc(o.emissaoTxt)}, sob o código <b>${esc(o.codigo)}</b>. Para a segurança de quem emitiu, o nome não aparece neste documento: a identidade correspondente ao ID fica guardada na trilha de auditoria do sistema e só pode ser consultada pela administração.` : `Documento elaborado por <b>${esc(o.autor)}</b> e emitido eletronicamente pela conta <b>${esc(o.emitidoPara)}</b> em ${esc(o.emissaoTxt)}, sob o código <b>${esc(o.codigo)}</b>.`} ${o.registrado ? 'A emissão foi registrada no servidor.' : 'Emissão em modo local, sem registro no servidor.'} Se este documento chegou a você por engano, não o leia nem o repasse: elimine-o e comunique a Unidade de Inteligência da SEDUC-MT.</div>
     </div></div>`;
 }
 /* Monta o documento completo a partir das seções */
 function montarDocumento(o) {
     const em = new Date(), emissaoTxt = em.toLocaleDateString('pt-BR') + ' às ' + em.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     const quem = USUARIO ? `${USUARIO.nome || USUARIO.email}${USUARIO.email && USUARIO.nome ? ' (' + USUARIO.email + ')' : ''}` : 'usuário local';
+    const anon = dxAnon(), idE = idEmissor();
+    const autorReal = dxAutor(), cargo = dxCargo(), F = dxFonte();
+    const autor = anon ? 'Identidade reservada · ID ' + idE : autorReal;
+    const quemPub = anon ? 'emissor ' + idE : quem;
     const registrado = conectado();
-    const urlV = registrado ? urlApiPublica() + '?acao=verificar&codigo=' + encodeURIComponent(o.codigo) : '';
+    const linkApp = dxLinkVerif(o.codigo);
+    const urlV = registrado ? (linkApp || (anon ? '' : urlApiPublica() + '?acao=verificar&codigo=' + encodeURIComponent(o.codigo))) : '';
     const conteudo = o.secoes.map(s => s.t + s.html).join('|');
-    const digital = dxImpressao(o.codigo + '|' + o.titulo + '|' + conteudo.replace(/<[^>]+>/g, ''));
+    const digital = dxImpressao(o.codigo + '|' + o.titulo + '|' + idE + '|' + conteudo.replace(/<[^>]+>/g, ''));
     const cls = o.cls || 'DOCUMENTO RESTRITO';
-    const ctx = Object.assign({}, o, { emitidoPara: quem, emissaoTxt, registrado });
-    const cab = `<div class="dx-cab"><span class="em">${emblema(34, 'dxc' + Math.random().toString(36).slice(2, 6))}</span><span class="org"><b>${DX_ORG[0]}</b>${DX_ORG[1]} · ${DX_ORG[2]}</span><span class="cod">${esc(o.tipo)}<br>Doc. ${esc(o.codigo)}</span><span class="cl">${esc(cls)}</span></div>`;
-    const rod = (p) => `<div class="dx-rod"><span><b>${esc(cls)}</b> · Proibida a reprodução ou o compartilhamento · Cópia de ${esc(quem)} · ${esc(emissaoTxt)}</span><span>${p}</span></div>`;
-    const lat = `<div class="dx-lat">${esc(cls)} · CÓPIA CONTROLADA · ${esc(o.codigo)} · ${esc(quem.toUpperCase())}</div>`;
-    const ficha = o.ficha.concat([['Elaborado por', quem], ['Destinatário', o.destinatario || 'Uso interno da Unidade de Inteligência']]);
+    const ctx = Object.assign({}, o, { emitidoPara: quem, emissaoTxt, registrado, anon, idE, autor: autor + (cargo ? ', ' + cargo : '') });
+    DX_DIG[o.codigo] = digital;
+    const cab = `<div class="dx-cab"><span class="em">${emblema(30, 'dxc' + Math.random().toString(36).slice(2, 6))}</span><span class="org"><b>${DX_ORG[0]}</b>${DX_ORG[1]} · ${DX_ORG[2]}</span><span class="cod">${esc(o.tipo)}<br>Doc. ${esc(o.codigo)}</span><span class="cl">${esc(cls)}</span></div>`;
+    const rod = p => `<div class="dx-rod"><span><b>${esc(cls)}</b> · Proibida a reprodução ou o compartilhamento · ${esc(o.codigo)}</span><span>${p}</span></div>`;
+    const ficha = o.ficha.concat([[anon ? 'Emissor' : 'Elaborado por', autor + (cargo ? ' · ' + cargo : '')], ['Destinatário', o.destinatario || 'Uso interno da Unidade de Inteligência']]);
+    const longo = v => String(v).length > 46;
     const qr = dxQR(urlV);
     const capa = `<section class="dx-pag dx-capa">
-        <div class="dx-tarja">${esc(cls)}<small>Acesso restrito · Lei nº 12.527/2011, art. 31 · Lei nº 13.709/2018 · Lei nº 8.069/1990</small></div>
-        <div class="dx-capa-topo">${emblema(70, 'dxk' + Math.random().toString(36).slice(2, 6))}<div class="org"><b>${DX_ORG[0]}</b>${DX_ORG[1]}<br>${DX_ORG[2]}</div></div>
-        <div class="dx-capa-meio">
-            <div class="dx-carimbo">${esc(cls)}<small>CÓPIA CONTROLADA</small></div>
-            <div class="dx-tipo">${esc(o.tipo)}</div><h1>${esc(o.titulo)}</h1><div class="sub">${esc(o.subtitulo || '')}</div>
-            <table class="dx-ficha">${ficha.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}</table>
+        <div class="cp-faixa">${esc(cls)}<span>Acesso restrito · Lei nº 12.527/2011 · Lei nº 13.709/2018 · Lei nº 8.069/1990</span></div>
+        <div class="cp-heroi">
+            <div class="cp-org">${emblema(62, 'dxk' + Math.random().toString(36).slice(2, 6))}<div><b>${DX_ORG[0]}</b>${DX_ORG[1]}<br>${DX_ORG[2]}</div></div>
+            <div class="cp-carimbo">${esc(cls)}<small>CÓPIA CONTROLADA</small></div>
+            <div class="cp-tit"><span class="cp-tipo">${esc(o.tipo)}</span><h1>${esc(o.titulo)}</h1><p>${esc(o.subtitulo || '')}</p></div>
         </div>
-        <div class="dx-autent"><div class="selo">${dxSelo(o.codigo, registrado)}</div>${qr ? `<div class="qr">${qr}</div>` : ''}
-            <div class="tx"><b class="t">Selo de autenticidade</b>${registrado ? `Para conferir se este documento é autêntico, leia o QR Code ou acesse <span class="mono">${esc(urlV)}</span>.` : 'Documento emitido em modo local, sem registro no servidor. Para ter autenticidade verificável, emita-o conectado à base do Google Sheets.'}<br>Código do documento: <span class="mono">${esc(o.codigo)}</span><br>Impressão digital do conteúdo: <span class="mono">${digital}</span></div></div>
-        <div class="dx-capa-pe"><span>Emitido em ${esc(emissaoTxt)} pelo sistema EDUCASEG-PLUS</span><span>${esc(cls)} · não compartilhar</span></div>
-        <div class="dx-tarja">${esc(cls)}<small>Proibida a reprodução, o encaminhamento ou o compartilhamento sem autorização</small></div>
+        <div class="cp-corpo">
+            <div class="cp-ficha">${ficha.map(([k, v]) => `<div${longo(v) ? ' class="l"' : ''}><small>${esc(k)}</small><b>${esc(v)}</b></div>`).join('')}</div>
+            <div class="cp-autent"><div class="selo">${dxSelo(o.codigo, registrado)}</div>${qr ? `<div class="qr">${qr}</div>` : ''}
+                <div class="tx"><b class="t">Selo de autenticidade</b>${registrado ? (urlV ? `Para conferir a autenticidade, leia o QR Code ou acesse <span class="mono">${esc(urlV.replace(/^https?:\/\//, '').replace(/#.*$/, ''))}</span> e informe o código.` : 'Para conferir a autenticidade, informe o código abaixo na opção "Verificar documento" da tela de entrada do sistema.') : 'Emitido em modo local, sem registro no servidor. Para ter autenticidade verificável, emita o documento conectado à base do Google Sheets.'}<br>Código: <span class="mono">${esc(o.codigo)}</span> · Impressão digital: <span class="mono">${digital}</span></div></div>
+        </div>
+        <div class="cp-rodape"><span>Emitido em ${esc(emissaoTxt)} · EDUCASEG-PLUS</span><span>Nº ${esc(o.codigo)}</span></div>
+        <div class="cp-faixa">PROIBIDA A REPRODUÇÃO<span>O encaminhamento ou o compartilhamento sem autorização sujeita o infrator às penalidades legais</span></div>
     </section>`;
-    const aviso = `<section class="dx-pag">${cab}${lat}<div class="dx-mi">${dxAviso(Object.assign(ctx, { codigo: o.codigo }))}
+    const aviso = `<section class="dx-pag">${cab}<div class="dx-mi">${dxAviso(Object.assign(ctx, { codigo: o.codigo }))}
         <div class="dx-sumario"><h3>Sumário</h3><ol>${o.secoes.map(s => `<li>${esc(s.t)}</li>`).join('')}<li>Validação e responsabilidade</li></ol></div></div>${rod('Aviso e sumário')}</section>`;
-    const corpo = `<section class="dx-pag">${cab}${lat}<div class="dx-mi">${o.secoes.map((s, i) => `<div class="dx-sec"><h2><span>${i + 1}.</span>${esc(s.t)}</h2>${s.html}</div>`).join('')}
+    const corpo = `<section class="dx-pag">${cab}<div class="dx-mi">${o.secoes.map((s, i) => `<div class="dx-sec"><h2><span>${i + 1}.</span>${esc(s.t)}</h2>${s.html}</div>`).join('')}
         <div class="dx-sec"><h2><span>${o.secoes.length + 1}.</span>Validação e responsabilidade</h2>
-        <div class="dx-assin"><div><p>Documento produzido a partir dos dados disponíveis no sistema na data de emissão. As análises são indícios para orientar a ação da rede e não substituem a apuração de cada caso.</p><div class="ln"><b>${esc(USUARIO && USUARIO.nome || 'Responsável pela emissão')}</b>${esc(USUARIO ? (PERFIS[USUARIO.perfil] || USUARIO.perfil) : '')} · ${DX_ORG[2]}</div></div>
-        <div class="val"><b>Validação eletrônica</b><br>Código: <span style="font-family:Consolas,monospace;font-weight:700">${esc(o.codigo)}</span><br>Impressão digital: <span style="font-family:Consolas,monospace">${digital}</span><br>${registrado ? 'Conferência: ' + esc(urlV) : 'Emissão local, sem registro no servidor.'}</div></div></div>
+        <div class="dx-assin"><div><p class="nota">Documento produzido a partir dos dados disponíveis no sistema na data de emissão. As análises são indícios para orientar a ação da rede e não substituem a apuração de cada caso.</p>
+            <div class="ln">${anon ? `<b>Assinatura do responsável</b>ID do emissor ${esc(idE)}${cargo ? ' · ' + esc(cargo) : ''}<br>` : `<b>${esc(autor)}</b>${esc(cargo)}${cargo ? '<br>' : ''}`}${DX_ORG[2]} · SEDUC-MT</div></div>
+        <div class="val">${qr ? `<div class="qr">${qr}</div>` : ''}<div><b>Validação eletrônica</b><br>Código: <span class="mono">${esc(o.codigo)}</span><br>Impressão digital: <span class="mono">${digital}</span><br>Emitido por ${esc(quemPub)} em ${esc(emissaoTxt)}.${registrado ? '<br>Conferência pelo QR Code ou pelo código em "Verificar documento" na tela de entrada do sistema.' : '<br>Emissão local, sem registro no servidor.'}</div></div></div></div>
     </div>${rod('Conteúdo')}</section>`;
     const q = t => '"' + String(t).replace(/\\/g, '').replace(/"/g, "'") + '"';
-    const pagina = `<style>@media print{@page{size:A4;margin:24mm 15mm 22mm 15mm;
-        @top-left{content:${q(DX_ORG[0] + ' · SEDUC-MT · ' + DX_ORG[2])};font:7.5pt Arial,sans-serif;color:#0b1a42;font-weight:700;vertical-align:bottom;padding-bottom:5px;border-bottom:1.5px solid #0b1a42}
-        @top-right{content:${q(cls)};font:800 7.5pt Arial,sans-serif;letter-spacing:2px;color:#fff;background:#b91c1c;vertical-align:middle;text-align:center;margin:10mm 0 5mm 6px;padding:0 8px}
-        @bottom-left{content:${q(cls + ' · Proibida a reprodução ou o compartilhamento (Lei 12.527/2011, Lei 13.709/2018, ECA e Código Penal arts. 153 e 325) · Doc. ' + o.codigo + ' · Cópia de ' + quem + ' em ' + emissaoTxt)};font:6.8pt Arial,sans-serif;color:#7f1d1d;vertical-align:top;padding-top:5px;border-top:1px solid #cbd5e1}
-        @bottom-right{content:"Página " counter(page) " de " counter(pages);font:7.5pt Arial,sans-serif;color:#475569;vertical-align:top;padding-top:5px;border-top:1px solid #cbd5e1;width:24mm}}}</style>`;
+    const fp = F.css.replace(/"/g, "'");
+    const pagina = `<style>@media print{@page{size:A4;margin:25mm 16mm 20mm 16mm;
+        @top-left{content:${q(DX_ORG[0] + '  ·  SEDUC-MT  ·  ' + o.tipo)};font:600 7.2pt ${fp};color:#0b1a42;vertical-align:bottom;padding-bottom:4px;border-bottom:1.2px solid #0b1a42;margin-bottom:6mm}
+        @top-right{content:${q(cls)};font:800 7.2pt ${fp};letter-spacing:1.6px;color:#b91c1c;vertical-align:bottom;padding-bottom:4px;border-bottom:1.2px solid #0b1a42;text-align:right;width:45mm;margin-bottom:6mm}
+        @bottom-left{content:${q('Proibida a reprodução ou o compartilhamento sem autorização (Lei 12.527/2011, Lei 13.709/2018, ECA, CP arts. 153 e 325) · Doc. ' + o.codigo + ' · Emitido por ' + quemPub + ' em ' + emissaoTxt)};font:6.4pt ${fp};color:#7f1d1d;vertical-align:top;padding-top:4px;border-top:.8px solid #cbd5e1}
+        @bottom-right{content:"Página " counter(page) " de " counter(pages);font:600 7pt ${fp};color:#475569;vertical-align:top;padding-top:4px;border-top:.8px solid #cbd5e1;width:24mm;text-align:right}}
+        @page:first{margin:0}}</style>`;
     const fixos = `<div class="dx-fixo marca">${esc(cls)}</div>`;
-    return `${pagina}<div class="dx-fixos">${fixos}</div><div class="dx">${capa}${aviso}${corpo}</div>`;
+    return `${pagina}<div class="dx-fixos">${fixos}</div><div class="dx" style="--dx-fonte:${F.css.replace(/"/g, "'")};--dx-esc:${DXP.tam === 'grande' ? 1.1 : 1}">${capa}${aviso}${corpo}</div>`;
+}
+/* O Word não entende variáveis CSS: troca pelos valores */
+function dxResolverVars(css) {
+    const F = dxFonte(), mapa = { 'dx-azul': '#0b1a42', 'dx-azul2': '#1e3a8a', 'dx-azul3': '#2563eb', 'dx-verm': '#b91c1c', 'dx-tx': '#1e293b', 'dx-tx2': '#475569', 'dx-borda': '#d8dee8', 'dx-suave': '#f5f7fb', 'dx-fonte': F.css, 'dx-esc': DXP.tam === 'grande' ? '1.1' : '1', 'c': '#2563eb' };
+    return css.replace(/var\(--([\w-]+)(?:,[^)]*\))?\)?/g, (m, k) => mapa[k] !== undefined ? mapa[k] : m).replace(/calc\(([\d.]+)(px|pt) \* ([\d.]+)\)/g, (m, a, u, b) => (a * b).toFixed(2) + u);
 }
 /* Exporta: PDF (impressão), Word ou HTML */
 function exportarDocumento(html, titulo, base, fmt) {
-    const doc = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(titulo)}</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap"><style>body{margin:0;padding:24px;background:#e2e8f0;font-family:Arial,Helvetica,sans-serif}${DX_CSS}</style></head><body>${html}</body></html>`;
+    const F = dxFonte();
+    const doc = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(titulo)}</title><link rel="stylesheet" href="${dxLinkFonte(F)}"><style>body{margin:0;padding:24px;background:#e2e8f0}${DX_CSS}</style></head><body>${html}</body></html>`;
     if (fmt === 'pdf') {
         const f = document.createElement('iframe'); f.setAttribute('aria-hidden', 'true');
         f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden';
         document.body.appendChild(f);
-        f.onload = () => { setTimeout(() => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast('Não foi possível abrir a impressão neste ambiente. Use HTML e imprima pelo navegador.', 'alerta'); } setTimeout(() => f.remove(), 60000); }, 350); };
+        f.onload = async () => {
+            try { await Promise.race([f.contentDocument.fonts.ready, new Promise(r => setTimeout(r, 2500))]); } catch (e) { }
+            setTimeout(() => { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { toast('Não foi possível abrir a impressão neste ambiente. Use HTML e imprima pelo navegador.', 'alerta'); } setTimeout(() => f.remove(), 60000); }, 250);
+        };
         f.srcdoc = doc;
-        toast('Na janela de impressão, escolha "Salvar como PDF"', 'download');
+        toast('Na janela de impressão, escolha "Salvar como PDF" e deixe "Gráficos de fundo" marcado', 'download');
     } else if (fmt === 'doc') {
-        // Word não exibe SVG: troca selo e QR por texto e tira as camadas fixas de impressão
-        const w = doc.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<div class="dx-fixo[^"]*">[\s\S]*?<\/div>/g, '')
+        // Word não exibe SVG nem variáveis CSS: remove os gráficos vetoriais e resolve as cores e a fonte
+        const w = doc.replace(DX_CSS, dxResolverVars(DX_CSS)).replace(/style="--dx-fonte:[^"]*"/, `style="font-family:${F.css.replace(/"/g, "'")}"`)
+            .replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<div class="dx-fixo[^"]*">[\s\S]*?<\/div>/g, '')
             .replace('<html lang="pt-BR">', '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" lang="pt-BR">');
         baixar(base + '.doc', '﻿' + w, 'application/msword');
     } else baixar(base + '.html', doc, 'text/html;charset=utf-8');
 }
-function escolherFormato(titulo, fn) {
-    const op = (f, i, t, s) => `<button class="dx-op" onclick="fecharModal();${fn}('${f}')"><span class="ic">${ic(i)}</span><span><b>${t}</b><small>${s}</small></span></button>`;
-    abrirModal({ titulo, sub: 'O documento sai com capa, selo de autenticidade, marcas de documento restrito e aviso de sigilo.', icone: 'download', tam: 'peq',
-        corpo: `<div class="dx-ops">${op('pdf', 'doc', 'PDF', 'Abre a impressão: escolha "Salvar como PDF". Cabeçalho, rodapé e marca d’água em todas as páginas.')}${op('doc', 'doc', 'Word (.doc)', 'Para editar. O Word não mostra o selo gráfico nem o QR Code; o código e a impressão digital continuam no texto.')}${op('html', 'ext', 'Página HTML', 'Abre em qualquer navegador e pode ser impressa depois.')}</div>` });
+/* Janela de emissão: autor, cargo, destinatário, fonte, tamanho e formato */
+function escolherFormato(titulo, fn, alvo) {
+    const est = alvo === 'nws' ? NWS : RL;
+    DX_FONTES.forEach(dxCarregarFonte);
+    const fonteOp = DX_FONTES.map(f => `<label class="dx-fop${DXP.fonte === f.id ? ' on' : ''}"><input type="radio" name="dx-fonte" value="${f.id}" ${DXP.fonte === f.id ? 'checked' : ''}><b style="font-family:${f.css.replace(/"/g, '&quot;')}">${f.nome}</b><small>${f.tipo}</small><span style="font-family:${f.css.replace(/"/g, '&quot;')}">Aa 1234</span></label>`).join('');
+    const fmtOp = [['pdf', 'doc', 'PDF', 'Abre a impressão: escolha "Salvar como PDF".'], ['doc', 'doc', 'Word (.doc)', 'Para editar. Sem o selo gráfico e o QR Code.'], ['html', 'ext', 'Página HTML', 'Abre em qualquer navegador.']]
+        .map(([v, i, t, s], k) => `<label class="dx-fmt${k === 0 ? ' on' : ''}"><input type="radio" name="dx-fmt" value="${v}" ${k === 0 ? 'checked' : ''}><span class="ic">${ic(i)}</span><span><b>${t}</b><small>${s}</small></span></label>`).join('');
+    abrirModal({ titulo, sub: 'Defina quem assina, a fonte e o formato. As escolhas ficam salvas para as próximas emissões.', icone: 'download', tam: 'grd',
+        corpo: `<div class="dx-form">
+            <div class="form-grade">
+                <div><label class="rot" for="dx-autor">Gerado por</label><input class="campo" id="dx-autor" placeholder="${esc(USUARIO && USUARIO.nome || 'Nome de quem elaborou')}" value="${esc(DXP.autor)}"></div>
+                <div><label class="rot" for="dx-cargo">Cargo ou função</label><input class="campo" id="dx-cargo" placeholder="${esc(USUARIO ? (PERFIS[USUARIO.perfil] || '') : 'Ex.: Analista de Inteligência')}" value="${esc(DXP.cargo)}"></div>
+                <label class="inteiro dx-anon"><input type="checkbox" id="dx-anon" ${dxAnon() ? 'checked' : ''}><span><b>Anonimizar o emissor e o endereço da base</b><small>Recomendado. No lugar do nome e do e-mail aparece um ID (${esc(idEmissor())}); o QR Code leva à página do sistema, não ao endereço da planilha. A identidade fica só na auditoria.</small></span></label>
+                <div class="inteiro"><label class="rot" for="dx-dest">Destinatário</label><input class="campo" id="dx-dest" placeholder="Ex.: Gabinete da Secretária · Coordenadoria de Segurança Escolar" value="${esc(est.dest || '')}"></div>
+            </div>
+            <div class="rot" style="margin-top:14px">Fonte do documento</div><div class="dx-fontes">${fonteOp}</div>
+            <div class="form-grade" style="margin-top:12px"><div><label class="rot" for="dx-tam">Tamanho do texto</label><select class="campo" id="dx-tam"><option value="normal" ${DXP.tam !== 'grande' ? 'selected' : ''}>Padrão</option><option value="grande" ${DXP.tam === 'grande' ? 'selected' : ''}>Ampliado (+10%)</option></select></div></div>
+            <div class="rot" style="margin-top:14px">Formato</div><div class="dx-fmts">${fmtOp}</div>
+            <p class="dica" style="margin:12px 0 0">Com a anonimização desligada, "Gerado por" aparece na capa, no aviso de sigilo e na assinatura, e a conta que emitiu aparece no rodapé.</p></div>`,
+        pe: `<button class="btn btn-s" data-fechar>Cancelar</button><button class="btn btn-p" id="dx-gerar">${ic('download')}Gerar documento</button>` });
+    const m = $('modal');
+    m.querySelectorAll('.dx-fontes, .dx-fmts').forEach(g => g.addEventListener('change', e => { g.querySelectorAll('label').forEach(l => l.classList.toggle('on', l.contains(e.target) && e.target.checked)); }));
+    $('dx-gerar').onclick = () => {
+        DXP.autor = $('dx-autor').value.trim(); DXP.cargo = $('dx-cargo').value.trim(); DXP.tam = $('dx-tam').value; DXP.anon = $('dx-anon').checked;
+        DXP.fonte = (m.querySelector('input[name=dx-fonte]:checked') || {}).value || DXP.fonte; dxSalvarPref();
+        est.dest = $('dx-dest').value.trim(); if (alvo !== 'nws' && $('rl-dest')) $('rl-dest').value = est.dest;
+        const fmt = (m.querySelector('input[name=dx-fmt]:checked') || {}).value || 'pdf';
+        fecharModal();
+        if (alvo !== 'nws' && typeof folhaRelatorio === 'function' && $('rl-folha')) folhaRelatorio();
+        window[fn](fmt);
+    };
 }
 
 /* =====================================================================
@@ -6031,21 +6174,32 @@ folhaRelatorio = function () {
     f.innerHTML = RL.html;
 };
 rRelatorio = function () {
-    $('acoes-relatorio').innerHTML = `<button class="btn btn-v btn-sm" onclick="copiar(resumoTexto())">${ic('copy')}Copiar resumo</button><button class="btn btn-p btn-sm" onclick="escolherFormato('Baixar relatório', 'baixarRelatorio')">${ic('download')}Baixar documento</button>`;
+    $('acoes-relatorio').innerHTML = `<button class="btn btn-v btn-sm" onclick="copiar(resumoTexto())">${ic('copy')}Copiar resumo</button><button class="btn btn-p btn-sm" onclick="escolherFormato('Gerar relatório de inteligência', 'baixarRelatorio', 'rl')">${ic('download')}Baixar documento</button>`;
     if (!$('rl-titulo') || !$('rl-dest')) {
         $('cont-relatorio').innerHTML = `<div class="card card-pad"><div class="form-grade">
             <div><label class="rot" for="rl-titulo">Título</label><input class="campo" id="rl-titulo" value="${esc(RL.titulo)}"></div>
             <div><label class="rot" for="rl-cls">Classificação</label><select class="campo" id="rl-cls"><option>DOCUMENTO RESTRITO</option><option>RESERVADO</option><option>USO INTERNO</option></select></div>
+            <div><label class="rot" for="rl-autor">Gerado por</label><input class="campo" id="rl-autor" placeholder="${esc(USUARIO && USUARIO.nome || 'Nome de quem elaborou')}" value="${esc(DXP.autor)}"></div>
+            <div><label class="rot" for="rl-cargo">Cargo ou função</label><input class="campo" id="rl-cargo" placeholder="Ex.: Analista de Inteligência" value="${esc(DXP.cargo)}"></div>
+            <div><label class="rot" for="rl-fonte">Fonte do documento</label><select class="campo" id="rl-fonte">${DX_FONTES.map(f => `<option value="${f.id}" ${DXP.fonte === f.id ? 'selected' : ''}>${f.nome} · ${f.tipo}</option>`).join('')}</select></div>
+            <div><label class="rot" for="rl-tam">Tamanho do texto</label><select class="campo" id="rl-tam"><option value="normal">Padrão</option><option value="grande" ${DXP.tam === 'grande' ? 'selected' : ''}>Ampliado (+10%)</option></select></div>
+            <label class="inteiro dx-anon"><input type="checkbox" id="rl-anon" ${dxAnon() ? 'checked' : ''}><span><b>Anonimizar o emissor e o endereço da base</b><small>No documento aparece o ID ${esc(idEmissor())} no lugar do nome e do e-mail, e o QR Code não mostra o endereço da planilha.</small></span></label>
             <div class="inteiro"><label class="rot" for="rl-dest">Destinatário</label><input class="campo" id="rl-dest" placeholder="Ex.: Gabinete da Secretaria · Coordenadoria de Segurança Escolar" value="${esc(RL.dest)}"></div>
             <div class="inteiro"><div class="rot">Seções</div><div class="chk-linha" id="rl-sec">${[['sintese', 'Síntese e indicadores'], ['frag', 'Fragilidades'], ['rec', 'Recorrências e reincidência'], ['verif', 'Verificação de consistência'], ['rec2', 'Recomendações'], ['livro', 'Anexo: ocorrências críticas']].map(([k, t]) => `<label><input type="checkbox" data-s="${k}" ${RL.sec[k] ? 'checked' : ''}> ${t}</label>`).join('')}</div>
             <p class="dica">O documento usa o recorte da barra superior e sai com capa, selo de autenticidade, cabeçalho e rodapé em todas as páginas, marcas de documento restrito e aviso de sigilo com as penalidades. Nomes de crianças e adolescentes não entram no relatório.</p></div></div></div>
             <div class="rel-palco"><div id="rl-folha"></div></div>`;
         $('rl-titulo').oninput = () => { RL.titulo = $('rl-titulo').value; folhaRelatorio(); };
         $('rl-dest').oninput = () => { RL.dest = $('rl-dest').value; folhaRelatorio(); };
+        let tA; const pref = () => { clearTimeout(tA); tA = setTimeout(() => { DXP.autor = $('rl-autor').value.trim(); DXP.cargo = $('rl-cargo').value.trim(); dxSalvarPref(); folhaRelatorio(); }, 250); };
+        $('rl-autor').oninput = pref; $('rl-cargo').oninput = pref;
+        $('rl-fonte').onchange = () => { DXP.fonte = $('rl-fonte').value; dxCarregarFonte(dxFonte()); dxSalvarPref(); folhaRelatorio(); };
+        $('rl-tam').onchange = () => { DXP.tam = $('rl-tam').value; dxSalvarPref(); folhaRelatorio(); };
+        $('rl-anon').onchange = () => { DXP.anon = $('rl-anon').checked; dxSalvarPref(); folhaRelatorio(); };
         $('rl-cls').onchange = () => { RL.cls = $('rl-cls').value; folhaRelatorio(); };
         $('rl-sec').onchange = e => { const i = e.target.closest('input'); if (i) { RL.sec[i.dataset.s] = i.checked; folhaRelatorio(); } };
     }
-    $('rl-cls').value = RL.cls;
+    $('rl-cls').value = RL.cls; dxCarregarFonte(dxFonte());
+    if ($('rl-autor') && document.activeElement !== $('rl-autor')) $('rl-autor').value = DXP.autor; if ($('rl-fonte')) $('rl-fonte').value = DXP.fonte; if ($('rl-tam')) $('rl-tam').value = DXP.tam; if ($('rl-anon')) $('rl-anon').checked = dxAnon(); if ($('rl-cargo') && document.activeElement !== $('rl-cargo')) $('rl-cargo').value = DXP.cargo;
     folhaRelatorio();
 };
 baixarRelatorio = function (fmt) {
@@ -6096,13 +6250,13 @@ function documentoRelease() {
 function baixarRelatorioRelease(fmt) {
     if (!NWS.d) return;
     const D = documentoRelease();
-    if (conectado()) api('registrarRelatorio', { codigo: D.codigo, titulo: D.titulo, classificacao: 'DOCUMENTO RESTRITO', recorte: 'Release · ' + NWS.dias + ' dias', registros: D.n }).catch(e => toast('Documento gerado, mas o código não foi registrado no servidor: ' + e.message, 'alerta'));
+    if (conectado()) api('registrarRelatorio', { codigo: D.codigo, titulo: D.titulo, classificacao: 'DOCUMENTO RESTRITO', recorte: 'Release · ' + NWS.dias + ' dias', registros: D.n, hash: DX_DIG[D.codigo] || '' }).catch(e => toast('Documento gerado, mas o código não foi registrado no servidor: ' + e.message, 'alerta'));
     exportarDocumento(D.html, D.titulo, 'EDUCASEG-PLUS_release_' + D.codigo + '_' + hojeArq(), fmt);
 }
 const _rReleaseV11 = rRelease;
 rRelease = function () {
     _rReleaseV11();
-    if (NWS.d) { const a = $('acoes-release'); if (a && !a.querySelector('[data-rel-doc]')) a.insertAdjacentHTML('beforeend', `<button class="btn btn-p btn-sm" data-rel-doc onclick="escolherFormato('Baixar relatório do Release', 'baixarRelatorioRelease')">${ic('download')}Baixar relatório</button>`); }
+    if (NWS.d) { const a = $('acoes-release'); if (a && !a.querySelector('[data-rel-doc]')) a.insertAdjacentHTML('beforeend', `<button class="btn btn-p btn-sm" data-rel-doc onclick="escolherFormato('Gerar relatório do Release', 'baixarRelatorioRelease', 'nws')">${ic('download')}Baixar relatório</button>`); }
 };
 
 /* =====================================================================
@@ -6144,6 +6298,60 @@ documentoRelease = function () {
     return Object.assign(D, { html: renumerar(D.html.replace(/(<div class="dx-sec"><h2><span>2\.<\/span>)/, `<div class="dx-sec"><h2><span>2.</span>${esc(sec.t)}</h2>${sec.html}</div>$1`).replace('<li>Síntese</li>', '<li>Síntese</li><li>' + esc(sec.t) + '</li>')) });
 };
 function renumerar(h) { let i = 0; return h.replace(/<h2><span>\d+\.<\/span>/g, () => `<h2><span>${++i}.</span>`); }
+
+/* Registro do relatório com a impressão digital (sem expor o endereço da base no texto copiado) */
+autenticarRelatorio = async function () {
+    if (!conectado()) return;
+    try { await api('registrarRelatorio', { codigo: RL.codigo, titulo: RL.titulo, classificacao: RL.cls, recorte: descRecorte(), registros: REG.length, hash: DX_DIG[RL.codigo] || '' }); } catch (e) { toast('Documento gerado, mas o código não foi registrado no servidor: ' + e.message, 'alerta'); }
+};
+resumoTexto = function () {
+    autenticarRelatorio();
+    const t = _resumoV4();
+    const l = dxLinkVerif(RL.codigo);
+    return conectado() ? t + '\n\nCódigo de verificação: ' + RL.codigo + (l ? '\nConferir em: ' + l : (dxAnon() ? '' : '\nConferir em: ' + urlApiPublica() + '?acao=verificar&codigo=' + RL.codigo)) : t;
+};
+
+/* =====================================================================
+   VERIFICAÇÃO PÚBLICA DE DOCUMENTO  (#verificar=CÓDIGO)
+   Consulta a base sem mostrar o endereço dela e sem expor quem emitiu.
+   ===================================================================== */
+async function consultarVerificacao(cod) {
+    const base = API.url || ls.get('esp_api') || API_PADRAO;
+    if (!base) throw new Error('Sistema sem servidor configurado.');
+    let ultimo = null;
+    for (const u of urlsApi(base)) {
+        try {
+            const r = await fetch(u.replace(/\/a\/[^/]+\/macros\//, '/macros/') + '?acao=verificar&formato=json&codigo=' + encodeURIComponent(cod), { redirect: 'follow' });
+            const j = await r.json(); if (j && 'autentico' in j) return j;
+        } catch (e) { ultimo = e; }
+    }
+    throw new Error('Não foi possível consultar o servidor agora.' + (ultimo ? '' : ''));
+}
+function telaVerificacao(cod) {
+    let t = $('verif-pub'); if (!t) { t = document.createElement('div'); t.id = 'verif-pub'; document.body.appendChild(t); }
+    const fechar = `history.replaceState(null,'',location.pathname+location.search);document.getElementById('verif-pub').remove()`;
+    const pinta = corpo => { t.innerHTML = `<div class="vp-caixa"><div class="vp-cab">${emblema(44, 'vpe')}<div><b>EDUCASEG-PLUS</b><small>Verificação de autenticidade de documento</small></div><button class="ic-btn" onclick="${fechar}" aria-label="Fechar">${ic('x')}</button></div>
+        <form class="vp-form" onsubmit="event.preventDefault();telaVerificacao(this.c.value.trim().toUpperCase())"><input class="campo mono" name="c" placeholder="ESP-2026-XXXXXXX" value="${esc(cod || '')}" autocomplete="off"><button class="btn btn-p">${ic('search')}Verificar</button></form>${corpo}
+        <p class="vp-nota">${ic('shield')}A verificação confirma se o código foi emitido pelo sistema e mostra a impressão digital registrada. Por segurança, o nome de quem emitiu não é exibido.</p></div>`; };
+    if (!cod) { pinta('<p class="vp-dica">Digite o código que aparece na capa do documento.</p>'); return; }
+    try { history.replaceState(null, '', '#verificar=' + encodeURIComponent(cod)); } catch (e) { }
+    pinta(`<div class="vp-res">${ic('clock')}Consultando…</div>`);
+    consultarVerificacao(cod).then(j => {
+        if (!j.autentico) return pinta(`<div class="vp-res nao">${ic('x')}<div><b>Código não encontrado</b><span>O código ${esc(cod)} não corresponde a nenhum documento registrado. O documento pode ser falso ou ter sido emitido sem conexão com a base.</span></div></div>`);
+        pinta(`<div class="vp-res ok">${ic('check')}<div><b>Documento autêntico</b><span>Registrado pelo sistema EDUCASEG-PLUS.</span></div></div>
+            <dl class="vp-dados"><dt>Código</dt><dd class="mono">${esc(j.codigo)}</dd><dt>Título</dt><dd>${esc(j.titulo || '—')}</dd><dt>Classificação</dt><dd>${esc(j.classificacao || '—')}</dd><dt>Emitido em</dt><dd>${esc(j.emitidoEm || '—')}</dd><dt>Emissor</dt><dd class="mono">${esc(j.emissor || 'identidade reservada')}</dd>${j.impressao ? `<dt>Impressão digital</dt><dd class="mono">${esc(j.impressao)}</dd>` : ''}${j.registros ? `<dt>Registros analisados</dt><dd>${fmtN(j.registros)}</dd>` : ''}</dl>
+            ${j.impressao ? '<p class="vp-dica">Compare a impressão digital acima com a que aparece na capa do documento. Se forem diferentes, o conteúdo foi alterado.</p>' : ''}`);
+    }).catch(e => pinta(`<div class="vp-res nao">${ic('alerta')}<div><b>Não foi possível verificar agora</b><span>${esc(e.message)}</span></div></div>`));
+}
+function checarHashVerificacao() { const m = location.hash.match(/^#verificar(?:=([^&]*))?/); if (m) telaVerificacao(decodeURIComponent(m[1] || '').toUpperCase()); }
+window.addEventListener('hashchange', checarHashVerificacao);
+document.addEventListener('DOMContentLoaded', () => setTimeout(checarHashVerificacao, 300));
+const _mostrarLoginV12 = mostrarLogin;
+mostrarLogin = function (msg) {
+    _mostrarLoginV12(msg);
+    const cx = document.querySelector('#login .login-caixa');
+    if (cx && !cx.querySelector('.vp-link')) cx.insertAdjacentHTML('beforeend', `<button type="button" class="vp-link" onclick="telaVerificacao('')">${ic('shield')}Verificar autenticidade de um documento</button>`);
+};
 
 </script>
 </body>
