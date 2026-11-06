@@ -1334,6 +1334,99 @@ html.menu-recolhido .lat-acoes { max-width: none; flex-direction: column; }
 mark { background: color-mix(in srgb, var(--ambar) 35%, transparent); color: inherit; padding: 0 2px; border-radius: 3px; }
 .tr-alta .tx b .selo { display: inline-flex; width: auto; margin-left: 6px; vertical-align: 1px; padding: 1px 7px; font-size: 10.5px; }
 .tr-alta .tx b { white-space: normal; }
+
+/* ---------- 2.7 Problemas detectados ---------- */
+.pd2-resumo { padding: 18px 20px; display: grid; gap: 14px; }
+.pd2-frase { font-size: 15px; line-height: 1.6; color: var(--texto2); }
+.pd2-frase b { color: var(--texto); }
+.pd2-frase a { color: var(--prim); font-weight: 700; text-decoration: none; border-bottom: 1px dashed currentColor; }
+.pd2-barra { display: flex; gap: 3px; height: 8px; border-radius: 99px; overflow: hidden; }
+.pd2-barra span { background: var(--c); }
+.pd2-nvs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.pd2-nv { display: flex; gap: 12px; align-items: flex-start; text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--borda); background: var(--card); cursor: pointer; font: inherit; color: inherit; transition: border-color .15s, background .15s, opacity .15s; }
+.pd2-nv:hover { border-color: var(--c); }
+.pd2-nv.on { border-color: var(--c); background: color-mix(in srgb, var(--c) 8%, var(--card)); box-shadow: inset 0 0 0 1px var(--c); }
+.pd2-nv.apag { opacity: .55; }
+.pd2-nv-ic { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent); }
+.pd2-nv-ic svg { width: 18px; height: 18px; }
+.pd2-nv b { display: block; font-size: 24px; line-height: 1; font-family: var(--f-dado); color: var(--c); }
+.pd2-nv em { display: block; font-style: normal; font-weight: 700; font-size: 13.5px; margin-top: 4px; }
+.pd2-nv small { display: block; font-size: 11.5px; color: var(--muted); margin-top: 2px; line-height: 1.35; }
+.pd2-grade { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.pd2-esq { position: sticky; top: 12px; display: flex; flex-direction: column; max-height: calc(100vh - 120px); overflow: hidden; }
+.pd2-filtros { padding: 14px; display: grid; gap: 8px; border-bottom: 1px solid var(--borda); }
+.pd2-filtros .campo { width: 100%; }
+.pd2-lista { overflow-y: auto; padding: 6px 8px 10px; }
+.pd2-sec { display: flex; align-items: center; gap: 8px; padding: 12px 8px 6px; font-size: 11px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--c); }
+.pd2-sec i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.pd2-sec span { margin-left: auto; color: var(--muted); font-family: var(--f-dado); }
+.pd2-tipo { width: 100%; display: flex; gap: 10px; align-items: flex-start; text-align: left; padding: 10px; border-radius: 10px; border: 1px solid transparent; background: none; cursor: pointer; font: inherit; color: inherit; }
+.pd2-tipo:hover { background: var(--suave); }
+.pd2-tipo.sel { background: color-mix(in srgb, var(--c) 8%, var(--card)); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+.pd2-tipo-ic { flex: none; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
+.pd2-tipo-ic svg { width: 16px; height: 16px; }
+.pd2-tipo-tx { flex: 1; min-width: 0; }
+.pd2-tipo-tx b { display: block; font-size: 13px; line-height: 1.3; }
+.pd2-tipo-tx small { display: block; font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+.pd2-tipo-tx small em { font-style: normal; color: var(--c-crit); font-weight: 700; }
+.pd2-mini { display: block; height: 3px; border-radius: 99px; background: var(--suave2); margin-top: 7px; overflow: hidden; }
+.pd2-mini span { display: block; height: 100%; background: var(--c); border-radius: 99px; }
+.pd2-tipo-n { flex: none; font-family: var(--f-dado); font-weight: 700; font-size: 15px; color: var(--c); padding-top: 4px; }
+.pd2-det { padding: 20px; border-top: 4px solid var(--c); }
+.pd2-det-cab { display: flex; gap: 14px; align-items: flex-start; }
+.pd2-det-ic { flex: none; width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; color: #fff; background: var(--c); }
+.pd2-det-ic svg { width: 22px; height: 22px; }
+.pd2-selos { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+.pd2-det h2 { margin: 0; font-size: 20px; line-height: 1.25; }
+.pd2-det-cab p { margin: 6px 0 0; color: var(--texto2); font-size: 13.5px; line-height: 1.55; }
+.pd2-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--borda); border: 1px solid var(--borda); border-radius: 12px; overflow: hidden; margin-top: 16px; }
+.pd2-kpis div { background: var(--card); padding: 12px 14px; }
+.pd2-kpis b { display: block; font-size: 20px; font-family: var(--f-dado); line-height: 1.1; }
+.pd2-kpis small { display: block; font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+.pd2-fazer { margin-top: 16px; padding: 14px 16px; border-radius: 12px; background: color-mix(in srgb, var(--c) 6%, var(--suave)); border: 1px solid color-mix(in srgb, var(--c) 22%, transparent); }
+.pd2-fazer-t { display: flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--c); }
+.pd2-fazer-t svg { width: 15px; height: 15px; }
+.pd2-fazer ol { margin: 10px 0 0; padding: 0; list-style: none; counter-reset: p; display: grid; gap: 7px; }
+.pd2-fazer li { counter-increment: p; display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; line-height: 1.45; }
+.pd2-fazer li::before { content: counter(p); flex: none; width: 21px; height: 21px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 800; color: #fff; background: var(--c); margin-top: -1px; }
+.pd2-itens { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; padding: 0 18px 12px; }
+.pd2-item { display: flex; flex-direction: column; gap: 9px; text-align: left; padding: 12px 13px; border-radius: 11px; border: 1px solid var(--borda); background: var(--card); cursor: pointer; font: inherit; color: inherit; transition: border-color .15s, box-shadow .15s, transform .15s; }
+.pd2-item:hover { border-color: var(--borda2); box-shadow: var(--sombra); transform: translateY(-1px); }
+.pd2-item-top { display: flex; gap: 10px; align-items: flex-start; }
+.pd2-item-loc { flex: 1; min-width: 0; }
+.pd2-item-loc b { display: block; font-size: 13px; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.pd2-item-loc small { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+.pd2-item-loc small svg { width: 12px; height: 12px; }
+.pd2-item-n { flex: none; width: 46px; height: 46px; border-radius: 50%; display: grid; place-content: center; text-align: center; background: conic-gradient(var(--c) calc(var(--p) * 1%), var(--suave2) 0); position: relative; }
+.pd2-item-n::before { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: var(--card); }
+.pd2-item-n b, .pd2-item-n small { position: relative; line-height: 1; }
+.pd2-item-n b { font-family: var(--f-dado); font-size: 14px; }
+.pd2-item-n small { font-size: 9px; color: var(--muted); }
+.pd2-marcas { display: flex; flex-wrap: wrap; gap: 5px; }
+.pd2-marcas span { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; color: var(--c); background: color-mix(in srgb, var(--c) 11%, transparent); }
+.pd2-evid { font-size: 12px; color: var(--texto2); line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.pd2-item-rod { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--borda); font-size: 11.5px; color: var(--muted); }
+.pd2-item-rod > span { display: inline-flex; align-items: center; gap: 4px; }
+.pd2-item-rod svg { width: 12px; height: 12px; }
+.pd2-rec { color: var(--c-crit); font-weight: 700; }
+.pd2-abrir { color: var(--prim); font-weight: 700; }
+.pd2-multi { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; padding: 8px 18px 18px; }
+.pd2-multi-i { display: flex; gap: 10px; align-items: center; text-align: left; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--borda); background: var(--card); cursor: pointer; font: inherit; color: inherit; }
+.pd2-multi-i:hover { border-color: var(--borda2); background: var(--suave); }
+.pd2-multi-n { flex: none; width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; font-family: var(--f-dado); font-weight: 800; color: #fff; background: var(--c-crit); }
+.pd2-multi-tx { min-width: 0; }
+.pd2-multi-tx b { display: block; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pd2-multi-tx small { display: block; font-size: 11px; color: var(--muted); }
+.pd2-pontos { display: flex; gap: 3px; margin-top: 5px; }
+.pd2-pontos i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+@media (max-width: 1100px) { .pd2-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) {
+  .pd2-grade { grid-template-columns: minmax(0, 1fr); }
+  .pd2-esq { position: static; max-height: 380px; }
+  .pd2-nv { padding: 10px; }
+  .pd2-nv-ic, .pd2-nv small { display: none; }
+  .pd2-nv em { font-size: 12px; }
+}
 </style>
 
 </head>
@@ -1401,8 +1494,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '2.6.0+4abdb28f';
-const APP_NOTAS = 'Rotas prováveis, Rede de vínculos e Termos e tendências reformulados.';
+const APP_VERSAO = '2.7.0+abe3cf3d';
+const APP_NOTAS = 'Problemas detectados redesenhado: resumo, lista de problemas e painel com o que fazer e onde agir.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -5251,6 +5344,129 @@ Object.assign(LEGENDAS, {
     difusao: { mostra: ['Frase-resumo, mapa das rotas entre municípios, rotas mais fortes e municípios sob pressão.', 'Abas: agravamento entre tipos e autores que circulam entre cidades.'], fonte: ['Datas, municípios, tipos e autores do Livro; distância entre os centros dos municípios (IBGE).'], calc: ['Passagem: o mesmo tipo aparece num município vizinho (até o raio) dentro da janela. Rota: passagem que se repete 2+ vezes.', 'Pressão: vizinho sem registro em 30 dias, pesado pela quantidade de casos recentes ao redor e pela distância.'], usar: ['Escolha tipo, janela e raio no topo. Passe o mouse nas rotas da lista para destacar no mapa.', 'É indício estatístico, não prova de ligação entre os casos.'] },
     vinculos: { mostra: ['Grupos de pessoas ligadas entre si, a rede de uma pessoa (até 2 passos) e a visão geral.'], fonte: ['Campos Vítima(s) e Agressor(es) do Livro, pelo nome digitado.'], calc: ['Vermelho grosso: autores no mesmo registro (agiram juntos). Cinza: autor e vítima no mesmo registro.', 'Grupo: 3 ou mais pessoas conectadas. Grafias diferentes do mesmo nome contam como pessoas diferentes.'], usar: ['Grupos: escolha um grupo na lista. Explorar pessoa: busque pelo nome e clique em outra pessoa para navegar.', 'Passe o mouse para destacar as ligações; restrito a Administrador e Inteligência.'] },
     termos: { mostra: ['Pesquisa livre nos relatos, radar de temas de risco, palavras em alta e mais frequentes.'], fonte: ['Texto do campo Resumo dos Fatos.'], calc: ['Radar: relatos que citam palavras ligadas a cada tema, comparando a janela recente com a anterior do mesmo tamanho.', 'Em alta: 2× mais frequente que antes e presente em 3 ou mais escolas. Genéricas e nomes são ignorados.'], usar: ['Digite um termo na pesquisa para ver a evolução mensal e os trechos.', 'Clique num tema, palavra ou expressão para abrir os relatos.'] }
+});
+
+/* =====================================================================
+   EDUCASEG-PLUS 2.7 — Problemas detectados redesenhado
+   Leitura em 3 passos: resumo → escolher o problema → ver onde agir
+   ===================================================================== */
+const CAT_IC = { 'Proteção': 'shield', 'Saúde mental': 'activity', 'Segurança': 'target', 'Reincidência': 'repeat', 'Gestão': 'doc', 'Rotina': 'clock', 'Tendência': 'trend', 'Território': 'map' };
+Object.assign(PD, { sel: '', lim: 12 });
+const haDias = d => { if (!d) return '—'; const n = diasEntre(d, A.hoje); return n <= 0 ? 'hoje' : n === 1 ? 'ontem' : 'há ' + n + ' dias'; };
+/* "Encaminhar X, reforçar Y e mapear Z" → passos curtos */
+function passosAcao(rec) {
+    const t = String(rec || '').replace(/\.$/, ''), partes = []; let prof = 0, buf = '';
+    for (let i = 0; i < t.length; i++) { const c = t[i]; if (c === '(') prof++; if (c === ')') prof--; if (!prof && (c === ',' || c === ';' || (c === '.' && t[i + 1] === ' '))) { partes.push(buf); buf = ''; continue; } buf += c; }
+    partes.push(buf); return partes.map(s => s.trim().replace(/^e\s+/i, '')).filter(s => s.length > 3).map(s => s[0].toUpperCase() + s.slice(1));
+}
+/* Marcadores de evidência curtos a partir do texto do alerta */
+function marcasEvid(a) {
+    const m = String(a.texto || '').match(/combinando ([^.]+)\./);
+    if (m) return m[1].split(/,\s*/).map(s => s.trim()).filter(Boolean);
+    return [];
+}
+function abrirTipoPD(k) { PD.sel = k; PD.lim = 12; rAlertas(); const d = $('pd2-det'); if (d && matchMedia('(max-width: 900px)').matches) d.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+rAlertas = function () {
+    const q = chave(PD.q);
+    const filtrados = AL.filter(a => (!PD.nivel || a.nivel === PD.nivel) && (!PD.cat || a.cat === PD.cat) && (!q || chave(a.titulo + ' ' + a.local + ' ' + (a.mun ? nomeMun(a.mun) : '') + ' ' + a.texto).includes(q)));
+    const G = window.PD_G = gruposAlertas(filtrados);
+    const cats = [...new Set(AL.map(a => a.cat))].sort();
+    $('acoes-alertas').innerHTML = `<button class="btn btn-v btn-sm" onclick="copiar(textoAlertas())">${ic('copy')}Copiar resumo</button><button class="btn btn-v btn-sm" onclick="exportarAlertas()">${ic('download')}Exportar CSV</button>`;
+    if (!G.find(g => g.k === PD.sel)) PD.sel = G[0] ? G[0].k : '';
+    const g = G.find(x => x.k === PD.sel);
+
+    /* ---- 1. Resumo ---- */
+    const crit = AL.filter(a => a.nivel === 'critico');
+    const escCrit = new Set(crit.map(a => a.escK || a.local)), munCrit = new Set(crit.map(a => a.mun).filter(Boolean));
+    const gTodos = gruposAlertas(AL), topCrit = gTodos.find(x => x.nivel === 'critico');
+    const total = AL.length || 1;
+    const seg = nv => { const n = AL.filter(a => a.nivel === nv).length, P = PRIOR[nv], on = PD.nivel === nv;
+        return `<button class="pd2-nv${on ? ' on' : ''}${PD.nivel && !on ? ' apag' : ''}" style="--c:${P.cor}" onclick="PD.nivel=PD.nivel==='${nv}'?'':'${nv}';PD.sel='';rAlertas()" aria-pressed="${on}"><span class="pd2-nv-ic">${ic(P.ico)}</span><span><b>${fmtN(n)}</b><em>${P.nome}</em><small>${P.sub}</small></span></button>`; };
+    const barra = ['critico', 'alto', 'medio'].map(nv => { const n = AL.filter(a => a.nivel === nv).length; return n ? `<span style="--c:${PRIOR[nv].cor};flex:${n}" title="${PRIOR[nv].nome}: ${n}"></span>` : ''; }).join('');
+    const resumo = `<div class="card pd2-resumo">
+        <div class="pd2-frase">${crit.length
+            ? `<b>${fmtN(crit.length)} situações pedem ação imediata</b> em ${fmtN(escCrit.size)} locais de ${fmtN(munCrit.size)} municípios.${topCrit ? ` A mais frequente é <a href="#" onclick="event.preventDefault();PD.nivel='';PD.cat='';PD.q='';abrirTipoPD('${esc(topCrit.k)}')">${esc(topCrit.titulo.toLowerCase())}</a> (${topCrit.itens.length} ${topCrit.itens.length === 1 ? 'local' : 'locais'}).` : ''}`
+            : `<b>Nenhuma situação de ação imediata</b> no recorte atual.`} Clique numa faixa de urgência para filtrar.</div>
+        <div class="pd2-barra">${barra}</div>
+        <div class="pd2-nvs">${['critico', 'alto', 'medio'].map(seg).join('')}</div></div>`;
+
+    /* ---- 2. Lista de tipos (esquerda) ---- */
+    let ultNv = '';
+    const lista = G.map(x => {
+        const P = PRIOR[x.nivel], cab = x.nivel !== ultNv ? `<div class="pd2-sec" style="--c:${P.cor}"><i></i>${P.nome}<span>${G.filter(y => y.nivel === x.nivel).length}</span></div>` : '';
+        ultNv = x.nivel;
+        const novo = x.ultima && diasEntre(new Date(x.ultima), A.hoje) <= 7;
+        const maxL = Math.max(...G.filter(y => y.nivel === x.nivel).map(y => y.itens.length), 1);
+        return cab + `<button class="pd2-tipo${x.k === PD.sel ? ' sel' : ''}" style="--c:${P.cor}" onclick="abrirTipoPD('${esc(x.k)}')">
+            <span class="pd2-tipo-ic">${ic(CAT_IC[x.cat] || 'alerta')}</span>
+            <span class="pd2-tipo-tx" title=""><b>${esc(x.titulo)}</b><small>${esc(x.cat)} · ${x.itens.length} ${x.itens.length === 1 ? 'local' : 'locais'} · ${fmtN(x.regs)} reg.${novo ? ' · <em>● novo</em>' : ''}</small><span class="pd2-mini"><span style="width:${Math.max(4, 100 * x.itens.length / maxL)}%"></span></span></span>
+            <span class="pd2-tipo-n">${x.itens.length}</span></button>`;
+    }).join('');
+    const esquerda = `<div class="card pd2-esq">
+        <div class="pd2-filtros"><div class="busca">${ic('search')}<input class="campo" id="pd-q" placeholder="Buscar escola, município, pessoa…" value="${esc(PD.q)}"></div>
+        <select class="campo" id="pd-cat"><option value="">Todas as categorias</option>${cats.map(c => `<option ${PD.cat === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>
+        ${PD.nivel || PD.cat || PD.q ? `<button class="btn btn-s btn-sm" onclick="PD.nivel='';PD.cat='';PD.q='';PD.sel='';rAlertas()">${ic('x')}Limpar filtros</button>` : ''}</div>
+        <div class="pd2-lista">${lista || `<div class="vazio peq">${ic('check')}Nenhum problema com esses filtros.</div>`}</div></div>`;
+
+    /* ---- 3. Detalhe (direita) ---- */
+    let direita = `<div class="card"><div class="vazio">${ic('check')}Nada a mostrar.</div></div>`;
+    if (g) {
+        const P = PRIOR[g.nivel], regs = [...new Set(g.itens.flatMap(a => a.regs))];
+        const muns = new Map(); g.itens.forEach(a => { if (a.mun) muns.set(a.mun, (muns.get(a.mun) || 0) + 1); });
+        const meses = []; const h = new Date(A.hoje); for (let i = 11; i >= 0; i--) { const d = new Date(h.getFullYear(), h.getMonth() - i, 1); meses.push(chaveMes(d)); }
+        const porMes = meses.map(m => regs.filter(r => r.dt && chaveMes(r.dt) === m).length);
+        const ult = g.ultima ? new Date(g.ultima) : null;
+        const passos = passosAcao(g.rec);
+        const itens = g.itens.slice().sort((a, b) => (+ultimaData(b) || 0) - (+ultimaData(a) || 0) || b.regs.length - a.regs.length);
+        const maxR = Math.max(...itens.map(a => a.regs.length), 1);
+        const cartao = a => {
+            const i = AL.indexOf(a), u = ultimaData(a), marcas = marcasEvid(a), rec = u && diasEntre(u, A.hoje) <= 7;
+            return `<button class="pd2-item" onclick="abrirAlerta(${i})">
+                <span class="pd2-item-top"><span class="pd2-item-loc"><b>${esc(a.local)}</b><small>${ic('pin')}${a.mun && a.local !== nomeMun(a.mun) ? esc(nomeMun(a.mun)) : esc(a.cat)}</small></span>
+                <span class="pd2-item-n" style="--p:${Math.round(100 * a.regs.length / maxR)}"><b>${a.regs.length}</b><small>reg.</small></span></span>
+                ${marcas.length ? `<span class="pd2-marcas">${marcas.map(m => `<span>${esc(m)}</span>`).join('')}</span>` : `<span class="pd2-evid">${esc(a.texto)}</span>`}
+                <span class="pd2-item-rod"><span class="${rec ? 'pd2-rec' : ''}">${ic('clock')}${u ? fmtD(u) + ' · ' + haDias(u) : 'sem data'}</span><span class="pd2-abrir">Analisar ${ic('chevR')}</span></span></button>`;
+        };
+        direita = `<div class="pilha" id="pd2-det" style="min-width:0">
+            <div class="card pd2-det" style="--c:${P.cor}">
+                <div class="pd2-det-cab"><span class="pd2-det-ic">${ic(CAT_IC[g.cat] || 'alerta')}</span>
+                    <div style="min-width:0"><div class="pd2-selos"><span class="selo" style="--c:${P.cor}">${P.nome}</span><span class="selo" style="--c:var(--muted)">${esc(g.cat)}</span></div>
+                    <h2>${esc(g.titulo)}</h2><p>${esc(porQue(g.titulo) || g.itens[0].texto)}</p></div></div>
+                <div class="pd2-kpis">
+                    <div><b>${g.itens.length}</b><small>${g.itens.length === 1 ? 'local afetado' : 'locais afetados'}</small></div>
+                    <div><b>${muns.size}</b><small>${muns.size === 1 ? 'município' : 'municípios'}</small></div>
+                    <div><b>${fmtN(regs.length)}</b><small>registros ligados</small></div>
+                    <div><b>${ult ? haDias(ult) : '—'}</b><small>último fato${ult ? ' · ' + fmtD(ult) : ''}</small></div></div>
+                <div class="pd2-fazer"><div class="pd2-fazer-t">${ic('check')}O que fazer</div><ol>${passos.map(p => `<li>${esc(p)}</li>`).join('')}</ol></div>
+            </div>
+            <div class="grade g2" style="align-items:stretch">
+                <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:${P.cor}">${ic('activity')}</div><div><h3>Evolução</h3><p>Registros ligados a este problema por mês</p></div></div>${sparkline(porMes, css(P.cor.slice(4, -1)) || P.cor, 64)}<div class="pulso-rod"><span>${MES_ABR[+meses[0].slice(5) - 1]}/${meses[0].slice(2, 4)}</span><span>${MES_ABR[+meses[11].slice(5) - 1]}/${meses[11].slice(2, 4)}</span></div></div>
+                <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:${P.cor}">${ic('map')}</div><div><h3>Onde se concentra</h3><p>Locais afetados por município</p></div></div>${hbar([...muns.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([m, v]) => ({ t: nomeMun(m), v, c: P.cor })))}</div>
+            </div>
+            <div class="card">
+                <div class="card-pad" style="padding-bottom:0"><div class="card-tit" style="margin-bottom:10px"><div class="ico" style="--c:${P.cor}">${ic('pin')}</div><div><h3>Onde agir</h3><p>${itens.length} ${itens.length === 1 ? 'local' : 'locais'}, do fato mais recente para o mais antigo. Clique para analisar.</p></div><div class="dir"><button class="btn btn-s btn-sm" onclick="listaModal('${esc(g.titulo)}', [...new Set(PD_G.find(x=>x.k===PD.sel).itens.flatMap(a=>a.regs))])">${ic('book')}Todos os registros</button></div></div></div>
+                <div class="pd2-itens" style="--c:${P.cor}">${itens.slice(0, PD.lim).map(cartao).join('')}</div>
+                ${itens.length > PD.lim ? `<div style="padding:0 18px 18px;text-align:center"><button class="btn btn-s" onclick="PD.lim+=24;rAlertas()">Mostrar mais ${Math.min(24, itens.length - PD.lim)} de ${itens.length - PD.lim} restantes</button></div>` : '<div style="height:6px"></div>'}
+            </div></div>`;
+    }
+
+    /* ---- 4. Escolas com vários problemas ---- */
+    const porLocal = new Map();
+    filtrados.forEach(a => { if (!a.escK) return; if (!porLocal.has(a.escK)) porLocal.set(a.escK, { k: a.escK, nome: a.local, mun: a.mun, al: [] }); porLocal.get(a.escK).al.push(a); });
+    const ordNv = { critico: 0, alto: 1, medio: 2 };
+    const multi = [...porLocal.values()].map(x => Object.assign(x, { tipos: new Set(x.al.map(a => a.titulo)).size, crit: x.al.filter(a => a.nivel === 'critico').length })).filter(x => x.tipos >= 2).sort((a, b) => b.crit - a.crit || b.tipos - a.tipos).slice(0, 12);
+    const multiCard = multi.length ? `<div class="card"><div class="card-pad" style="padding-bottom:6px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('target')}</div><div><h3>Escolas com vários problemas ao mesmo tempo</h3><p>Onde diferentes alertas se somam. Costumam ser as prioridades reais de visita.</p></div></div></div>
+        <div class="pd2-multi">${multi.map(x => `<button class="pd2-multi-i" onclick="abrirEscola('${esc(x.k)}')"><span class="pd2-multi-n">${x.tipos}</span><span class="pd2-multi-tx"><b>${esc(x.nome)}</b><small>${esc(nomeMun(x.mun))}</small><span class="pd2-pontos">${x.al.slice().sort((a, b) => ordNv[a.nivel] - ordNv[b.nivel]).map(a => `<i style="--c:${PRIOR[a.nivel].cor}" title="${esc(PRIOR[a.nivel].nome + ': ' + a.titulo)}"></i>`).join('')}</span></span></button>`).join('')}</div></div>` : '';
+
+    $('cont-alertas').innerHTML = resumo + `<div class="pd2-grade">${esquerda}${direita}</div>` + multiCard +
+        `<details class="card card-pad pd-ajuda"><summary><b>Como o sistema detecta cada problema</b></summary><div class="peq" style="line-height:1.65;color:var(--texto2);columns:2 320px;column-gap:28px;margin-top:10px">${Object.entries(POR_QUE).map(([t, d]) => `<p style="margin:0 0 8px;break-inside:avoid"><b>${esc(t)}:</b> ${esc(d)}</p>`).join('')}<p style="margin:0;break-inside:avoid"><b>Alta abrupta de um tipo de fato:</b> 10 ou mais casos em 30 dias e pelo menos o dobro da média mensal anterior.</p></div></details>`;
+    let t; $('pd-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { PD.q = $('pd-q').value; rAlertas(); const i = $('pd-q'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 300); };
+    $('pd-cat').onchange = () => { PD.cat = $('pd-cat').value; PD.sel = ''; rAlertas(); };
+};
+
+if (LEGENDAS.alertas) Object.assign(LEGENDAS.alertas, {
+    usar: ['Comece pelo resumo: clique numa faixa de urgência para filtrar.', 'Escolha um problema na lista da esquerda; à direita aparecem o que fazer, a evolução e os locais.', 'Clique num local para abrir a análise com os registros. "Escolas com vários problemas" ajuda a decidir as visitas.']
 });
 
 </script>
