@@ -1315,7 +1315,7 @@ html.menu-recolhido .lat-acoes { max-width: none; flex-direction: column; }
 .cam-p small { font-weight: 500; color: var(--muted); font-size: 10px; }
 .cam-s { color: var(--muted2); }
 .sel-vn { background: var(--prim-claro) !important; box-shadow: inset 3px 0 0 var(--prim); }
-.vn2-tela { position: relative; height: 470px; border-radius: 12px; background: var(--suave); overflow: hidden; border: 1px solid var(--borda); }
+.vn2-tela { position: relative; height: 520px; border-radius: 14px; background: #0b1530; overflow: hidden; border: 1px solid #1e2b4d; box-shadow: inset 0 0 0 1px rgba(56,189,248,.06), 0 10px 30px -18px rgba(2,6,23,.6); }
 .vn2-tela.alta { height: 600px; }
 .vn2-tela canvas { width: 100%; height: 100%; display: block; }
 .vn2-leg { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; font-size: 11.5px; color: var(--texto2); margin-top: 10px; }
@@ -1427,6 +1427,19 @@ mark { background: color-mix(in srgb, var(--ambar) 35%, transparent); color: inh
   .pd2-nv-ic, .pd2-nv small { display: none; }
   .pd2-nv em { font-size: 12px; }
 }
+
+/* ---------- 2.8 teia da Rede de vínculos ---------- */
+@media (max-width: 700px) { .vn2-tela, .vn2-tela.alta { height: 440px; } }
+.vn2-tela .mapa-painel { background: rgba(15,23,42,.94); color: #e2e8f0; border: 1px solid #334155; }
+.vn3-leg { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: var(--suave); border: 1px solid var(--borda); font-size: 12px; color: var(--texto2); }
+.vn3-leg-g { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+.vn3-leg-g em { font-style: normal; font-size: 10.5px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-right: 2px; }
+.vn3-leg-g span { display: inline-flex; align-items: center; gap: 7px; }
+.vn3-no { position: relative; display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #0f172a; border: 2px solid var(--c); }
+.vn3-no > svg { width: 13px; height: 13px; fill: none; stroke: #f8fafc; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.vn3-no b { position: absolute; top: -5px; right: -6px; width: 13px; height: 13px; border-radius: 50%; background: var(--c); display: grid; place-items: center; border: 1.5px solid var(--card); }
+.vn3-no b svg { width: 8px; height: 8px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.vn3-lin { display: inline-block; width: 22px; background: var(--c); border-radius: 2px; }
 </style>
 
 </head>
@@ -1494,8 +1507,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '2.7.0+abe3cf3d';
-const APP_NOTAS = 'Problemas detectados redesenhado: resumo, lista de problemas e painel com o que fazer e onde agir.';
+const APP_VERSAO = '2.8.0+9c4dcb7c';
+const APP_NOTAS = 'Rede de vínculos com nova teia: fundo escuro, ícones por papel e nomes mais legíveis.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -5218,8 +5231,13 @@ rVinculos = function () {
     if (matchMedia('(max-width: 900px)').matches && $('vn2-grade')) $('vn2-grade').style.gridTemplateColumns = 'minmax(0,1fr)';
 };
 function legendaGrafo(ego) {
-    const it = (c, t, linha) => `<span>${linha ? `<i style="width:18px;height:${linha}px;background:${c}"></i>` : `<i style="width:10px;height:10px;border-radius:50%;background:${c}"></i>`}${t}</span>`;
-    return `<div class="vn2-leg">${ego ? it('var(--marca)', 'Pessoa escolhida') : ''}${it('var(--c-crit)', 'Mais vezes autor')}${it('var(--prim)', 'Mais vezes vítima')}${it('var(--roxo)', 'Autor e vítima')}${it('var(--c-crit)', 'agiram juntos', 3)}${it('var(--muted2)', 'autor e vítima no mesmo fato', 1.5)}${it('var(--prim)', 'vítimas no mesmo fato (tracejado)', 1.5)}<span class="mut">Tamanho = nº de registros · passe o mouse para destacar · clique para abrir</span></div>`;
+    const no = (c, ico) => `<i class="vn3-no" style="--c:${c}"><svg viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><b><svg viewBox="0 0 24 24">${ico}</svg></b></i>`;
+    const RAIO = '<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>', ESC = '<path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V6c2 0 5-1 8-3 3 2 6 3 8 3z"/>', ALVO = '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/>';
+    const lin = (c, est, t) => `<span><i class="vn3-lin" style="--c:${c};${est}"></i>${t}</span>`;
+    return `<div class="vn3-leg">
+        <div class="vn3-leg-g"><em>Pessoas</em>${ego ? `<span>${no('#22d3ee', '<circle cx="12" cy="12" r="4"/>')}Pessoa escolhida</span>` : ''}<span>${no('#f43f5e', RAIO)}Mais vezes autor</span><span>${no('#3b82f6', ESC)}Mais vezes vítima</span><span>${no('#a855f7', ALVO)}Autor e vítima</span></div>
+        <div class="vn3-leg-g"><em>Ligações</em>${lin('#f43f5e', 'height:3px;box-shadow:0 0 6px #f43f5e', 'Agiram juntos')}${lin('#94a3b8', 'height:1.5px', 'Autor → vítima (seta)')}${lin('#3b82f6', 'height:0;border-top:1.5px dashed #3b82f6;background:none', 'Vítimas do mesmo fato')}</div>
+        <div class="vn3-leg-g mut"><em>Leitura</em><span>Tamanho = nº de registros · número no canto = registros · passe o mouse para destacar · clique para abrir</span></div></div>`;
 }
 /* Desenha um subgrafo com layout próprio (mais legível que o grafo inteiro) */
 function desenharSub(chaves, centro) {
@@ -5232,46 +5250,103 @@ function desenharSub(chaves, centro) {
     const E = []; const vistos = new Set();
     REG.forEach(r => {
         const ag = r.agr.map(chave).filter(k => ok.has(k)), vi = r.vit.map(chave).filter(k => ok.has(k));
-        const add = (a, b, t) => { if (a === b) return; const k = (a < b ? a + '§' + b : b + '§' + a); let e = vistos.has(k) ? E.find(x => x.k === k) : null; if (!e) { e = { k, a, b, n: 0, coaut: 0, agrv: 0, covit: 0 }; E.push(e); vistos.add(k); } e.n++; e[t]++; };
+        const add = (a, b, t) => { if (a === b) return; const k = (a < b ? a + '§' + b : b + '§' + a); let e = vistos.has(k) ? E.find(x => x.k === k) : null; if (!e) { e = { k, a, b, n: 0, coaut: 0, agrv: 0, covit: 0 }; E.push(e); vistos.add(k); } e.n++; e[t]++; if (t === 'agrv') e.au = a; };
         for (let i = 0; i < ag.length; i++) for (let j = i + 1; j < ag.length; j++) add(ag[i], ag[j], 'coaut');
         ag.forEach(a => vi.forEach(v => add(a, v, 'agrv')));
         for (let i = 0; i < vi.length; i++) for (let j = i + 1; j < vi.length; j++) add(vi[i], vi[j], 'covit');
     });
     const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight;
     cv.width = W * dpr; cv.height = H * dpr;
-    const Lk = simular(N, E, W, H);
-    // ajusta o desenho para ocupar a tela (grafos pequenos ficavam espremidos no meio)
+    simular(N, E, W, H);
+    const base0 = Math.min(N.length > 90 ? 7 : N.length > 45 ? 10 : 13, Math.max(7, W / 32));
+    N.forEach(n => n.r = base0 + Math.min(base0 * .8, Math.sqrt(n.regs.size || 1) * (base0 / 5)));
+    // ajusta o desenho para ocupar a tela, com margem para os rótulos
     if (N.length > 1) { const xs = N.map(n => n.x), ys = N.map(n => n.y), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
-        const esc_ = Math.min((W - 220) / Math.max(1, x1 - x0), (H - 70) / Math.max(1, y1 - y0), 4);
-        N.forEach(n => { n.x = W / 2 - 40 + (n.x - (x0 + x1) / 2) * esc_; n.y = H / 2 + (n.y - (y0 + y1) / 2) * esc_; }); }
-    if (false && centro) { const c = N.find(n => n.k === centro); if (c) { const dx = W / 2 - c.x, dy = H / 2 - c.y; N.forEach(n => { n.x = Math.max(40, Math.min(W - 70, n.x + dx)); n.y = Math.max(28, Math.min(H - 28, n.y + dy)); }); } }
+        const esc_ = Math.min((W - 150) / Math.max(1, x1 - x0), (H - 90) / Math.max(1, y1 - y0), 4);
+        N.forEach(n => { n.x = W / 2 + (n.x - (x0 + x1) / 2) * esc_; n.y = H / 2 - 8 + (n.y - (y0 + y1) / 2) * esc_; }); }
+    else if (N[0]) { N[0].x = W / 2; N[0].y = H / 2; }
     const viz = new Map(N.map(n => [n.k, new Set()])); E.forEach(e => { viz.get(e.a).add(e.b); viz.get(e.b).add(e.a); });
+    const porK = new Map(N.map(n => [n.k, n]));
     const x = cv.getContext('2d');
-    const cor = { a: css('--c-crit'), v: css('--prim'), m: css('--roxo'), l: css('--muted2'), t: css('--texto'), c: css('--marca'), card: css('--card') };
+    const COR = { a: '#f43f5e', v: '#3b82f6', m: '#a855f7', c: '#22d3ee', l: 'rgba(148,163,184,.55)', txt: '#e2e8f0' };
     const fonte = css('--f-corpo') || 'sans-serif';
+    const corNo = n => n.k === centro ? COR.c : n.agr && n.vit ? COR.m : n.agr >= n.vit ? COR.a : COR.v;
+    // ícones (traços no estilo Lucide, caixa 24x24)
+    const IC = {
+        pessoa: new Path2D('M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'),
+        alvo: new Path2D('M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'),
+        escudo: new Path2D('M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z'),
+        raio: new Path2D('M13 2 3 14h9l-1 8 10-12h-9l1-8z')
+    };
+    const icone = (path, cx, cy, tam, cor, lw) => { x.save(); x.translate(cx - tam / 2, cy - tam / 2); x.scale(tam / 24, tam / 24); x.strokeStyle = cor; x.lineWidth = (lw || 2) * 24 / tam; x.lineCap = 'round'; x.lineJoin = 'round'; x.stroke(path); x.restore(); };
+    // fundo pré-renderizado: gradiente, grade de pontos e anéis de radar
+    const fundo = document.createElement('canvas'); fundo.width = W * dpr; fundo.height = H * dpr;
+    (() => { const f = fundo.getContext('2d'); f.scale(dpr, dpr);
+        const g = f.createRadialGradient(W / 2, H / 2, 20, W / 2, H / 2, Math.max(W, H) * .75); g.addColorStop(0, '#13234a'); g.addColorStop(.55, '#0b1530'); g.addColorStop(1, '#070d1f');
+        f.fillStyle = g; f.fillRect(0, 0, W, H);
+        f.fillStyle = 'rgba(148,163,184,.13)'; for (let yy = 12; yy < H; yy += 22) for (let xx = 12; xx < W; xx += 22) f.fillRect(xx, yy, 1.2, 1.2);
+        f.strokeStyle = 'rgba(56,189,248,.07)'; f.lineWidth = 1; [.18, .32, .46].forEach(k => { f.beginPath(); f.arc(W / 2, H / 2, Math.min(W, H) * k * 1.6, 0, 6.283); f.stroke(); });
+        f.beginPath(); f.moveTo(W / 2, 0); f.lineTo(W / 2, H); f.moveTo(0, H / 2); f.lineTo(W, H / 2); f.strokeStyle = 'rgba(56,189,248,.05)'; f.stroke();
+    })();
+    const curva = (a, b, e) => { const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, dx = b.x - a.x, dy = b.y - a.y, k = e.coaut ? .08 : .16; return [mx - dy * k, my + dx * k]; };
     const desenhar = () => {
-        x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, W, H);
+        x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, cv.width, cv.height); x.drawImage(fundo, 0, 0);
+        x.setTransform(dpr, 0, 0, dpr, 0, 0);
         const h = VN2.hover, foco = h ? new Set([h, ...viz.get(h)]) : null;
-        E.forEach((e, i) => { const a = N.find(n => n.k === e.a), b = N.find(n => n.k === e.b); if (!a || !b) return; const on = !foco || (foco.has(a.k) && foco.has(b.k) && (a.k === h || b.k === h)); x.globalAlpha = on ? (e.coaut ? .9 : .55) : .07; x.strokeStyle = e.coaut ? cor.a : e.agrv ? cor.l : cor.v; x.lineWidth = e.coaut ? 1.6 + Math.min(4, e.n * .8) : 1.2; x.setLineDash(!e.coaut && !e.agrv ? [4, 4] : []); x.beginPath(); x.moveTo(a.x, a.y); x.lineTo(b.x, b.y); x.stroke(); }); x.setLineDash([]);
-        const caixas = [], cabe = (bx) => !caixas.some(c => bx.x < c.x + c.w && bx.x + bx.w > c.x && bx.y < c.y + c.h && bx.y + bx.h > c.y);
-        N.forEach(n => {
-            const on = !foco || foco.has(n.k); n.r = 5 + Math.min(12, Math.sqrt(n.regs.size || 1) * 2.4);
-            x.globalAlpha = on ? 1 : .15;
-            x.fillStyle = n.k === centro ? cor.c : n.agr && n.vit ? cor.m : n.agr >= n.vit ? cor.a : cor.v;
-            x.beginPath(); x.arc(n.x, n.y, n.r, 0, 6.283); x.fill(); x.lineWidth = n.k === centro ? 3 : 1.5; x.strokeStyle = n.k === centro ? cor.t : cor.card; x.stroke();
+        // ligações: curvas; coautoria vermelha com brilho, autor→vítima com seta, vítimas juntas tracejado azul
+        E.slice().sort((p, q) => p.coaut - q.coaut).forEach(e => {
+            const a = porK.get(e.a), b = porK.get(e.b); if (!a || !b) return;
+            const on = !foco || (a.k === h || b.k === h);
+            const cor = e.coaut ? COR.a : e.agrv ? COR.l : COR.v;
+            const [cx, cy] = curva(a, b, e);
+            x.globalAlpha = on ? (e.coaut ? .95 : .7) : .06;
+            x.strokeStyle = cor; x.lineWidth = e.coaut ? 1.8 + Math.min(4, e.n * .7) : 1.3;
+            x.setLineDash(!e.coaut && !e.agrv ? [4, 5] : []);
+            if (e.coaut && on) { x.shadowColor = COR.a; x.shadowBlur = 10; }
+            x.beginPath(); x.moveTo(a.x, a.y); x.quadraticCurveTo(cx, cy, b.x, b.y); x.stroke(); x.shadowBlur = 0;
+            if (e.agrv && !e.coaut && e.au && on) { // seta na ponta da vítima
+                const de = e.au === a.k ? a : b, para = de === a ? b : a, [qx, qy] = de === a ? [cx, cy] : [cx, cy];
+                const ang = Math.atan2(para.y - qy, para.x - qx), px = para.x - Math.cos(ang) * (para.r + 3), py = para.y - Math.sin(ang) * (para.r + 3);
+                x.setLineDash([]); x.fillStyle = 'rgba(203,213,225,.85)'; x.beginPath(); x.moveTo(px, py); x.lineTo(px - Math.cos(ang - .45) * 8, py - Math.sin(ang - .45) * 8); x.lineTo(px - Math.cos(ang + .45) * 8, py - Math.sin(ang + .45) * 8); x.closePath(); x.fill();
+            }
         });
-        // rótulos: prioridade para foco, centro e quem tem mais registros; pula os que encostariam em outro
-        const ordem = N.filter(n => !foco || foco.has(n.k)).sort((a, b) => (b.k === h) - (a.k === h) || (b.k === centro) - (a.k === centro) || b.regs.size - a.regs.size);
+        x.setLineDash([]); x.globalAlpha = 1;
+        // pessoas: disco escuro, anel colorido, ícone no centro e selo do papel
+        N.forEach(n => {
+            const on = !foco || foco.has(n.k), c = corNo(n), r = n.r, destaque = n.k === centro || n.k === h;
+            x.globalAlpha = on ? 1 : .18;
+            if (destaque || (on && foco)) { const gl = x.createRadialGradient(n.x, n.y, r * .6, n.x, n.y, r * 2.4); gl.addColorStop(0, c + '66'); gl.addColorStop(1, c + '00'); x.fillStyle = gl; x.beginPath(); x.arc(n.x, n.y, r * 2.4, 0, 6.283); x.fill(); }
+            if (n.k === centro) { x.strokeStyle = COR.c; x.globalAlpha = on ? .45 : .1; x.lineWidth = 1; x.setLineDash([3, 4]); x.beginPath(); x.arc(n.x, n.y, r + 8, 0, 6.283); x.stroke(); x.setLineDash([]); x.globalAlpha = on ? 1 : .18; }
+            const g = x.createLinearGradient(n.x, n.y - r, n.x, n.y + r); g.addColorStop(0, '#1e293b'); g.addColorStop(1, '#0f172a');
+            x.fillStyle = g; x.beginPath(); x.arc(n.x, n.y, r, 0, 6.283); x.fill();
+            x.lineWidth = destaque ? 3 : 2.2; x.strokeStyle = c; x.stroke();
+            if (r >= 9) icone(IC.pessoa, n.x, n.y + .5, r * 1.15, '#f8fafc', r >= 14 ? 2 : 2.4);
+            else { x.fillStyle = c; x.beginPath(); x.arc(n.x, n.y, r * .45, 0, 6.283); x.fill(); }
+            // selo do papel no canto: raio = autor, escudo = vítima, alvo = os dois
+            if (r >= 10) { const bx = n.x + r * .72, by = n.y - r * .72, br = Math.max(6.5, r * .42);
+                x.fillStyle = c; x.beginPath(); x.arc(bx, by, br, 0, 6.283); x.fill(); x.lineWidth = 1.5; x.strokeStyle = '#0b1530'; x.stroke();
+                icone(n.agr && n.vit ? IC.alvo : n.agr >= n.vit ? IC.raio : IC.escudo, bx, by, br * 1.25, '#fff', 2.6); }
+            // contador de registros embaixo à esquerda para os maiores
+            if (r >= 14 && n.regs.size > 1) { const bx = n.x - r * .72, by = n.y + r * .72; x.fillStyle = '#0b1530'; x.beginPath(); x.arc(bx, by, 7.5, 0, 6.283); x.fill(); x.strokeStyle = c; x.lineWidth = 1.2; x.stroke(); x.fillStyle = '#f8fafc'; x.font = `700 8.5px ${fonte}`; x.textAlign = 'center'; x.fillText(n.regs.size > 99 ? '99+' : n.regs.size, bx, by + 3); x.textAlign = 'left'; }
+        });
         x.globalAlpha = 1;
+        // rótulos em pílula abaixo de cada pessoa, sem sobreposição
+        const caixas = N.map(n => ({ x: n.x - n.r, y: n.y - n.r, w: n.r * 2, h: n.r * 2 }));
+        const cabe = bx => !caixas.some(c => bx.x < c.x + c.w && bx.x + bx.w > c.x && bx.y < c.y + c.h && bx.y + bx.h > c.y);
+        const ordem = N.filter(n => !foco || foco.has(n.k)).sort((a, b) => (b.k === h) - (a.k === h) || (b.k === centro) - (a.k === centro) || b.regs.size - a.regs.size);
         ordem.forEach(n => {
             const nm = n.nome.split(' '), t = nm[0] + (nm[1] ? ' ' + nm[nm.length - 1] : ''), forte = n.k === centro || n.k === h;
-            x.font = `${forte ? 700 : 600} 11px ${fonte}`;
-            const w = x.measureText(t).width, bx = { x: n.x + n.r + 3, y: n.y - 8, w: w + 6, h: 16 };
-            if (bx.x + bx.w > W) bx.x = n.x - n.r - 3 - bx.w;
-            if (!forte && !cabe(bx)) return;
+            x.font = `${forte ? 700 : 600} ${forte ? 11.5 : 10.5}px ${fonte}`;
+            const w = x.measureText(t).width + 14, bx = { x: n.x - w / 2, y: n.y + n.r + 5, w, h: 18 };
+            bx.x = Math.max(4, Math.min(W - w - 4, bx.x));
+            const self = caixas.findIndex(c => c.x === n.x - n.r && c.y === n.y - n.r);
+            const outros = caixas.filter((c, i) => i !== self);
+            if (!forte && outros.some(c => bx.x < c.x + c.w && bx.x + bx.w > c.x && bx.y < c.y + c.h && bx.y + bx.h > c.y)) return;
             caixas.push(bx);
-            x.fillStyle = cor.card; x.globalAlpha = .85; x.fillRect(bx.x, bx.y, bx.w, bx.h); x.globalAlpha = 1;
-            x.fillStyle = cor.t; x.fillText(t, bx.x + 3, n.y + 4);
+            const c = corNo(n);
+            x.fillStyle = forte ? c : 'rgba(15,23,42,.88)'; x.strokeStyle = forte ? c : c + '88'; x.lineWidth = 1;
+            x.beginPath(); x.roundRect ? x.roundRect(bx.x, bx.y, bx.w, bx.h, 9) : x.rect(bx.x, bx.y, bx.w, bx.h); x.fill(); x.stroke();
+            x.fillStyle = forte && n.k === centro ? '#04222b' : '#f1f5f9'; x.fillText(t, bx.x + 7, bx.y + 12.5);
         });
         x.globalAlpha = 1;
     };
