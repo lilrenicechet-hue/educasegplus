@@ -792,7 +792,10 @@ main { flex: 1; min-width: 0; display: flex; flex-direction: column; height: 100
 .selo-demo { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: .04em; background: color-mix(in srgb, var(--ambar) 16%, transparent); color: var(--ambar); white-space: nowrap; }
 @media (max-width: 640px) { #recorte { padding: 8px 16px; } #recorte .campo { max-width: none; flex: 1 1 40%; } #recorte .fonte { margin-left: 0; width: 100%; } }
 
-.aba { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+/* Rolagem: cada página rola inteira (faixa-herói incluída) dentro de #abas; o corpo da página nunca rola. */
+#abas { flex: 1; min-height: 0; display: flex; flex-direction: column; position: relative; }
+.aba { flex: 1; min-height: 0; display: block; overflow-y: auto; overflow-x: hidden; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; scrollbar-gutter: stable; }
+.aba:focus { outline: none; }
 .heroi { background: var(--heroi); background-image: radial-gradient(700px 220px at 92% -40%, rgba(34,195,214,.22), transparent 70%), radial-gradient(500px 200px at 10% 140%, rgba(37,99,235,.18), transparent 70%); color: #fff; padding: 16px 28px 42px; flex-shrink: 0; position: relative; overflow: hidden; }
 .heroi::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 340px; background-image: radial-gradient(circle, rgba(148,163,184,.22) 1px, transparent 1.4px); background-size: 12px 12px; mask-image: linear-gradient(90deg, transparent, #000 60%); -webkit-mask-image: linear-gradient(90deg, transparent, #000 60%); opacity: .7; pointer-events: none; }
 .heroi-linha { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
@@ -800,7 +803,19 @@ main { flex: 1; min-width: 0; display: flex; flex-direction: column; height: 100
 .heroi h2 svg.i { color: var(--marca); }
 .heroi p { margin: 3px 0 0; color: #9fb0c4; font-size: 12.5px; max-width: 70ch; }
 .heroi .acoes-h { display: flex; gap: 8px; flex-wrap: wrap; }
-.conteudo { flex: 1; min-height: 0; overflow-y: auto; padding: 0 28px 28px; margin-top: -26px; position: relative; z-index: 2; }
+.conteudo { padding: 0 28px 28px; margin-top: -26px; position: relative; z-index: 2; }
+.pal-res, .gaveta-corpo, .modal-corpo { overscroll-behavior: contain; }
+#f-toggle { display: none; }
+.mapa-dica { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 600; background: rgba(11,20,36,.82); color: #fff; padding: 8px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 600; pointer-events: none; transition: opacity .25s; }
+@media (max-width: 640px) {
+    #recorte { gap: 6px; }
+    #recorte .rot-r { display: none; }
+    #f-toggle { display: inline-flex; }
+    #recorte:not(.aberto) .campo, #recorte:not(.aberto) #f-limpar { display: none; }
+    #recorte .fonte { width: auto; flex: 1; min-width: 0; overflow: hidden; }
+    #recorte.aberto .fonte { flex-basis: 100%; }
+    .lista[style*="max-height"], .tab-wrap[style*="max-height"] { max-height: 60vh !important; }
+}
 .pilha > * + * { margin-top: 16px; }
 @media (max-width: 640px) { .heroi { padding: 14px 16px 40px; } .conteudo { padding: 0 16px 20px; } }
 
@@ -970,7 +985,7 @@ table.tab { width: 100%; border-collapse: separate; border-spacing: 0; font-size
 .tl .met { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
 /* Mapa */
-.mapa-box { position: relative; height: calc(100vh - 230px); min-height: 480px; border-radius: 14px; overflow: hidden; border: 1px solid var(--borda); }
+.mapa-box { position: relative; height: calc(100vh - 230px); height: calc(100dvh - 230px); min-height: 480px; border-radius: 14px; overflow: hidden; border: 1px solid var(--borda); }
 .mapa-box .leaflet-container, #mapa-rota { background: var(--mapa-fundo); font-family: var(--f-corpo); }
 #mapa-geral, #mapa-rota { height: 100%; width: 100%; }
 .mapa-painel { position: absolute; z-index: 500; background: var(--card); border: 1px solid var(--borda); border-radius: 12px; box-shadow: var(--sombra); padding: 10px 12px; font-size: 12px; }
@@ -989,7 +1004,7 @@ table.tab { width: 100%; border-collapse: separate; border-spacing: 0; font-size
 .rotulo-mun { background: transparent; border: 0; box-shadow: none; color: var(--muted); font-size: 9.5px; font-weight: 700; text-shadow: 0 0 3px var(--mapa-fundo); }
 .leaflet-tooltip.rotulo-mun::before { display: none; }
 .num-parada { background: #0b1424; color: #fff; border: 2px solid #22c3d6; border-radius: 50%; width: 26px !important; height: 26px !important; display: flex !important; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; font-family: var(--f-corpo); }
-@media (max-width: 640px) { .mapa-box { height: 70vh; min-height: 380px; } .mapa-painel { padding: 8px 10px; font-size: 11px; } .mapa-legenda { max-width: 190px; left: 8px; bottom: 8px; } .mapa-camadas { right: 8px; top: 8px; } }
+@media (max-width: 640px) { .mapa-box { height: 62vh; height: 62dvh; min-height: 380px; } .mapa-painel { padding: 8px 10px; font-size: 11px; } .mapa-legenda { max-width: 190px; left: 8px; bottom: 8px; } .mapa-camadas { right: 8px; top: 8px; } }
 
 /* Rotas */
 .rota-lista { counter-reset: p; }
@@ -3444,7 +3459,7 @@ function formOcorrencia() {
         $('ro-ok').disabled = true;
         try {
             let cab, linha;
-            if (conectado()) { const j = await api('registrar', { registro }); cab = j.cabecalho; linha = j.linha; }
+            if (conectado()) { const j = await api('registrar', { registro }); cab = j.cabecalho; linha = j.linha; if (j.aviso) setTimeout(() => toast(j.aviso, 'alerta'), 1600); }
             else {
                 cab = Object.values(ROT_COLS);
                 Object.assign(registro, { 'Nº': 'L' + Date.now().toString(36).toUpperCase(), 'Perfil': 'LOCAL', 'Status': 'Pendente' });
@@ -4069,6 +4084,154 @@ function rTermos() {
 function verTermo(w) { const rs = (window.TERMOS && TERMOS.regsDe.get(w)) || []; listaModal('Relatos com "' + w.toLowerCase() + '"', rs); }
 /* Mapa de calor: não redesenha quando o mapa está oculto (evita erro de canvas com largura zero) */
 if (typeof L !== 'undefined' && L.HeatLayer) { const _rd = L.HeatLayer.prototype._redraw; L.HeatLayer.prototype._redraw = function () { if (!this._map || !this._canvas || !this._canvas.width || !this._canvas.height) return; try { return _rd.call(this); } catch (e) { } }; }
+
+/* =====================================================================
+   EDUCASEG-PLUS 2.2 — recursos do servidor: configuração, alertas por
+   e-mail, rotinas, backup, lixeira, sessões, histórico e autenticidade
+   ===================================================================== */
+const urlApiPublica = () => (API.url || '').replace(/\/a\/[^/]+\/macros\//, '/macros/');
+
+/* ---------- Administração do servidor (na página Usuários) ---------- */
+const _rUsuariosV3 = rUsuarios;
+rUsuarios = async function () {
+    await _rUsuariosV3();
+    if (!ehAdmin() || ABA !== 'usuarios') return;
+    const c = $('cont-usuarios');
+    c.insertAdjacentHTML('beforeend', `<div class="card"><div class="abas-int" style="padding:0 10px;margin:0" id="adm-abas">${[['config', 'Configurações e alertas'], ['dres', 'E-mails das DREs'], ['sessoes', 'Sessões ativas'], ['lixeira', 'Lixeira'], ['servidor', 'Rotinas e backup'], ['auditoria', 'Auditoria']].map(([k, t], i) => `<button data-a="${k}" class="${i ? '' : 'ativo'}">${t}</button>`).join('')}</div><div id="adm-corpo" class="card-pad"></div></div>`);
+    $('adm-abas').onclick = e => { const b = e.target.closest('button'); if (!b) return; document.querySelectorAll('#adm-abas button').forEach(x => x.classList.toggle('ativo', x === b)); admAba(b.dataset.a); };
+    admAba('config');
+};
+async function admAba(a) {
+    const el = $('adm-corpo'); el.innerHTML = `<div class="vazio">${ic('clock')}Carregando…</div>`;
+    try {
+        if (a === 'config') {
+            const j = await api('config'), C = j.config;
+            const sn = k => `<select class="campo" id="cf-${k}"><option value="SIM" ${C[k].valor === 'SIM' ? 'selected' : ''}>Sim</option><option value="NAO" ${C[k].valor !== 'SIM' ? 'selected' : ''}>Não</option></select>`;
+            el.innerHTML = `<div class="form-grade">
+                <div class="inteiro"><label class="rot" for="cf-ALERTA_EMAILS">E-mails da Unidade de Inteligência <small>(recebem todos os alertas e o resumo da rede)</small></label><input class="campo" id="cf-ALERTA_EMAILS" value="${esc(C.ALERTA_EMAILS.valor)}" placeholder="inteligencia@edu.mt.gov.br, coordenacao@edu.mt.gov.br"></div>
+                <div><label class="rot" for="cf-ALERTA_SENSIVEIS">Alerta imediato de tipo sensível</label>${sn('ALERTA_SENSIVEIS')}<p class="dica">Arma, facção, violência sexual, suicídio, tráfico e invasão. O e-mail não leva nomes de estudantes.</p></div>
+                <div><label class="rot" for="cf-RESUMO_DIARIO">Resumo diário às 7h</label>${sn('RESUMO_DIARIO')}<p class="dica">Exige as rotinas instaladas (aba Rotinas e backup).</p></div>
+                <div><label class="rot" for="cf-PENDENCIA_HORAS">Prazo de validação de casos críticos <small>(horas)</small></label><input class="campo" type="number" min="1" max="720" id="cf-PENDENCIA_HORAS" value="${esc(C.PENDENCIA_HORAS.valor)}"></div>
+                <div><label class="rot" for="cf-BACKUP_MANTER">Backups semanais mantidos</label><input class="campo" type="number" min="1" max="52" id="cf-BACKUP_MANTER" value="${esc(C.BACKUP_MANTER.valor)}"></div>
+                <div class="inteiro"><label class="rot" for="cf-LINK_SISTEMA">Endereço do sistema <small>(usado no botão dos e-mails)</small></label><input class="campo" id="cf-LINK_SISTEMA" value="${esc(C.LINK_SISTEMA.valor || location.href.split('#')[0])}"></div>
+                <div class="inteiro"><label class="rot" for="cf-ORGAO">Órgão <small>(cabeçalho dos e-mails)</small></label><input class="campo" id="cf-ORGAO" value="${esc(C.ORGAO.valor)}"></div>
+                <div><label class="rot" for="cf-MANUTENCAO">Modo manutenção</label>${sn('MANUTENCAO')}<p class="dica">Sim bloqueia o acesso de todos, exceto administradores.</p></div>
+                <div class="inteiro" style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-p" id="cf-ok">${ic('check')}Salvar configurações</button></div></div>`;
+            $('cf-ok').onclick = async () => { const valores = {}; Object.keys(C).forEach(k => { if ($('cf-' + k)) valores[k] = $('cf-' + k).value; }); $('cf-ok').disabled = true; try { await api('salvarConfig', { valores }); toast('Configurações salvas'); } catch (e) { toast(e.message, 'alerta'); } $('cf-ok').disabled = false; };
+        } else if (a === 'dres') {
+            const j = await api('notificacoes'); window.NOTIF = j.notificacoes;
+            el.innerHTML = `<p class="peq mut" style="margin-top:0">Quem recebe, em cada DRE, os alertas imediatos de tipos sensíveis e o resumo diário daquela regional.</p>
+                <div class="tab-wrap"><table class="tab"><thead><tr><th>DRE</th><th>E-mails</th><th>Alertas imediatos</th><th>Resumo diário</th></tr></thead><tbody>${j.notificacoes.map((n, i) => `<tr><td><b>${esc(n.dre)}</b></td><td><input class="campo" data-i="${i}" data-c="emails" value="${esc(n.emails)}" placeholder="email@edu.mt.gov.br"></td><td><input type="checkbox" data-i="${i}" data-c="imediato" ${n.imediato ? 'checked' : ''} aria-label="Alertas imediatos ${esc(n.dre)}"></td><td><input type="checkbox" data-i="${i}" data-c="resumo" ${n.resumo ? 'checked' : ''} aria-label="Resumo diário ${esc(n.dre)}"></td></tr>`).join('')}</tbody></table></div>
+                <div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="btn btn-p" id="nt-ok">${ic('check')}Salvar</button></div>`;
+            $('nt-ok').onclick = async () => { el.querySelectorAll('[data-i]').forEach(x => { const n = NOTIF[+x.dataset.i]; n[x.dataset.c] = x.type === 'checkbox' ? x.checked : x.value; }); try { await api('salvarNotificacoes', { notificacoes: NOTIF }); toast('E-mails das DREs salvos'); } catch (e) { toast(e.message, 'alerta'); } };
+        } else if (a === 'sessoes') {
+            const j = await api('sessoes');
+            el.innerHTML = `<div class="tab-wrap"><table class="tab"><thead><tr><th>Usuário</th><th>Perfil</th><th>Entrou em</th><th>Expira em</th><th></th></tr></thead><tbody>${j.sessoes.map(s => `<tr><td><b>${esc(s.nome)}</b><br><span class="peq mut">${esc(s.email)}</span></td><td>${esc(PERFIS[s.perfil] || s.perfil)}</td><td class="peq num">${s.inicio ? new Date(s.inicio).toLocaleString('pt-BR') : '—'}</td><td class="peq num">${new Date(s.expira).toLocaleString('pt-BR')}</td><td>${s.email !== USUARIO.email ? `<button class="btn btn-d btn-sm" onclick="encerrarSessoesDe('${esc(s.email)}')">Encerrar</button>` : '<span class="peq mut">você</span>'}</td></tr>`).join('') || '<tr><td colspan="5"><div class="vazio">Nenhuma sessão ativa.</div></td></tr>'}</tbody></table></div><p class="dica">Desativar um usuário, mudar o perfil ou redefinir a senha encerra as sessões dele automaticamente.</p>`;
+        } else if (a === 'lixeira') {
+            const j = await api('lixeira');
+            el.innerHTML = `<div class="tab-wrap" style="max-height:420px"><table class="tab"><thead><tr><th>Nº</th><th>Ocorrência</th><th>Excluída em</th><th>Por</th><th>Motivo</th><th></th></tr></thead><tbody>${j.itens.map(x => `<tr><td class="mono">${esc(x.n)}</td><td class="esc-cel"><b>${esc(x.escola)}</b><span>${esc(tipoCurto(x.tipo))} · ${esc(x.data)}</span></td><td class="peq num">${new Date(x.quando).toLocaleString('pt-BR')}</td><td class="peq">${esc(x.por)}</td><td class="peq">${esc(x.motivo)}</td><td><button class="btn btn-s btn-sm" onclick="restaurarOc('${esc(x.n)}')">${ic('repeat')}Restaurar</button></td></tr>`).join('') || '<tr><td colspan="6"><div class="vazio">Lixeira vazia.</div></td></tr>'}</tbody></table></div>`;
+        } else if (a === 'servidor') {
+            const j = await api('diagnostico'), d = j.diagnostico;
+            const it = (t, v) => `<div><dt>${t}</dt><dd>${v}</dd></div>`;
+            el.innerHTML = `<dl class="dados-lista">${it('Versão do servidor', esc(d.versao))}${it('Ocorrências na base', fmtN(d.ocorrencias))}${it('Usuários', fmtN(d.usuarios))}${it('Sessões ativas', fmtN(d.sessoesAtivas))}${it('Registros de auditoria', fmtN(d.auditoria))}${it('Versões guardadas', fmtN(d.versoes))}${it('Relatórios autenticados', fmtN(d.relatorios))}${it('Itens na lixeira', fmtN(d.lixeira))}${it('Último backup', d.ultimoBackup ? new Date(d.ultimoBackup).toLocaleString('pt-BR') : 'nunca')}${it('E-mails restantes hoje', fmtN(d.cotaEmailRestante))}${it('Rotinas instaladas', d.rotinas.length ? esc(d.rotinas.join(', ')) : '<span style="color:var(--c-crit)">nenhuma</span>')}${it('Modo manutenção', esc(d.manutencao))}</dl>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"><button class="btn btn-p" id="sv-rot">${ic('clock')}${d.rotinas.length ? 'Reinstalar' : 'Instalar'} rotinas automáticas</button><button class="btn btn-s" id="sv-bkp">${ic('database')}Fazer backup agora</button></div>
+                <p class="dica">Rotinas: resumo diário por e-mail e limpeza de sessões todo dia às 7h; backup da planilha numa pasta do Drive e arquivamento da auditoria antiga aos domingos às 2h.</p>`;
+            $('sv-rot').onclick = async () => { try { const r = await api('rotinas'); toast('Rotinas instaladas'); admAba('servidor'); } catch (e) { toast(e.message, 'alerta'); } };
+            $('sv-bkp').onclick = async () => { $('sv-bkp').disabled = true; try { const r = await api('backup'); toast('Backup criado: ' + r.nome, 'database'); admAba('servidor'); } catch (e) { toast(e.message, 'alerta'); $('sv-bkp').disabled = false; } };
+        } else if (a === 'auditoria') {
+            const j = await api('auditoria', { limite: 500 });
+            el.innerHTML = `<div class="busca" style="margin-bottom:10px">${ic('search')}<input class="campo" id="au-q" placeholder="Filtrar por usuário, ação ou nº"></div><div class="tab-wrap" style="max-height:440px"><table class="tab"><thead><tr><th>Data/hora</th><th>Usuário</th><th>Ação</th><th>Alvo</th><th>Detalhe</th><th>Resultado</th></tr></thead><tbody id="au-tb"></tbody></table></div>`;
+            const pint = () => { const q = chave($('au-q').value); $('au-tb').innerHTML = j.linhas.filter(l => !q || chave(l.join(' ')).includes(q)).slice(0, 500).map(l => `<tr><td class="peq num" style="white-space:nowrap">${esc(l[0])}</td><td class="peq">${esc(l[1])}</td><td>${esc(l[2])}</td><td class="mono peq">${esc(l[3])}</td><td class="peq">${esc(l[4])}</td><td>${l[5] === 'OK' ? '<span class="selo" style="--c:var(--verde)">OK</span>' : `<span class="selo" style="--c:var(--c-crit)">${esc(l[5])}</span>`}</td></tr>`).join(''); };
+            $('au-q').oninput = pint; pint();
+        }
+    } catch (e) { el.innerHTML = `<div class="vazio">${ic('alerta')}${esc(e.message)}</div>`; }
+}
+async function encerrarSessoesDe(email) { try { await api('encerrarSessoes', { email }); toast('Sessões encerradas'); admAba('sessoes'); } catch (e) { toast(e.message, 'alerta'); } }
+async function restaurarOc(n) { try { await api('restaurar', { n }); toast('Ocorrência nº ' + n + ' restaurada'); admAba('lixeira'); sincronizar(false); } catch (e) { toast(e.message, 'alerta'); } }
+
+/* ---------- Histórico de alterações na gaveta da ocorrência ---------- */
+const _abrirOcV4 = abrirOcorrencia;
+abrirOcorrencia = function (id) {
+    _abrirOcV4(id);
+    if (!conectado() || !['ADMIN', 'INTELIGENCIA', 'DRE'].includes(USUARIO.perfil)) return;
+    const barra = document.querySelectorAll('#gaveta .acoes-t'), alvo = barra[barra.length - 1];
+    if (alvo && !$('btn-hist')) alvo.insertAdjacentHTML('beforeend', `<button class="btn btn-v btn-sm" id="btn-hist" onclick="historicoOc('${esc(id)}')">${ic('clock')}Histórico</button>`);
+};
+async function historicoOc(n) {
+    try {
+        const j = await api('historico', { n });
+        const ev = j.eventos.map(e => `<div><div class="bola" style="--c:${e.resultado === 'OK' ? 'var(--prim)' : 'var(--c-crit)'}">${ic('clock')}</div><div class="txt"><b>${esc(e.acao)}</b> · ${esc(e.usuario)}<div class="met">${esc(e.quando)}${e.detalhe ? ' · ' + esc(e.detalhe) : ''}</div></div></div>`).join('');
+        const ve = j.versoes.map(v => `<div class="card card-pad" style="margin-top:8px"><div class="peq mut">Antes de "${esc(v.acao)}" por ${esc(v.usuario)} em ${new Date(v.quando).toLocaleString('pt-BR')}</div><div class="peq" style="margin-top:4px">Criticidade: <b>${esc(v.antes['Criticidade'] || '')}</b> · Status: <b>${esc(v.antes['Status'] || '')}</b>${v.antes['Observação'] ? ' · Observação: ' + esc(v.antes['Observação']) : ''}</div></div>`).join('');
+        abrirModal({ titulo: 'Histórico da ocorrência nº ' + n, sub: j.eventos.length + ' evento(s) · ' + j.versoes.length + ' versão(ões) anterior(es)', icone: 'clock', corpo: `<div class="tl">${ev || '<div class="vazio peq">Sem eventos registrados.</div>'}</div>${ve ? '<div class="rot" style="margin-top:12px">Versões anteriores</div>' + ve : ''}`, pe: `<button class="btn btn-p" data-fechar>Fechar</button>` });
+    } catch (e) { toast(e.message, 'alerta'); }
+}
+
+/* ---------- Autenticidade dos relatórios ---------- */
+const _folhaV4 = folhaRelatorio;
+folhaRelatorio = function () {
+    _folhaV4();
+    if (!conectado()) return;
+    const r = document.querySelector('#rl-folha .rel-rodape');
+    if (r) r.insertAdjacentHTML('afterend', `<div style="font-size:9.5px;color:#64748b;margin-top:6px">Confira a autenticidade deste documento em ${esc(urlApiPublica())}?acao=verificar&amp;codigo=${esc(RL.codigo)}</div>`);
+};
+async function autenticarRelatorio() {
+    if (!conectado()) return;
+    try { await api('registrarRelatorio', { codigo: RL.codigo, titulo: RL.titulo, classificacao: RL.cls, recorte: descRecorte(), registros: REG.length }); } catch (e) { toast('Relatório gerado, mas o código não foi registrado no servidor: ' + e.message, 'alerta'); }
+}
+const _baixarRelV4 = baixarRelatorio;
+baixarRelatorio = function (fmt) { autenticarRelatorio(); _baixarRelV4(fmt); };
+const _resumoV4 = resumoTexto;
+resumoTexto = function () { autenticarRelatorio(); const t = _resumoV4(); return conectado() ? t + '\n\nVerificação: ' + urlApiPublica() + '?acao=verificar&codigo=' + RL.codigo : t; };
+
+/* =====================================================================
+   ROLAGEM E MAPAS — correções
+   ===================================================================== */
+/* 1. Preserva a posição da rolagem quando a mesma página é redesenhada (filtro, sincronização, tema) */
+const POS_ROLAGEM = {};
+const _renderAbaV4 = renderAba;
+renderAba = function () {
+    const sc = $('aba-' + ABA), mesma = sc && POS_ROLAGEM._ultima === ABA, top = mesma ? sc.scrollTop : (POS_ROLAGEM[ABA] || 0);
+    _renderAbaV4();
+    POS_ROLAGEM._ultima = ABA;
+    if (!sc) return;
+    const repor = () => { if (ABA === POS_ROLAGEM._ultima && Math.abs(sc.scrollTop - top) > 2) sc.scrollTop = Math.min(top, sc.scrollHeight - sc.clientHeight); };
+    repor(); requestAnimationFrame(repor); setTimeout(repor, 120); setTimeout(repor, 400);
+};
+document.addEventListener('scroll', e => { const t = e.target; if (t && t.classList && t.classList.contains('aba')) POS_ROLAGEM[t.id.slice(4)] = t.scrollTop; }, true);
+/* Ao trocar de página pelo menu, volta ao topo dela */
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('.lat-btn'); if (b) { POS_ROLAGEM[b.dataset.aba] = 0; const s = $('aba-' + b.dataset.aba); if (s) s.scrollTop = 0; } }, true);
+
+/* 2. Mapas não "sequestram" a rolagem: zoom pela roda só depois de clicar no mapa;
+      no celular, arrastar o mapa só depois de tocar nele (o dedo rola a página). */
+if (typeof L !== 'undefined') {
+    L.Map.mergeOptions({ scrollWheelZoom: false });
+    const toque = matchMedia('(pointer: coarse)').matches;
+    L.Map.addInitHook(function () {
+        const m = this, el = m.getContainer();
+        if (toque) { m.dragging.disable(); m.touchZoom.disable(); if (m.tap) m.tap.disable(); }
+        const dica = L.DomUtil.create('div', 'mapa-dica', el);
+        dica.textContent = toque ? 'Toque no mapa para mover e ampliar' : 'Clique no mapa para usar a roda do mouse';
+        dica.style.opacity = '0';
+        let t;
+        const mostrar = () => { if (m._ativo) return; dica.style.opacity = '1'; clearTimeout(t); t = setTimeout(() => { dica.style.opacity = '0'; }, 1400); };
+        const ativar = () => { m._ativo = true; dica.style.opacity = '0'; m.scrollWheelZoom.enable(); if (toque) { m.dragging.enable(); m.touchZoom.enable(); } };
+        const desativar = () => { m._ativo = false; m.scrollWheelZoom.disable(); if (toque) { m.dragging.disable(); m.touchZoom.disable(); } };
+        m.on('click focus', ativar);
+        el.addEventListener('wheel', mostrar, { passive: true });
+        if (toque) el.addEventListener('touchmove', e => { if (!m._ativo && e.touches.length === 1) mostrar(); }, { passive: true });
+        el.addEventListener('mouseleave', desativar);
+        document.addEventListener('touchstart', e => { if (m._ativo && !el.contains(e.target)) desativar(); }, { passive: true });
+    });
+}
+
+/* 3. Barra de recorte recolhível no celular */
+(function () {
+    const r = $('recorte'); if (!r || $('f-toggle')) return;
+    r.insertAdjacentHTML('afterbegin', `<button class="btn btn-s btn-sm" id="f-toggle" aria-expanded="false" aria-controls="recorte">${ic('filter')}<span>Filtros</span></button>`);
+    const atual = () => { const n = ['f-dre', 'f-mun', 'f-per', 'f-crit', 'f-tipo'].filter(id => $(id) && $(id).value).length; $('f-toggle').querySelector('span').textContent = n ? 'Filtros (' + n + ')' : 'Filtros'; };
+    $('f-toggle').onclick = () => { const a = r.classList.toggle('aberto'); $('f-toggle').setAttribute('aria-expanded', a); };
+    r.addEventListener('change', atual); r.addEventListener('click', e => { if (e.target.id === 'f-limpar') setTimeout(atual, 0); });
+})();
 
 </script>
 </body>
