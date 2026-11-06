@@ -1440,6 +1440,53 @@ mark { background: color-mix(in srgb, var(--ambar) 35%, transparent); color: inh
 .vn3-no b { position: absolute; top: -5px; right: -6px; width: 13px; height: 13px; border-radius: 50%; background: var(--c); display: grid; place-items: center; border: 1.5px solid var(--card); }
 .vn3-no b svg { width: 8px; height: 8px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .vn3-lin { display: inline-block; width: 22px; background: var(--c); border-radius: 2px; }
+
+/* ---------- 2.9 Release ---------- */
+.rl-status { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 12px 16px; font-size: 12.5px; color: var(--texto2); }
+.rl-pulso { width: 9px; height: 9px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 4px color-mix(in srgb, var(--verde) 18%, transparent); }
+.rl-pulso.on { background: var(--ambar); animation: rlp 1s infinite alternate; }
+@keyframes rlp { to { box-shadow: 0 0 0 7px color-mix(in srgb, var(--ambar) 8%, transparent); } }
+.rl-var { font-size: 12px; font-weight: 700; margin-left: 4px; font-family: var(--f-dado); }
+.rl-barras { width: 100%; height: 170px; display: block; }
+.rl-leg { display: flex; gap: 16px; font-size: 11.5px; color: var(--texto2); margin-top: 6px; }
+.rl-leg span { display: inline-flex; align-items: center; gap: 6px; }
+.rl-leg i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.rl-filtros { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+.rl-filtros .campo { width: 100%; }
+.rl-chips { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.rl-chips .chip { cursor: pointer; }
+.rl-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; padding: 4px 18px 14px; }
+.rl-not { display: flex; flex-direction: column; gap: 10px; padding: 14px 15px; border-radius: 12px; border: 1px solid var(--borda); border-left: 4px solid var(--c); background: var(--card); }
+.rl-not:hover { box-shadow: var(--sombra); }
+.rl-not-top { display: flex; align-items: center; gap: 10px; }
+.rl-fonte-ic { flex: none; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; font-size: 11px; font-weight: 800; color: #fff; background: linear-gradient(135deg, #1e3a8a, #0b1424); letter-spacing: .02em; }
+.rl-fonte { flex: 1; min-width: 0; }
+.rl-fonte b { display: block; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rl-fonte small { display: block; font-size: 11px; color: var(--muted); }
+.rl-tit { font-size: 14.5px; font-weight: 700; line-height: 1.4; color: var(--texto); text-decoration: none; }
+.rl-tit:hover { color: var(--prim); text-decoration: underline; }
+.rl-tit svg { width: 13px; height: 13px; vertical-align: -1px; opacity: .55; }
+.rl-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.rl-tag { font: inherit; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 99px; border: 0; cursor: pointer; color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
+.rl-tag.env { --c: var(--muted); cursor: default; background: var(--suave2); color: var(--texto2); }
+.rl-not-rod { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-top: auto; padding-top: 9px; border-top: 1px dashed var(--borda); font-size: 11.5px; }
+.rl-lnk { display: inline-flex; align-items: center; gap: 4px; font: inherit; font-size: 11.5px; font-weight: 600; color: var(--texto2); background: none; border: 0; padding: 0; cursor: pointer; max-width: 100%; }
+button.rl-lnk:hover { color: var(--prim); }
+.rl-lnk svg, .rl-livro svg { width: 12px; height: 12px; flex: none; }
+.rl-livro { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 99px; border: 1px solid var(--borda); background: var(--suave); color: var(--prim); cursor: pointer; }
+.rl-livro.falta { color: var(--c-crit); border-color: color-mix(in srgb, var(--c-crit) 30%, transparent); background: color-mix(in srgb, var(--c-crit) 7%, transparent); cursor: default; }
+.rl-falta-n { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--c-crit) 7%, var(--suave)); margin-bottom: 8px; }
+.rl-falta-n b { font-size: 26px; font-family: var(--f-dado); color: var(--c-crit); }
+.rl-falta-n span { font-size: 12px; color: var(--texto2); line-height: 1.45; }
+.rl-vazio { text-align: center; padding: 36px 24px; max-width: 640px; margin: 0 auto; width: 100%; }
+.rl-vazio-ic { width: 56px; height: 56px; margin: 0 auto 12px; border-radius: 16px; display: grid; place-items: center; color: var(--c, var(--prim)); background: color-mix(in srgb, var(--c, var(--prim)) 12%, transparent); }
+.rl-vazio-ic svg { width: 28px; height: 28px; }
+.rl-vazio h3 { margin: 0 0 8px; }
+.rl-vazio p { color: var(--texto2); line-height: 1.6; }
+.rl-vazio ol { text-align: left; color: var(--texto2); line-height: 1.7; font-size: 13.5px; }
+.rl-gira svg { animation: rlg 1.2s linear infinite; }
+@keyframes rlg { to { transform: rotate(360deg); } }
+@media (max-width: 900px) { .rl-filtros { grid-template-columns: minmax(0, 1fr); } .rl-lista { grid-template-columns: minmax(0, 1fr); padding: 4px 12px 12px; } .rl-status .mut { margin-left: 0 !important; } }
 </style>
 
 </head>
@@ -1507,8 +1554,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '2.8.0+9c4dcb7c';
-const APP_NOTAS = 'Rede de vínculos com nova teia: fundo escuro, ícones por papel e nomes mais legíveis.';
+const APP_VERSAO = '2.9.0+23ac8e74';
+const APP_NOTAS = 'Nova seção Release: notícias sobre escolas de MT na mídia, com números, links e cruzamento com o Livro.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -5543,6 +5590,181 @@ rAlertas = function () {
 if (LEGENDAS.alertas) Object.assign(LEGENDAS.alertas, {
     usar: ['Comece pelo resumo: clique numa faixa de urgência para filtrar.', 'Escolha um problema na lista da esquerda; à direita aparecem o que fazer, a evolução e os locais.', 'Clique num local para abrir a análise com os registros. "Escolas com vários problemas" ajuda a decidir as visitas.']
 });
+
+/* =====================================================================
+   EDUCASEG-PLUS 2.9 — RELEASE: notícias da mídia sobre escolas de MT
+   As matérias são coletadas pelo servidor (Apps Script) no Google Notícias,
+   classificadas e cruzadas aqui com o Livro de Ocorrências.
+   ===================================================================== */
+ICONES.jornal = '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/>';
+ICONES.link = '<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>';
+(function () {
+    const pos = ABAS.findIndex(a => a.id === 'termos') + 1;
+    ABAS.splice(pos, 0, { id: 'release', t: 'Release', ico: 'jornal', h: 'Release · escolas de MT na mídia', p: 'Notícias sobre escolas de Mato Grosso: casos de violência e fatos com alunos, professores e escolas estaduais, com links, números e o cruzamento com o Livro de Ocorrências.' });
+})();
+const _renderAbaV10 = renderAba;
+renderAba = function () { if (A && ABA === 'release') { rRelease(); garantirLegenda('release'); return; } _renderAbaV10(); };
+
+const NWS = { dias: 30, cat: '', mun: '', env: '', q: '', lim: 30, d: null, janela: 0, carregando: false, erro: '' };
+const rlPrecisa = () => Math.min(365, NWS.dias * 2);
+const NWS_VIOL = ['Arma', 'Ameaça de ataque', 'Violência sexual', 'Morte', 'Violência física'];
+const NWS_COR = { 'Arma': 'var(--c-crit)', 'Ameaça de ataque': 'var(--c-crit)', 'Violência sexual': 'var(--c-crit)', 'Morte': 'var(--c-crit)', 'Violência física': 'var(--c-alto)', 'Drogas': 'var(--c-alto)', 'Saúde mental': 'var(--roxo)', 'Bullying e discriminação': 'var(--roxo)', 'Crime e polícia': 'var(--c-medio)', 'Estrutura e gestão': 'var(--c-baixo)', 'Outros': 'var(--muted)' };
+const rlGrav = n => n.cats.some(c => ['Arma', 'Ameaça de ataque', 'Violência sexual', 'Morte'].includes(c)) ? 'critico' : n.cats.some(c => ['Violência física', 'Drogas', 'Saúde mental', 'Bullying e discriminação'].includes(c)) ? 'alto' : 'medio';
+const rlViol = n => n.cats.some(c => NWS_VIOL.includes(c));
+const rlServidor = () => !!(API.url && API.token);
+
+async function carregarRelease(forcar) {
+    if (!rlServidor()) return;
+    const k = rlPrecisa();
+    if (!forcar && NWS.d && NWS.janela >= k) return;
+    NWS.carregando = true; NWS.erro = ''; if (ABA === 'release') rRelease();
+    try {
+        const j = await api('noticias', { dias: k, forcar: !!forcar });
+        j.noticias.forEach(n => { n.data = new Date(n.dt); n.munK = n.mun ? chave(n.mun) : ''; n.cats = n.cats.length ? n.cats : ['Outros']; });
+        NWS.d = j; NWS.janela = k;
+        if (forcar && j.coleta) toast(j.coleta.ok ? `Busca concluída: ${j.coleta.novas} notícia(s) nova(s)` : 'Não foi possível buscar agora: ' + j.coleta.erro, j.coleta.ok ? 'check' : 'alerta');
+    } catch (e) { NWS.erro = e.message; }
+    NWS.carregando = false; if (ABA === 'release') rRelease();
+}
+
+/* Cruza a notícia com o Livro: registros no mesmo município até 7 dias antes ou depois */
+function rlLivro(n) {
+    if (!n.munK) return [];
+    if (!n._livro) n._livro = REG.filter(r => r.mun === n.munK && r.dt && Math.abs(r.dt - n.data) <= 7 * DIA);
+    return n._livro;
+}
+function rlEscola(n) {
+    if (n._esc !== undefined) return n._esc;
+    n._esc = null;
+    if (n.escola && n.munK) {
+        const nome = n.escola.replace(/^(Escola Estadual|Escola Municipal|EE|E\.E\.|Colégio Estadual|Escola Militar|Escola Plena)\s+/i, '');
+        const ref = resolverEscola(nome, n.munK);
+        if (ref) { const k = chave(ref.nome) + '|' + n.munK; n._esc = { k, nome: ref.nome, noLivro: A.escolas.has(k) }; }
+    }
+    return n._esc;
+}
+function rlBarras(lista, ini, fim) {
+    const semana = (fim - ini) / DIA > 45, passo = semana ? 7 * DIA : DIA;
+    const cols = []; for (let t = +ini; t < +fim; t += passo) cols.push({ t, n: 0, v: 0 });
+    lista.forEach(n => { const i = Math.floor((n.data - ini) / passo); if (cols[i]) { cols[i].n++; if (rlViol(n)) cols[i].v++; } });
+    const mx = Math.max(1, ...cols.map(c => c.n)), W = 640, H = 150, bw = W / cols.length;
+    const barras = cols.map((c, i) => { const h = (c.n / mx) * (H - 24), hv = (c.v / mx) * (H - 24), x = i * bw + bw * .14, w = bw * .72, dt = new Date(c.t);
+        return `<g><title>${semana ? 'Semana de ' : ''}${dt.toLocaleDateString('pt-BR')}: ${c.n} notícia(s), ${c.v} de violência</title><rect x="${x}" y="${H - 18 - h}" width="${w}" height="${Math.max(0, h - hv)}" rx="2" fill="var(--prim)" opacity=".55"/><rect x="${x}" y="${H - 18 - hv}" width="${w}" height="${hv}" rx="2" fill="var(--c-crit)"/></g>`; }).join('');
+    const rot = [0, Math.floor(cols.length / 2), cols.length - 1].map(i => cols[i] ? `<text x="${i * bw + bw / 2}" y="${H - 3}" text-anchor="${i === 0 ? 'start' : i === cols.length - 1 ? 'end' : 'middle'}" font-size="10" fill="var(--muted)">${new Date(cols[i].t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}</text>` : '').join('');
+    return `<svg viewBox="0 0 ${W} ${H}" class="rl-barras" preserveAspectRatio="none" role="img" aria-label="Notícias por ${semana ? 'semana' : 'dia'}"><line x1="0" x2="${W}" y1="${H - 18}" y2="${H - 18}" stroke="var(--borda)"/>${barras}${rot}</svg>
+        <div class="rl-leg"><span><i style="background:var(--c-crit)"></i>Violência</span><span><i style="background:var(--prim);opacity:.55"></i>Outros assuntos</span><span class="mut">por ${semana ? 'semana' : 'dia'}</span></div>`;
+}
+function textoRelease(lista, todas) {
+    const ini = new Date(Date.now() - NWS.dias * DIA), viol = lista.filter(rlViol);
+    const cont = (arr, f) => { const m = new Map(); arr.forEach(x => f(x).forEach(k => k && m.set(k, (m.get(k) || 0) + 1))); return [...m.entries()].sort((a, b) => b[1] - a[1]); };
+    const linhas = [
+        `RELEASE · ESCOLAS DE MATO GROSSO NA MÍDIA`,
+        `Período: ${fmtD(ini)} a ${fmtD(new Date())} (${NWS.dias} dias)${NWS.cat || NWS.mun || NWS.env || NWS.q ? ' · filtros: ' + [NWS.cat, NWS.mun && nomeMun(NWS.mun), NWS.env, NWS.q && '"' + NWS.q + '"'].filter(Boolean).join(', ') : ''}`,
+        `Gerado pelo EDUCASEG-PLUS em ${fmtDH(new Date())}`, '',
+        `RESUMO`,
+        `- ${lista.length} notícia(s) sobre escolas de MT; ${viol.length} sobre casos de violência.`,
+        `- ${new Set(lista.map(n => n.munK).filter(Boolean)).size} município(s) citados; ${new Set(lista.map(n => n.fonte)).size} veículo(s) de imprensa.`,
+        `- Envolvendo professores: ${lista.filter(n => n.env.includes('Professores')).length} · alunos: ${lista.filter(n => n.env.includes('Alunos')).length}.`, '',
+        `POR ASSUNTO`, ...cont(lista, n => n.cats).map(([k, v]) => `- ${k}: ${v}`), '',
+        `MUNICÍPIOS MAIS CITADOS`, ...cont(lista, n => [n.mun]).slice(0, 10).map(([k, v]) => `- ${k}: ${v}`), '',
+        `PRINCIPAIS NOTÍCIAS`,
+        ...lista.slice().sort((a, b) => ({ critico: 0, alto: 1, medio: 2 }[rlGrav(a)] - { critico: 0, alto: 1, medio: 2 }[rlGrav(b)]) || b.data - a.data).slice(0, 15)
+            .map(n => `- ${n.data.toLocaleDateString('pt-BR')} · ${n.titulo} (${n.fonte}${n.mun ? ', ' + n.mun : ''})\n  ${n.link}`), '',
+        `Fonte: Google Notícias, coleta automática. Classificação por palavras-chave; confirme cada caso na matéria original.`
+    ];
+    return linhas.join('\n');
+}
+function abrirTextoRelease() {
+    const t = textoRelease(window.NWS_LISTA || [], NWS.d ? NWS.d.noticias : []);
+    abrirModal({ titulo: 'Release do período', sub: 'Texto pronto para enviar ou colar num documento.', icone: 'jornal', tam: 'grd',
+        corpo: `<textarea class="campo mono" rows="22" style="width:100%;font-size:12px" readonly>${esc(t)}</textarea>`,
+        pe: `<button class="btn btn-s" data-fechar>Fechar</button><button class="btn btn-s" onclick="baixar('release-escolas-mt-${new Date().toISOString().slice(0, 10)}.txt', textoRelease(window.NWS_LISTA||[]))">${ic('download')}Baixar .txt</button><button class="btn btn-p" onclick="copiar(textoRelease(window.NWS_LISTA||[]))">${ic('copy')}Copiar</button>` });
+}
+
+function rRelease() {
+    const pode = USUARIO && ['ADMIN', 'INTELIGENCIA'].includes(USUARIO.perfil);
+    $('acoes-release').innerHTML = `<div class="seg" style="background:rgba(255,255,255,.08)" id="rl-dias">${[7, 30, 90, 180].map(d => `<button data-d="${d}" class="${NWS.dias === d ? 'ativo' : ''}" style="${NWS.dias === d ? '' : 'color:#cbd5e1'}">${d} dias</button>`).join('')}</div>
+        ${rlServidor() && pode ? `<button class="btn btn-v btn-sm" onclick="carregarRelease(true)" ${NWS.carregando ? 'disabled' : ''}>${ic('repeat')}Buscar agora</button>` : ''}
+        ${NWS.d ? `<button class="btn btn-v btn-sm" onclick="abrirTextoRelease()">${ic('doc')}Gerar release</button>` : ''}`;
+    $('rl-dias').onclick = e => { const b = e.target.closest('button'); if (b) { NWS.dias = +b.dataset.d; NWS.lim = 30; rRelease(); } };
+    const C = $('cont-release');
+    if (!rlServidor()) {
+        C.innerHTML = `<div class="card card-pad rl-vazio"><div class="rl-vazio-ic">${ic('jornal')}</div><h3>O Release precisa do servidor</h3><p>As notícias são buscadas pelo servidor do sistema (Google Apps Script), que consulta o Google Notícias a cada 6 horas e guarda as matérias na planilha. No modo local não há como buscar na internet.</p><ol><li>Entre com usuário e senha (servidor Google Sheets).</li><li>No Apps Script, cole o <b>Codigo.gs 2.3</b>, rode "1. Configurar planilha" e publique uma nova versão.</li><li>Como Administrador, reinstale as rotinas em Usuários › Rotinas e backup.</li></ol></div>`;
+        return;
+    }
+    if (!NWS.d || NWS.janela < rlPrecisa()) { if (!NWS.carregando && !NWS.erro) { carregarRelease(); return; } }
+    if (NWS.erro && !NWS.d) { C.innerHTML = `<div class="card card-pad rl-vazio"><div class="rl-vazio-ic" style="--c:var(--c-crit)">${ic('alerta')}</div><h3>Não foi possível carregar as notícias</h3><p>${esc(NWS.erro)}</p><p class="mut peq">Se o servidor ainda está na versão 2.2, atualize o Codigo.gs para a 2.3.</p><button class="btn btn-p" onclick="NWS.erro='';carregarRelease(true)">${ic('repeat')}Tentar de novo</button></div>`; return; }
+    if (!NWS.d) { C.innerHTML = `<div class="card card-pad rl-vazio"><div class="rl-vazio-ic rl-gira">${ic('repeat')}</div><h3>Buscando notícias…</h3><p>Na primeira vez o servidor consulta o Google Notícias e pode levar até um minuto.</p></div>`; return; }
+
+    const agora = Date.now(), ini = new Date(agora - NWS.dias * DIA), iniAnt = new Date(agora - 2 * NWS.dias * DIA);
+    const todas = NWS.d.noticias.filter(n => n.data >= ini), ant = NWS.d.noticias.filter(n => n.data >= iniAnt && n.data < ini);
+    const q = chave(NWS.q);
+    const lista = window.NWS_LISTA = todas.filter(n => (!NWS.cat || n.cats.includes(NWS.cat)) && (!NWS.mun || n.munK === NWS.mun) && (!NWS.env || n.env.includes(NWS.env)) && (!q || chave(n.titulo + ' ' + n.fonte + ' ' + n.mun + ' ' + n.escola).includes(q)));
+    const varia = (a, b) => b ? `<span class="rl-var" style="color:${a > b ? 'var(--c-crit)' : a < b ? 'var(--verde)' : 'var(--muted)'}">${a > b ? '▲' : a < b ? '▼' : '■'} ${Math.abs(Math.round(100 * (a - b) / b))}%</span>` : '';
+    const nViol = todas.filter(rlViol).length, nViolA = ant.filter(rlViol).length;
+    const nProf = todas.filter(n => n.env.includes('Professores')).length, nProfA = ant.filter(n => n.env.includes('Professores')).length;
+    const munsC = new Set(todas.map(n => n.munK).filter(Boolean)), fontes = new Set(todas.map(n => n.fonte));
+    const kpi = (c, i, t, v, s, vr) => `<div class="kpi" style="--c:${c}"><div class="r">${ic(i)}${t}</div><div class="v">${fmtN(v)} ${vr || ''}</div><div class="s">${s}</div></div>`;
+    const kpis = `<div class="kpis">${kpi('var(--prim)', 'jornal', 'Notícias', todas.length, `nos últimos ${NWS.dias} dias`, varia(todas.length, ant.length))}${kpi('var(--c-crit)', 'alerta', 'Casos de violência', nViol, 'agressão, arma, ameaça, abuso ou morte', varia(nViol, nViolA))}${kpi('var(--roxo)', 'user', 'Com professores', nProf, 'professores como vítimas ou envolvidos', varia(nProf, nProfA))}${kpi('var(--c-baixo)', 'pin', 'Municípios citados', munsC.size, `${fontes.size} veículo(s) de imprensa`)}</div>`;
+
+    const cont = (arr, f) => { const m = new Map(); arr.forEach(x => f(x).forEach(k => k && m.set(k, (m.get(k) || 0) + 1))); return [...m.entries()].sort((a, b) => b[1] - a[1]); };
+    const porCat = cont(todas, n => n.cats), porMun = cont(todas, n => [n.munK]).slice(0, 10), porFonte = cont(todas, n => [n.fonte]).slice(0, 8);
+    // cruzamento: notícias de violência em municípios sem registro no Livro na mesma semana
+    const semLivro = todas.filter(n => rlViol(n) && n.munK && !rlLivro(n).length);
+    const ultima = NWS.d.ultimaColeta ? new Date(NWS.d.ultimaColeta) : null;
+
+    const chipsCat = `<div class="rl-chips">${[['', 'Todos os assuntos', todas.length]].concat(porCat.map(([k, v]) => [k, k, v])).map(([k, t, v]) => `<button class="chip${NWS.cat === k ? ' ativo' : ''}" style="--c:${NWS_COR[k] || 'var(--prim)'}" onclick="NWS.cat='${esc(k)}';NWS.lim=30;rRelease()"><span class="pt"></span>${esc(t)} <span class="q">${v}</span></button>`).join('')}</div>`;
+    const filtros = `<div class="card card-pad rl-filtros">
+        <div class="busca">${ic('search')}<input class="campo" id="rl-q" placeholder="Buscar no título, veículo, município ou escola" value="${esc(NWS.q)}"></div>
+        <select class="campo" id="rl-mun"><option value="">Todos os municípios</option>${cont(todas, n => [n.munK]).map(([k, v]) => `<option value="${esc(k)}" ${NWS.mun === k ? 'selected' : ''}>${esc(nomeMun(k))} (${v})</option>`).join('')}</select>
+        <select class="campo" id="rl-env"><option value="">Todos os envolvidos</option>${['Alunos', 'Professores', 'Gestão e servidores', 'Famílias'].map(k => `<option ${NWS.env === k ? 'selected' : ''}>${k}</option>`).join('')}</select>
+        ${NWS.cat || NWS.mun || NWS.env || NWS.q ? `<button class="btn btn-s btn-sm" onclick="NWS.cat='';NWS.mun='';NWS.env='';NWS.q='';rRelease()">${ic('x')}Limpar</button>` : ''}
+        ${chipsCat}</div>`;
+
+    const cartao = n => {
+        const g = rlGrav(n), cor = g === 'critico' ? 'var(--c-crit)' : g === 'alto' ? 'var(--c-alto)' : 'var(--prim)', liv = rlLivro(n), e = rlEscola(n);
+        const ini2 = (n.fonte || '?').replace(/[^A-Za-zÀ-ú0-9 ]/g, '').split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        return `<article class="rl-not" style="--c:${cor}">
+            <div class="rl-not-top"><span class="rl-fonte-ic">${esc(ini2 || '?')}</span><span class="rl-fonte"><b>${esc(n.fonte || 'Fonte não informada')}</b><small>${n.data.toLocaleDateString('pt-BR')} · ${n.data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} · ${haDias(n.data)}</small></span>${g !== 'medio' ? `<span class="selo" style="--c:${cor}">${g === 'critico' ? 'Grave' : 'Atenção'}</span>` : ''}</div>
+            <a class="rl-tit" href="${esc(n.link)}" target="_blank" rel="noopener noreferrer">${esc(n.titulo)} ${ic('link')}</a>
+            <div class="rl-tags">${n.cats.map(c => `<button class="rl-tag" style="--c:${NWS_COR[c] || 'var(--muted)'}" onclick="NWS.cat='${esc(c)}';rRelease()">${esc(c)}</button>`).join('')}${n.env.map(v => `<span class="rl-tag env">${esc(v)}</span>`).join('')}</div>
+            <div class="rl-not-rod">
+                ${n.mun ? `<button class="rl-lnk" onclick="NWS.mun='${esc(n.munK)}';rRelease()">${ic('pin')}${esc(n.mun)}</button>` : '<span class="mut">município não identificado</span>'}
+                ${e ? (e.noLivro ? `<button class="rl-lnk" onclick="abrirEscola('${esc(e.k)}')">${ic('escola')}${esc(e.nome)}</button>` : `<span class="rl-lnk">${ic('escola')}${esc(e.nome)}</span>`) : n.escola ? `<span class="rl-lnk">${ic('escola')}${esc(n.escola)}</span>` : ''}
+                ${n.munK ? (liv.length ? `<button class="rl-livro" onclick="listaModal('Livro: ${esc(n.mun)} entre ${new Date(+n.data - 7 * DIA).toLocaleDateString('pt-BR')} e ${new Date(+n.data + 7 * DIA).toLocaleDateString('pt-BR')}', NWS_LISTA.find(x=>x.id==='${esc(n.id)}')._livro)">${ic('book')}${liv.length} no Livro ±7 dias</button>` : (rlViol(n) ? `<span class="rl-livro falta">${ic('alerta')}Sem registro no Livro ±7 dias</span>` : '')) : ''}
+            </div></article>`;
+    };
+
+    C.innerHTML = `
+    <div class="card card-pad rl-status"><span class="rl-pulso${NWS.carregando ? ' on' : ''}"></span><span>${NWS.carregando ? 'Atualizando notícias…' : `Última coleta ${ultima ? 'em ' + fmtDH(ultima) + ' (' + haDias(ultima).replace('há ', 'há ') + ')' : 'ainda não feita'}`} · ${NWS.d.consultas || ''} buscas no Google Notícias · coleta automática a cada 6 h</span><span class="mut" style="margin-left:auto">Classificação automática por palavras-chave: confirme na matéria original.</span></div>
+    ${kpis}
+    <div class="grade" style="grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:stretch" id="rl-g1">
+        <div class="card card-pad"><div class="card-tit"><div class="ico">${ic('bar')}</div><div><h3>Notícias ao longo do tempo</h3><p>Em vermelho, as matérias sobre casos de violência</p></div></div>${todas.length ? rlBarras(todas, ini, new Date(agora)) : '<div class="vazio peq">Nenhuma notícia no período.</div>'}</div>
+        <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('grid')}</div><div><h3>Assuntos</h3><p>Uma notícia pode ter mais de um. Clique para filtrar.</p></div></div>${hbar(porCat.map(([k, v]) => ({ t: k, v, c: NWS_COR[k] || 'var(--prim)', on: `NWS.cat='${esc(k)}';rRelease()` })))}</div>
+    </div>
+    <div class="grade g3" style="align-items:stretch" id="rl-g2">
+        <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-baixo)">${ic('map')}</div><div><h3>Municípios mais citados</h3><p>Clique para filtrar</p></div></div>${hbar(porMun.map(([k, v]) => ({ t: nomeMun(k), v, c: 'var(--c-baixo)', on: `NWS.mun='${esc(k)}';rRelease()` })))}</div>
+        <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('jornal')}</div><div><h3>Veículos de imprensa</h3><p>Quem mais publicou no período</p></div></div>${hbar(porFonte.map(([k, v]) => ({ t: k, v, c: 'var(--roxo)' })))}</div>
+        <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-crit)">${ic('book')}</div><div><h3>Mídia × Livro de Ocorrências</h3><p>Casos de violência noticiados sem registro no Livro no mesmo município (±7 dias)</p></div></div>
+            ${semLivro.length ? `<div class="rl-falta-n"><b>${semLivro.length}</b><span>de ${nViol} notícias de violência com município identificado não têm registro correspondente. Pode indicar subnotificação.</span></div><div class="lista">${semLivro.slice(0, 4).map(n => `<a class="item" href="${esc(n.link)}" target="_blank" rel="noopener noreferrer"><span class="ic" style="--c:var(--c-crit)">${ic('alerta')}</span><span class="tx"><b>${esc(n.mun)}</b><span>${esc(n.titulo)}</span></span></a>`).join('')}</div>` : `<div class="vazio peq">${ic('check')}Toda notícia de violência com município identificado tem registro no Livro na mesma semana.</div>`}</div>
+    </div>
+    ${filtros}
+    <div class="card"><div class="card-pad" style="padding-bottom:6px"><div class="card-tit" style="margin:0"><div class="ico">${ic('jornal')}</div><div><h3>Notícias</h3><p>${lista.length} de ${todas.length} no período, da mais recente para a mais antiga. O título abre a matéria no site do veículo.</p></div></div></div>
+        <div class="rl-lista">${lista.slice(0, NWS.lim).map(cartao).join('') || `<div class="vazio">${ic('search')}Nenhuma notícia com esses filtros.</div>`}</div>
+        ${lista.length > NWS.lim ? `<div style="padding:0 18px 18px;text-align:center"><button class="btn btn-s" onclick="NWS.lim+=30;rRelease()">Mostrar mais ${Math.min(30, lista.length - NWS.lim)} de ${lista.length - NWS.lim}</button></div>` : '<div style="height:8px"></div>'}
+    </div>`;
+    let t; $('rl-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { NWS.q = $('rl-q').value; NWS.lim = 30; rRelease(); const i = $('rl-q'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 300); };
+    $('rl-mun').onchange = () => { NWS.mun = $('rl-mun').value; NWS.lim = 30; rRelease(); };
+    $('rl-env').onchange = () => { NWS.env = $('rl-env').value; NWS.lim = 30; rRelease(); };
+    if (matchMedia('(max-width: 900px)').matches) ['rl-g1'].forEach(id => { const g = $(id); if (g) g.style.gridTemplateColumns = 'minmax(0,1fr)'; });
+}
+
+if (typeof LEGENDAS !== 'undefined') LEGENDAS.release = {
+    mostra: ['Notícias da imprensa sobre escolas de MT: violência, armas, ameaças, abuso, drogas e fatos com alunos, professores e escolas estaduais.', 'Números do período, evolução, assuntos, municípios, veículos e o cruzamento com o Livro.'],
+    fonte: ['Google Notícias, consultado pelo servidor do sistema a cada 6 horas com buscas sobre escolas de Mato Grosso.', 'As matérias ficam guardadas na aba Noticias da planilha, sem repetir a mesma notícia.'],
+    calc: ['Assunto e envolvidos: palavras-chave do título. Município: nome de um dos 142 municípios citado no texto.', 'Mídia × Livro: notícia de violência sem nenhum registro no Livro no mesmo município entre 7 dias antes e 7 dias depois.'],
+    usar: ['Escolha o período no topo. Clique em assunto, município ou envolvido para filtrar.', '"Gerar release" monta o texto do período com números e links. Confirme sempre na matéria original.']
+};
 
 </script>
 </body>
