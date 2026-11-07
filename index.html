@@ -1566,6 +1566,40 @@ button.rl-lnk:hover { color: var(--prim); }
 .vp-link svg { width: 14px; height: 14px; }
 .vp-cab .ic-btn { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; border: 0; background: var(--suave); color: var(--muted); cursor: pointer; }
 .vp-cab .ic-btn svg { width: 18px; height: 18px; }
+
+/* ---------- 3.4 acesso pelo celular ---------- */
+.lg-status { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--lg-mut, var(--muted)); min-height: 18px; margin-top: -6px; }
+.lg-status:empty { display: none; }
+.lg-status i { width: 8px; height: 8px; border-radius: 50%; background: #94a3b8; flex: none; }
+.lg-status.ok i { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.2); }
+.lg-status.erro { color: #fca5a5; }
+.lg-status.erro i { background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.2); }
+.lg-status button, .dg-btn { background: none; border: 0; padding: 0; font: inherit; font-weight: 700; color: #93c5fd; text-decoration: underline; cursor: pointer; }
+.dg-btn { color: inherit; margin-left: 4px; }
+.vp-link + .vp-link, .dg-link + .vp-link { margin-top: 6px; }
+.dg-link { display: flex; }
+.dg-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.dg-lista li { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; background: var(--suave); font-size: 13px; }
+.dg-lista .b { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: #94a3b8; }
+.dg-lista .b svg { width: 14px; height: 14px; }
+.dg-lista li.ok .b { background: var(--verde); }
+.dg-lista li.nao .b { background: var(--c-crit); }
+.dg-lista li.esp .b { background: var(--ambar); }
+.dg-lista b { display: block; }
+.dg-lista small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; line-height: 1.45; }
+.dg-conc { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, var(--c-alto) 9%, var(--card)); border: 1px solid color-mix(in srgb, var(--c-alto) 30%, transparent); font-size: 13px; line-height: 1.55; }
+.dg-conc.ok { background: color-mix(in srgb, var(--verde) 9%, var(--card)); border-color: color-mix(in srgb, var(--verde) 30%, transparent); }
+.dg-conc p { margin: 8px 0 0; }
+.dg-acoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+@media (max-width: 600px) {
+  #login.login-v3 .login-arte { padding: 18px 16px 12px; }
+  #login.login-v3 .login-mt { width: min(150px, 44%); margin: 6px auto 0; }
+  #login.login-v3 .lg3-logo svg { width: 46px; height: 46px; }
+  .lg3-nome b { font-size: 22px; }
+  #login.login-v3 .login-caixa { padding: 22px 18px; gap: 13px; }
+  #login.login-v3 .login-caixa h1 { font-size: 24px; }
+  #login.login-v3 .login-form { padding: 12px 12px 24px; }
+}
 </style>
 
 </head>
@@ -1633,8 +1667,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '3.3.0+219ba4a4';
-const APP_NOTAS = 'Documentos com emissor anonimizado e QR Code sem o endereço da base; verificação pública de autenticidade.';
+const APP_VERSAO = '3.4.0+91a422ea';
+const APP_NOTAS = 'Acesso pelo celular: diagnóstico de conexão na tela de entrada e tela de entrada mais compacta.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -6351,6 +6385,120 @@ mostrarLogin = function (msg) {
     _mostrarLoginV12(msg);
     const cx = document.querySelector('#login .login-caixa');
     if (cx && !cx.querySelector('.vp-link')) cx.insertAdjacentHTML('beforeend', `<button type="button" class="vp-link" onclick="telaVerificacao('')">${ic('shield')}Verificar autenticidade de um documento</button>`);
+};
+
+/* =====================================================================
+   EDUCASEG-PLUS 3.4 — acesso pelo celular
+   Diagnóstico de conexão na tela de entrada, tempo-limite nas chamadas,
+   limpeza de cache do aplicativo e tela de entrada mais compacta no celular.
+   ===================================================================== */
+
+/* Tempo-limite nas chamadas ao Apps Script (redes móveis lentas não ficam presas em "Entrando…") */
+(function () {
+    const f0 = window.fetch.bind(window);
+    window.fetch = function (url, op) {
+        const u = typeof url === 'string' ? url : (url && url.url) || '';
+        if (!/script\.google(usercontent)?\.com/.test(u) || (op && op.signal) || typeof AbortController === 'undefined') return f0(url, op);
+        const c = new AbortController(), t = setTimeout(() => c.abort(), 30000);
+        return f0(url, Object.assign({}, op || {}, { signal: c.signal })).finally(() => clearTimeout(t));
+    };
+})();
+
+const ehCelular = () => /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || matchMedia('(pointer: coarse)').matches;
+const ehIOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const navInterno = () => /FBAN|FBAV|Instagram|WhatsApp|Line\/|; wv\)/i.test(navigator.userAgent);
+
+async function pingServidor(url, ms) {
+    const c = typeof AbortController !== 'undefined' ? new AbortController() : null, t = c ? setTimeout(() => c.abort(), ms || 15000) : 0;
+    const ini = Date.now();
+    try {
+        const r = await fetch(url + '?acao=ping', { redirect: 'follow', cache: 'no-store', signal: c ? c.signal : undefined });
+        const txt = await r.text();
+        let j = null; try { j = JSON.parse(txt); } catch (e) { }
+        if (j && j.ok) return { ok: true, versao: j.versao, ms: Date.now() - ini };
+        return { ok: false, tipo: /accounts\.google|ServiceLogin|Fazer login|Sign in/i.test(txt) ? 'login' : /permiss|permission|acesso negado|denied/i.test(txt) ? 'permissao' : 'formato', ms: Date.now() - ini };
+    } catch (e) { return { ok: false, tipo: e && e.name === 'AbortError' ? 'tempo' : 'bloqueio', ms: Date.now() - ini }; }
+    finally { if (t) clearTimeout(t); }
+}
+function urlServidorAtual() { const i = $('lg-api'); return (i && i.value.trim()) || API.url || ls.get('esp_api') || API_PADRAO || ''; }
+
+/* Situação do servidor na tela de entrada */
+async function statusLogin() {
+    const el = $('lg-status'); if (!el || EM_ARTEFATO) return;
+    const url = urlServidorAtual(); if (!url) { el.innerHTML = ''; return; }
+    el.className = 'lg-status'; el.innerHTML = '<i></i>Verificando o servidor…';
+    let res = null;
+    for (const u of urlsApi(url)) { res = await pingServidor(u, 12000); if (res.ok) break; }
+    if (!$('lg-status')) return;
+    el.className = 'lg-status ' + (res && res.ok ? 'ok' : 'erro');
+    el.innerHTML = res && res.ok ? `<i></i>Servidor disponível · versão ${esc(res.versao || '')}` : `<i></i>O servidor não respondeu neste aparelho. <button type="button" onclick="diagnosticoConexao()">Ver o motivo</button>`;
+}
+
+/* Diagnóstico completo */
+async function diagnosticoConexao() {
+    let t = $('verif-pub'); if (!t) { t = document.createElement('div'); t.id = 'verif-pub'; document.body.appendChild(t); }
+    const linha = (ok, tit, det) => `<li class="${ok === null ? 'esp' : ok ? 'ok' : 'nao'}"><span class="b">${ok === null ? ic('clock') : ok ? ic('check') : ic('x')}</span><div><b>${tit}</b>${det ? `<small>${det}</small>` : ''}</div></li>`;
+    const pinta = (itens, conclusao) => { t.innerHTML = `<div class="vp-caixa"><div class="vp-cab">${emblema(44, 'dge')}<div><b>Diagnóstico de conexão</b><small>Por que não consigo entrar neste aparelho?</small></div><button class="ic-btn" onclick="document.getElementById('verif-pub').remove()" aria-label="Fechar">${ic('x')}</button></div>
+        <ul class="dg-lista">${itens.join('')}</ul>${conclusao || ''}
+        <div class="dg-acoes"><button class="btn btn-s btn-sm" onclick="limparCacheApp()">${ic('repeat')}Limpar cache e recarregar</button>${ls.get('esp_api') && ls.get('esp_api') !== API_PADRAO ? `<button class="btn btn-s btn-sm" onclick="ls.set('esp_api','${esc(API_PADRAO)}');location.reload()">${ic('database')}Usar o servidor padrão</button>` : ''}<button class="btn btn-s btn-sm" onclick="copiar(window.DIAG_TXT||'')">${ic('copy')}Copiar diagnóstico</button></div></div>`; };
+    const itens = [];
+    itens.push(linha(navigator.onLine, navigator.onLine ? 'Aparelho com internet' : 'Aparelho sem internet', navigator.onLine ? '' : 'Conecte-se ao Wi-Fi ou aos dados móveis e tente de novo.'));
+    itens.push(linha(true, 'Versão do sistema neste aparelho: ' + esc(String(APP_VERSAO).split('+')[0]), (navigator.serviceWorker && navigator.serviceWorker.controller) ? 'Aplicativo instalado com cache ativo.' : ''));
+    const url = urlServidorAtual();
+    itens.push(linha(null, 'Testando o servidor…', ''));
+    pinta(itens);
+    // versão publicada (detecta celular com versão antiga em cache)
+    let pub = '';
+    try { if (/^https?:$/.test(location.protocol)) { const r = await fetch(location.pathname + '?v=' + Date.now(), { cache: 'no-store' }); const m = (await r.text()).match(/APP_VERSAO = '([^']+)'/); pub = m ? m[1] : ''; } } catch (e) { }
+    if (pub && pub !== APP_VERSAO) itens.splice(1, 1, linha(false, 'Este aparelho está com uma versão antiga do sistema', `Instalada: ${esc(APP_VERSAO.split('+')[0])} · publicada: ${esc(pub.split('+')[0])}. Toque em "Limpar cache e recarregar".`));
+    const res = [];
+    for (const u of urlsApi(url)) res.push(Object.assign({ u }, await pingServidor(u, 15000)));
+    const ok = res.find(r => r.ok);
+    const motivo = { login: 'o Google pediu login: a implantação está restrita à conta institucional', permissao: 'o Google negou o acesso a esta conta', formato: 'resposta inesperada do servidor', tempo: 'o servidor demorou demais para responder (rede lenta)', bloqueio: 'o navegador bloqueou a resposta do Google' };
+    itens.splice(itens.length - 1, 1, ok ? linha(true, 'Servidor respondeu · versão ' + esc(ok.versao || ''), `Tempo de resposta: ${(ok.ms / 1000).toFixed(1)} s.`) : linha(false, 'O servidor não respondeu neste aparelho', res.map(r => `${/\/a\//.test(r.u) ? 'Endereço institucional' : 'Endereço geral'}: ${motivo[r.tipo] || r.tipo}`).join('<br>')));
+    let conclusao = '';
+    if (!navigator.onLine) conclusao = '';
+    else if (ok) conclusao = `<div class="dg-conc ok"><b>A conexão está funcionando.</b> Se a entrada falhar, confira o e-mail e a senha (o celular costuma colocar a primeira letra em maiúscula ou um espaço no fim; o sistema já corrige isso). Depois de 5 senhas erradas o acesso fica bloqueado por 15 minutos.</div>`;
+    else if (res.every(r => r.tipo === 'tempo')) conclusao = `<div class="dg-conc"><b>Rede lenta ou instável.</b> Tente pelo Wi-Fi ou aguarde alguns segundos e tente de novo.</div>`;
+    else conclusao = `<div class="dg-conc"><b>O mais provável: a implantação do Apps Script não está aberta para "Qualquer pessoa".</b>
+        <p>No computador funciona porque o navegador já está logado na conta @edu.mt.gov.br. No celular, ${ehIOS() ? 'o Safari bloqueia o login do Google dentro de outro site' : 'o navegador normalmente não está logado na conta institucional ou bloqueia esse login dentro de outro site'}${navInterno() ? ', e você abriu o link dentro de um aplicativo (WhatsApp/Instagram), que bloqueia ainda mais' : ''}.</p>
+        <p><b>Correção (administrador, 2 minutos):</b> no Apps Script, Implantar › Gerenciar implantações › editar (lápis) › em "Quem pode acessar" escolha <b>Qualquer pessoa</b> › Implantar. O endereço continua o mesmo e a segurança não muda: toda ação continua exigindo usuário e senha do sistema.</p>
+        <p>Se a opção "Qualquer pessoa" não aparecer, o Google Workspace da SEDUC bloqueia esse tipo de publicação: peça ao administrador do Workspace para liberar, ou publique o script a partir de uma conta que permita.</p>
+        ${navInterno() ? '<p>Enquanto isso, abra o link no navegador do celular (Chrome ou Safari), e não dentro do WhatsApp.</p>' : ''}</div>`;
+    window.DIAG_TXT = ['EDUCASEG-PLUS · diagnóstico de conexão', 'Data: ' + new Date().toLocaleString('pt-BR'), 'Versão: ' + APP_VERSAO + (pub ? ' (publicada ' + pub + ')' : ''), 'Aparelho: ' + navigator.userAgent, 'Online: ' + navigator.onLine,
+        ...res.map(r => (/\/a\//.test(r.u) ? 'Institucional' : 'Geral') + ': ' + (r.ok ? 'OK ' + r.versao : r.tipo) + ' (' + r.ms + ' ms)')].join('\n');
+    pinta(itens, conclusao);
+}
+async function limparCacheApp() {
+    try { if (navigator.serviceWorker) { const rs = await navigator.serviceWorker.getRegistrations(); await Promise.all(rs.map(r => r.unregister())); } } catch (e) { }
+    try { if (window.caches) { const ks = await caches.keys(); await Promise.all(ks.map(k => caches.delete(k))); } } catch (e) { }
+    location.replace(location.pathname + '?atualizado=' + Date.now());
+}
+
+/* Tela de entrada: situação do servidor, link de diagnóstico e erro com atalho */
+const _mostrarLoginV13 = mostrarLogin;
+mostrarLogin = function (msg) {
+    _mostrarLoginV13(msg);
+    const cx = document.querySelector('#login .login-caixa'); if (!cx) return;
+    const btn = $('lg-entrar');
+    if (btn && !$('lg-status')) btn.insertAdjacentHTML('afterend', '<div id="lg-status" class="lg-status"></div>');
+    const v = cx.querySelector('.vp-link');
+    if (v && !cx.querySelector('.dg-link')) v.insertAdjacentHTML('beforebegin', `<button type="button" class="vp-link dg-link" onclick="diagnosticoConexao()">${ic('activity')}Problemas para entrar? Testar a conexão</button>`);
+    // o celular costuma capitalizar e corrigir o e-mail
+    const em = $('lg-email'); if (em) { em.setAttribute('autocapitalize', 'none'); em.setAttribute('autocorrect', 'off'); em.setAttribute('spellcheck', 'false'); em.setAttribute('inputmode', 'email'); }
+    const erroBox = $('login-erro');
+    if (erroBox && !erroBox._obs) {
+        erroBox._obs = new MutationObserver(() => { const a = erroBox.querySelector('.aviso'); if (a && /servidor|login do Google|conexão|demorou|abort/i.test(a.textContent) && !a.querySelector('.dg-btn')) a.querySelector('div').insertAdjacentHTML('beforeend', ` <button type="button" class="dg-btn" onclick="diagnosticoConexao()">Testar a conexão</button>`); });
+        erroBox._obs.observe(erroBox, { childList: true, subtree: true });
+    }
+    setTimeout(statusLogin, 400);
+    const api = $('lg-api'); if (api) api.addEventListener('change', statusLogin);
+};
+/* Mensagem mais clara quando a chamada estoura o tempo */
+const _apiV13 = api;
+api = async function (acao, dados) {
+    try { return await _apiV13(acao, dados); }
+    catch (e) { if (e && /abort/i.test(e.name + ' ' + e.message)) throw new Error('O servidor demorou demais para responder. Verifique a internet do aparelho e tente de novo.'); throw e; }
 };
 
 </script>
