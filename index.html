@@ -1600,6 +1600,42 @@ button.rl-lnk:hover { color: var(--prim); }
   #login.login-v3 .login-caixa h1 { font-size: 24px; }
   #login.login-v3 .login-form { padding: 12px 12px 24px; }
 }
+.dg-teste { margin-top: 14px; padding: 12px 14px; border-radius: 12px; border: 1px dashed var(--prim); background: var(--prim-claro); font-size: 13px; line-height: 1.55; }
+.dg-teste .mono { font-family: var(--f-dado); font-weight: 700; }
+</style>
+<style>
+/* ===== 3.5: emblema em destaque acima do mapa + Acesso e conexão ===== */
+#login.login-v4 .login-arte { justify-content: flex-start; align-items: center; text-align: center; padding-top: clamp(28px, 6vh, 64px); }
+#login.login-v4 .login-marca { flex-direction: column; align-items: center; gap: 14px; }
+.lg4-logo svg { display: block; width: 112px; height: 112px; filter: drop-shadow(0 18px 40px rgba(37,99,235,.45)); }
+#login.login-v4 .lg3-nome b { font-size: 38px; }
+#login.login-v4 .lg3-nome small { margin-top: 9px; }
+#login.login-v4 .login-mt { width: min(520px, 86%); margin: 26px auto 0; opacity: .9; }
+#login.login-v4 #lg-local { align-self: center; }
+.lat-emblema svg { border-radius: 11px; }
+.ac-grade { display: grid; gap: 16px; }
+.ac-srv { display: grid; gap: 8px; padding: 14px; border: 1px solid var(--borda, rgba(148,163,184,.3)); border-radius: 12px; }
+.ac-rot { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.ac-url { font-size: 13px; padding: 9px 11px; border-radius: 8px; background: rgba(148,163,184,.12); word-break: break-all; }
+.ac-linha { display: flex; flex-wrap: wrap; gap: 8px; }
+.ac-srv .lg-status { margin-top: 0; }
+.ac-ops { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.ac-op { display: flex; align-items: center; gap: 12px; text-align: left; padding: 12px; border-radius: 12px; border: 1px solid var(--borda, rgba(148,163,184,.3)); background: none; color: inherit; font: inherit; cursor: pointer; }
+.ac-op:hover { border-color: var(--prim); background: rgba(37,99,235,.06); }
+.ac-op b { display: block; font-size: 13.5px; } .ac-op small { display: block; font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+.ac-ic { flex: none; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: rgba(37,99,235,.12); color: var(--prim); }
+.ac-ic svg { width: 18px; height: 18px; }
+@media (max-width: 860px) {
+  #login.login-v4 .login-arte { padding: 26px 16px 14px; }
+  .lg4-logo svg { width: 84px; height: 84px; }
+  #login.login-v4 .lg3-nome b { font-size: 28px; }
+  #login.login-v4 .login-mt { display: block; width: min(200px, 52%); margin: 14px auto 0; }
+}
+@media (max-width: 600px) {
+  .lg4-logo svg { width: 72px; height: 72px; }
+  #login.login-v4 .lg3-nome b { font-size: 25px; }
+  #login.login-v4 .login-mt { width: min(130px, 40%); margin-top: 10px; }
+}
 </style>
 
 </head>
@@ -1667,8 +1703,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '3.4.0+91a422ea';
-const APP_NOTAS = 'Acesso pelo celular: diagnóstico de conexão na tela de entrada e tela de entrada mais compacta.';
+const APP_VERSAO = '3.5.0+4d70e2d4';
+const APP_NOTAS = 'Novo emblema, tela de entrada mais limpa e opções de acesso agora dentro do sistema (menu lateral › Acesso e conexão).';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -3296,7 +3332,16 @@ function pintarPaleta() {
 
 /* Endereço da API (implantação do Apps Script como "App da Web").
    Pode ser preenchido aqui antes de publicar no GitHub ou informado na tela de login. */
-const API_PADRAO = 'https://script.google.com/a/edu.mt.gov.br/macros/s/AKfycbz6AgqsRF82gj3VCRTxNEd_R6lwkCjSbVu4GsXDXTr73l3cKiQ7/exec';
+const API_PADRAO = 'https://script.google.com/macros/s/AKfycbwvdPygrYRXbS8f_4QfXijzG7RGxoL8uRTQYJXs5iSBUzj1yufGDyeR8nXzAYF788bR3w/exec';
+/* Endereços antigos da implantação: migram para o atual */
+const API_ANTIGAS = [/AKfycbz6AgqsRF82gj3VCRTxNEd_R6lwkCjSbVu4GsXDXTr73l3cKiQ7/];
+(function migrarApi() {
+    try {
+        const velho = u => u && API_ANTIGAS.some(r => r.test(u));
+        if (velho(localStorage.getItem('esp_api'))) localStorage.setItem('esp_api', API_PADRAO);
+        [localStorage, sessionStorage].forEach(st => { const v = st.getItem('esp_sessao'); if (!v) return; const o = JSON.parse(v); if (o && velho(o.url)) { o.url = API_PADRAO; st.setItem('esp_sessao', JSON.stringify(o)); } });
+    } catch (e) { }
+})();
 
 const API = { url: '', token: '' };
 let USUARIO = null;
@@ -6440,6 +6485,8 @@ async function diagnosticoConexao() {
     const linha = (ok, tit, det) => `<li class="${ok === null ? 'esp' : ok ? 'ok' : 'nao'}"><span class="b">${ok === null ? ic('clock') : ok ? ic('check') : ic('x')}</span><div><b>${tit}</b>${det ? `<small>${det}</small>` : ''}</div></li>`;
     const pinta = (itens, conclusao) => { t.innerHTML = `<div class="vp-caixa"><div class="vp-cab">${emblema(44, 'dge')}<div><b>Diagnóstico de conexão</b><small>Por que não consigo entrar neste aparelho?</small></div><button class="ic-btn" onclick="document.getElementById('verif-pub').remove()" aria-label="Fechar">${ic('x')}</button></div>
         <ul class="dg-lista">${itens.join('')}</ul>${conclusao || ''}
+        <div class="dg-teste"><b>Teste decisivo:</b> abra o endereço do servidor direto no navegador. Se estiver tudo certo, aparece um texto começando com <span class="mono">{"ok":true</span>. Se aparecer uma página do Google (pedido de login, "autorização necessária", "função não encontrada" ou erro do script), é isso que precisa ser corrigido no Apps Script.
+            <div class="dg-acoes" style="margin-top:8px">${urlsApi(urlServidorAtual()).map((u, i) => `<a class="btn btn-p btn-sm" href="${esc(u)}?acao=ping" target="_blank" rel="noopener">${ic('ext')}Abrir teste ${i ? '(endereço geral)' : (urlsApi(urlServidorAtual()).length > 1 ? '(endereço institucional)' : '')}</a>`).join('')}</div></div>
         <div class="dg-acoes"><button class="btn btn-s btn-sm" onclick="limparCacheApp()">${ic('repeat')}Limpar cache e recarregar</button>${ls.get('esp_api') && ls.get('esp_api') !== API_PADRAO ? `<button class="btn btn-s btn-sm" onclick="ls.set('esp_api','${esc(API_PADRAO)}');location.reload()">${ic('database')}Usar o servidor padrão</button>` : ''}<button class="btn btn-s btn-sm" onclick="copiar(window.DIAG_TXT||'')">${ic('copy')}Copiar diagnóstico</button></div></div>`; };
     const itens = [];
     itens.push(linha(navigator.onLine, navigator.onLine ? 'Aparelho com internet' : 'Aparelho sem internet', navigator.onLine ? '' : 'Conecte-se ao Wi-Fi ou aos dados móveis e tente de novo.'));
@@ -6463,6 +6510,8 @@ async function diagnosticoConexao() {
     else conclusao = `<div class="dg-conc"><b>O mais provável: a implantação do Apps Script não está aberta para "Qualquer pessoa".</b>
         <p>No computador funciona porque o navegador já está logado na conta @edu.mt.gov.br. No celular, ${ehIOS() ? 'o Safari bloqueia o login do Google dentro de outro site' : 'o navegador normalmente não está logado na conta institucional ou bloqueia esse login dentro de outro site'}${navInterno() ? ', e você abriu o link dentro de um aplicativo (WhatsApp/Instagram), que bloqueia ainda mais' : ''}.</p>
         <p><b>Correção (administrador, 2 minutos):</b> no Apps Script, Implantar › Gerenciar implantações › editar (lápis) › em "Quem pode acessar" escolha <b>Qualquer pessoa</b> › Implantar. O endereço continua o mesmo e a segurança não muda: toda ação continua exigindo usuário e senha do sistema.</p>
+        <p>Confira também, na mesma tela: <b>"Executar como" deve estar em "Eu"</b> (a conta dona da planilha). Se estiver em "Usuário que acessa o app da Web", o Google exige login de cada pessoa e o sistema não consegue entrar.</p>
+        <p>Se você criou uma <b>nova implantação</b> (em vez de editar a existente), o endereço mudou: copie o novo endereço terminado em /exec e cole em "Acesso e conexão › Servidor" (menu lateral, dentro do sistema).</p>
         <p>Se a opção "Qualquer pessoa" não aparecer, o Google Workspace da SEDUC bloqueia esse tipo de publicação: peça ao administrador do Workspace para liberar, ou publique o script a partir de uma conta que permita.</p>
         ${navInterno() ? '<p>Enquanto isso, abra o link no navegador do celular (Chrome ou Safari), e não dentro do WhatsApp.</p>' : ''}</div>`;
     window.DIAG_TXT = ['EDUCASEG-PLUS · diagnóstico de conexão', 'Data: ' + new Date().toLocaleString('pt-BR'), 'Versão: ' + APP_VERSAO + (pub ? ' (publicada ' + pub + ')' : ''), 'Aparelho: ' + navigator.userAgent, 'Online: ' + navigator.onLine,
@@ -6500,6 +6549,111 @@ api = async function (acao, dados) {
     try { return await _apiV13(acao, dados); }
     catch (e) { if (e && /abort/i.test(e.name + ' ' + e.message)) throw new Error('O servidor demorou demais para responder. Verifique a internet do aparelho e tente de novo.'); throw e; }
 };
+
+/* =====================================================================
+   EDUCASEG-PLUS 3.5 — emblema contemporâneo, tela inicial limpa e
+   "Acesso e conexão" dentro do sistema
+   ===================================================================== */
+
+/* ---------- Emblema v3: plano, geométrico, sem ornamentos ---------- */
+function emblemaV3(tam, id, fundoTotal) {
+    id = id || 'e3' + Math.random().toString(36).slice(2, 7);
+    const fundo = fundoTotal ? `<rect width="64" height="64" fill="url(#${id}f)"/>` : `<rect x="1" y="1" width="62" height="62" rx="16" fill="url(#${id}f)"/>`;
+    return `<svg viewBox="0 0 64 64" width="${tam}" height="${tam}" aria-hidden="true" class="emblema">
+    <defs><linearGradient id="${id}f" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#0b1f5c"/></linearGradient></defs>
+    ${fundo}
+    <path d="M32 12.5 47 18v12.2c0 10-6.3 17.6-15 21.3-8.7-3.7-15-11.3-15-21.3V18Z" fill="none" stroke="#fff" stroke-width="3.4" stroke-linejoin="round"/>
+    <path d="M32 26.5 25.5 36.5M32 26.5 38.5 36.5M25.5 36.5H38.5" stroke="#7dd3fc" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="32" cy="26.5" r="3.4" fill="#fff"/><circle cx="25.5" cy="36.5" r="3" fill="#7dd3fc"/><circle cx="38.5" cy="36.5" r="3" fill="#7dd3fc"/>
+  </svg>`;
+}
+emblema = emblemaV3;
+function aplicarEmblema() {
+    document.querySelectorAll('.lat-ic').forEach(el => { el.removeAttribute('data-ico'); el.innerHTML = emblema(38, 'lat'); el.classList.add('lat-emblema'); });
+    try {
+        const l = document.querySelector('link[rel="icon"]') || document.head.appendChild(Object.assign(document.createElement('link'), { rel: 'icon' }));
+        l.type = 'image/svg+xml'; l.href = 'data:image/svg+xml,' + encodeURIComponent(emblema(64, 'fav').replace(' class="emblema"', ' xmlns="http://www.w3.org/2000/svg"'));
+    } catch (e) { }
+}
+aplicarEmblema();
+
+/* ---------- Tela inicial: só o emblema, o nome, o mapa e o login ---------- */
+const MODO_PREVIA = () => EM_ARTEFATO || location.protocol === 'file:';
+const _mostrarLoginV14 = mostrarLogin;
+mostrarLogin = function (msg) {
+    _mostrarLoginV14(msg);
+    const l = $('login'); if (!l) return;
+    l.classList.add('login-v4');
+    const marca = l.querySelector('.login-marca');
+    if (marca) marca.innerHTML = `<div class="lg4-logo">${emblema(112, 'lg4')}</div><div class="lg3-nome"><b>EDUCASEG<span>-PLUS</span></b><small>Inteligência em Segurança Escolar · SEDUC-MT</small></div>`;
+    const cx = l.querySelector('.login-caixa'); if (!cx) return;
+    // links e opções de acesso saem da tela inicial (ficam dentro do sistema)
+    cx.querySelectorAll('.vp-link, .dg-link').forEach(el => el.remove());
+    const mais = $('lg-mais');
+    if (mais) {
+        mais.hidden = true; mais.open = false;
+        const loc = $('lg-local');
+        if (loc && MODO_PREVIA()) {
+            loc.classList.add('btn-sm'); loc.innerHTML = ic('database') + 'Entrar em modo local (pré-visualização)';
+            mais.parentNode.insertBefore(loc, mais);
+        }
+    }
+    const api = $('lg-api'); if (api && !api.value.trim()) api.value = ls.get('esp_api') || API_PADRAO;
+    const erroBox = $('login-erro'); if (erroBox && erroBox._obs) { erroBox._obs.disconnect(); erroBox._obs = null; }
+};
+/* a situação do servidor fica, mas sem o botão de diagnóstico na tela inicial */
+const _statusLoginV14 = statusLogin;
+statusLogin = async function () {
+    await _statusLoginV14();
+    const el = $('lg-status'); if (el && el.classList.contains('erro')) el.innerHTML = '<i></i>O servidor não respondeu neste aparelho. Tente de novo em instantes.';
+};
+
+/* ---------- Acesso e conexão (menu lateral) ---------- */
+const mascararUrl = u => { const m = String(u || '').match(/\/s\/([^/]{6})[^/]*([^/]{4})\/exec/); return m ? 'script.google.com/…/s/' + m[1] + '••••' + m[2] + '/exec' : (u ? '••••' : 'não definido'); };
+function telaAcesso() {
+    const adm = USUARIO && (USUARIO.perfil === 'ADMIN' || USUARIO.perfil === 'LOCAL');
+    const url = API.url || ls.get('esp_api') || API_PADRAO;
+    const op = (icone, tit, sub, acao, extra) => `<button type="button" class="ac-op" onclick="${acao}" ${extra || ''}><span class="ac-ic">${ic(icone)}</span><span><b>${tit}</b><small>${sub}</small></span></button>`;
+    abrirModal({
+        titulo: 'Acesso e conexão', sub: 'Servidor, diagnóstico e ferramentas do aparelho', icone: 'activity', tam: 'md',
+        corpo: `<div class="ac-grade">
+            <section class="ac-srv"><div class="ac-rot">Servidor (Google Sheets)</div>
+              ${adm ? `<input class="campo mono" id="ac-api" value="${esc(url)}" placeholder="https://script.google.com/macros/s/…/exec">
+                <div class="ac-linha"><button class="btn btn-p btn-sm" type="button" onclick="salvarServidor()">${ic('check')}Salvar endereço</button>
+                <button class="btn btn-s btn-sm" type="button" onclick="$('ac-api').value=API_PADRAO">${ic('repeat')}Usar o padrão</button></div>
+                <p class="dica">Só altere se o Apps Script ganhou uma nova implantação. O endereço fica salvo neste aparelho.</p>`
+            : `<div class="ac-url mono">${esc(mascararUrl(url))}</div><p class="dica">Endereço definido pela administração. Por segurança, ele não é exibido por inteiro.</p>`}
+              <div id="ac-status" class="lg-status"></div></section>
+            <div class="ac-ops">
+              ${op('activity', 'Testar a conexão', 'Diagnóstico completo deste aparelho', "fecharModal();diagnosticoConexao()")}
+              ${op('shield', 'Verificar documento', 'Confere a autenticidade de um relatório', "fecharModal();telaVerificacao('')")}
+              ${INSTALAR.evento ? op('download', 'Instalar aplicativo', 'Atalho na tela inicial do aparelho', 'fecharModal();instalarApp()') : ''}
+              ${op('repeat', 'Limpar cache e recarregar', 'Resolve versão antiga presa no aparelho', 'limparCacheApp()')}
+            </div></div>`,
+        pe: `<button class="btn btn-s" onclick="fecharModal()">Fechar</button>`
+    });
+    (async () => {
+        const el = $('ac-status'); if (!el || EM_ARTEFATO || !url) return;
+        el.className = 'lg-status'; el.innerHTML = '<i></i>Verificando o servidor…';
+        let res = null; for (const u of urlsApi(url)) { res = await pingServidor(u, 12000); if (res.ok) break; }
+        if (!$('ac-status')) return;
+        el.className = 'lg-status ' + (res && res.ok ? 'ok' : 'erro');
+        el.innerHTML = res && res.ok ? `<i></i>Servidor disponível · versão ${esc(res.versao || '')}` : '<i></i>O servidor não respondeu. Use "Testar a conexão".';
+    })();
+}
+function salvarServidor() {
+    const u = ($('ac-api').value || '').trim();
+    if (!/^https:\/\/script\.google\.com\/.+\/exec$/.test(u)) return toast('Endereço inválido: use a URL da implantação terminada em /exec');
+    ls.set('esp_api', u);
+    if (conectado()) { API.url = u; try { const s = lerSessao(); if (s) { s.url = u; (ss.get('esp_sessao') ? ss : ls).set('esp_sessao', JSON.stringify(s)); } } catch (e) { } }
+    fecharModal(); toast('Endereço do servidor salvo');
+}
+(function botaoAcesso() {
+    const ac = document.querySelector('.lat-acoes'); if (!ac || $('btn-acesso')) return;
+    const b = document.createElement('button');
+    b.id = 'btn-acesso'; b.title = 'Acesso e conexão'; b.setAttribute('aria-label', 'Acesso e conexão'); b.innerHTML = ic('activity'); b.onclick = telaAcesso;
+    ac.insertBefore(b, ac.firstChild);
+})();
 
 </script>
 </body>
