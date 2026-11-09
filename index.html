@@ -2055,6 +2055,133 @@ html.sem-recorte #recorte { display: none !important; }
   .vn4-cab-tx p { grid-column: 1 / -1; margin: 0; }
 }
 </style>
+<style>
+/* ===== 4.2: Proteção ===== */
+.pt-fil { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pt-fil > button { height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--borda); background: none; color: var(--muted); font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+.pt-fil > button.ativo { background: var(--prim); border-color: var(--prim); color: #fff; }
+.pt-lista, .fc-lista, .acp-lista, .rk-lista { border-top: 1px solid var(--borda); }
+.pt-it, .fc-it, .acp-it, .rk-it { display: flex; align-items: center; gap: 14px; width: 100%; padding: 12px 18px; border: 0; border-bottom: 1px solid var(--borda); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; position: relative; }
+.pt-it:hover, .fc-it:hover, .acp-it:hover, .rk-it:hover { background: var(--suave); }
+.pt-it::before, .rk-it::before { content: ''; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 0 3px 3px 0; background: var(--c); }
+.pt-anel { --p: 0; flex: none; width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--c) calc(var(--p) * 1%), var(--suave2) 0); position: relative; }
+.pt-anel::before { content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--card); }
+.pt-anel b { position: relative; font-size: 12px; font-weight: 800; }
+.pt-tx, .fc-tx, .acp-tx, .rk-tx { flex: 1; min-width: 0; display: grid; gap: 3px; }
+.pt-tx > b, .fc-tx > b, .acp-tx > b, .rk-tx > b { font-size: 14px; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pt-tx > span, .fc-tx > span, .acp-tx > span, .rk-tx > span { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pt-tx .pt-prox { display: flex; align-items: center; gap: 6px; color: var(--c); font-weight: 600; white-space: normal; }
+.pt-prox svg { width: 14px; height: 14px; flex: none; }
+.pt-prox b { color: var(--texto); }
+.pt-mod { flex: none; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--suave2); color: var(--texto2); }
+.pt-barra { height: 8px; border-radius: 999px; background: var(--suave2); overflow: hidden; }
+.pt-barra span { display: block; height: 100%; background: var(--verde); border-radius: 999px; }
+.pt-passos { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: pp; }
+.pt-passos li { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; padding: 12px; border: 1px solid var(--borda); border-radius: 12px; }
+.pt-passos li.ok { background: color-mix(in srgb, var(--verde) 6%, transparent); border-color: color-mix(in srgb, var(--verde) 30%, var(--borda)); }
+.pt-passos li.atr { border-color: color-mix(in srgb, var(--c-crit) 45%, var(--borda)); background: color-mix(in srgb, var(--c-crit) 5%, transparent); }
+.pt-chk { position: relative; width: 28px; height: 28px; cursor: pointer; }
+.pt-chk input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.pt-chk span { position: absolute; inset: 0; border-radius: 8px; border: 2px solid var(--borda2); background: var(--card); }
+.pt-chk input:checked + span { background: var(--verde); border-color: var(--verde); }
+.pt-chk input:checked + span::after { content: ''; position: absolute; left: 8px; top: 3px; width: 7px; height: 13px; border: solid #fff; border-width: 0 3px 3px 0; transform: rotate(45deg); }
+.pt-chk input:focus-visible + span { outline: 2px solid var(--prim); outline-offset: 2px; }
+.pt-ptx b { display: block; font-size: 14px; }
+.pt-ptx small { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+.pt-ptx small em { color: var(--c-crit); font-style: normal; font-weight: 800; }
+.pt-ptx p { margin: 6px 0 0; font-size: 12.5px; color: var(--texto2); line-height: 1.5; }
+.pt-obs { margin-top: 8px; height: 34px; font-size: 13px; }
+.pt-gav { border-left: 4px solid var(--c); }
+.pt-gav .ico { --c: inherit; }
+.am-lista { border-top: 1px solid var(--borda); }
+.am-it { padding: 14px 18px; border-bottom: 1px solid var(--borda); display: grid; gap: 8px; }
+.am-cab { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; }
+.am-cab .mut { font-size: 12px; }
+.am-tr { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--texto2); }
+.am-tr mark { background: color-mix(in srgb, var(--c-crit) 22%, transparent); color: var(--texto); padding: 0 2px; border-radius: 3px; font-weight: 700; }
+.am-pe { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.am-ts { flex: 1; display: flex; flex-wrap: wrap; gap: 4px; }
+.am-ts em { font-style: normal; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--c-crit) 12%, transparent); color: var(--c-crit); }
+.am-passos { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.am-passos li b { display: block; font-size: 13.5px; }
+.am-passos li small { display: block; font-size: 11.5px; color: var(--muted); }
+.am-passos li span { display: block; font-size: 12.5px; color: var(--texto2); margin-top: 2px; }
+.rk-g { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; }
+.rk-n { flex: none; width: 22px; font-size: 12px; font-weight: 800; color: var(--muted); text-align: center; }
+.rk-sc { flex: none; width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; align-content: center; background: color-mix(in srgb, var(--c) 12%, transparent); color: var(--c); }
+.rk-sc b { font-size: 19px; font-weight: 900; line-height: 1; }
+.rk-sc small { font-size: 9.5px; font-weight: 800; text-transform: uppercase; }
+.rk-mot { display: flex; flex-wrap: wrap; gap: 4px; white-space: normal !important; }
+.rk-mot em { font-style: normal; font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: var(--suave2); color: var(--texto2); }
+.fc-falta { display: grid; gap: 8px; }
+.fc-falta > div { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 70px; gap: 12px; align-items: center; font-size: 13px; }
+.fc-falta .br, .fc-nota .br { height: 8px; border-radius: 999px; background: var(--suave2); overflow: hidden; }
+.fc-falta .br i { display: block; height: 100%; background: var(--c-crit); border-radius: 999px; }
+.fc-falta b { text-align: right; font-size: 12.5px; }
+.fc-idx { flex: none; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 14%, transparent); color: var(--c); font-weight: 900; }
+.fc-nota { flex: none; width: 150px; display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; align-items: center; }
+.fc-nota .br i { display: block; height: 100%; background: var(--c); border-radius: 999px; }
+.fc-nota b { font-size: 13px; color: var(--c); }
+.fc-nota small { grid-column: 1 / -1; font-size: 10.5px; color: var(--c-alto); font-weight: 700; }
+.fc-sem { flex: none; font-size: 11.5px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--suave2); color: var(--muted); }
+.fc-form fieldset { border: 1px solid var(--borda); border-radius: 12px; padding: 8px 14px 12px; margin: 0 0 10px; }
+.fc-form legend { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 0 6px; }
+.fc-q { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--borda); font-size: 13.5px; }
+.fc-q:last-child { border-bottom: 0; }
+.fc-op { display: inline-flex; gap: 4px; flex: none; }
+.fc-op label { position: relative; cursor: pointer; }
+.fc-op input { position: absolute; opacity: 0; }
+.fc-op span { display: inline-block; padding: 6px 11px; border-radius: 8px; border: 1px solid var(--borda); font-size: 12px; font-weight: 700; color: var(--muted); }
+.fc-op .sim input:checked + span { background: var(--verde); border-color: var(--verde); color: #fff; }
+.fc-op .parcial input:checked + span { background: var(--c-medio); border-color: var(--c-medio); color: #fff; }
+.fc-op .nao input:checked + span { background: var(--c-crit); border-color: var(--c-crit); color: #fff; }
+.fc-op input:focus-visible + span { outline: 2px solid var(--prim); outline-offset: 2px; }
+.acp-av { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 14%, transparent); color: var(--c); font-weight: 900; font-size: 13px; }
+.acp-st { flex: none; font-size: 11.5px; font-weight: 800; padding: 4px 10px; border-radius: 999px; }
+.acp-st.sem { background: color-mix(in srgb, var(--c-crit) 12%, transparent); color: var(--c-crit); }
+.acp-st.vencido { background: color-mix(in srgb, var(--c-alto) 14%, transparent); color: var(--c-alto); }
+.acp-st.acompanhamento { background: color-mix(in srgb, var(--prim) 12%, transparent); color: var(--prim); }
+.acp-st.concluido { background: color-mix(in srgb, var(--verde) 12%, transparent); color: var(--verde); }
+.acp-enc { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; padding-top: 4px; font-size: 13.5px; }
+.acp-enc label { display: flex; align-items: center; gap: 8px; }
+.acp-hist { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 13px; }
+.acp-hist small { display: block; color: var(--muted); font-size: 11.5px; }
+.itv-it { cursor: default; }
+.itv-ef { flex: none; text-align: right; display: grid; }
+.itv-ef b { font-size: 15px; } .itv-ef small, .itv-ef em { font-size: 11px; color: var(--muted); font-style: normal; }
+.ic-btn.conf { color: #fff; background: var(--c-crit); }
+.pv-esc .campo { margin-top: 4px; }
+.pv-res { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 12px; font-size: 13px; color: var(--texto2); align-items: center; }
+.pv-temas { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.pv-tema { border: 1px solid color-mix(in srgb, var(--c) 30%, var(--borda)); border-radius: 14px; padding: 14px; background: color-mix(in srgb, var(--c) 4%, var(--card)); }
+.pv-tema header { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+.pv-n { flex: none; width: 30px; height: 30px; border-radius: 9px; background: var(--c); color: #fff; display: grid; place-items: center; font-weight: 900; }
+.pv-tema header b { display: block; font-size: 14.5px; }
+.pv-tema header small { font-size: 12px; color: var(--muted); }
+.pv-tema ul { margin: 0; padding-left: 18px; display: grid; gap: 5px; font-size: 13px; line-height: 1.5; }
+.pv-refs { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+.pv-refs span { font-size: 11px; padding: 3px 8px; border-radius: 6px; background: var(--suave2); color: var(--texto2); }
+.pv-cal { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.pv-cal li { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 10px; border-radius: 10px; background: var(--suave); font-size: 13px; }
+.pv-cal li span { font-weight: 900; text-transform: uppercase; font-size: 12px; color: var(--roxo); }
+.pv-cal li.agora { outline: 2px solid var(--roxo); }
+.pv-cal li em { font-style: normal; font-size: 10.5px; font-weight: 800; color: var(--verde); }
+.pv-canais { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.pv-canais div { padding: 10px 12px; border-radius: 10px; background: var(--suave); display: grid; }
+.pv-canais b { font-size: 22px; font-weight: 900; color: var(--c-crit); }
+.pv-canais .l b { font-size: 14px; }
+.pv-canais span { font-size: 12px; color: var(--texto2); }
+@media (max-width: 1100px) { .rk-g { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) {
+  .pt-it, .fc-it, .acp-it, .rk-it { padding: 12px 14px; gap: 10px; }
+  .pt-mod { display: none; }
+  .fc-nota { width: 96px; }
+  .fc-q { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .fc-falta > div { grid-template-columns: minmax(0, 1fr) 64px; }
+  .fc-falta .br { grid-column: 1 / -1; grid-row: 2; }
+  .am-it { padding: 12px 14px; }
+}
+</style>
 
 </head>
 <body>
@@ -2121,8 +2248,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '4.1.0+312a5d3b';
-const APP_NOTAS = 'Rede de vínculos: grupos com risco, busca e filtros; o que o grupo fez com tipos, gravidade e linha do tempo; onde atuou com mapa e escolas.';
+const APP_VERSAO = '4.2.0+e016d572';
+const APP_NOTAS = 'Nova área Proteção: protocolos de resposta, ameaças, risco previsto, segurança das escolas, acompanhamento, intervenções e prevenção.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -8065,6 +8192,716 @@ rVinculos = function () {
     const os = $('vn4-ord'); if (os) os.onchange = () => { VN2.gOrd = os.value; rVinculos(); };
     const sel = grade.querySelector('.vn4-it.sel'); if (sel) { const box = sel.parentElement; if (sel.offsetTop < box.scrollTop || sel.offsetTop > box.scrollTop + box.clientHeight - 60) box.scrollTop = sel.offsetTop - 40; }
 };
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.2 — PROTEÇÃO (parte 1)
+   armazenamento comum · protocolos de resposta · ameaças · risco previsto
+   ===================================================================== */
+
+/* ---------- Armazenamento: planilha (servidor) ou este navegador (modo local) ---------- */
+const PRT = { itens: new Map(), carregado: false, carregando: false, erro: '' };
+const prtK = (tipo, id) => tipo + '|' + id;
+function prtLocalLer() { try { return JSON.parse(localStorage.getItem('esp_protecao') || '[]'); } catch (e) { return []; } }
+function prtLocalGravar() { try { localStorage.setItem('esp_protecao', JSON.stringify([...PRT.itens.values()])); } catch (e) { } }
+async function prtCarregar(forcar) {
+    if (PRT.carregando || (PRT.carregado && !forcar)) return;
+    if (!forcar && PRT.falhouEm && Date.now() - PRT.falhouEm < 60000) return; // depois de uma falha, espera 1 minuto
+    PRT.carregando = true; PRT.erro = '';
+    try {
+        let lista = [];
+        if (conectado()) lista = (await api('itens', {})).itens || [];
+        else lista = prtLocalLer();
+        PRT.itens = new Map(lista.map(i => [prtK(i.tipo, i.id), i]));
+        PRT.carregado = true;
+    } catch (e) { PRT.erro = e.message; PRT.falhouEm = Date.now(); }
+    PRT.carregando = false;
+    if (!PRT.erro && (PROT_ABAS.includes(ABA) || ABA === 'meudia')) renderAba();
+}
+const prtGet = (tipo, id) => PRT.itens.get(prtK(tipo, id));
+const prtLista = tipo => [...PRT.itens.values()].filter(i => i.tipo === tipo);
+async function prtSalvar(tipo, id, dados, escola, dre) {
+    const quem = USUARIO ? (USUARIO.email || USUARIO.nome || 'local') : 'local';
+    const item = { tipo, id: String(id), dados, escola: escola || '', dre: dre || '', por: quem, em: new Date().toISOString() };
+    const ant = PRT.itens.get(prtK(tipo, id));
+    PRT.itens.set(prtK(tipo, id), item);
+    try {
+        if (conectado()) { const j = await api('salvarItem', { tipo, id: String(id), dados, escola, dre }); item.em = j.em || item.em; }
+        else prtLocalGravar();
+        return true;
+    } catch (e) {
+        if (ant) PRT.itens.set(prtK(tipo, id), ant); else PRT.itens.delete(prtK(tipo, id));
+        toast(e.message || 'Não foi possível salvar', 'alerta'); return false;
+    }
+}
+async function prtExcluir(tipo, id) {
+    const ant = PRT.itens.get(prtK(tipo, id)); PRT.itens.delete(prtK(tipo, id));
+    try { if (conectado()) await api('excluirItem', { tipo, id: String(id) }); else prtLocalGravar(); return true; }
+    catch (e) { if (ant) PRT.itens.set(prtK(tipo, id), ant); toast(e.message, 'alerta'); return false; }
+}
+const podeEditarProtecao = () => !!USUARIO && USUARIO.perfil !== 'LEITOR';
+const dataISO = d => { const x = new Date(d); return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0'); };
+const dataDeISO = s => { const m = String(s || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? new Date(+m[1], +m[2] - 1, +m[3], 12) : null; };
+const PROT_ABAS = ['protocolos', 'ameacas', 'risco', 'seguranca', 'acompanhamento', 'intervencoes', 'prevencao'];
+
+/* =====================================================================
+   1. PROTOCOLOS DE RESPOSTA
+   ===================================================================== */
+const H = 3600e3;
+const PROT_MODELOS = [
+    { id: 'sexual', nome: 'Violência sexual', teste: /SEXUAL|ESTUPRO|ABUSO SEX|IMPORTUNA|ASSEDIO SEX|EXPLORACAO SEX/, passos: [
+        ['Acolher a vítima em local reservado, sem interrogar', 0, 'Escola', 'A escola ouve o que a criança quiser contar e não pede detalhes nem confronta o suspeito (escuta especializada, Lei 13.431/2017).'],
+        ['Comunicar o Conselho Tutelar', 24, 'Escola', 'Comunicação obrigatória de suspeita ou confirmação de violência (ECA, arts. 13 e 245).'],
+        ['Avisar a família ou o responsável', 24, 'Escola', 'Exceto quando o suspeito for da família: nesse caso, só o Conselho Tutelar e a polícia.'],
+        ['Registrar boletim de ocorrência ou acionar a delegacia especializada', 24, 'Escola / DRE', ''],
+        ['Encaminhar ao atendimento de saúde', 24, 'Escola', 'Em caso de violência recente, o atendimento nas primeiras 72 horas permite a profilaxia.'],
+        ['Informar a DRE e a Unidade de Inteligência', 24, 'Escola', ''],
+        ['Montar o plano de proteção na escola', 72, 'Escola / DRE', 'Afastamento do suspeito do convívio, acompanhamento da vítima e cuidado com a exposição do caso.'],
+        ['Acompanhar a vítima após 30 dias', 720, 'DRE', '']] },
+    { id: 'autoagressao', nome: 'Autoagressão ou ideação suicida', teste: /SUICID|AUTOAGRESS|AUTOMUTIL|AUTOLES|AUTOPROVOC/, passos: [
+        ['Não deixar o estudante sozinho e acolher', 0, 'Escola', 'Em risco imediato, chamar o SAMU (192). Ouvir sem julgar.'],
+        ['Avisar a família ou o responsável', 2, 'Escola', ''],
+        ['Encaminhar ao CAPS, CAPSi ou serviço de saúde', 24, 'Escola', 'Indicar também o CVV (188, gratuito, 24 horas).'],
+        ['Comunicar o Conselho Tutelar', 24, 'Escola', 'Notificação de violência autoprovocada (Lei 13.819/2019).'],
+        ['Informar a DRE', 24, 'Escola', ''],
+        ['Definir o plano de cuidado na escola', 72, 'Escola', 'Com o psicólogo ou assistente social da rede (Lei 13.935/2019), sem expor o estudante à turma.'],
+        ['Fazer contato de acompanhamento em 72 horas', 72, 'Escola', ''],
+        ['Reavaliar em 30 dias', 720, 'Escola / DRE', '']] },
+    { id: 'ameaca', nome: 'Arma ou ameaça de ataque', teste: /ARMA|FACA|SIMULACRO|ATAQUE|MASSACRE|EXPLOSIV|BOMBA|INVASAO/, passos: [
+        ['Proteger os estudantes e acionar a Polícia Militar (190) se houver risco', 0, 'Escola', ''],
+        ['Preservar as provas e não divulgar a ameaça', 2, 'Escola', 'Guardar prints, mensagens e objetos. A divulgação em redes sociais espalha pânico e estimula imitação.'],
+        ['Comunicar a DRE e a Unidade de Inteligência', 2, 'Escola', ''],
+        ['Registrar boletim de ocorrência', 24, 'Escola / DRE', ''],
+        ['Comunicar o Conselho Tutelar e a família do autor', 24, 'Escola', 'Quando o autor for criança ou adolescente.'],
+        ['Avaliar o reforço da segurança', 48, 'DRE', 'Ronda escolar, controle de acesso e revisão da ficha de segurança da escola.'],
+        ['Acompanhar o autor e a turma', 168, 'Escola', 'Escuta, mediação e encaminhamento à rede de saúde quando indicado.'],
+        ['Reavaliar em 30 dias', 720, 'DRE', '']] },
+    { id: 'drogas', nome: 'Drogas, tráfico ou facção', teste: /DROGA|ENTORPEC|SUBSTANC|TRAFIC|FACCAO|CRIME ORGANIZ/, passos: [
+        ['Garantir a segurança e acionar a PM se houver flagrante ou arma', 0, 'Escola', ''],
+        ['Avisar a família ou o responsável', 24, 'Escola', ''],
+        ['Comunicar o Conselho Tutelar', 24, 'Escola', ''],
+        ['Informar a DRE e a Unidade de Inteligência', 24, 'Escola', ''],
+        ['Encaminhar à rede de saúde (CAPS AD) quando houver uso', 168, 'Escola', ''],
+        ['Fazer ação de prevenção com a turma', 168, 'Escola', 'Por exemplo, o PROERD da Polícia Militar.'],
+        ['Reavaliar em 30 dias', 720, 'Escola / DRE', '']] },
+    { id: 'agressao', nome: 'Agressão física ou outro fato crítico', teste: /./, passos: [
+        ['Separar os envolvidos e prestar socorro', 0, 'Escola', 'SAMU (192) se houver ferido.'],
+        ['Avisar as famílias', 24, 'Escola', ''],
+        ['Comunicar o Conselho Tutelar quando a vítima for criança ou adolescente', 24, 'Escola', ''],
+        ['Informar a DRE', 24, 'Escola', ''],
+        ['Registrar boletim de ocorrência quando houver lesão ou crime', 48, 'Escola', ''],
+        ['Fazer mediação de conflito ou medida pedagógica', 168, 'Escola', 'Círculos restaurativos e acordo de convivência.'],
+        ['Reavaliar em 30 dias', 720, 'Escola', '']] }
+];
+const protModeloDe = r => { const k = chave(r.tipo); return PROT_MODELOS.find(m => m.teste.test(k)) || PROT_MODELOS[PROT_MODELOS.length - 1]; };
+const PROT_JANELA = 30; // dias: ocorrências críticas ou sensíveis recentes ganham protocolo automaticamente
+function protPrecisa(r) { return r.dt && (r.crit === 'CRÍTICO' || ehSevero(r.tipo)) && diasEntre(r.dt, A.hoje) <= PROT_JANELA && diasEntre(r.dt, A.hoje) >= -1; }
+function protEstado(r) {
+    const it = prtGet('protocolo', r.id), d = it ? it.dados : null;
+    const m = PROT_MODELOS.find(x => x.id === (d && d.modelo)) || protModeloDe(r);
+    const base = r.dt ? +r.dt : Date.now();
+    const passos = m.passos.map(([t, h, quem, det], i) => { const f = d && d.passos && d.passos[i]; return { i, t, h, quem, det, feito: !!(f && f.feito), em: f && f.em, por: f && f.por, obs: (f && f.obs) || '', prazo: new Date(base + h * H) }; });
+    const agora = Date.now(), pend = passos.filter(p => !p.feito);
+    const atras = pend.filter(p => +p.prazo < agora);
+    const concluido = d && d.status === 'concluido' || !pend.length;
+    return { r, m, it, passos, feitos: passos.length - pend.length, total: passos.length, prox: pend[0] || null, atras, concluido, manual: !!(d && d.manual) };
+}
+function protCasos() {
+    const ids = new Set(prtLista('protocolo').map(i => i.id));
+    return REG.filter(r => protPrecisa(r) || ids.has(String(r.id))).map(protEstado).sort((a, b) => (b.atras.length > 0) - (a.atras.length > 0) || (a.concluido - b.concluido) || (b.r.dt - a.r.dt));
+}
+const fmtPrazo = d => { const h = (+d - Date.now()) / H; if (h < -48) return 'venceu há ' + Math.round(-h / 24) + ' dias'; if (h < 0) return 'venceu há ' + Math.max(1, Math.round(-h)) + ' h'; if (h < 48) return 'vence em ' + Math.max(1, Math.round(h)) + ' h'; return 'vence em ' + Math.round(h / 24) + ' dias'; };
+const PT = { filtro: 'abertos', modelo: '' };
+function rProtocolos() {
+    $('acoes-protocolos').innerHTML = `<button class="btn btn-v btn-sm" onclick="prtCarregar(true)">${ic('repeat')}Atualizar</button>`;
+    const C = protCasos();
+    const ab = C.filter(c => !c.concluido), at = ab.filter(c => c.atras.length), conc = C.filter(c => c.concluido);
+    let L = PT.filtro === 'atrasados' ? at : PT.filtro === 'concluidos' ? conc : PT.filtro === 'todos' ? C : ab;
+    if (PT.modelo) L = L.filter(c => c.m.id === PT.modelo);
+    const kpi = (c, i, t, v, s, f) => `<button class="kpi" style="--c:${c}" onclick="PT.filtro='${f}';rProtocolos()"><div class="r">${ic(i)}${t}</div><div class="v">${fmtN(v)}</div><div class="s">${s}</div></button>`;
+    $('cont-protocolos').innerHTML = `${PRT.erro ? `<div class="aviso alerta">${ic('alerta')}<div>Não foi possível ler os protocolos salvos: ${esc(PRT.erro)}</div></div>` : ''}
+    <div class="kpis">${kpi('var(--prim)', 'check', 'Em andamento', ab.length, `críticos e sensíveis dos últimos ${PROT_JANELA} dias`, 'abertos')}${kpi('var(--c-crit)', 'alerta', 'Com passo atrasado', at.length, 'precisam de ação agora', 'atrasados')}${kpi('var(--verde)', 'check', 'Concluídos', conc.length, 'todos os passos feitos', 'concluidos')}${kpi('var(--roxo)', 'book', 'Total acompanhado', C.length, 'no recorte atual', 'todos')}</div>
+    <div class="card"><div class="card-pad" style="padding-bottom:10px"><div class="card-tit" style="margin-bottom:10px"><div class="ico" style="--c:var(--c-crit)">${ic('check')}</div><div><h3>Casos em acompanhamento</h3><p>Toque num caso para marcar os passos feitos. Os prazos contam a partir da data do fato.</p></div></div>
+        <div class="pt-fil">${[['abertos', 'Em andamento'], ['atrasados', 'Atrasados'], ['concluidos', 'Concluídos'], ['todos', 'Todos']].map(([v, t]) => `<button class="${PT.filtro === v ? 'ativo' : ''}" onclick="PT.filtro='${v}';rProtocolos()">${t}</button>`).join('')}
+        <select class="campo" id="pt-modelo" style="width:auto;height:32px;font-size:12.5px"><option value="">Todos os protocolos</option>${PROT_MODELOS.map(m => `<option value="${m.id}" ${PT.modelo === m.id ? 'selected' : ''}>${m.nome}</option>`).join('')}</select></div></div>
+        <div class="pt-lista">${L.slice(0, 120).map(c => {
+            const pct = Math.round(c.feitos / c.total * 100), cor = c.concluido ? 'var(--verde)' : c.atras.length ? 'var(--c-crit)' : 'var(--prim)';
+            return `<button class="pt-it" onclick="abrirProtocolo('${esc(c.r.id)}')" style="--c:${cor}"><span class="pt-anel" style="--p:${pct}"><b>${c.feitos}/${c.total}</b></span>
+            <span class="pt-tx"><b>${esc(tipoCurto(c.r.tipo))}</b><span>${esc(c.r.esc)} · ${esc(nomeMun(c.r.mun))} · ${fmtD(c.r.dt)}</span>
+            <span class="pt-prox">${c.concluido ? `${ic('check')}Protocolo concluído` : `${c.atras.length ? ic('alerta') : ic('clock')}<b>${esc(c.prox.t)}</b> · ${fmtPrazo(c.prox.prazo)}`}</span></span>
+            <span class="pt-mod">${esc(c.m.nome)}</span></button>`; }).join('') || `<div class="vazio">${ic('check')}Nenhum caso nesta lista.</div>`}</div></div>`;
+    $('pt-modelo').onchange = e => { PT.modelo = e.target.value; rProtocolos(); };
+}
+function abrirProtocolo(id) {
+    const r = acharReg(id); if (!r) return;
+    const c = protEstado(r), pode = podeEditarProtecao();
+    fecharGaveta();
+    abrirModal({ titulo: 'Protocolo · ' + c.m.nome, sub: `${esc(tipoCurto(r.tipo))} · ${esc(r.esc)} · ${fmtDH(r.dt)}`, icone: 'check', cor: c.atras.length ? 'var(--c-crit)' : 'var(--prim)', tam: 'grd',
+        corpo: `<div class="pt-det">
+            <div class="pt-barra"><span style="width:${c.feitos / c.total * 100}%"></span></div><p class="mut peq" style="margin:6px 0 14px">${c.feitos} de ${c.total} passos feitos${c.atras.length ? ` · <b style="color:var(--c-crit)">${c.atras.length} atrasado(s)</b>` : ''}</p>
+            <ol class="pt-passos">${c.passos.map(p => `<li class="${p.feito ? 'ok' : +p.prazo < Date.now() ? 'atr' : ''}">
+                <label class="pt-chk"><input type="checkbox" data-i="${p.i}" ${p.feito ? 'checked' : ''} ${pode ? '' : 'disabled'}><span></span></label>
+                <div class="pt-ptx"><b>${esc(p.t)}</b><small>${esc(p.quem)} · ${p.h ? 'prazo ' + fmtDH(p.prazo) : 'imediato'}${p.feito ? ` · feito${p.em ? ' em ' + new Date(p.em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : ''}` : +p.prazo < Date.now() ? ' · <em>atrasado</em>' : ''}</small>
+                ${p.det ? `<p>${esc(p.det)}</p>` : ''}
+                <input class="campo pt-obs" data-o="${p.i}" placeholder="Observação (opcional)" value="${esc(p.obs)}" ${pode ? '' : 'disabled'}></div></li>`).join('')}</ol>
+            <p class="dica">${c.it ? `Última atualização por ${esc(c.it.por)} em ${new Date(c.it.em).toLocaleString('pt-BR')}.` : 'Nenhum passo registrado ainda.'} ${conectado() ? 'Fica salvo na planilha e vale para todos os usuários com acesso à escola.' : 'Modo local: fica salvo só neste navegador.'}</p></div>`,
+        pe: `<button class="btn btn-s" onclick="fecharModal();abrirOcorrencia('${esc(r.id)}')">${ic('book')}Ver ocorrência</button>${pode ? `<button class="btn btn-p" id="pt-salvar">${ic('check')}Salvar protocolo</button>` : '<button class="btn btn-s" onclick="fecharModal()">Fechar</button>'}` });
+    if (!pode) return;
+    $('pt-salvar').onclick = async () => {
+        const m = $('modal'), quem = USUARIO ? (USUARIO.nome || USUARIO.email) : 'local', passos = {};
+        c.passos.forEach(p => {
+            const f = m.querySelector(`input[data-i="${p.i}"]`).checked, o = m.querySelector(`input[data-o="${p.i}"]`).value.trim();
+            passos[p.i] = { feito: f, em: f ? (p.feito ? p.em : new Date().toISOString()) : null, por: f ? (p.feito ? p.por : quem) : null, obs: o };
+        });
+        const tudo = c.passos.every(p => passos[p.i].feito);
+        const ok = await prtSalvar('protocolo', r.id, { modelo: c.m.id, passos, status: tudo ? 'concluido' : 'aberto', manual: c.manual || !protPrecisa(r) }, r.esc, r.dre);
+        if (ok) { fecharModal(); toast(tudo ? 'Protocolo concluído' : 'Protocolo salvo', 'check'); renderAba(); }
+    };
+}
+/* bloco do protocolo dentro da ficha da ocorrência */
+const _abrirOcorrenciaV21 = abrirOcorrencia;
+abrirOcorrencia = function (id) {
+    _abrirOcorrenciaV21(id);
+    const r = acharReg(id), corpo = document.querySelector('#gaveta .gaveta-corpo'); if (!r || !corpo) return;
+    const c = protEstado(r), tem = protPrecisa(r) || c.it;
+    corpo.insertAdjacentHTML('afterbegin', `<div class="card card-pad pt-gav" style="--c:${c.concluido ? 'var(--verde)' : c.atras.length ? 'var(--c-crit)' : 'var(--prim)'}"><div class="card-tit" style="margin:0"><div class="ico">${ic('check')}</div><div><h3>Protocolo de resposta</h3><p>${tem ? `${esc(c.m.nome)} · ${c.feitos} de ${c.total} passos${c.prox ? ' · próximo: ' + esc(c.prox.t) + ' (' + fmtPrazo(c.prox.prazo) + ')' : ' · concluído'}` : 'Este registro não abre protocolo automático. Você pode abrir um se precisar.'}</p></div><div class="dir"><button class="btn btn-p btn-sm" onclick="abrirProtocolo('${esc(r.id)}')">${tem ? 'Abrir' : 'Abrir protocolo'}</button></div></div></div>`);
+};
+
+/* =====================================================================
+   5. MONITORAMENTO DE AMEAÇAS
+   ===================================================================== */
+const AMEACA_PADRAO = ['MASSACRE', 'ATAQUE A ESCOLA', 'ATAQUE NA ESCOLA', 'ATACAR A ESCOLA', 'MATAR TODOS', 'VOU MATAR', 'VAO MORRER', 'VAI MORRER', 'ATIRAR', 'ATIRADOR', 'ARMA DE FOGO', 'REVOLVER', 'PISTOLA', 'BOMBA', 'EXPLOSIVO', 'ESFAQUEAR', 'LISTA DE ALVOS', 'LISTA DE MORTE', 'DIA DO ATAQUE', 'CHACINA', 'SUZANO', 'COLUMBINE', 'AMEACA DE ATAQUE'];
+const AM = { dias: 30 };
+const ameacaTermos = () => { const c = prtGet('config', 'ameacas'); const t = c && Array.isArray(c.dados.termos) && c.dados.termos.length ? c.dados.termos : AMEACA_PADRAO; return t.map(x => chave(x)).filter(Boolean); };
+function ameacaAchar(dias) {
+    const termos = ameacaTermos(); if (!termos.length) return { regs: [], nws: [] };
+    const re = new RegExp('\\b(' + termos.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'g');
+    const regs = [];
+    REG.forEach(r => {
+        if (!r.dt || diasEntre(r.dt, A.hoje) > dias) return;
+        const txt = chave(r.resumo || '') + ' ' + chave(r.tipo); re.lastIndex = 0;
+        const ach = new Set(); let m; while ((m = re.exec(txt))) ach.add(m[1]);
+        if (ach.size) regs.push({ r, termos: [...ach] });
+    });
+    const nws = [];
+    if (typeof NWS !== 'undefined' && NWS.d && NWS.d.noticias) NWS.d.noticias.forEach(n => {
+        if (!n.data || (Date.now() - n.data) / 864e5 > dias) return;
+        const txt = chave(n.titulo + ' ' + (n.resumo || '')); re.lastIndex = 0; const ach = new Set(); let m; while ((m = re.exec(txt))) ach.add(m[1]);
+        if (ach.size) nws.push({ n, termos: [...ach] });
+    });
+    regs.sort((a, b) => b.r.dt - a.r.dt); nws.sort((a, b) => b.n.data - a.n.data);
+    return { regs, nws };
+}
+function ameacaTrecho(texto, termos) {
+    const t = String(texto || '');
+    // normaliza caractere a caractere, mantendo a posição de cada letra no texto original
+    const k = [...t].map(c => { const n = c.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase()[0] || ' '; return /[A-Z0-9]/.test(n) ? n : ' '; }).join('');
+    let pos = -1, tam = 0;
+    termos.forEach(x => { const m = new RegExp('(^|[^A-Z0-9])(' + x.replace(/ /g, ' +') + ')').exec(k); if (m) { const ini = m.index + m[1].length; if (pos < 0 || ini < pos) { pos = ini; tam = m[2].length; } } });
+    if (pos < 0) return esc(t.slice(0, 220)) + (t.length > 220 ? '…' : '');
+    const ini = Math.max(0, pos - 90), fim = Math.min(t.length, pos + tam + 120);
+    return (ini ? '…' : '') + esc(t.slice(ini, pos)) + '<mark>' + esc(t.slice(pos, pos + tam)) + '</mark>' + esc(t.slice(pos + tam, fim)) + (fim < t.length ? '…' : '');
+}
+function rAmeacas() {
+    $('acoes-ameacas').innerHTML = `<div class="seg" style="background:rgba(255,255,255,.08)">${[7, 30, 90].map(d => `<button class="${AM.dias === d ? 'ativo' : ''}" style="${AM.dias === d ? '' : 'color:#cbd5e1'}" onclick="AM.dias=${d};rAmeacas()">${d} dias</button>`).join('')}</div>`;
+    if (typeof carregarRelease === 'function' && typeof rlServidor === 'function' && rlServidor() && !(NWS.d && NWS.d.noticias) && !AM._nws) { AM._nws = true; carregarRelease().then(() => { if (ABA === 'ameacas') rAmeacas(); }).catch(() => { }); }
+    const X = ameacaAchar(AM.dias), escs = new Set(X.regs.map(x => x.r.escK)), sem7 = X.regs.filter(x => diasEntre(x.r.dt, A.hoje) <= 7).length;
+    const pode = USUARIO && (USUARIO.perfil === 'ADMIN' || USUARIO.perfil === 'INTELIGENCIA' || USUARIO.perfil === 'LOCAL');
+    const passos = PROT_MODELOS.find(m => m.id === 'ameaca').passos;
+    $('cont-ameacas').innerHTML = `
+    <div class="kpis"><div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('alerta')}Registros com termos de ameaça</div><div class="v">${fmtN(X.regs.length)}</div><div class="s">${sem7} nos últimos 7 dias</div></div>
+        <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('escola')}Escolas</div><div class="v">${fmtN(escs.size)}</div><div class="s">com pelo menos um registro</div></div>
+        <div class="kpi" style="--c:var(--marca2)"><div class="r">${ic('jornal')}Notícias</div><div class="v">${fmtN(X.nws.length)}</div><div class="s">${typeof NWS !== 'undefined' && NWS.d ? 'na imprensa, mesmo período' : 'Release indisponível'}</div></div>
+        <div class="kpi" style="--c:var(--roxo)"><div class="r">${ic('search')}Termos vigiados</div><div class="v">${ameacaTermos().length}</div><div class="s">${pode ? 'editáveis abaixo' : 'definidos pela Inteligência'}</div></div></div>
+    <div class="card"><div class="card-pad" style="padding-bottom:6px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('alerta')}</div><div><h3>Registros com sinais de ameaça</h3><p>Relatos do Livro que citam os termos vigiados, do mais recente para o mais antigo</p></div></div></div>
+        <div class="am-lista">${X.regs.slice(0, 80).map(({ r, termos }) => { const c = protEstado(r); return `<div class="am-it">
+            <div class="am-cab"><span class="selo" style="--c:${corCrit(r.crit)}">${esc(r.crit)}</span><b>${esc(tipoCurto(r.tipo))}</b><span class="mut">${esc(r.esc)} · ${esc(nomeMun(r.mun))} · ${fmtDH(r.dt)}</span></div>
+            <p class="am-tr">${ameacaTrecho(r.resumo, termos)}</p>
+            <div class="am-pe"><span class="am-ts">${termos.map(t => `<em>${esc(t.toLowerCase())}</em>`).join('')}</span>
+                <button class="btn btn-s btn-sm" onclick="abrirOcorrencia('${esc(r.id)}')">${ic('book')}Registro</button>
+                <button class="btn btn-p btn-sm" onclick="abrirProtocolo('${esc(r.id)}')">${ic('check')}${c.it || protPrecisa(r) ? `Protocolo ${c.feitos}/${c.total}` : 'Abrir protocolo'}</button></div></div>`; }).join('') || `<div class="vazio">${ic('check')}Nenhum registro com os termos vigiados nos últimos ${AM.dias} dias.</div>`}</div></div>
+    <div class="card"><div class="card-pad" style="padding-bottom:6px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--marca2)">${ic('jornal')}</div><div><h3>Na imprensa</h3><p>Notícias do Release com os mesmos termos</p></div></div></div>
+        <div class="lista">${X.nws.slice(0, 20).map(({ n }) => `<a class="item" href="${esc(n.link)}" target="_blank" rel="noopener"><span class="ic" style="--c:var(--c-crit)">${ic('jornal')}</span><span class="tx"><b>${esc(n.titulo)}</b><span>${n.data.toLocaleDateString('pt-BR')} · ${esc(n.fonte || '')}${n.mun ? ' · ' + esc(n.mun) : ''}</span></span></a>`).join('') || '<div class="vazio peq">Nenhuma notícia com esses termos no período.</div>'}</div></div>
+    <div class="grade g2 am-g2"><div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-crit)">${ic('shield')}</div><div><h3>O que fazer diante de uma ameaça</h3><p>Resumo do protocolo, baseado nas recomendações do MEC para proteção no ambiente escolar</p></div></div>
+            <ol class="am-passos">${passos.map(([t, h, q, d]) => `<li><b>${esc(t)}</b><small>${h ? 'até ' + (h < 48 ? h + ' h' : Math.round(h / 24) + ' dias') : 'imediato'} · ${esc(q)}</small>${d ? `<span>${esc(d)}</span>` : ''}</li>`).join('')}</ol></div>
+        <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('search')}</div><div><h3>Termos vigiados</h3><p>Uma expressão por linha. Acentos e maiúsculas não importam.</p></div></div>
+            <textarea class="campo" id="am-termos" rows="10" ${pode ? '' : 'disabled'} style="font-size:13px;height:auto">${esc(ameacaTermos().join('\n'))}</textarea>
+            ${pode ? `<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="btn btn-p btn-sm" id="am-salvar">${ic('check')}Salvar termos</button><button class="btn btn-s btn-sm" id="am-padrao">${ic('repeat')}Voltar ao padrão</button></div>` : ''}</div></div>`;
+    if (pode) {
+        $('am-salvar').onclick = async () => { const t = $('am-termos').value.split('\n').map(x => x.trim()).filter(Boolean); if (await prtSalvar('config', 'ameacas', { termos: t })) { toast('Termos salvos', 'check'); rAmeacas(); } };
+        $('am-padrao').onclick = async () => { if (await prtSalvar('config', 'ameacas', { termos: AMEACA_PADRAO })) rAmeacas(); };
+    }
+}
+
+/* =====================================================================
+   3. RISCO PREVISTO PARA OS PRÓXIMOS 30 DIAS
+   ===================================================================== */
+const FERIADOS = [[1, 1, 'Confraternização Universal'], [4, 21, 'Tiradentes'], [5, 1, 'Dia do Trabalho'], [9, 7, 'Independência'], [10, 12, 'Nossa Senhora Aparecida'], [11, 2, 'Finados'], [11, 15, 'Proclamação da República'], [11, 20, 'Consciência Negra'], [12, 25, 'Natal']];
+function riscoCalcular() {
+    if (RISCO_CACHE.A === A) return RISCO_CACHE.L;
+    const hoje = A.hoje, d = r => diasEntre(r.dt, hoje);
+    const recAtivas = new Map(); A.recorrencias.filter(c => c.ativa).forEach(c => recAtivas.set(c.escola.k, (recAtivas.get(c.escola.k) || 0) + 1));
+    const esc = [...A.escolas.values()];
+    const base = esc.map(e => {
+        let n30 = 0, nAnt = 0, sev90 = 0, crit30 = 0, saz = 0;
+        e.regs.forEach(r => {
+            if (!r.dt) return; const x = d(r);
+            if (x >= 0 && x <= 30) { n30++; if (r.crit === 'CRÍTICO') crit30++; }
+            else if (x > 30 && x <= 120) nAnt++;
+            if (x >= 0 && x <= 90 && ehSevero(r.tipo)) sev90++;
+            if (x >= 335 && x <= 395) saz++; // mesmo período (próximos 30 dias) no ano passado
+        });
+        return { e, n30, nAnt, sev90, crit30, saz, rec: recAtivas.get(e.k) || 0, tend: n30 / (nAnt / 3 + .5) };
+    });
+    // vizinhança: escolas a até 5 km em alta
+    base.forEach(b => {
+        b.viz = 0; if (b.e.lat == null) return;
+        base.forEach(o => { if (o !== b && o.e.lat != null && o.n30 >= 2 && o.tend > 1.2 && hav(b.e, o.e) <= 5) b.viz++; });
+    });
+    // ficha de segurança (item 4) e feriados próximos
+    const prox = []; for (let i = 0; i <= 30; i++) { const x = new Date(+hoje + i * DIA); const f = FERIADOS.find(([m, dd]) => x.getMonth() + 1 === m && x.getDate() === dd); if (f) prox.push({ data: x, nome: f[2] }); }
+    const L = base.map(b => {
+        const fic = typeof fichaEstado === 'function' ? fichaEstado(b.e.k) : null;
+        const parts = [
+            [30 * Math.min(1, b.n30 / 6), `${b.n30} registro(s) em 30 dias`],
+            [20 * Math.min(1, Math.max(0, b.tend - 1) / 2), `ritmo ${fmt1(b.tend)}× o trimestre anterior`],
+            [20 * Math.min(1, b.sev90 / 3), `${b.sev90} fato(s) sensível(is) em 90 dias`],
+            [10 * Math.min(1, b.rec / 2), `${b.rec} recorrência(s) ativa(s)`],
+            [8 * Math.min(1, b.viz / 3), `${b.viz} escola(s) vizinha(s) em alta`],
+            [7 * Math.min(1, b.saz / 4), `${b.saz} registro(s) neste período no ano passado`],
+            [fic && fic.preenchida ? 5 * (1 - fic.nota) : 0, fic && fic.preenchida ? `ficha de segurança com ${Math.round(fic.nota * 100)}% dos itens` : '']
+        ];
+        const score = Math.round(Math.min(100, parts.reduce((s, p) => s + p[0], 0) + (prox.length && b.n30 ? 3 : 0)));
+        const motivos = parts.filter(p => p[0] >= 4 && p[1]).sort((a, c) => c[0] - a[0]).map(p => p[1]);
+        return { e: b.e, score, nivel: score >= 55 ? 'alto' : score >= 30 ? 'medio' : 'baixo', motivos, n30: b.n30, tend: b.tend, sev90: b.sev90 };
+    }).sort((a, b) => b.score - a.score);
+    RISCO_CACHE.A = A; RISCO_CACHE.L = L; RISCO_CACHE.prox = prox;
+    return L;
+}
+const RISCO_CACHE = { A: null, L: [], prox: [] };
+const RISCO_COR = { alto: 'var(--c-crit)', medio: 'var(--c-alto)', baixo: 'var(--c-baixo)' };
+function riscoRota() {
+    const top = riscoCalcular().filter(x => x.nivel === 'alto' && x.e.lat != null);
+    if (!top.length) return toast('Nenhuma escola em risco alto com localização', 'info');
+    const dre = top[0].e.dre, i = origensRota().findIndex(o => o.dre === dre);
+    RT.origem = i >= 0 ? i : 0; RT.dre = ''; RT.criterio = 'manual'; RT.sel = new Set(top.filter(x => x.e.dre === dre).slice(0, 10).map(x => x.e.k));
+    irPara('rotas'); toast(`Rota com ${RT.sel.size} escola(s) em risco alto da ${nomeDre(dre)}`, 'nav');
+}
+function rRisco() {
+    $('acoes-risco').innerHTML = `<button class="btn btn-p btn-sm" onclick="riscoRota()">${ic('nav')}Montar rota de visitas</button>`;
+    const L = riscoCalcular(), alto = L.filter(x => x.nivel === 'alto'), med = L.filter(x => x.nivel === 'medio');
+    const semana = L.slice(0, 10), prox = RISCO_CACHE.prox;
+    const pontos = L.filter(x => x.nivel !== 'baixo' && x.e.lat != null).reverse().map(x => ({ lat: x.e.lat, lng: x.e.lng, r: x.nivel === 'alto' ? 7 : 4.5, cor: x.nivel === 'alto' ? '#be123c' : '#f97316', op: .85 }));
+    const item = (x, i) => `<button class="rk-it" onclick="abrirEscola('${esc(x.e.k)}')" style="--c:${RISCO_COR[x.nivel]}"><span class="rk-n">${i + 1}</span><span class="rk-sc"><b>${x.score}</b><small>risco</small></span>
+        <span class="rk-tx"><b>${esc(x.e.nome)}</b><span>${esc(nomeMun(x.e.mun))} · ${esc(nomeDre(x.e.dre))}</span><span class="rk-mot">${x.motivos.slice(0, 3).map(m => `<em>${esc(m)}</em>`).join('')}</span></span></button>`;
+    $('cont-risco').innerHTML = `
+    <div class="kpis"><div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('alerta')}Risco alto</div><div class="v">${fmtN(alto.length)}</div><div class="s">escolas com nota 55 ou mais</div></div>
+        <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('trend')}Risco médio</div><div class="v">${fmtN(med.length)}</div><div class="s">nota entre 30 e 54</div></div>
+        <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('escola')}Escolas avaliadas</div><div class="v">${fmtN(L.length)}</div><div class="s">com registro no recorte</div></div>
+        <div class="kpi" style="--c:var(--roxo)"><div class="r">${ic('clock')}Próximos 30 dias</div><div class="v">${prox.length}</div><div class="s">${prox.length ? 'feriado(s): ' + prox.map(p => p.data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })).join(', ') : 'sem feriado nacional'}</div></div></div>
+    <div class="grade rk-g"><div class="card"><div class="card-pad" style="padding-bottom:6px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('nav')}</div><div><h3>Escolas para visitar esta semana</h3><p>As 10 com maior risco previsto e os motivos de cada uma</p></div></div></div>
+            <div class="rk-lista">${semana.map(item).join('') || '<div class="vazio">Sem escolas no recorte.</div>'}</div></div>
+        <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('map')}</div><div><h3>Onde está o risco</h3><p>Escolas em risco alto (vermelho) e médio (laranja)</p></div></div>
+            <div class="vn4-mapa">${typeof mapaMT === 'function' ? mapaMT({ pontos, sedes: true, titulo: 'Risco previsto' }) : ''}</div>
+            <div class="dx-mapa-leg" style="margin-top:8px"><span><i style="background:#be123c;border-radius:50%"></i>Risco alto</span><span><i style="background:#f97316;border-radius:50%"></i>Risco médio</span><span><i style="background:#fff;border:1.6px solid #0b1a42"></i>Sede de DRE</span></div></div></div>
+    <div class="card"><div class="card-pad" style="padding-bottom:6px"><div class="card-tit" style="margin:0"><div class="ico">${ic('bar')}</div><div><h3>Todas as escolas avaliadas</h3><p>Ordenadas pela nota de risco previsto</p></div></div></div>
+        <div class="tab-wrap" style="max-height:520px"><table class="tab"><thead><tr><th>#</th><th>Escola</th><th>Risco</th><th class="dir">30 dias</th><th class="dir">Ritmo</th><th class="dir">Sensíveis 90d</th><th>Principais motivos</th></tr></thead><tbody>${L.slice(0, 200).map((x, i) => `<tr class="clic" onclick="abrirEscola('${esc(x.e.k)}')" style="--faixa:${RISCO_COR[x.nivel]}"><td class="mut num">${i + 1}</td><td class="esc-cel"><b>${esc(x.e.nome)}</b><span>${esc(nomeMun(x.e.mun))}</span></td><td><span class="medidor" style="--c:${RISCO_COR[x.nivel]}"><span class="tr"><span style="width:${x.score}%"></span></span><b>${x.score}</b></span></td><td class="dir num">${x.n30}</td><td class="dir num">${fmt1(x.tend)}×</td><td class="dir num">${x.sev90}</td><td class="peq">${esc(x.motivos.slice(0, 2).join(' · ') || '—')}</td></tr>`).join('')}</tbody></table></div></div>`;
+}
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.2 — PROTEÇÃO (parte 2)
+   ficha de segurança · acompanhamento de pessoas · intervenções ·
+   prevenção e relatório para a comunidade · ligação com o menu
+   ===================================================================== */
+
+/* =====================================================================
+   4. FICHA DE SEGURANÇA DA ESCOLA
+   ===================================================================== */
+const FICHA_ITENS = [
+    ['Acesso', 'portao', 'Portão controlado nos horários de entrada e saída'],
+    ['Acesso', 'porteiro', 'Porteiro ou vigia durante todo o turno'],
+    ['Acesso', 'visitantes', 'Identificação e registro de visitantes'],
+    ['Estrutura', 'muro', 'Muro ou cerca íntegros em todo o perímetro'],
+    ['Estrutura', 'iluminacao', 'Iluminação externa funcionando'],
+    ['Estrutura', 'cameras', 'Câmeras funcionando nas áreas comuns'],
+    ['Estrutura', 'alarme', 'Alarme ou botão de emergência'],
+    ['Pessoas', 'mediador', 'Coordenador ou mediador de conflitos designado'],
+    ['Pessoas', 'psicologo', 'Psicólogo ou assistente social atendendo a escola'],
+    ['Pessoas', 'ronda', 'Ronda escolar da Polícia Militar'],
+    ['Planos', 'emergencia', 'Plano de emergência e evacuação escrito'],
+    ['Planos', 'simulado', 'Simulado de emergência feito neste ano'],
+    ['Planos', 'protocolo', 'Equipe conhece o protocolo para ameaças'],
+    ['Planos', 'escuta', 'Canal de escuta para os estudantes']
+];
+const FICHA_VAL = { sim: 1, parcial: .5, nao: 0 };
+function fichaEstado(k) {
+    const it = prtGet('ficha', k), d = it ? it.dados : null;
+    if (!d || !d.itens) return { preenchida: false, nota: 0, faltam: FICHA_ITENS.map(i => i[1]), it: null };
+    const vals = FICHA_ITENS.map(([, id]) => d.itens[id]).filter(v => v in FICHA_VAL);
+    const nota = vals.length ? vals.reduce((s, v) => s + FICHA_VAL[v], 0) / FICHA_ITENS.length : 0;
+    const dias = d.data ? diasEntre(dataDeISO(d.data), new Date()) : 999;
+    return { preenchida: true, nota, faltam: FICHA_ITENS.filter(([, id]) => d.itens[id] !== 'sim').map(i => i[1]), it, d, velha: dias > 180, dias };
+}
+function podeFicha(e) {
+    if (!podeEditarProtecao()) return false;
+    const u = USUARIO; if (!u) return false;
+    if (u.perfil === 'ESCOLA') return chave(u.escola || '') === chave(e.nome);
+    if (u.perfil === 'DRE') return !u.dre || chave(u.dre).replace(/^DRE /, '') === String(e.dre).replace(/^DRE /, '');
+    return true;
+}
+const FS2 = { filtro: '', busca: '' };
+function rSeguranca() {
+    const esc_ = escolasOrd();
+    const fe = esc_.map(e => ({ e, f: fichaEstado(e.k) }));
+    const pre = fe.filter(x => x.f.preenchida), top = esc_.slice(0, 20), topPre = top.filter(e => fichaEstado(e.k).preenchida);
+    const media = pre.length ? pre.reduce((s, x) => s + x.f.nota, 0) / pre.length : 0;
+    // o que mais falta nas escolas mais frágeis (com ficha)
+    const falta = FICHA_ITENS.map(([g, id, t]) => ({ t, id, n: topPre.filter(e => fichaEstado(e.k).d.itens[id] !== 'sim').length })).filter(x => x.n).sort((a, b) => b.n - a.n);
+    let L = fe;
+    if (FS2.filtro === 'sem') L = L.filter(x => !x.f.preenchida);
+    if (FS2.filtro === 'fracas') L = L.filter(x => x.f.preenchida && x.f.nota < .6);
+    if (FS2.filtro === 'velhas') L = L.filter(x => x.f.preenchida && x.f.velha);
+    if (FS2.busca) { const q = chave(FS2.busca); L = L.filter(x => chave(x.e.nome).includes(q) || chave(nomeMun(x.e.mun)).includes(q)); }
+    $('acoes-seguranca').innerHTML = '';
+    $('cont-seguranca').innerHTML = `
+    <div class="kpis"><div class="kpi" style="--c:var(--prim)"><div class="r">${ic('shield')}Fichas preenchidas</div><div class="v">${fmtN(pre.length)}<small class="mut" style="font-size:14px"> / ${fmtN(esc_.length)}</small></div><div class="s">escolas com registro no recorte</div></div>
+        <div class="kpi" style="--c:var(--verde)"><div class="r">${ic('check')}Proteção média</div><div class="v">${pre.length ? Math.round(media * 100) + '%' : '—'}</div><div class="s">dos itens presentes</div></div>
+        <div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('target')}20 mais frágeis</div><div class="v">${topPre.length}<small class="mut" style="font-size:14px"> / 20</small></div><div class="s">já têm ficha preenchida</div></div>
+        <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('clock')}Desatualizadas</div><div class="v">${fmtN(pre.filter(x => x.f.velha).length)}</div><div class="s">ficha com mais de 6 meses</div></div></div>
+    <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-crit)">${ic('target')}</div><div><h3>O que falta nas escolas mais frágeis</h3><p>Entre as 20 escolas com maior índice de fragilidade que já preencheram a ficha</p></div></div>
+        ${topPre.length ? `<div class="fc-falta">${falta.slice(0, 8).map(x => `<div><span class="nm">${esc(x.t)}</span><span class="br"><i style="width:${x.n / topPre.length * 100}%"></i></span><b>${x.n} de ${topPre.length}</b></div>`).join('') || '<div class="vazio peq">Todas as fichas estão completas.</div>'}</div>` : `<div class="vazio peq">${ic('info')}Nenhuma das 20 escolas mais frágeis preencheu a ficha ainda. Comece por elas na lista abaixo.</div>`}</div>
+    <div class="card"><div class="card-pad" style="padding-bottom:10px"><div class="card-tit" style="margin-bottom:10px"><div class="ico">${ic('escola')}</div><div><h3>Fichas por escola</h3><p>Ordenadas pelo índice de fragilidade. ${podeEditarProtecao() ? 'Toque para preencher ou atualizar.' : 'Seu perfil só pode consultar.'}</p></div></div>
+        <div class="pt-fil"><div class="busca" style="flex:1;min-width:200px">${ic('search')}<input class="campo" id="fc-q" placeholder="Buscar escola ou município" value="${esc(FS2.busca)}"></div>${[['', 'Todas'], ['sem', 'Sem ficha'], ['fracas', 'Abaixo de 60%'], ['velhas', 'Desatualizadas']].map(([v, t]) => `<button class="${FS2.filtro === v ? 'ativo' : ''}" onclick="FS2.filtro='${v}';rSeguranca()">${t}</button>`).join('')}</div></div>
+        <div class="fc-lista">${L.slice(0, 120).map(({ e, f }) => `<button class="fc-it" onclick="abrirFicha('${esc(e.k)}')"><span class="fc-idx" style="--c:${corIdx(e.idx)}">${e.idx}</span>
+            <span class="fc-tx"><b>${esc(e.nome)}</b><span>${esc(nomeMun(e.mun))} · ${fmtN(e.n)} ocorrência(s)</span></span>
+            ${f.preenchida ? `<span class="fc-nota" style="--c:${f.nota >= .8 ? 'var(--verde)' : f.nota >= .6 ? 'var(--c-medio)' : 'var(--c-crit)'}"><span class="br"><i style="width:${f.nota * 100}%"></i></span><b>${Math.round(f.nota * 100)}%</b>${f.velha ? '<small>desatualizada</small>' : ''}</span>` : '<span class="fc-sem">Sem ficha</span>'}</button>`).join('') || '<div class="vazio">Nenhuma escola nesta lista.</div>'}</div></div>`;
+    let t; $('fc-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { FS2.busca = $('fc-q').value; rSeguranca(); const i = $('fc-q'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 300); };
+}
+function abrirFicha(k) {
+    const e = A.escolas.get(k); if (!e) return;
+    const f = fichaEstado(k), pode = podeFicha(e), d = f.d || { itens: {} };
+    const grupos = [...new Set(FICHA_ITENS.map(i => i[0]))];
+    fecharGaveta();
+    abrirModal({ titulo: 'Ficha de segurança', sub: esc(e.nome) + ' · ' + esc(nomeMun(e.mun)), icone: 'shield', tam: 'grd',
+        corpo: `<div class="fc-form">${grupos.map(g => `<fieldset><legend>${g}</legend>${FICHA_ITENS.filter(i => i[0] === g).map(([, id, t]) => `<div class="fc-q"><span>${esc(t)}</span><div class="fc-op" role="radiogroup" aria-label="${esc(t)}">${[['sim', 'Sim'], ['parcial', 'Em parte'], ['nao', 'Não']].map(([v, r]) => `<label class="${v}"><input type="radio" name="fc-${id}" value="${v}" ${d.itens[id] === v ? 'checked' : ''} ${pode ? '' : 'disabled'}><span>${r}</span></label>`).join('')}</div></div>`).join('')}</fieldset>`).join('')}
+            <div class="form-grade" style="margin-top:12px"><div><label class="rot" for="fc-data">Data da verificação</label><input class="campo" type="date" id="fc-data" value="${esc(d.data || dataISO(new Date()))}" ${pode ? '' : 'disabled'}></div>
+            <div><label class="rot" for="fc-resp">Responsável pelo preenchimento</label><input class="campo" id="fc-resp" value="${esc(d.resp || (USUARIO && USUARIO.nome) || '')}" ${pode ? '' : 'disabled'}></div>
+            <div class="inteiro"><label class="rot" for="fc-obs">Observações e pedidos</label><textarea class="campo" id="fc-obs" rows="3" style="height:auto" ${pode ? '' : 'disabled'}>${esc(d.obs || '')}</textarea></div></div>
+            ${f.it ? `<p class="dica">Última atualização por ${esc(f.it.por)} em ${new Date(f.it.em).toLocaleString('pt-BR')}.</p>` : ''}</div>`,
+        pe: pode ? `<button class="btn btn-s" data-fechar>Cancelar</button><button class="btn btn-p" id="fc-salvar">${ic('check')}Salvar ficha</button>` : '<button class="btn btn-s" data-fechar>Fechar</button>' });
+    if (!pode) return;
+    $('fc-salvar').onclick = async () => {
+        const itens = {}; FICHA_ITENS.forEach(([, id]) => { const x = $('modal').querySelector(`input[name="fc-${id}"]:checked`); if (x) itens[id] = x.value; });
+        if (Object.keys(itens).length < FICHA_ITENS.length) return toast(`Responda os ${FICHA_ITENS.length} itens (faltam ${FICHA_ITENS.length - Object.keys(itens).length})`, 'alerta');
+        if (await prtSalvar('ficha', k, { itens, data: $('fc-data').value, resp: $('fc-resp').value.trim(), obs: $('fc-obs').value.trim(), escola: e.nome }, e.nome, e.dre)) { fecharModal(); toast('Ficha salva', 'check'); RISCO_CACHE.A = null; renderAba(); }
+    };
+}
+
+/* =====================================================================
+   6. ACOMPANHAMENTO DE VÍTIMAS E REINCIDENTES
+   ===================================================================== */
+const ACP_ENC = [['conselho', 'Conselho Tutelar'], ['familia', 'Família ou responsável'], ['caps', 'CAPS / CAPSi / saúde'], ['psico', 'Psicólogo ou assistente social'], ['social', 'Assistência social (CRAS/CREAS)'], ['mediacao', 'Mediação ou círculo restaurativo'], ['policia', 'Polícia / delegacia']];
+const ACP = { filtro: 'sem', cat: '', busca: '' };
+function acpCandidatos() {
+    if (typeof montarGrafo === 'function' && (!GRAFO || GRAFO._A !== A)) { VN.min = 1; VN.lig = 'todas'; GRAFO = montarGrafo(); GRAFO._A = A; }
+    const m = new Map();
+    const add = (p, cat, det) => { if (!p) return; let o = m.get(p.k); if (!o) { o = { k: p.k, nome: p.nome, cats: [], det: [], regs: p.regs }; m.set(p.k, o); } if (!o.cats.includes(cat)) { o.cats.push(cat); o.det.push(det); } };
+    (GRAFO ? GRAFO.imas : []).forEach(n => add(A.pessoas.get(n.k) || n, 'vitima', `vítima de ${n.autores} autores`));
+    (A.reincidentes || []).slice(0, 300).forEach(p => add(p, 'reincidente', `${p.agr} registros como autor`));
+    REG.forEach(r => { if (/SUICID|AUTOAGRESS|AUTOMUTIL|AUTOLES|AUTOPROVOC/.test(chave(r.tipo))) r.vit.concat(r.agr).forEach(n => add(A.pessoas.get(chave(n)), 'saude', 'registro de autoagressão ou ideação')); });
+    return [...m.values()].map(o => {
+        const regs = [...(o.regs || [])].filter(r => r.dt).sort((a, b) => b.dt - a.dt);
+        const it = prtGet('pessoa', o.k), d = it && it.dados;
+        const prox = d && d.proxima ? dataDeISO(d.proxima) : null;
+        const sit = !d ? 'sem' : d.situacao === 'concluido' ? 'concluido' : prox && prox < new Date() ? 'vencido' : 'acompanhamento';
+        return Object.assign(o, { regsL: regs, ult: regs[0] && regs[0].dt, escolas: new Set(regs.map(r => r.escK)).size, it, d, prox, sit, prio: (o.cats.includes('saude') ? 3 : 0) + (o.cats.includes('vitima') ? 2 : 0) + (o.cats.includes('reincidente') ? 1 : 0) });
+    }).sort((a, b) => b.prio - a.prio || (b.ult || 0) - (a.ult || 0));
+}
+const ACP_CAT = { saude: ['Saúde mental', 'var(--c-crit)'], vitima: ['Vítima de vários autores', 'var(--prim)'], reincidente: ['Autor reincidente', 'var(--c-alto)'] };
+function rAcompanhamento() {
+    $('acoes-acompanhamento').innerHTML = '';
+    if (!podeVerPessoas()) { $('cont-acompanhamento').innerHTML = `<div class="card"><div class="vazio">${ic('shield')}O acompanhamento mostra nomes de crianças e adolescentes e está liberado só para os perfis Administrador e Inteligência.</div></div>`; return; }
+    const C = acpCandidatos(), n = s => C.filter(x => x.sit === s).length;
+    let L = C.filter(x => ACP.filtro === 'todos' || x.sit === ACP.filtro);
+    if (ACP.cat) L = L.filter(x => x.cats.includes(ACP.cat));
+    if (ACP.busca) { const q = chave(ACP.busca); L = L.filter(x => x.k.includes(q)); }
+    const kpi = (c, i, t, v, s, f) => `<button class="kpi" style="--c:${c}" onclick="ACP.filtro='${f}';rAcompanhamento()"><div class="r">${ic(i)}${t}</div><div class="v">${fmtN(v)}</div><div class="s">${s}</div></button>`;
+    $('cont-acompanhamento').innerHTML = `<div class="aviso info">${ic('shield')}<div>Uso restrito à proteção de crianças e adolescentes (ECA e LGPD). Registre só o necessário para garantir o acompanhamento; não anote diagnósticos.</div></div>
+    <div class="kpis">${kpi('var(--c-crit)', 'alerta', 'Sem plano', n('sem'), 'pessoas prioritárias sem acompanhamento', 'sem')}${kpi('var(--c-alto)', 'clock', 'Reavaliação vencida', n('vencido'), 'data de retorno já passou', 'vencido')}${kpi('var(--prim)', 'users', 'Em acompanhamento', n('acompanhamento'), 'com plano e data em dia', 'acompanhamento')}${kpi('var(--verde)', 'check', 'Concluídos', n('concluido'), 'acompanhamento encerrado', 'concluido')}</div>
+    <div class="card"><div class="card-pad" style="padding-bottom:10px"><div class="card-tit" style="margin-bottom:10px"><div class="ico" style="--c:var(--roxo)">${ic('users')}</div><div><h3>Pessoas prioritárias</h3><p>Autoagressão ou ideação suicida primeiro, depois vítimas de vários autores e autores reincidentes</p></div></div>
+        <div class="pt-fil"><div class="busca" style="flex:1;min-width:200px">${ic('search')}<input class="campo" id="acp-q" placeholder="Buscar pelo nome" value="${esc(ACP.busca)}"></div>
+        ${[['sem', 'Sem plano'], ['vencido', 'Vencidos'], ['acompanhamento', 'Em acompanhamento'], ['concluido', 'Concluídos'], ['todos', 'Todos']].map(([v, t]) => `<button class="${ACP.filtro === v ? 'ativo' : ''}" onclick="ACP.filtro='${v}';rAcompanhamento()">${t}</button>`).join('')}
+        <select class="campo" id="acp-cat" style="width:auto;height:32px;font-size:12.5px"><option value="">Todas as categorias</option>${Object.entries(ACP_CAT).map(([k, [t]]) => `<option value="${k}" ${ACP.cat === k ? 'selected' : ''}>${t}</option>`).join('')}</select></div></div>
+        <div class="acp-lista">${L.slice(0, 150).map(x => `<button class="acp-it" onclick="abrirPlano('${esc(x.k)}')"><span class="acp-av" style="--c:${ACP_CAT[x.cats[0]][1]}">${esc(x.nome.trim().split(/\s+/).map(p => p[0]).slice(0, 2).join(''))}</span>
+            <span class="acp-tx"><b>${esc(x.nome)}</b><span>${x.det.join(' · ')} · ${x.escolas} escola(s)${x.ult ? ' · último registro ' + fmtD(x.ult) : ''}</span>
+            <span class="vn4-tags">${x.cats.map(c => `<em style="background:color-mix(in srgb, ${ACP_CAT[c][1]} 13%, transparent);color:${ACP_CAT[c][1]}">${ACP_CAT[c][0]}</em>`).join('')}</span></span>
+            <span class="acp-st ${x.sit}">${{ sem: 'Sem plano', vencido: 'Reavaliar', acompanhamento: 'Retorno ' + (x.prox ? fmtD(x.prox).slice(0, 5) : ''), concluido: 'Concluído' }[x.sit]}</span></button>`).join('') || '<div class="vazio">Ninguém nesta lista.</div>'}</div></div>`;
+    $('acp-cat').onchange = e => { ACP.cat = e.target.value; rAcompanhamento(); };
+    let t; $('acp-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { ACP.busca = $('acp-q').value; rAcompanhamento(); const i = $('acp-q'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 300); };
+}
+function abrirPlano(k) {
+    const x = acpCandidatos().find(o => o.k === k); if (!x) return;
+    const d = x.d || { enc: {}, hist: [] }, pode = podeEditarProtecao();
+    const ult = x.regsL[0];
+    abrirModal({ titulo: 'Plano de acompanhamento', sub: esc(x.nome) + ' · ' + x.det.join(' · '), icone: 'users', cor: ACP_CAT[x.cats[0]][1], tam: 'grd',
+        corpo: `<div class="fc-form">
+            <fieldset><legend>Encaminhamentos feitos</legend><div class="acp-enc">${ACP_ENC.map(([id, t]) => `<label><input type="checkbox" id="acp-e-${id}" ${d.enc && d.enc[id] ? 'checked' : ''} ${pode ? '' : 'disabled'}> ${t}</label>`).join('')}</div></fieldset>
+            <div class="form-grade" style="margin-top:12px">
+                <div><label class="rot" for="acp-resp">Responsável pelo acompanhamento</label><input class="campo" id="acp-resp" value="${esc(d.resp || '')}" placeholder="Nome e função" ${pode ? '' : 'disabled'}></div>
+                <div><label class="rot" for="acp-prox">Próxima reavaliação</label><input class="campo" type="date" id="acp-prox" value="${esc(d.proxima || dataISO(Date.now() + 15 * DIA))}" ${pode ? '' : 'disabled'}></div>
+                <div><label class="rot" for="acp-sit">Situação</label><select class="campo" id="acp-sit" ${pode ? '' : 'disabled'}><option value="acompanhamento">Em acompanhamento</option><option value="concluido" ${d.situacao === 'concluido' ? 'selected' : ''}>Concluído</option></select></div>
+                <div><label class="rot" for="acp-esc">Escola de referência</label><input class="campo" id="acp-esc" value="${esc(d.escola || (ult ? ult.esc : ''))}" ${pode ? '' : 'disabled'}></div>
+                <div class="inteiro"><label class="rot" for="acp-nota">Registro desta etapa</label><textarea class="campo" id="acp-nota" rows="3" style="height:auto" placeholder="O que foi feito e o que falta, sem diagnósticos" ${pode ? '' : 'disabled'}></textarea></div></div>
+            ${d.hist && d.hist.length ? `<fieldset style="margin-top:12px"><legend>Histórico</legend><ol class="acp-hist">${d.hist.slice().reverse().map(h => `<li><small>${new Date(h.em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' })} · ${esc(h.por)}</small>${esc(h.txt)}</li>`).join('')}</ol></fieldset>` : ''}
+            <fieldset style="margin-top:12px"><legend>Registros recentes</legend><div class="lista">${x.regsL.slice(0, 5).map(r => `<button class="item" onclick="abrirOcorrencia('${esc(r.id)}')"><span class="ic" style="--c:${corCrit(r.crit)}">${ic('book')}</span><span class="tx"><b>${esc(tipoCurto(r.tipo))}</b><span>${fmtD(r.dt)} · ${esc(r.esc)}</span></span></button>`).join('')}</div></fieldset></div>`,
+        pe: pode ? `<button class="btn btn-s" data-fechar>Cancelar</button><button class="btn btn-p" id="acp-salvar">${ic('check')}Salvar plano</button>` : '<button class="btn btn-s" data-fechar>Fechar</button>' });
+    if (!pode) return;
+    $('acp-salvar').onclick = async () => {
+        const enc = {}; ACP_ENC.forEach(([id]) => { if ($('acp-e-' + id).checked) enc[id] = true; });
+        const nota = $('acp-nota').value.trim(), hist = (d.hist || []).slice();
+        if (nota) hist.push({ em: new Date().toISOString(), por: USUARIO ? (USUARIO.nome || USUARIO.email) : 'local', txt: nota.slice(0, 600) });
+        const dados = { nome: x.nome, cats: x.cats, enc, resp: $('acp-resp').value.trim(), proxima: $('acp-prox').value, situacao: $('acp-sit').value, escola: $('acp-esc').value.trim(), hist: hist.slice(-30) };
+        if (await prtSalvar('pessoa', k, dados, dados.escola, ult ? ult.dre : '')) { fecharModal(); toast('Plano salvo', 'check'); renderAba(); }
+    };
+}
+
+/* =====================================================================
+   8. INTERVENÇÕES E O QUE FUNCIONA
+   ===================================================================== */
+const ITV_TIPOS = ['Ronda escolar da PM', 'Mediação de conflitos', 'Círculos restaurativos', 'Palestra ou roda de conversa', 'Reforço do controle de acesso', 'Instalação de câmeras', 'Reforma ou iluminação', 'Psicólogo ou assistente social', 'Troca ou reforço da gestão', 'Projeto pedagógico', 'Ação com as famílias', 'Outra'];
+const ITV = { filtro: '' };
+function itvEfeito(it) {
+    const d = it.dados, ini = dataDeISO(d.data); if (!ini) return null;
+    const regs = (A.escolas.get(d.escK) || { regs: [] }).regs.filter(r => r.dt);
+    const ate = Math.min(90, diasEntre(ini, A.hoje));
+    const antes = regs.filter(r => r.dt < ini && diasEntre(r.dt, ini) <= 90), depois = regs.filter(r => r.dt >= ini && diasEntre(ini, r.dt) <= 90);
+    if (ate < 14) return { aguardando: true, dias: Math.max(0, ate), antes: antes.length };
+    const ta = antes.length / 90 * 30, td = depois.length / ate * 30;
+    const ca = antes.filter(r => r.crit === 'CRÍTICO' || r.crit === 'ALTO').length / 90 * 30, cd = depois.filter(r => r.crit === 'CRÍTICO' || r.crit === 'ALTO').length / ate * 30;
+    return { aguardando: false, dias: ate, antes: antes.length, depois: depois.length, ta, td, varia: ta ? (td - ta) / ta : (td ? 1 : 0), variaGrave: ca ? (cd - ca) / ca : (cd ? 1 : 0) };
+}
+const fmtVarP = v => (v > 0 ? '+' : '') + Math.round(v * 100) + '%';
+function rIntervencoes() {
+    const pode = podeEditarProtecao();
+    $('acoes-intervencoes').innerHTML = pode ? `<button class="btn btn-p btn-sm" onclick="formIntervencao()">${ic('plus')}Registrar intervenção</button>` : '';
+    const L = prtLista('intervencao').filter(i => i.dados && A.escolas.has(i.dados.escK) && (!ITV.filtro || i.dados.tipo === ITV.filtro)).map(i => ({ i, ef: itvEfeito(i), e: A.escolas.get(i.dados.escK) })).sort((a, b) => String(b.i.dados.data).localeCompare(String(a.i.dados.data)));
+    const todas = prtLista('intervencao').filter(i => i.dados && A.escolas.has(i.dados.escK)).map(i => ({ i, ef: itvEfeito(i) }));
+    const aval = todas.filter(x => x.ef && !x.ef.aguardando);
+    const porTipo = ITV_TIPOS.map(t => { const xs = aval.filter(x => x.i.dados.tipo === t); return { t, n: xs.length, total: todas.filter(x => x.i.dados.tipo === t).length, med: xs.length ? xs.reduce((s, x) => s + x.ef.varia, 0) / xs.length : null, grave: xs.length ? xs.reduce((s, x) => s + x.ef.variaGrave, 0) / xs.length : null, queda: xs.filter(x => x.ef.varia < 0).length }; }).filter(x => x.total).sort((a, b) => (a.med == null) - (b.med == null) || a.med - b.med);
+    const media = aval.length ? aval.reduce((s, x) => s + x.ef.varia, 0) / aval.length : null;
+    const cor = v => v == null ? 'var(--muted)' : v < -0.1 ? 'var(--verde)' : v > 0.1 ? 'var(--c-crit)' : 'var(--c-medio)';
+    $('cont-intervencoes').innerHTML = `
+    <div class="kpis"><div class="kpi" style="--c:var(--prim)"><div class="r">${ic('zap')}Intervenções</div><div class="v">${fmtN(todas.length)}</div><div class="s">registradas no recorte</div></div>
+        <div class="kpi" style="--c:var(--roxo)"><div class="r">${ic('escola')}Escolas atendidas</div><div class="v">${fmtN(new Set(todas.map(x => x.i.dados.escK)).size)}</div><div class="s">${fmtN(aval.length)} já com 14 dias ou mais para avaliar</div></div>
+        <div class="kpi" style="--c:${cor(media)}"><div class="r">${ic('trend')}Efeito médio</div><div class="v">${media == null ? '—' : fmtVarP(media)}</div><div class="s">registros por mês, 90 dias antes × depois</div></div>
+        <div class="kpi" style="--c:var(--verde)"><div class="r">${ic('check')}Melhor resultado</div><div class="v" style="font-size:18px;line-height:1.25">${porTipo[0] && porTipo[0].med != null ? esc(porTipo[0].t) : '—'}</div><div class="s">${porTipo[0] && porTipo[0].med != null ? fmtVarP(porTipo[0].med) + ' em ' + porTipo[0].n + ' escola(s)' : 'aguardando dados'}</div></div></div>
+    <div class="card"><div class="card-pad" style="padding-bottom:6px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--verde)">${ic('trend')}</div><div><h3>O que funciona</h3><p>Variação média de registros por mês na escola, comparando os 90 dias antes e depois de cada tipo de intervenção</p></div></div></div>
+        <div class="tab-wrap"><table class="tab"><thead><tr><th>Tipo de intervenção</th><th class="dir">Registradas</th><th class="dir">Avaliadas</th><th class="dir">Registros</th><th class="dir">Crítico + alto</th><th class="dir">Escolas com queda</th></tr></thead><tbody>${porTipo.map(x => `<tr class="clic" onclick="ITV.filtro=${JSON.stringify(x.t).replace(/"/g, '&quot;')};rIntervencoes()"><td><b>${esc(x.t)}</b></td><td class="dir num">${x.total}</td><td class="dir num">${x.n}</td><td class="dir num" style="color:${cor(x.med)};font-weight:800">${x.med == null ? '—' : fmtVarP(x.med)}</td><td class="dir num" style="color:${cor(x.grave)};font-weight:700">${x.grave == null ? '—' : fmtVarP(x.grave)}</td><td class="dir num">${x.n ? x.queda + ' de ' + x.n : '—'}</td></tr>`).join('') || `<tr><td colspan="6"><div class="vazio">${ic('zap')}Nenhuma intervenção registrada ainda.${pode ? ' Use "Registrar intervenção" no topo da página.' : ''}</div></td></tr>`}</tbody></table></div>
+        <p class="dica" style="padding:0 18px 14px">Indício, não prova: outras mudanças no período também afetam os números. Quanto mais intervenções registradas, mais confiável fica a comparação.</p></div>
+    <div class="card"><div class="card-pad" style="padding-bottom:6px"><div class="card-tit" style="margin:0"><div class="ico">${ic('clock')}</div><div><h3>Intervenções registradas</h3><p>${ITV.filtro ? `Filtrando: ${esc(ITV.filtro)} · <a href="#" onclick="ITV.filtro='';rIntervencoes();return false">ver todas</a>` : 'Da mais recente para a mais antiga'}</p></div></div></div>
+        <div class="lista">${L.slice(0, 100).map(({ i, ef, e }) => `<div class="item itv-it"><span class="ic" style="--c:${ef && !ef.aguardando ? cor(ef.varia) : 'var(--muted)'}">${ic('zap')}</span><span class="tx"><b>${esc(i.dados.tipo)} · ${esc(e.nome)}</b><span>${fmtD(dataDeISO(i.dados.data))} · ${esc(nomeMun(e.mun))}${i.dados.desc ? ' · ' + esc(i.dados.desc) : ''}</span></span>
+            <span class="itv-ef">${!ef ? '' : ef.aguardando ? `<em>aguardando (${ef.dias} de 14 dias)</em>` : `<b style="color:${cor(ef.varia)}">${fmtVarP(ef.varia)}</b><small>${ef.antes} antes · ${ef.depois} depois</small>`}</span>
+            ${pode ? `<button class="ic-btn" title="Excluir" aria-label="Excluir intervenção" onclick="excluirIntervencao('${esc(i.id)}')">${ic('lixo')}</button>` : ''}</div>`).join('') || '<div class="vazio peq">Nenhuma intervenção nesta lista.</div>'}</div></div>`;
+}
+function formIntervencao(escK) {
+    const escs = escolasOrd();
+    abrirModal({ titulo: 'Registrar intervenção', sub: 'O que foi feito na escola. O efeito aparece depois de 14 dias.', icone: 'zap', tam: 'md',
+        corpo: `<div class="form-grade">
+            <div class="inteiro"><label class="rot" for="itv-esc">Escola</label><input class="campo" id="itv-esc" list="itv-escs" placeholder="Digite o nome da escola" value="${escK && A.escolas.get(escK) ? esc(A.escolas.get(escK).nome + ' — ' + nomeMun(A.escolas.get(escK).mun)) : ''}"><datalist id="itv-escs">${escs.map(e => `<option value="${esc(e.nome + ' — ' + nomeMun(e.mun))}">`).join('')}</datalist></div>
+            <div><label class="rot" for="itv-tipo">Tipo</label><select class="campo" id="itv-tipo">${ITV_TIPOS.map(t => `<option>${t}</option>`).join('')}</select></div>
+            <div><label class="rot" for="itv-data">Data de início</label><input class="campo" type="date" id="itv-data" value="${dataISO(new Date())}"></div>
+            <div class="inteiro"><label class="rot" for="itv-desc">Descrição curta</label><input class="campo" id="itv-desc" maxlength="200" placeholder="Ex.: ronda diária na entrada e na saída por 60 dias"></div>
+            <div class="inteiro"><label class="rot" for="itv-resp">Responsável</label><input class="campo" id="itv-resp" value="${esc(USUARIO && USUARIO.nome || '')}"></div></div>`,
+        pe: `<button class="btn btn-s" data-fechar>Cancelar</button><button class="btn btn-p" id="itv-salvar">${ic('check')}Registrar</button>` });
+    $('itv-salvar').onclick = async () => {
+        const v = $('itv-esc').value.trim(), e = escs.find(x => (x.nome + ' — ' + nomeMun(x.mun)) === v) || escs.find(x => chave(x.nome) === chave(v));
+        if (!e) return toast('Escolha a escola na lista', 'alerta');
+        if (!$('itv-data').value) return toast('Informe a data', 'alerta');
+        const id = 'I' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+        if (await prtSalvar('intervencao', id, { escK: e.k, escola: e.nome, tipo: $('itv-tipo').value, data: $('itv-data').value, desc: $('itv-desc').value.trim(), resp: $('itv-resp').value.trim() }, e.nome, e.dre)) { fecharModal(); toast('Intervenção registrada', 'check'); renderAba(); }
+    };
+}
+async function excluirIntervencao(id) {
+    const b = document.querySelector(`[onclick="excluirIntervencao('${id}')"]`);
+    if (b && !b.dataset.conf) { b.dataset.conf = 1; b.classList.add('conf'); b.title = 'Toque de novo para excluir'; toast('Toque de novo no ícone para confirmar a exclusão', 'info'); setTimeout(() => { if (b) { delete b.dataset.conf; b.classList.remove('conf'); } }, 4000); return; }
+    if (await prtExcluir('intervencao', id)) { toast('Intervenção excluída'); renderAba(); }
+}
+
+/* =====================================================================
+   10. PREVENÇÃO E RELATÓRIO PARA A COMUNIDADE
+   ===================================================================== */
+const PREV = [
+    { id: 'bullying', t: 'Bullying e discriminação', re: /BULLY|INTIMIDA|DISCRIMINA|PRECONCEITO|RACIS|HOMOFOB/, cor: '#7c3aed',
+        acoes: ['Instituir o programa de combate à intimidação sistemática, com regras de convivência construídas com a turma', 'Rodas de conversa e protagonismo estudantil (grêmio, estudantes mediadores)', 'Formação dos professores para identificar sinais e agir na hora', 'Canal de escuta para que a vítima possa relatar sem exposição'],
+        refs: ['Lei 13.185/2015 · Programa de Combate à Intimidação Sistemática', 'Lei 14.811/2024 · bullying e cyberbullying no Código Penal', '7 de abril · Dia Nacional de Combate ao Bullying e à Violência na Escola (Lei 13.277/2016)'] },
+    { id: 'digital', t: 'Celular e ambiente digital', re: /CELULAR|CYBER|INTERNET|REDES SOC|VIRTUAL|IMAGEM|FOTO|VIDEO/, cor: '#0ea5e9',
+        acoes: ['Aplicar as regras de uso do celular em sala e no intervalo, combinadas com as famílias', 'Educação digital: privacidade, exposição de imagens e discurso de ódio', 'Protocolo para casos de exposição de imagens íntimas ou montagens', 'Orientar as famílias sobre acompanhamento das redes'],
+        refs: ['Lei 15.100/2025 · uso de aparelhos eletrônicos nas escolas', 'Lei 14.811/2024 · cyberbullying'] },
+    { id: 'saude', t: 'Saúde mental', re: /SUICID|AUTOAGRESS|AUTOMUTIL|AUTOLES|ANSIEDADE|DEPRESS|SAUDE MENTAL|CRISE/, cor: '#dc2626',
+        acoes: ['Atendimento do psicólogo ou assistente social da rede para a escola', 'Formação da equipe para acolher sem julgar e encaminhar', 'Fluxo combinado com o CAPS/CAPSi do município', 'Ações de cuidado no Setembro Amarelo e ao longo do ano, sem detalhar métodos'],
+        refs: ['Lei 13.819/2019 · Política Nacional de Prevenção da Automutilação e do Suicídio', 'Lei 13.935/2019 · psicólogos e assistentes sociais na educação básica', 'CVV 188 · gratuito, 24 horas'] },
+    { id: 'sexual', t: 'Violência sexual e contra a mulher', re: /SEXUAL|ESTUPRO|ASSEDIO|IMPORTUNA|MULHER|MISOGIN|FEMINIC|DOMESTICA/, cor: '#be123c',
+        acoes: ['Educação para o reconhecimento do abuso adequada a cada idade', 'Equipe preparada para a escuta especializada e para comunicar o Conselho Tutelar', 'Semana Escolar de Combate à Violência contra a Mulher (março)', 'Campanha de 18 de maio com a rede de proteção do município'],
+        refs: ['Lei 13.431/2017 · escuta especializada', 'Lei 14.164/2021 · prevenção da violência contra a mulher nos currículos', '18 de maio · Dia Nacional de Combate ao Abuso e à Exploração Sexual (Lei 9.970/2000)', 'Disque 100 e Ligue 180'] },
+    { id: 'drogas', t: 'Álcool, cigarro e outras drogas', re: /DROGA|ENTORPEC|SUBSTANC|ALCOOL|TABACO|CIGARRO|VAPE|NARGUIL/, cor: '#16a34a',
+        acoes: ['PROERD da Polícia Militar nas turmas indicadas', 'Projetos de vida e atividades no contraturno', 'Fluxo com o CAPS AD para casos de uso', 'Conversa com as famílias sobre sinais de uso'],
+        refs: ['PROERD · Programa Educacional de Resistência às Drogas (PM)'] },
+    { id: 'agressao', t: 'Agressões e brigas', re: /AGRESS|BRIGA|LESAO|VIAS DE FATO|DESACATO|AMEACA/, cor: '#ea580c',
+        acoes: ['Mediação de conflitos e círculos restaurativos', 'Acordo de convivência revisado com a turma', 'Presença de adultos nos pontos e horários críticos (intervalo, saída)', 'Acompanhamento dos estudantes envolvidos repetidamente'],
+        refs: ['Justiça restaurativa na escola · círculos de construção de paz'] },
+    { id: 'armas', t: 'Armas e ameaças de ataque', re: /ARMA|FACA|SIMULACRO|ATAQUE|MASSACRE|EXPLOSIV|BOMBA|INVASAO/, cor: '#991b1b',
+        acoes: ['Controle de acesso e revisão da ficha de segurança', 'Ronda escolar da PM nos horários de entrada e saída', 'Equipe treinada no protocolo de ameaças e no simulado de emergência', 'Orientação a estudantes e famílias: avisar a escola, não compartilhar ameaças'],
+        refs: ['MEC · Recomendações para proteção e segurança no ambiente escolar (2023)'] },
+    { id: 'patrimonio', t: 'Dano ao patrimônio', re: /DANO|PATRIMONIO|VANDAL|PICHA|FURTO|ROUBO/, cor: '#64748b',
+        acoes: ['Zeladoria participativa com o grêmio', 'Iluminação e fechamento dos acessos fora do horário', 'Reparos rápidos para evitar novos danos', 'Projeto de arte e ocupação dos espaços'],
+        refs: [] },
+    { id: 'evasao', t: 'Evasão e saída sem autorização', re: /EVASAO|PERIMETRO|FUGA|FALTA|ABANDONO/, cor: '#0d9488',
+        acoes: ['Busca ativa dos estudantes que faltam com frequência', 'Controle de saída e comunicação imediata à família', 'Projeto de acolhimento e vínculo com a escola'],
+        refs: ['Busca Ativa Escolar (UNICEF, Undime e Congemas)'] }
+];
+const PV = { escK: '' };
+function prevPlano(e) {
+    const hoje = A.hoje, regs = e.regs.filter(r => r.dt && diasEntre(r.dt, hoje) <= 180);
+    const tot = regs.length || 1;
+    return PREV.map(p => { const n = regs.filter(r => p.re.test(chave(r.tipo))).length; return Object.assign({}, p, { n, pct: n / tot }); }).filter(p => p.n).sort((a, b) => b.n - a.n);
+}
+function rPrevencao() {
+    const escs = escolasOrd();
+    if (!PV.escK || !A.escolas.has(PV.escK)) { const u = USUARIO; const minha = u && u.perfil === 'ESCOLA' ? escs.find(e => chave(e.nome) === chave(u.escola || '')) : null; PV.escK = (minha || escs[0] || {}).k || ''; }
+    const e = A.escolas.get(PV.escK);
+    $('acoes-prevencao').innerHTML = e ? `<button class="btn btn-p btn-sm" onclick="relatorioComunidade()">${ic('doc')}Relatório para a comunidade</button>` : '';
+    if (!e) { $('cont-prevencao').innerHTML = '<div class="card"><div class="vazio">Nenhuma escola no recorte.</div></div>'; return; }
+    const plano = prevPlano(e), f = fichaEstado(e.k), itv = prtLista('intervencao').filter(i => i.dados && i.dados.escK === e.k);
+    const mes = new Date().getMonth() + 1;
+    const cal = [[3, 'Semana Escolar de Combate à Violência contra a Mulher', 'sexual'], [4, '7/4 · Dia Nacional de Combate ao Bullying e à Violência na Escola', 'bullying'], [5, '18/5 · Combate ao Abuso e à Exploração Sexual de Crianças e Adolescentes', 'sexual'], [6, '26/6 · Dia Internacional contra o Abuso e o Tráfico de Drogas', 'drogas'], [9, 'Setembro Amarelo · valorização da vida', 'saude']];
+    $('cont-prevencao').innerHTML = `
+    <div class="card card-pad pv-esc"><label class="rot" for="pv-esc">Escola</label><input class="campo" id="pv-esc" list="pv-escs" value="${esc(e.nome + ' — ' + nomeMun(e.mun))}" autocomplete="off"><datalist id="pv-escs">${escs.map(x => `<option value="${esc(x.nome + ' — ' + nomeMun(x.mun))}">`).join('')}</datalist>
+        <div class="pv-res"><span>${seloIdx(e.idx)}</span><span><b>${fmtN(e.regs.filter(r => r.dt && diasEntre(r.dt, A.hoje) <= 180).length)}</b> registros em 6 meses</span><span>Ficha de segurança: <b>${f.preenchida ? Math.round(f.nota * 100) + '%' : 'não preenchida'}</b></span><span><b>${itv.length}</b> intervenção(ões) registrada(s)</span></div></div>
+    <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--verde)">${ic('book')}</div><div><h3>Plano de prevenção sugerido</h3><p>Ações para os temas que mais aparecem nos registros da escola nos últimos 6 meses</p></div></div>
+        <div class="pv-temas">${plano.slice(0, 5).map((p, i) => `<article class="pv-tema" style="--c:${p.cor}"><header><span class="pv-n">${i + 1}</span><div><b>${esc(p.t)}</b><small>${p.n} registro(s) · ${Math.round(p.pct * 100)}% da escola</small></div></header>
+            <ul>${p.acoes.map(a => `<li>${esc(a)}</li>`).join('')}</ul>${p.refs.length ? `<div class="pv-refs">${p.refs.map(r => `<span>${esc(r)}</span>`).join('')}</div>` : ''}</article>`).join('') || '<div class="vazio peq">Sem registros nos últimos 6 meses para sugerir temas.</div>'}</div></div>
+    <div class="grade g2"><div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('clock')}</div><div><h3>Calendário de campanhas</h3><p>Datas para trabalhar os temas da escola com a comunidade</p></div></div>
+            <ol class="pv-cal">${cal.map(([m, t, id]) => `<li class="${m === mes ? 'agora' : ''}${plano.some(p => p.id === id) ? ' rel' : ''}"><span>${['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'][m - 1]}</span><b>${esc(t)}</b>${plano.some(p => p.id === id) ? '<em>tema da escola</em>' : ''}</li>`).join('')}</ol></div>
+        <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-crit)">${ic('alerta')}</div><div><h3>Canais de ajuda</h3><p>Para divulgar na escola e no relatório para a comunidade</p></div></div>
+            <div class="pv-canais">${[['190', 'Polícia Militar'], ['192', 'SAMU'], ['100', 'Disque Direitos Humanos'], ['180', 'Central de Atendimento à Mulher'], ['188', 'CVV · apoio emocional']].map(([n, t]) => `<div><b>${n}</b><span>${t}</span></div>`).join('')}<div class="l"><b>Conselho Tutelar</b><span>Telefone do município na Rede de proteção</span></div></div></div></div>`;
+    const inp = $('pv-esc'); inp.onchange = () => { const x = escs.find(o => (o.nome + ' — ' + nomeMun(o.mun)) === inp.value); if (x) { PV.escK = x.k; rPrevencao(); } };
+}
+function relatorioComunidade() {
+    const e = A.escolas.get(PV.escK); if (!e) return;
+    const hoje = A.hoje, d = r => diasEntre(r.dt, hoje);
+    const tri = e.regs.filter(r => r.dt && d(r) >= 0 && d(r) < 90), ant = e.regs.filter(r => r.dt && d(r) >= 90 && d(r) < 180);
+    const conta = arr => { const m = new Map(); arr.forEach(r => m.set(tipoCurto(r.tipo), (m.get(tipoCurto(r.tipo)) || 0) + 1)); return [...m.entries()].sort((a, b) => b[1] - a[1]); };
+    const ct = conta(tri), plano = prevPlano(e).slice(0, 4), f = fichaEstado(e.k);
+    const itv = prtLista('intervencao').filter(i => i.dados && i.dados.escK === e.k && dataDeISO(i.dados.data) && diasEntre(dataDeISO(i.dados.data), hoje) < 180);
+    const varia = ant.length ? Math.round((tri.length - ant.length) / ant.length * 100) : null;
+    const codigo = codigoVerificacao('comunidade|' + e.k + '|' + tri.length);
+    const secoes = [
+        { t: 'Panorama do trimestre', html: `<div class="dx-kpis"><div><small>Registros nos últimos 90 dias</small><b>${fmtN(tri.length)}</b></div><div><small>Trimestre anterior</small><b>${fmtN(ant.length)}</b></div><div><small>Variação</small><b>${varia == null ? '—' : (varia > 0 ? '+' : '') + varia + '%'}</b></div><div><small>Graves (crítico ou alto)</small><b>${fmtN(tri.filter(r => r.crit === 'CRÍTICO' || r.crit === 'ALTO').length)}</b></div></div>
+            <p>Este relatório apresenta, de forma resumida e sem identificar nenhuma pessoa, as ocorrências registradas pela escola no Livro de Ocorrências nos últimos três meses e as ações de proteção em andamento. Ele serve para a escola conversar com estudantes, famílias e o conselho escolar.</p>` },
+        { t: 'O que foi registrado', html: ct.length ? `<table class="t"><thead><tr><th>Tipo de ocorrência</th><th style="text-align:right">Registros</th><th style="text-align:right">%</th></tr></thead><tbody>${ct.slice(0, 10).map(([t, v]) => `<tr><td>${esc(t)}</td><td style="text-align:right">${v}</td><td style="text-align:right">${Math.round(v / tri.length * 100)}%</td></tr>`).join('')}</tbody></table>` : '<p>Nenhum registro no período.</p>' },
+        { t: 'O que a escola está fazendo', html: `${itv.length ? `<ul>${itv.map(i => `<li><b>${esc(i.dados.tipo)}</b> · desde ${fmtD(dataDeISO(i.dados.data))}${i.dados.desc ? ': ' + esc(i.dados.desc) : ''}</li>`).join('')}</ul>` : '<p>Nenhuma intervenção registrada no sistema nos últimos 6 meses.</p>'}
+            ${f.preenchida ? `<p>A ficha de segurança da escola tem <b>${Math.round(f.nota * 100)}%</b> dos itens de proteção presentes${f.faltam.length ? '. Itens em melhoria: ' + f.faltam.map(id => (FICHA_ITENS.find(x => x[1] === id) || [, , id])[2].toLowerCase()).slice(0, 5).join('; ') + '.' : '.'}</p>` : ''}` },
+        { t: 'Próximos passos', html: plano.length ? plano.map(p => `<p><b>${esc(p.t)}</b></p><ul>${p.acoes.slice(0, 3).map(a => `<li>${esc(a)}</li>`).join('')}</ul>`).join('') : '<p>Manter as ações de convivência e acompanhamento.</p>' },
+        { t: 'Canais de ajuda', html: `<ul><li><b>190</b> · Polícia Militar</li><li><b>192</b> · SAMU</li><li><b>100</b> · Disque Direitos Humanos (violência contra crianças e adolescentes)</li><li><b>180</b> · Central de Atendimento à Mulher</li><li><b>188</b> · CVV, apoio emocional gratuito 24 horas</li><li><b>Conselho Tutelar</b> do município</li></ul><p>Em qualquer situação de risco, procure a direção da escola.</p>` }
+    ];
+    const o = { tipo: 'Relatório para a comunidade escolar', titulo: 'Segurança e convivência · ' + e.nome, subtitulo: nomeMun(e.mun) + ' · últimos 90 dias até ' + fmtD(hoje), cls: 'USO DA COMUNIDADE ESCOLAR', codigo, destinatario: 'Estudantes, famílias e conselho escolar', publico: true, secoes,
+        ficha: [['Nº do documento', codigo], ['Escola', e.nome], ['Município', nomeMun(e.mun)], ['Período', 'últimos 90 dias'], ['Fonte', 'Livro de Ocorrências · sem dados pessoais']] };
+    window.DOC_COMUNIDADE = { o, n: tri.length, dest: RL.dest, base: 'EDUCASEG-PLUS_comunidade_' + codigo + '_' + hojeArq() };
+    RL.dest = o.destinatario;
+    escolherFormato('Relatório para a comunidade escolar', 'baixarComunidade', 'com');
+}
+function baixarComunidade(fmt) {
+    const D = window.DOC_COMUNIDADE; if (!D) return;
+    D.o.destinatario = RL.dest || D.o.destinatario; RL.dest = D.dest; // devolve o destinatário do relatório de inteligência
+    const html = montarDocumento(D.o);
+    if (conectado()) api('registrarRelatorio', { codigo: D.o.codigo, titulo: D.o.titulo, classificacao: D.o.cls, recorte: D.o.ficha[1][1], registros: D.n, hash: DX_DIG[D.o.codigo] || '' }).catch(() => { });
+    exportarDocumento(html, D.o.titulo, D.base, fmt);
+}
+/* documentos públicos: sem aviso de sigilo, sem marca d'água e com rodapé de divulgação */
+const _montarDocumentoV22 = montarDocumento;
+montarDocumento = function (o) {
+    let h = _montarDocumentoV22(o);
+    if (!o.publico) return h;
+    h = h.replace(/<section class="dx-pag"><div class="dx-cab">(?:(?!<section)[\s\S])*?Aviso de sigilo<\/span><\/div><\/section>/, '')
+        .replace(/<div class="dx-fixo marca">[\s\S]*?<\/div>/, '')
+        .replace(/Acesso restrito · Lei nº 12\.527\/2011[^<]*/, 'Documento para a comunidade escolar · não contém dados pessoais')
+        .replace(/PROIBIDA A REPRODUÇÃO<span>[^<]*<\/span>/, 'DIVULGAÇÃO PERMITIDA<span>Pode ser compartilhado com estudantes, famílias e conselho escolar</span>')
+        .replace(/CÓPIA CONTROLADA/g, 'DIVULGAÇÃO AUTORIZADA')
+        .replace(/Proibida a reprodução ou o compartilhamento sem autorização \([^)]*\)/g, 'Documento para a comunidade escolar')
+        .replace(/Proibida a reprodução ou o compartilhamento/g, 'Documento para a comunidade escolar');
+    return h;
+};
+
+/* =====================================================================
+   LIGAÇÃO COM O SISTEMA: menu, páginas, tópicos, ficha da escola, Meu dia
+   ===================================================================== */
+(function () {
+    const pos = ABAS.findIndex(a => a.g === 'Registros' || /Registros/i.test(a.g || ''));
+    ABAS.splice(pos < 0 ? ABAS.length : pos, 0,
+        { g: 'Proteção' },
+        { id: 'protocolos', t: 'Protocolos de resposta', ico: 'check', h: 'Protocolos de resposta', p: 'O passo a passo de cada ocorrência crítica ou sensível, com prazos, responsáveis e o que já foi feito.' },
+        { id: 'ameacas', t: 'Ameaças', ico: 'alerta', h: 'Monitoramento de ameaças', p: 'Relatos e notícias com sinais de ameaça de ataque, arma ou violência grave, com o protocolo de resposta.' },
+        { id: 'risco', t: 'Risco previsto', ico: 'trend', h: 'Risco previsto para os próximos 30 dias', p: 'Escolas com maior chance de novas ocorrências e os motivos, para priorizar visitas e ações.' },
+        { id: 'seguranca', t: 'Segurança das escolas', ico: 'shield', h: 'Segurança das escolas', p: 'Ficha de estrutura e rotina de proteção de cada escola, cruzada com a fragilidade.' },
+        { id: 'acompanhamento', t: 'Acompanhamento', ico: 'users', h: 'Acompanhamento de vítimas e reincidentes', p: 'Planos individuais para quem precisa de cuidado contínuo, com encaminhamentos e datas de retorno.' },
+        { id: 'intervencoes', t: 'Intervenções', ico: 'zap', h: 'Intervenções e o que funciona', p: 'O que foi feito em cada escola e o efeito nos registros, comparando antes e depois.' },
+        { id: 'prevencao', t: 'Prevenção', ico: 'book', h: 'Prevenção e formação', p: 'Plano de prevenção sugerido para cada escola a partir dos próprios registros, com campanhas, canais de ajuda e relatório para a comunidade.' });
+    Object.assign(LEGENDAS, {
+        protocolos: { mostra: ['Cada ocorrência crítica ou de tipo sensível dos últimos 30 dias, com o protocolo de resposta adequado ao tipo de fato.', 'Quantos passos foram feitos e qual é o próximo, com o prazo.'], fonte: ['Livro de Ocorrências e os passos marcados pelos usuários, salvos na planilha (aba Acompanhamento).'], calc: ['O protocolo é escolhido pelo tipo de fato: violência sexual, saúde mental, arma ou ameaça, drogas ou agressão.', 'Os prazos contam a partir da data e hora do fato.'], usar: ['Abra um caso, marque os passos feitos e anote observações.', 'Também é possível abrir um protocolo a partir de qualquer ocorrência.'] },
+        ameacas: { mostra: ['Registros cujo relato cita termos de ameaça de ataque, arma ou violência grave.', 'Notícias do Release com os mesmos termos.'], fonte: ['Campo Resumo dos fatos do Livro e títulos das notícias.'], calc: ['Busca sem acento e sem diferenciar maiúsculas pelos termos vigiados.'], usar: ['Abra o registro e o protocolo de cada caso.', 'Administrador e Inteligência podem editar os termos.'] },
+        risco: { mostra: ['Nota de 0 a 100 de chance de novas ocorrências em cada escola nos próximos 30 dias.', 'Os motivos que mais pesaram em cada nota.'], fonte: ['Livro de Ocorrências, cadastro georreferenciado das escolas e fichas de segurança.'], calc: ['Combina registros dos últimos 30 dias, ritmo contra o trimestre anterior, fatos sensíveis em 90 dias, recorrências ativas, escolas vizinhas em alta (até 5 km), o mesmo período do ano passado e a ficha de segurança.', 'Alto: 55 ou mais; médio: 30 a 54.'], usar: ['"Montar rota de visitas" leva as escolas em risco alto para Rotas de visita.'] },
+        seguranca: { mostra: ['A ficha de 14 itens de proteção de cada escola e o que mais falta nas mais frágeis.'], fonte: ['Fichas preenchidas pelas escolas, DREs e Inteligência.'], calc: ['Sim vale 1, em parte vale meio, não vale zero. A nota é a proporção de itens presentes.'], usar: ['Toque numa escola para preencher. Atualize a cada semestre.'] },
+        acompanhamento: { mostra: ['Pessoas que precisam de cuidado contínuo: autoagressão ou ideação, vítimas de vários autores e autores reincidentes.'], fonte: ['Livro de Ocorrências e os planos registrados (aba Acompanhamento).'], calc: ['Reavaliação vencida: a data de retorno já passou.'], usar: ['Abra a pessoa, marque os encaminhamentos e marque a próxima reavaliação.'] },
+        intervencoes: { mostra: ['As intervenções feitas em cada escola e o efeito médio de cada tipo.'], fonte: ['Intervenções registradas pelos usuários e Livro de Ocorrências.'], calc: ['Registros por mês nos 90 dias antes contra até 90 dias depois do início. Só entra na média com 14 dias ou mais.'], usar: ['Registre toda ação relevante para o sistema aprender o que funciona.'] },
+        prevencao: { mostra: ['Plano de prevenção por escola, campanhas do ano e canais de ajuda.'], fonte: ['Registros da escola nos últimos 6 meses, ficha de segurança e intervenções.'], calc: ['Os temas são ordenados pela quantidade de registros de cada tipo.'], usar: ['"Relatório para a comunidade" gera um documento sem dados pessoais para estudantes e famílias.'] }
+    });
+    Object.assign(TOPICOS, {
+        protocolos: [{ t: 'Situação', s: 'Casos em andamento, atrasados e concluídos', i: 'check', m: /kpis|aviso/ }, { t: 'Casos', s: 'Toque num caso para marcar os passos', i: 'book', m: /Casos em acompanhamento/ }],
+        ameacas: [{ t: 'Situação', s: 'Registros, escolas e notícias com sinais de ameaça', i: 'alerta', m: /kpis/ }, { t: 'Sinais encontrados', s: 'Relatos do Livro e notícias da imprensa', i: 'search', m: /Registros com sinais|Na imprensa/ }, { t: 'Protocolo e termos', s: 'O que fazer e o que o sistema vigia', i: 'shield', m: /O que fazer diante|Termos vigiados/ }],
+        risco: [{ t: 'Situação', s: 'Quantas escolas em cada nível de risco', i: 'trend', m: /kpis/ }, { t: 'Prioridades da semana', s: 'As escolas para visitar primeiro e onde ficam', i: 'nav', m: /visitar esta semana|rk-g/ }, { t: 'Todas as escolas', s: 'A nota de cada escola avaliada', i: 'bar', m: /Todas as escolas avaliadas/ }],
+        seguranca: [{ t: 'Situação', s: 'Fichas preenchidas e proteção média', i: 'shield', m: /kpis/ }, { t: 'O que falta', s: 'Itens ausentes nas escolas mais frágeis', i: 'target', m: /O que falta/ }, { t: 'Fichas por escola', s: 'Preencha ou atualize a ficha de cada escola', i: 'escola', m: /Fichas por escola/ }],
+        acompanhamento: [{ t: 'Situação', s: 'Planos pendentes, vencidos e em dia', i: 'users', m: /aviso|kpis/ }, { t: 'Pessoas prioritárias', s: 'Abra a pessoa para registrar o plano', i: 'target', m: /Pessoas prioritárias/ }],
+        intervencoes: [{ t: 'Situação', s: 'Intervenções registradas e efeito médio', i: 'zap', m: /kpis/ }, { t: 'O que funciona', s: 'Efeito médio de cada tipo de intervenção', i: 'trend', m: /O que funciona/ }, { t: 'Intervenções registradas', s: 'Cada ação, com o efeito na escola', i: 'clock', m: /Intervenções registradas/ }],
+        prevencao: [{ t: 'Escola', s: 'Escolha a escola e veja o resumo', i: 'escola', m: /pv-esc/ }, { t: 'Plano de prevenção', s: 'Temas e ações sugeridas', i: 'book', m: /Plano de prevenção/ }, { t: 'Campanhas e canais de ajuda', s: 'Datas do ano e números para divulgar', i: 'clock', m: /Calendário de campanhas|Canais de ajuda/ }]
+    });
+})();
+const _renderAbaV22 = renderAba;
+renderAba = function () {
+    const f = { protocolos: rProtocolos, ameacas: rAmeacas, risco: rRisco, seguranca: rSeguranca, acompanhamento: rAcompanhamento, intervencoes: rIntervencoes, prevencao: rPrevencao }[ABA];
+    if (f && A) {
+        if (!PRT.carregado && !PRT.carregando) prtCarregar();
+        f(); if (typeof garantirLegenda === 'function') garantirLegenda(ABA);
+        if (typeof fsGarantir === 'function') fsGarantir();
+        if (typeof organizarTopicos === 'function') organizarTopicos(ABA);
+        return;
+    }
+    _renderAbaV22();
+};
+/* ficha da escola (gaveta): segurança, intervenções e prevenção */
+const _abrirEscolaV22 = abrirEscola;
+abrirEscola = function (k) {
+    _abrirEscolaV22(k);
+    const e = A.escolas.get(k), corpo = document.querySelector('#gaveta .gaveta-corpo'); if (!e || !corpo) return;
+    const f = fichaEstado(k), rk = riscoCalcular().find(x => x.e.k === k), itv = prtLista('intervencao').filter(i => i.dados && i.dados.escK === k);
+    corpo.insertAdjacentHTML('afterbegin', `<div class="card card-pad pt-gav" style="--c:${rk ? RISCO_COR[rk.nivel] : 'var(--prim)'}"><div class="card-tit" style="margin-bottom:10px"><div class="ico">${ic('shield')}</div><div><h3>Proteção da escola</h3><p>${rk ? `Risco previsto ${rk.score}/100 (${rk.nivel})` : 'Sem risco calculado'} · ficha de segurança ${f.preenchida ? Math.round(f.nota * 100) + '%' : 'não preenchida'} · ${itv.length} intervenção(ões)</p></div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-s btn-sm" onclick="abrirFicha('${esc(k)}')">${ic('shield')}Ficha de segurança</button>${podeEditarProtecao() ? `<button class="btn btn-s btn-sm" onclick="fecharGaveta();formIntervencao('${esc(k)}')">${ic('zap')}Registrar intervenção</button>` : ''}<button class="btn btn-s btn-sm" onclick="fecharGaveta();PV.escK='${esc(k)}';irPara('prevencao')">${ic('book')}Plano de prevenção</button></div></div>`);
+};
+/* Meu dia: protocolos atrasados e ameaças entram em "O que pede ação" */
+const _rMeuDiaV22 = rMeuDia;
+rMeuDia = function () {
+    _rMeuDiaV22();
+    if (!PRT.carregado && !PRT.carregando) prtCarregar();
+    const cont = $('cont-meudia'); if (!cont) return;
+    const at = protCasos().filter(c => !c.concluido && c.atras.length), am = ameacaAchar(7).regs;
+    if (!at.length && !am.length) return;
+    const html = `<div class="card md-prot"><div class="card-pad" style="padding-bottom:6px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('shield')}</div><div><h3>Proteção agora</h3><p>Protocolos com passo atrasado e sinais de ameaça na última semana</p></div></div></div>
+        <div class="lista">${am.slice(0, 3).map(({ r, termos }) => `<button class="item" onclick="abrirOcorrencia('${esc(r.id)}')"><span class="ic" style="--c:var(--c-crit)">${ic('alerta')}</span><span class="tx"><b>Sinal de ameaça: "${esc(termos[0].toLowerCase())}"</b><span>${esc(r.esc)} · ${fmtD(r.dt)}</span></span><span class="md-tag" style="--c:var(--c-crit)">Ameaça</span></button>`).join('')}
+        ${at.slice(0, 4).map(c => `<button class="item" onclick="abrirProtocolo('${esc(c.r.id)}')"><span class="ic" style="--c:var(--c-alto)">${ic('check')}</span><span class="tx"><b>${esc(c.prox.t)}</b><span>${esc(tipoCurto(c.r.tipo))} · ${esc(c.r.esc)} · ${fmtPrazo(c.prox.prazo)}</span></span><span class="md-tag" style="--c:var(--c-alto)">Protocolo</span></button>`).join('')}
+        ${at.length > 4 || am.length > 3 ? `<button class="item" onclick="irPara('${at.length > 4 ? 'protocolos' : 'ameacas'}')"><span class="ic">${ic('ext')}</span><span class="tx"><b>Ver todos</b><span>${at.length} protocolo(s) atrasado(s) · ${am.length} sinal(is) de ameaça</span></span></button>` : ''}</div></div>`;
+    const alvo = [...cont.querySelectorAll('h3')].find(h => /Precisa da sua atenção/.test(h.textContent));
+    const card = alvo && alvo.closest('.card');
+    if (card) card.insertAdjacentHTML('beforebegin', html); else cont.insertAdjacentHTML('afterbegin', html);
+};
+if (TOPICOS.meudia) { const t = TOPICOS.meudia.find(x => /pede ação/.test(x.t)); if (t) t.m = /Precisa da sua atenção|Proteção agora/; }
 
 </script>
 </body>
