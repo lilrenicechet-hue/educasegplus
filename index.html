@@ -1637,6 +1637,105 @@ button.rl-lnk:hover { color: var(--prim); }
   #login.login-v4 .login-mt { width: min(130px, 40%); margin-top: 10px; }
 }
 </style>
+<style>
+/* ===== 3.6: uso no celular ===== */
+#nav-inf { display: none; }
+@media (max-width: 860px) {
+  #nav-inf { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; background: color-mix(in srgb, var(--card) 94%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--borda); padding: 4px max(6px, env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left)); box-shadow: 0 -6px 24px rgba(2,6,23,.08); }
+  #nav-inf button { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 52px; background: none; border: 0; border-radius: 12px; color: var(--muted); font: inherit; font-size: 10.5px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  #nav-inf button svg { width: 22px; height: 22px; }
+  #nav-inf button.ativo { color: var(--prim); }
+  #nav-inf button.ativo svg { background: color-mix(in srgb, var(--prim) 14%, transparent); border-radius: 999px; padding: 3px 14px; width: 50px; height: 28px; box-sizing: border-box; }
+  #nav-inf button:active { background: color-mix(in srgb, var(--prim) 8%, transparent); }
+  #nav-inf .ni-bolha { position: absolute; top: 4px; left: calc(50% + 6px); min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: #dc2626; color: #fff; font-size: 10px; font-style: normal; font-weight: 800; display: grid; place-items: center; line-height: 1; }
+  #nav-inf .ni-bolha[hidden] { display: none; }
+  main { padding-bottom: calc(61px + env(safe-area-inset-bottom)); }
+  #toast { bottom: calc(76px + env(safe-area-inset-bottom)) !important; left: 16px; right: 16px !important; text-align: center; }
+  #lateral { padding-bottom: env(safe-area-inset-bottom); }
+  .topo-movel { padding-top: env(safe-area-inset-top); height: calc(52px + env(safe-area-inset-top)); }
+  .topo-movel .ic-btn { width: 42px; height: 42px; }
+  .lat-btn { min-height: 44px; }
+  .lat-acoes button { width: 40px; height: 40px; }
+}
+@media (max-width: 640px) {
+  /* campos com 16px: o iPhone não dá zoom ao tocar */
+  .campo, input.campo, select.campo, textarea, #recorte .campo { font-size: 16px; }
+  .campo { height: 44px; }
+  textarea.campo { height: auto; }
+  .btn { min-height: 42px; }
+  .btn-sm { min-height: 36px; padding-inline: 12px; }
+  .ic-btn { min-width: 38px; min-height: 38px; }
+  .seg button, .abas-int button, .tabs button { min-height: 38px; }
+  /* cabeçalho das páginas mais enxuto */
+  .heroi { padding: 12px 16px 36px; }
+  .heroi h2 { font-size: 20px; }
+  .heroi-linha p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+  .heroi-linha p.aberto { -webkit-line-clamp: unset; display: block; }
+  .acoes-h { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; max-width: 100vw; }
+  .acoes-h::-webkit-scrollbar { display: none; }
+  .acoes-h > * { flex-shrink: 0; }
+  .legenda-pg > summary { min-height: 44px; }
+  /* tabelas largas em cartões */
+  .tab-wrap:has(> .tab-cartao) { overflow: visible; }
+  table.tab-cartao, table.tab-cartao tbody { display: block; width: 100%; min-width: 0 !important; }
+  table.tab-cartao thead { display: none; }
+  table.tab-cartao tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; padding: 13px 14px; position: relative; border-bottom: 1px solid var(--borda); }
+  table.tab-cartao tbody td { display: block; padding: 0 !important; border: 0 !important; text-align: left !important; white-space: normal !important; max-width: none !important; min-width: 0; font-size: 13px; overflow-wrap: anywhere; }
+  table.tab-cartao tbody td::before { content: attr(data-l); display: block; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  table.tab-cartao tbody td[data-l=""]::before, table.tab-cartao td.tc-pri::before, table.tab-cartao td.tc-rank::before, table.tab-cartao td.tc-cheia[data-l=""]::before, table.tab-cartao td[colspan]::before { display: none; }
+  table.tab-cartao td.tc-pri { grid-column: 1 / -1; order: -2; font-size: 14.5px; padding-right: 34px !important; }
+  table.tab-cartao td.tc-pri b { font-size: 14.5px; white-space: normal; }
+  table.tab-cartao td.tc-rank { position: absolute; top: 12px; right: 12px; min-width: 26px; height: 26px; border-radius: 8px; background: color-mix(in srgb, var(--prim) 10%, transparent); display: grid !important; place-items: center; font-weight: 800; font-size: 12px; color: var(--prim); }
+  table.tab-cartao td.tc-cheia, table.tab-cartao td[colspan] { grid-column: 1 / -1; }
+  table.tab-cartao td .medidor { max-width: 160px; }
+  table.tab-cartao td svg.faixa { width: 100%; height: auto; }
+  table.tab-cartao td .btn { min-height: 38px; }
+  table.tab-cartao td.esc-cel span { white-space: normal; }
+  .tc-ordem { display: flex; align-items: center; gap: 10px; padding: 10px 14px; font-size: 12px; font-weight: 700; color: var(--muted); }
+  .tc-ordem .campo { flex: 1; height: 40px; }
+  /* mapa: painéis compactos que não cobrem o estado */
+  .mapa-camadas { display: none; top: 54px; right: 8px; }
+  .mapa-camadas.aberto { display: grid; }
+  .mapa-camadas label { min-height: 34px; font-size: 13px; }
+  .mapa-cam-bt { right: 8px; top: 8px; display: flex; align-items: center; gap: 6px; font: inherit; font-size: 12.5px; font-weight: 700; color: var(--texto); cursor: pointer; min-height: 40px; }
+  .mapa-cam-bt svg { width: 16px; height: 16px; }
+  .mapa-cam-bt.ativo { border-color: var(--prim); color: var(--prim); }
+  .tl-painel { top: auto !important; bottom: 8px; left: 8px !important; right: 8px; gap: 8px; padding: 6px 8px; }
+  .tl-painel #tl-rot { min-width: 0; font-size: 11px; max-width: 92px; overflow: hidden; text-overflow: ellipsis; }
+  .tl-chk { font-size: 11px; }
+  .mapa-legenda { bottom: 62px !important; max-width: 168px !important; padding: 7px 9px !important; font-size: 10.5px !important; }
+  .mapa-legenda > :not(b):not(.esc):not(.lim) { display: none; }
+  .mapa-info { left: 8px; right: 8px; width: auto; bottom: 62px; }
+  .leaflet-control-zoom { display: none; }
+  /* gaveta de detalhes ocupa a tela */
+  #gaveta > * { width: 100% !important; max-width: 100% !important; padding-bottom: env(safe-area-inset-bottom); }
+}
+@media (max-width: 640px) and (hover: none) { .leaflet-control-zoom { display: none; } }
+</style>
+<style>
+.tc-mais { display: none; }
+@media (max-width: 640px) {
+  table.tab-cartao tr.tc-oculta { display: none !important; }
+  .tc-mais { display: flex; width: calc(100% - 28px); margin: 12px 14px; justify-content: center; }
+}
+</style>
+<style>
+@media (max-width: 640px) {
+  .tab-wrap:has(> .tab-cartao) { max-height: none !important; height: auto !important; }
+  table.tab-cartao tbody tr { box-shadow: inset 4px 0 0 var(--faixa, transparent); }
+  table.tab-cartao tbody td:first-child { box-shadow: none !important; }
+}
+</style>
+<style>
+#f-ok { display: none; }
+@media (max-width: 640px) {
+  #recorte.aberto { box-shadow: 0 14px 30px rgba(2,6,23,.18); position: relative; z-index: 5; padding-bottom: 12px; }
+  #recorte.aberto #f-ok { display: inline-flex; flex: 1; justify-content: center; }
+  #recorte.aberto #f-limpar { flex: 0 0 auto; }
+  #f-toggle { position: relative; }
+  .acoes-h kbd, .heroi kbd { display: none; }
+}
+</style>
 
 </head>
 <body>
@@ -1703,8 +1802,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '3.5.0+4d70e2d4';
-const APP_NOTAS = 'Novo emblema, tela de entrada mais limpa e opções de acesso agora dentro do sistema (menu lateral › Acesso e conexão).';
+const APP_VERSAO = '3.6.0+7cd4d57b';
+const APP_NOTAS = 'Versão para celular: barra de navegação inferior, tabelas em cartões, mapa compacto e campos maiores para o toque.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -6654,6 +6753,170 @@ function salvarServidor() {
     b.id = 'btn-acesso'; b.title = 'Acesso e conexão'; b.setAttribute('aria-label', 'Acesso e conexão'); b.innerHTML = ic('activity'); b.onclick = telaAcesso;
     ac.insertBefore(b, ac.firstChild);
 })();
+
+/* =====================================================================
+   EDUCASEG-PLUS 3.6 — uso no celular
+   barra de navegação inferior, tabelas em cartões, legenda recolhida,
+   mapa com painéis compactos, alvos de toque maiores
+   ===================================================================== */
+const ehTelaPequena = () => matchMedia('(max-width: 640px)').matches;
+const ehTelaMovel = () => matchMedia('(max-width: 860px)').matches;
+
+/* ---------- 1. Barra de navegação inferior ---------- */
+const NAV_INF = [
+    { id: 'painel', t: 'Painel', ico: 'home' },
+    { id: 'alertas', t: 'Problemas', ico: 'alerta' },
+    { id: 'mapa', t: 'Mapa', ico: 'map' },
+    { id: 'livro', t: 'Livro', ico: 'book' }
+];
+function montarNavInferior() {
+    if ($('nav-inf')) return;
+    const n = document.createElement('nav');
+    n.id = 'nav-inf'; n.setAttribute('aria-label', 'Navegação principal');
+    n.innerHTML = NAV_INF.map(a => `<button type="button" data-aba="${a.id}">${ic(a.ico)}<span>${a.t}</span><i class="ni-bolha" hidden></i></button>`).join('')
+        + `<button type="button" data-mais>${ic('grid')}<span>Mais</span></button>`;
+    n.addEventListener('click', e => {
+        const b = e.target.closest('button'); if (!b) return;
+        if (b.hasAttribute('data-mais')) { $('lateral').classList.contains('aberto') ? fecharMenu() : abrirMenu(); return; }
+        fecharMenu();
+        const sec = $('aba-' + b.dataset.aba);
+        if (ABA === b.dataset.aba && sec) { sec.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+        if (typeof POS_ROLAGEM !== 'undefined') POS_ROLAGEM[b.dataset.aba] = 0;
+        irPara(b.dataset.aba);
+        if (sec) sec.scrollTop = 0;
+    });
+    document.body.appendChild(n);
+    sincronizarNavInferior();
+}
+function sincronizarNavInferior() {
+    const n = $('nav-inf'); if (!n) return;
+    const naBarra = NAV_INF.some(a => a.id === ABA);
+    n.querySelectorAll('button[data-aba]').forEach(b => b.classList.toggle('ativo', b.dataset.aba === ABA));
+    const mais = n.querySelector('[data-mais]'); if (mais) mais.classList.toggle('ativo', !naBarra && !!ABA);
+    // número de problemas copiado do menu lateral
+    const bol = document.querySelector('.lat-btn[data-aba="alertas"] .bolha'), alvo = n.querySelector('[data-aba="alertas"] .ni-bolha');
+    if (alvo) { const t = bol && bol.textContent.trim(); alvo.hidden = !t; alvo.textContent = t || ''; }
+}
+const _irParaV15 = irPara;
+irPara = function (aba, semHash) { _irParaV15(aba, semHash); sincronizarNavInferior(); };
+
+/* ---------- 2. "Como funciona esta página" recolhida no celular ---------- */
+const _legendaHTMLV15 = legendaHTML;
+legendaHTML = function (aba) {
+    let h = _legendaHTMLV15(aba);
+    let salvo = null; try { salvo = localStorage.getItem('esp_leg_' + aba); } catch (e) { }
+    if (ehTelaPequena() && salvo === null) h = h.replace(/(<details class="legenda-pg"[^>]*?) open>/, '$1>').replace('<span class="mut peq">ocultar</span>', '<span class="mut peq">mostrar</span>');
+    return h;
+};
+
+/* ---------- 3. Tabelas largas viram cartões ---------- */
+function prepararTabela(t) {
+    if (t.closest('.dx, .dx-fixo') || !t.tHead) return;
+    const ths = [...t.tHead.querySelectorAll('th')];
+    if (ths.length < 5) return;
+    const rot = ths.map(h => h.textContent.replace(/[▾▴▲▼]/g, '').trim());
+    t.classList.add('tab-cartao');
+    let iPri = ths.findIndex((h, i) => i < 3 && /escola|munic|nome|dre|centro/i.test(rot[i]));
+    if (iPri < 0) iPri = rot[0] === '#' || rot[0] === 'Nº' ? 1 : 0;
+    t.querySelectorAll('tbody tr').forEach(tr => {
+        if (tr._cartao === rot.length) return;
+        tr._cartao = rot.length;
+        [...tr.children].forEach((td, i) => {
+            if (td.hasAttribute('colspan')) { td.classList.add('tc-cheia'); return; }
+            td.setAttribute('data-l', rot[i] || '');
+            if (i === iPri) td.classList.add('tc-pri');
+            else if (rot[i] === '#') td.classList.add('tc-rank');
+            else if (!rot[i] || td.querySelector('svg.faixa, .comp')) td.classList.add('tc-cheia');
+        });
+    });
+    // listas longas: 30 cartões por vez
+    const linhas = [...t.tBodies[0] ? t.tBodies[0].rows : []];
+    const lim = t._lim || 30;
+    let mais = t.nextElementSibling && t.nextElementSibling.classList.contains('tc-mais') ? t.nextElementSibling : null;
+    if (linhas.length > lim + 5) {
+        linhas.forEach((tr, i) => tr.classList.toggle('tc-oculta', i >= lim));
+        if (!mais) { mais = document.createElement('button'); mais.type = 'button'; mais.className = 'btn btn-s tc-mais'; t.after(mais); }
+        mais.textContent = `Mostrar mais (${Math.min(30, linhas.length - lim)} de ${linhas.length - lim} restantes)`;
+        mais.onclick = () => { t._lim = lim + 30; prepararTabela(t); };
+    } else { linhas.forEach(tr => tr.classList.remove('tc-oculta')); if (mais) mais.remove(); }
+    // ordenação: os cabeçalhos ficam escondidos, então vira um seletor
+    const ord = ths.filter(h => h.classList.contains('ord') || h.hasAttribute('onclick') || h.dataset.ord);
+    const wrap = t.closest('.tab-wrap') || t;
+    if (ord.length && !(wrap.previousElementSibling && wrap.previousElementSibling.classList.contains('tc-ordem'))) {
+        const s = document.createElement('label'); s.className = 'tc-ordem';
+        const atual = ord.find(h => /[▾▴▲▼]/.test(h.textContent));
+        s.innerHTML = `<span>Ordenar por</span><select class="campo">${ord.map((h, i) => `<option value="${i}" ${h === atual ? 'selected' : ''}>${esc(h.textContent.replace(/[▾▴▲▼]/g, '').trim())}</option>`).join('')}</select>`;
+        s.querySelector('select').onchange = e => { const h = ord[+e.target.value]; if (h) h.click(); };
+        wrap.parentNode.insertBefore(s, wrap);
+    }
+}
+
+/* ---------- 4. Mapa: camadas atrás de um botão ---------- */
+function prepararMapa(box) {
+    if (box._movel) return;
+    const cam = box.querySelector('.mapa-camadas'); if (!cam) return;
+    box._movel = true;
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'mapa-painel mapa-cam-bt'; b.innerHTML = ic('layers') + '<span>Camadas</span>';
+    b.onclick = () => { const ab = cam.classList.toggle('aberto'); b.classList.toggle('ativo', ab); };
+    box.appendChild(b);
+}
+
+/* ---------- 5. Cabeçalho das páginas: texto com "ler mais" ---------- */
+function prepararHeroi(sec) {
+    const p = sec.querySelector('.heroi-linha p'); if (!p || p._ok) return;
+    p._ok = true;
+    p.addEventListener('click', () => { if (ehTelaPequena()) p.classList.toggle('aberto'); });
+}
+
+/* ---------- Observador: aplica tudo conforme o conteúdo é desenhado ---------- */
+let _movelAgendado = false;
+function ajustesMoveis() {
+    _movelAgendado = false;
+    document.querySelectorAll('#abas table.tab, #gaveta table.tab, #modal table.tab').forEach(prepararTabela);
+    document.querySelectorAll('#abas .mapa-box').forEach(prepararMapa);
+    const sec = ABA && $('aba-' + ABA); if (sec) prepararHeroi(sec);
+    sincronizarNavInferior();
+}
+function agendarAjustesMoveis() { if (_movelAgendado) return; _movelAgendado = true; requestAnimationFrame(ajustesMoveis); }
+(function iniciarMovel() {
+    const ir = () => {
+        montarNavInferior();
+        new MutationObserver(agendarAjustesMoveis).observe(document.body, { childList: true, subtree: true });
+        agendarAjustesMoveis();
+        // mantém o campo focado visível acima do teclado
+        document.addEventListener('focusin', e => {
+            if (!ehTelaPequena() || !e.target.matches('input, textarea, select')) return;
+            setTimeout(() => { try { e.target.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (x) { } }, 300);
+        });
+        // gesto: arrastar o menu lateral para a esquerda fecha
+        const lat = $('lateral'); let x0 = null;
+        lat.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+        lat.addEventListener('touchend', e => { if (x0 != null && e.changedTouches[0].clientX - x0 < -60) fecharMenu(); x0 = null; }, { passive: true });
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ir); else ir();
+})();
+
+/* ---------- 6. Filtros no celular: botão "Ver resultados" e contador ---------- */
+function contarFiltros() {
+    const n = ['f-dre', 'f-mun', 'f-per', 'f-crit', 'f-tipo'].filter(id => $(id) && $(id).value).length;
+    const t = $('f-toggle'); if (t) { if (n) t.setAttribute('data-n', n); else t.removeAttribute('data-n'); }
+}
+(function filtrosMoveis() {
+    const ir = () => {
+        const r = $('recorte'), lim = $('f-limpar'); if (!r || !lim || $('f-ok')) return;
+        const ok = document.createElement('button');
+        ok.id = 'f-ok'; ok.type = 'button'; ok.className = 'btn btn-p btn-sm'; ok.textContent = 'Ver resultados';
+        ok.onclick = () => { r.classList.remove('aberto'); const s = ABA && $('aba-' + ABA); if (s) s.scrollTop = 0; };
+        lim.after(ok);
+        r.addEventListener('change', contarFiltros);
+        lim.addEventListener('click', () => setTimeout(contarFiltros, 50));
+        contarFiltros();
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ir); else ir();
+})();
+const _irParaV16 = irPara;
+irPara = function (aba, semHash) { const r = $('recorte'); if (r && ehTelaPequena()) r.classList.remove('aberto'); _irParaV16(aba, semHash); contarFiltros(); };
 
 </script>
 </body>
