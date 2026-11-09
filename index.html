@@ -1878,6 +1878,52 @@ html.sem-recorte #recorte { display: none !important; }
 .tc-ordem { display: none; }
 @media (max-width: 640px) { .tc-ordem { display: flex; } }
 </style>
+<style>
+/* ===== 4.0: páginas em tópicos ===== */
+.heroi h2 { font-size: 26px; letter-spacing: -.02em; }
+.heroi-linha p { font-size: 13.5px; }
+.card-tit h3 { font-size: 15.5px; font-weight: 800; letter-spacing: -.005em; }
+.card-tit p { font-size: 12.5px; }
+.tp-nav { position: sticky; top: 0; z-index: 20; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 8px; margin: 0 0 4px; background: color-mix(in srgb, var(--card) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--borda); border-radius: 14px; box-shadow: var(--sombra); }
+.tp-nav::-webkit-scrollbar { display: none; }
+.tp-nav button { flex: none; display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px 0 6px; border-radius: 10px; border: 0; background: none; color: var(--muted); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.tp-nav button span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; background: var(--suave2); color: var(--texto2); font-size: 12px; font-weight: 800; }
+.tp-nav button:hover { color: var(--texto); background: var(--suave); }
+.tp-nav button.ativo { color: var(--prim); background: color-mix(in srgb, var(--prim) 10%, transparent); }
+.tp-nav button.ativo span { background: var(--prim); color: #fff; }
+.tp { scroll-margin-top: 70px; }
+.tp + .tp { margin-top: 34px; }
+.tp-cab { display: flex; align-items: center; gap: 14px; padding: 0 2px 12px; margin-bottom: 14px; border-bottom: 2px solid var(--borda); position: relative; }
+.tp-cab::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 72px; height: 2px; background: var(--prim); border-radius: 2px; }
+.tp-n { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--prim); color: #fff; font-size: 16px; font-weight: 900; flex: none; box-shadow: 0 6px 14px color-mix(in srgb, var(--prim) 30%, transparent); }
+.tp-ic { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: color-mix(in srgb, var(--prim) 10%, transparent); color: var(--prim); flex: none; }
+.tp-ic svg { width: 18px; height: 18px; }
+.tp-tx { min-width: 0; flex: 1; }
+.tp-tx h2 { margin: 0; font-size: 21px; font-weight: 800; letter-spacing: -.015em; line-height: 1.2; color: var(--texto); text-wrap: balance; }
+.tp-tx p { margin: 3px 0 0; font-size: 13px; color: var(--muted); }
+.tp-rec { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 10px; border-radius: 9px; border: 1px solid var(--borda); background: var(--card); color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; flex: none; }
+.tp-rec svg { width: 14px; height: 14px; }
+.tp-rec:hover { color: var(--texto); border-color: var(--borda2); }
+.tp.fechado .tp-corpo { display: none; }
+.tp.fechado .tp-cab { margin-bottom: 0; }
+@media (max-width: 640px) {
+  .heroi h2 { font-size: 22px; }
+  .tp-nav { margin-inline: -4px; border-radius: 12px; padding: 6px; }
+  .tp-nav button { height: 34px; font-size: 12.5px; padding-right: 11px; }
+  .tp + .tp { margin-top: 26px; }
+  .tp-cab { gap: 10px; }
+  .tp-ic { display: none; }
+  .tp-n { width: 30px; height: 30px; font-size: 14.5px; }
+  .tp-tx h2 { font-size: 18.5px; }
+  .tp-tx p { font-size: 12.5px; }
+  .tp-rec span { display: none; }
+  .tp-rec { width: 34px; justify-content: center; padding: 0; }
+}
+</style>
+<style>
+.tp-rec svg { transform: rotate(90deg); transition: transform .15s; }
+.tp.fechado .tp-rec svg { transform: rotate(-90deg); }
+</style>
 
 </head>
 <body>
@@ -1944,8 +1990,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '3.9.2+adb29de4';
-const APP_NOTAS = 'Novo ícone do EDUCASEG-PLUS: livro com sinal de monitoramento, no estilo dos aplicativos atuais.';
+const APP_VERSAO = '4.0.0+0a2ccb14';
+const APP_NOTAS = 'Páginas organizadas em tópicos numerados, com títulos em destaque e barra de tópicos no topo.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -7528,6 +7574,211 @@ function emblemaV5(tam, id, fundoTotal, estilo) {
 let EMBLEMA_ESTILO = 'vidro';
 emblema = emblemaV5;
 if (typeof aplicarEmblema === 'function') aplicarEmblema();
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.0 — páginas organizadas em tópicos numerados,
+   com títulos em destaque e barra de tópicos fixa
+   ===================================================================== */
+/* Cada tópico: t (título), s (subtítulo), i (ícone), m (padrão que reconhece os blocos:
+   testado contra "classes do bloco | títulos dos cartões"). Blocos sem padrão seguem o anterior. */
+const TOPICOS = {
+    meudia: [
+        { t: 'Resumo do período', s: 'O total, a comparação com o período anterior e os principais números', i: 'sun', m: /md-topo|md-vazio|md-kpis/ },
+        { t: 'Ritmo e gravidade', s: 'Quando os registros aconteceram e o nível de cada um', i: 'activity', m: /Hora a hora|Dia a dia|Gravidade/ },
+        { t: 'O que pede ação', s: 'Críticos, problemas detectados e pendências do período', i: 'target', m: /Precisa da sua atenção/ },
+        { t: 'O que e onde aconteceu', s: 'Tipos de ocorrência e locais com mais registros', i: 'pin', m: /O que aconteceu|Onde aconteceu/ },
+        { t: 'Registros e escolas', s: 'A linha do tempo do período e as escolas com mais registros', i: 'clock', m: /Linha do tempo|Escolas do período/ },
+        { t: 'Na imprensa', s: 'Notícias sobre escolas de MT no mesmo período', i: 'jornal', m: /Na mídia/ }
+    ],
+    painel: [
+        { t: 'Visão geral', s: 'Os indicadores principais do recorte escolhido', i: 'home', m: /kpis/ },
+        { t: 'Tendência', s: 'Como os registros evoluem e o que a leitura automática destaca', i: 'trend', m: /Pulso|Evolução mensal|Leitura automática/ },
+        { t: 'Riscos e alertas', s: 'Problemas detectados e tipos que mais cresceram em 30 dias', i: 'alerta', m: /Problemas detectados|Comparativo de 30 dias/ },
+        { t: 'Perfil das ocorrências', s: 'Gravidade, tipos mais frequentes e críticas recentes', i: 'bar', m: /^.*\|Criticidade|Tipos mais frequentes|Críticas mais recentes/ },
+        { t: 'Território e escolas', s: 'Situação de cada DRE, escolas mais frágeis e escaladas', i: 'escola', m: /Situação por DRE|Escolas mais frágeis|Alertas de escalada/ }
+    ],
+    graficos: [
+        { t: 'Volume e tipos', s: 'Quantos registros há e de que tipos', i: 'bar', m: /Ocorrências por mês e criticidade|Tipos de ocorrência/ },
+        { t: 'Gravidade e validação', s: 'Níveis de criticidade, situação da validação e quem registra', i: 'check', m: /\|Criticidade|Situação da validação|Quem registrou/ },
+        { t: 'Onde acontece', s: 'DREs e municípios com mais ocorrências', i: 'pin', m: /Ocorrências por DRE|Municípios com mais/ },
+        { t: 'Quando acontece', s: 'Dia da semana, hora do fato e calendário do ano', i: 'clock', m: /Dia da semana|Hora do fato|Calendário do ano/ },
+        { t: 'Tendências', s: 'Evolução dos tipos sensíveis, variações e acumulado do ano', i: 'trend', m: /Tipos sensíveis por semana|Variação de 30 dias|volume × fragilidade|Acumulado no ano/ },
+        { t: 'Quem está envolvido', s: 'Sexo e perfil de vítimas e autores', i: 'users', m: /Sexo de vítimas|Perfil dos envolvidos|Vítimas por sexo|Autores por sexo|Quem agride quem|Participação feminina/ }
+    ],
+    alertas: [
+        { t: 'Resumo', s: 'Quantas situações pedem ação e com que urgência', i: 'alerta', m: /pd2-resumo/ },
+        { t: 'Problemas por tipo', s: 'Escolha um tipo de problema para ver onde se concentra e como agir', i: 'target', m: /pd2-grade|Evolução|Onde agir/ },
+        { t: 'Escolas com vários problemas', s: 'Unidades que somam mais de um tipo de risco', i: 'escola', m: /Escolas com vários problemas/ },
+        { t: 'Como os problemas são detectados', s: 'As regras usadas para identificar cada tipo', i: 'info', m: /pd-ajuda/ }
+    ],
+    difusao: [
+        { t: 'Leitura automática', s: 'O resumo do que os dados mostram sobre o espalhamento', i: 'zap', m: /df-frase/ },
+        { t: 'Rotas e pressão', s: 'Rotas mais fortes, agravamento e municípios sob pressão', i: 'trend', m: /Rotas mais fortes|sob pressão|Agravamento|Autores/ }
+    ],
+    vinculos: [
+        { t: 'Visão geral', s: 'Quantas pessoas, grupos e conexões foram encontrados', i: 'users', m: /aviso|kpis/ },
+        { t: 'Grupos e conexões', s: 'Escolha um grupo ou uma pessoa para ver a rede', i: 'layers', m: /vn2-grade|Grupos encontrados/ }
+    ],
+    termos: [
+        { t: 'Pesquisar nos relatos', s: 'Busque um termo e veja a evolução e os trechos', i: 'search', m: /^card card-pad\|[^|]*\|$/ },
+        { t: 'Radar de temas de risco', s: 'Temas que aumentaram nos últimos dias', i: 'zap', m: /Radar de temas/ },
+        { t: 'Palavras em destaque', s: 'Palavras em alta e as mais frequentes', i: 'bar', m: /Palavras em alta|Palavras mais frequentes/ }
+    ],
+    release: [
+        { t: 'Visão geral', s: 'Situação da coleta e números do período', i: 'jornal', m: /rl-status|kpis/ },
+        { t: 'Monitoramento institucional', s: 'Menções à Secretária e à Secretaria de Educação', i: 'eye', m: /rl-mon/ },
+        { t: 'Panorama da mídia', s: 'Evolução, assuntos, municípios, veículos e cruzamento com o Livro', i: 'bar', m: /rl-g1|rl-g2/ },
+        { t: 'Notícias', s: 'Filtre e abra cada matéria', i: 'doc', m: /rl-filtros|\|Notícias/ }
+    ],
+    comparar: [
+        { t: 'O que comparar', s: 'Escolha DREs, municípios ou escolas, ou o modo antes e depois', i: 'filter', m: /barra-filtros/ },
+        { t: 'Indicadores lado a lado', s: 'Os mesmos números para cada unidade escolhida', i: 'grid', m: /^card\|[^|]*\|$/ },
+        { t: 'Gráficos comparativos', s: 'Evolução, tipos, gravidade e horário na mesma escala', i: 'bar', m: /Ocorrências por mês|Perfil dos tipos|Criticidade|Hora do fato/ }
+    ],
+    mapa: [
+        { t: 'Mapa de Mato Grosso', s: 'Municípios coloridos pelo indicador escolhido, escolas e sedes', i: 'map', m: /Ocorrências por município|grade g32/ },
+        { t: 'Pontos quentes', s: 'Agrupamentos de escolas próximas com muitos registros', i: 'target', m: /hot-card|Pontos quentes/ }
+    ],
+    fragilidades: [
+        { t: 'Resumo', s: 'Quantas unidades em cada faixa de fragilidade', i: 'target', m: /kpis|comp-leg/ },
+        { t: 'Ranking', s: 'Unidades ordenadas pelo índice, com a composição de cada uma', i: 'bar', m: /^card\|/ },
+        { t: 'Matriz e método', s: 'Concentração por tipo e DRE e como o índice é calculado', i: 'grid', m: /Matriz tipo|Como o índice/ }
+    ],
+    recorrencias: [
+        { t: 'Resumo', s: 'Cadeias ativas, autores reincidentes e escolas em escalada', i: 'repeat', m: /kpis/ },
+        { t: 'Cadeias, autores e escaladas', s: 'Detalhe de cada recorrência', i: 'layers', m: /^card\|/ }
+    ],
+    verificacao: [
+        { t: 'Resumo', s: 'Qualidade geral dos registros do recorte', i: 'check', m: /kpis/ },
+        { t: 'Pendências encontradas', s: 'Cada tipo de problema, com a ação recomendada', i: 'alerta', m: /^card\|/ },
+        { t: 'Qualidade por DRE', s: 'Percentual de registros sem pendência em cada regional', i: 'bar', m: /Qualidade dos registros por DRE/ }
+    ],
+    contexto: [
+        { t: 'Indicadores educacionais', s: 'Ocorrências por mil estudantes e cruzamento com IDEB e outros', i: 'activity', m: /^card\|/ },
+        { t: 'Dados complementares', s: 'Importe a planilha de matrículas e indicadores', i: 'database', m: /Dados complementares/ }
+    ],
+    rede: [
+        { t: 'Emergência e denúncia', s: 'Números nacionais, gratuitos e 24 horas', i: 'alerta', m: /Emergência e denúncia/ },
+        { t: 'Rede cadastrada', s: 'Conselhos Tutelares, CAPS, delegacias e outros órgãos por município', i: 'shield', m: /kpis|^card\|/ }
+    ],
+    relatorio: [
+        { t: 'Configurar o documento', s: 'Título, classificação, autoria, fonte e seções', i: 'doc', m: /^card card-pad\|/ },
+        { t: 'Pré-visualização', s: 'Como o documento vai sair, página a página', i: 'eye', m: /rel-palco/ }
+    ],
+    usuarios: [
+        { t: 'Contas de acesso', s: 'Quem acessa a base, com perfil e situação', i: 'users', m: /^card\|(?![^|]*adm-abas)/ },
+        { t: 'Perfis', s: 'O que cada perfil pode ver e fazer', i: 'shield', m: /Perfis/ },
+        { t: 'Configurações do sistema', s: 'Alertas, rotinas, e-mails das DREs e manutenção', i: 'database', m: /Configurações|adm-abas/ }
+    ]
+};
+
+function tpChave(el) {
+    const h = [...el.querySelectorAll('h3')].map(x => x.textContent.trim()).join('|');
+    const ids = [el.id, ...[...el.querySelectorAll('[id]')].slice(0, 6).map(x => x.id)].filter(Boolean).join(' ');
+    return String(el.className || '').trim() + '|' + ids + '|' + h;
+}
+let _tpOcupado = false;
+function organizarTopicos(aba) {
+    const cfg = TOPICOS[aba], cont = $('cont-' + aba);
+    if (!cfg || !cont || _tpOcupado) return;
+    const filhos = [...cont.children];
+    if (!filhos.length) return;
+    const soltos = filhos.filter(el => !el.classList.contains('tp') && !el.classList.contains('tp-nav'));
+    if (!soltos.length) { tpAtualizarAtivo(aba); return; }
+    _tpOcupado = true;
+    try {
+        // devolve ao fluxo os blocos de uma organização anterior
+        const nos = [];
+        filhos.forEach(el => {
+            if (el.classList.contains('tp-nav')) return;
+            if (el.classList.contains('tp')) { const c = el.querySelector(':scope > .tp-corpo'); if (c) nos.push(...c.children); }
+            else nos.push(el);
+        });
+        const grupos = cfg.map(() => []);
+        let atual = 0;
+        nos.forEach(el => {
+            const k = tpChave(el);
+            const i = cfg.findIndex(t => t.m && t.m.test(k));
+            if (i >= 0) atual = i;
+            grupos[atual].push(el);
+        });
+        let fechados = {}; try { fechados = JSON.parse(localStorage.getItem('esp_tp_' + aba) || '{}'); } catch (e) { }
+        const usados = cfg.map((t, i) => ({ t, i, els: grupos[i] })).filter(g => g.els.length);
+        const frag = document.createDocumentFragment();
+        if (usados.length >= 2) {
+            const nav = document.createElement('nav');
+            nav.className = 'tp-nav'; nav.setAttribute('aria-label', 'Tópicos desta página');
+            nav.innerHTML = usados.map((g, n) => `<button type="button" data-tp="${g.i}"><span>${n + 1}</span>${esc(g.t.t)}</button>`).join('');
+            nav.addEventListener('click', e => { const b = e.target.closest('button[data-tp]'); if (b) tpIr(aba, +b.dataset.tp); });
+            frag.appendChild(nav);
+        }
+        usados.forEach((g, n) => {
+            const s = document.createElement('section');
+            s.className = 'tp' + (fechados[g.i] ? ' fechado' : ''); s.id = `tp-${aba}-${g.i}`; s.dataset.tp = g.i;
+            s.innerHTML = `<header class="tp-cab"><span class="tp-n">${n + 1}</span><span class="tp-ic">${ic(g.t.i)}</span><div class="tp-tx"><h2>${esc(g.t.t)}</h2><p>${esc(g.t.s)}</p></div>
+                <button type="button" class="tp-rec" aria-expanded="${!fechados[g.i]}" aria-label="Recolher ou mostrar este tópico">${ic('chevL')}<span>${fechados[g.i] ? 'Mostrar' : 'Recolher'}</span></button></header><div class="tp-corpo pilha"></div>`;
+            const corpo = s.querySelector('.tp-corpo');
+            g.els.forEach(el => corpo.appendChild(el));
+            s.querySelector('.tp-rec').onclick = () => {
+                const f = s.classList.toggle('fechado');
+                s.querySelector('.tp-rec').setAttribute('aria-expanded', String(!f));
+                s.querySelector('.tp-rec span').textContent = f ? 'Mostrar' : 'Recolher';
+                try { const o = JSON.parse(localStorage.getItem('esp_tp_' + aba) || '{}'); if (f) o[g.i] = 1; else delete o[g.i]; localStorage.setItem('esp_tp_' + aba, JSON.stringify(o)); } catch (e) { }
+                if (!f) tpRedimensionar(s);
+            };
+            frag.appendChild(s);
+        });
+        cont.appendChild(frag);
+        if (typeof MAPA !== 'undefined' && MAPA && aba === 'mapa') setTimeout(() => { try { MAPA.invalidateSize(); } catch (e) { } }, 60);
+    } finally { _tpOcupado = false; }
+    tpAtualizarAtivo(aba);
+}
+function tpRedimensionar(s) {
+    try { s.querySelectorAll('canvas').forEach(c => { const g = Object.values(graficos || {}).find(x => x.canvas === c); if (g) g.resize(); }); } catch (e) { }
+    try { if (typeof MAPA !== 'undefined' && MAPA) MAPA.invalidateSize(); } catch (e) { }
+}
+function tpIr(aba, i) {
+    const sec = $('aba-' + aba), alvo = $(`tp-${aba}-${i}`); if (!sec || !alvo) return;
+    if (alvo.classList.contains('fechado')) alvo.querySelector('.tp-rec').click();
+    const nav = sec.querySelector('.tp-nav'), folga = (nav ? nav.offsetHeight : 0) + 12;
+    const y = alvo.getBoundingClientRect().top - sec.getBoundingClientRect().top + sec.scrollTop - folga;
+    sec.scrollTo({ top: y, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+}
+function tpAtualizarAtivo(aba) {
+    const sec = $('aba-' + aba); if (!sec) return;
+    const nav = sec.querySelector('.tp-nav'); if (!nav) return;
+    const lim = sec.getBoundingClientRect().top + nav.offsetHeight + 40;
+    let ativo = null;
+    sec.querySelectorAll('.tp').forEach(s => { if (s.getBoundingClientRect().top <= lim) ativo = s.dataset.tp; });
+    if (ativo == null) { const p = sec.querySelector('.tp'); ativo = p && p.dataset.tp; }
+    nav.querySelectorAll('button').forEach(b => {
+        const on = b.dataset.tp === ativo;
+        if (on && !b.classList.contains('ativo')) { const l = b.offsetLeft - 12; if (nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: l, behavior: 'smooth' }); }
+        b.classList.toggle('ativo', on);
+    });
+}
+
+/* liga a organização a cada desenho da página, inclusive os feitos fora do renderAba */
+const _renderAbaV19 = renderAba;
+renderAba = function () { _renderAbaV19(); if (ABA) organizarTopicos(ABA); };
+(function ligarTopicos() {
+    const ir = () => {
+        Object.keys(TOPICOS).forEach(aba => {
+            const cont = $('cont-' + aba), sec = $('aba-' + aba);
+            if (cont && !cont._tpObs) {
+                let ag = false;
+                cont._tpObs = new MutationObserver(() => { if (_tpOcupado || ag) return; ag = true; requestAnimationFrame(() => { ag = false; organizarTopicos(aba); }); });
+                cont._tpObs.observe(cont, { childList: true });
+            }
+            if (sec && !sec._tpScroll) { let t = 0; sec._tpScroll = true; sec.addEventListener('scroll', () => { if (t) return; t = requestAnimationFrame(() => { t = 0; tpAtualizarAtivo(aba); }); }, { passive: true }); }
+        });
+    };
+    if ($('abas') && $('abas').children.length) ir();
+    else document.addEventListener('DOMContentLoaded', () => setTimeout(ir, 0));
+    // as seções são recriadas ao entrar no sistema: religa quando necessário
+    const _irParaV19 = irPara;
+    irPara = function (aba, semHash) { ir(); _irParaV19(aba, semHash); };
+})();
 
 </script>
 </body>
