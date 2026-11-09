@@ -1944,8 +1944,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '3.9.0+005a2926';
-const APP_NOTAS = 'A barra Recorte saiu do topo: agora cada seção tem os próprios filtros. O guia Como funciona esta página ficou em passos numerados.';
+const APP_VERSAO = '3.9.2+adb29de4';
+const APP_NOTAS = 'Novo ícone do EDUCASEG-PLUS: livro com sinal de monitoramento, no estilo dos aplicativos atuais.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -7490,6 +7490,44 @@ legendaHTML = function (aba) {
     return `<details class="legenda-pg lg2" id="leg-${aba}" ${aberto ? 'open' : ''}><summary><span class="lg2-sic">${ic('info')}</span><b>Como funciona esta página</b><span class="lg2-dica">4 passos para ler esta seção</span><span class="mut peq">${aberto ? 'ocultar' : 'mostrar'}</span></summary>
         <ol class="lg2-grade">${passos}</ol></details>`;
 };
+
+/* =====================================================================
+   EDUCASEG-PLUS 3.9.2 — emblema: livro + sinal de monitoramento, estilo de aplicativo atual
+   ===================================================================== */
+/* emblema 3.9.2: ícone 13 (livro + sinal) em estilo de aplicativo atual */
+function emblemaV5(tam, id, fundoTotal, estilo) {
+    id = (id || 'e5') + Math.random().toString(36).slice(2, 6);
+    estilo = estilo || EMBLEMA_ESTILO;
+    const P = {
+        vidro: { bg: ['#4f8cff', '#1d4ed8', '#172a8a'], pag: ['#ffffff', '#dbe7ff'], arc: ['#a5f3fc', '#ffffff'], brilho: .22, sombra: '#0b1a5c' },
+        noite: { bg: ['#1e293b', '#0f172a', '#020617'], pag: ['#7dd3fc', '#3b82f6'], arc: ['#67e8f9', '#38bdf8'], brilho: .08, sombra: '#000000' },
+        claro: { bg: ['#ffffff', '#eef3fb', '#dbe4f3'], pag: ['#3b82f6', '#1d4ed8'], arc: ['#22d3ee', '#0ea5e9'], brilho: .5, sombra: '#1e3a8a' },
+        aurora: { bg: ['#22d3ee', '#3b82f6', '#6d28d9'], pag: ['#ffffff', '#e0e7ff'], arc: ['#ffffff', '#e0f2fe'], brilho: .2, sombra: '#312e81' }
+    }[estilo] || {};
+    const sq = 'M32 1c-17.5 0-24.6 1.3-27.7 4.3S1 14.5 1 32s1.3 24.6 4.3 27.7S14.5 63 32 63s24.6-1.3 27.7-4.3S63 49.5 63 32s-1.3-24.6-4.3-27.7S49.5 1 32 1Z';
+    const forma = fundoTotal ? 'M0 0h64v64H0Z' : sq;
+    return `<svg viewBox="0 0 64 64" width="${tam}" height="${tam}" aria-hidden="true" class="emblema">
+    <defs>
+      <linearGradient id="${id}b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${P.bg[0]}"/><stop offset=".55" stop-color="${P.bg[1]}"/><stop offset="1" stop-color="${P.bg[2]}"/></linearGradient>
+      <radialGradient id="${id}h" cx=".28" cy=".12" r=".75"><stop offset="0" stop-color="#fff" stop-opacity="${P.brilho}"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      <linearGradient id="${id}p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.pag[0]}"/><stop offset="1" stop-color="${P.pag[1]}"/></linearGradient>
+      <linearGradient id="${id}a" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="${P.arc[0]}"/><stop offset="1" stop-color="${P.arc[1]}"/></linearGradient>
+      <filter id="${id}s" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="1.6" stdDeviation="1.6" flood-color="${P.sombra}" flood-opacity=".38"/></filter>
+    </defs>
+    <path d="${forma}" fill="url(#${id}b)"/>
+    <path d="${forma}" fill="url(#${id}h)"/>
+    ${fundoTotal ? '' : `<path d="${sq}" fill="none" stroke="#fff" stroke-opacity="${estilo === 'claro' ? .9 : .16}" stroke-width="1"/>`}
+    <g filter="url(#${id}s)">
+      <path d="M14 33.5c5.6-2.2 11.7-1.6 16.6 1.9v15.4c-4.9-3.5-11-4.1-16.6-1.9Z" fill="url(#${id}p)"/>
+      <path d="M50 33.5c-5.6-2.2-11.7-1.6-16.6 1.9v15.4c4.9-3.5 11-4.1 16.6-1.9Z" fill="url(#${id}p)" fill-opacity=".86"/>
+      <path d="M21.2 20.6a15.3 15.3 0 0 1 21.6 0M26 25.4a8.5 8.5 0 0 1 12 0" fill="none" stroke="url(#${id}a)" stroke-width="3.3" stroke-linecap="round"/>
+      <circle cx="32" cy="29.6" r="2.5" fill="url(#${id}a)"/>
+    </g>
+  </svg>`;
+}
+let EMBLEMA_ESTILO = 'vidro';
+emblema = emblemaV5;
+if (typeof aplicarEmblema === 'function') aplicarEmblema();
 
 </script>
 </body>
