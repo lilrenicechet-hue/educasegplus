@@ -1924,6 +1924,137 @@ html.sem-recorte #recorte { display: none !important; }
 .tp-rec svg { transform: rotate(90deg); transition: transform .15s; }
 .tp.fechado .tp-rec svg { transform: rotate(-90deg); }
 </style>
+<style>
+/* ===== 4.1: Rede de vínculos · grupos ===== */
+.vn4-grade { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); align-items: start; }
+.vn4-lista { position: sticky; top: 70px; display: flex; flex-direction: column; max-height: calc(100vh - 110px); }
+.vn4-riscos { display: flex; flex-wrap: wrap; gap: 6px; }
+.vn4-riscos span { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--texto2); padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--c) 10%, transparent); }
+.vn4-riscos i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.vn4-ctl { margin-top: 8px; }
+.vn4-ctl .campo { height: 36px; font-size: 13px; }
+.vn4-fil { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.vn4-fil button { height: 28px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--borda); background: none; color: var(--muted); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.vn4-fil button.ativo { background: var(--roxo); border-color: var(--roxo); color: #fff; }
+.vn4-itens { overflow-y: auto; border-top: 1px solid var(--borda); flex: 1; min-height: 0; }
+.vn4-it { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 12px; align-items: start; width: 100%; padding: 12px 16px; border: 0; border-bottom: 1px solid var(--borda); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; position: relative; }
+.vn4-it::before { content: ''; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 0 3px 3px 0; background: var(--c); opacity: .7; }
+.vn4-it:hover { background: var(--suave); }
+.vn4-it.sel { background: color-mix(in srgb, var(--roxo) 9%, transparent); }
+.vn4-it.sel::before { opacity: 1; width: 4px; }
+.vn4-it-n { display: grid; justify-items: center; align-content: center; height: 52px; border-radius: 12px; background: color-mix(in srgb, var(--roxo) 10%, transparent); color: var(--roxo); }
+.vn4-it-n b { font-size: 19px; font-weight: 900; line-height: 1; }
+.vn4-it-n small { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.vn4-it-tx { min-width: 0; display: grid; gap: 3px; }
+.vn4-it-t { font-weight: 800; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vn4-it-s { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vn4-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
+.vn4-tags em { font-style: normal; font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: var(--suave2); color: var(--texto2); }
+.vn4-tags em.r { background: color-mix(in srgb, var(--c) 14%, transparent); color: var(--c); }
+.vn4-tags em.at { background: color-mix(in srgb, var(--c-crit) 12%, transparent); color: var(--c-crit); }
+.vn4-tags em.sv { background: color-mix(in srgb, var(--c-alto) 14%, transparent); color: var(--c-alto); }
+.vn4-it-d { font-size: 11.5px; color: var(--muted); white-space: nowrap; padding-top: 2px; }
+.vn4-cab { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+.vn4-cab-n { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 13px; background: var(--c); color: #fff; font-size: 19px; font-weight: 900; flex: none; }
+.vn4-cab-tx { flex: 1; min-width: 0; }
+.vn4-cab-tx h3 { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: -.01em; line-height: 1.25; }
+.vn4-cab-tx p { margin: 5px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--texto2); }
+.vn4-risco { flex: none; font-size: 12px; font-weight: 800; padding: 6px 12px; border-radius: 999px; color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent); }
+.vn4-nums { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; }
+.vn4-nums div { padding: 10px 12px; border-radius: 12px; background: var(--suave); display: grid; gap: 2px; min-width: 0; }
+.vn4-nums b { font-size: 18px; font-weight: 900; color: var(--c); line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vn4-nums small { font-size: 11px; color: var(--muted); font-weight: 600; }
+.vn4-acoes { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 10px; margin-top: 12px; }
+.vn4-int { flex: 1; min-width: 240px; border: 1px solid var(--borda); border-radius: 10px; }
+.vn4-int summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 13px; font-weight: 700; }
+.vn4-int summary::-webkit-details-marker { display: none; }
+.vn4-int summary svg { width: 16px; height: 16px; color: var(--roxo); }
+.vn4-int-l { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 4px; padding: 4px 8px 10px; max-height: 260px; overflow: auto; }
+.vn4-int-l button { display: grid; grid-template-columns: 10px minmax(0, 1fr); column-gap: 8px; align-items: center; text-align: left; padding: 6px 8px; border-radius: 8px; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.vn4-int-l button:hover { background: var(--suave); }
+.vn4-int-l i { grid-row: 1 / 3; width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
+.vn4-int-l b { font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vn4-int-l small { font-size: 11px; color: var(--muted); }
+.vn4-g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+.vn4-h { margin: 16px 0 8px; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.vn4-fez .card-tit + .vn4-h, .vn4-onde .vn4-h:first-of-type { margin-top: 4px; }
+.vn4-tps { display: grid; gap: 7px; }
+.vn4-tp { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 26px 36px; gap: 10px; align-items: center; font-size: 13px; }
+.vn4-tp .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vn4-tp .nm em { font-style: normal; font-size: 10px; font-weight: 800; color: var(--c-crit); background: color-mix(in srgb, var(--c-crit) 12%, transparent); padding: 1px 6px; border-radius: 999px; }
+.vn4-tp .br, .vn4-esc .br { height: 8px; border-radius: 999px; background: var(--suave2); overflow: hidden; }
+.vn4-tp .br i, .vn4-esc .br i { display: block; height: 100%; border-radius: 999px; }
+.vn4-tp b { text-align: right; font-variant-numeric: tabular-nums; }
+.vn4-tp small { color: var(--muted); font-size: 11.5px; text-align: right; }
+.vn4-grav { display: flex; gap: 2px; height: 14px; border-radius: 999px; overflow: hidden; background: var(--suave2); }
+.vn4-grav span { min-width: 5px; }
+.vn4-grav-l { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 8px; font-size: 12px; color: var(--texto2); }
+.vn4-grav-l span { display: inline-flex; align-items: center; gap: 5px; }
+.vn4-grav-l i { width: 9px; height: 9px; border-radius: 3px; }
+.vn4-tl { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px; align-items: end; height: 92px; }
+.vn4-tl > div { display: grid; grid-template-rows: 1fr auto; height: 100%; gap: 4px; }
+.vn4-tl .b { position: relative; background: var(--suave); border-radius: 5px; overflow: hidden; }
+.vn4-tl .b i { position: absolute; left: 0; right: 0; bottom: 0; background: color-mix(in srgb, var(--roxo) 55%, transparent); border-radius: 4px 4px 0 0; }
+.vn4-tl .b i.g { background: var(--c-crit); }
+.vn4-tl small { font-size: 10px; color: var(--muted); text-align: center; }
+.vn4-nota { margin: 6px 0 0; font-size: 11.5px; color: var(--muted); }
+.vn4-quando { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.vn4-quando > div { display: flex; gap: 8px; align-items: center; padding: 10px; border-radius: 10px; background: var(--suave); min-width: 0; }
+.vn4-quando svg { width: 18px; height: 18px; color: var(--roxo); flex: none; }
+.vn4-quando small { display: block; font-size: 10.5px; color: var(--muted); font-weight: 700; }
+.vn4-quando b { display: block; font-size: 13px; }
+.vn4-rec { margin: 0 -18px -18px; }
+.vn4-mapa { border-radius: 12px; background: var(--suave); padding: 8px; }
+.vn4-mapa svg { display: block; width: 100%; height: auto; max-height: 300px; }
+.vn4-muns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.vn4-muns span { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; padding: 4px 10px; border-radius: 999px; background: color-mix(in srgb, var(--roxo) 9%, transparent); color: var(--texto2); }
+.vn4-muns svg { width: 13px; height: 13px; color: var(--roxo); }
+.vn4-escs { display: grid; gap: 4px; max-height: 340px; overflow: auto; }
+.vn4-esc { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) 46px; gap: 10px; align-items: center; padding: 8px; border-radius: 10px; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.vn4-esc:hover { background: var(--suave); }
+.vn4-esc .nm b { display: block; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vn4-esc .nm small { font-size: 11px; color: var(--muted); }
+.vn4-esc .br i { background: var(--roxo); }
+.vn4-esc .v { text-align: right; } .vn4-esc .v b { display: block; font-size: 13px; } .vn4-esc .v small { font-size: 10.5px; color: var(--muted); }
+@media (max-width: 1280px) { .vn4-g2 { grid-template-columns: minmax(0, 1fr); } .vn4-nums { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 900px) {
+  .vn4-grade { grid-template-columns: minmax(0, 1fr); }
+  .vn4-lista { position: static; max-height: none; }
+  .vn4-itens { max-height: 420px; }
+}
+@media (max-width: 640px) {
+  .vn4-cab { flex-wrap: wrap; }
+  .vn4-risco { order: -1; margin-left: auto; }
+  .vn4-nums { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vn4-quando { grid-template-columns: minmax(0, 1fr); }
+  .vn4-tp { grid-template-columns: minmax(0, 1fr) 26px 36px; }
+  .vn4-tp .br { grid-column: 1 / -1; grid-row: 2; }
+  .vn4-esc { grid-template-columns: minmax(0, 1fr) 46px; }
+  .vn4-esc .br { grid-column: 1 / -1; grid-row: 2; }
+  .vn4-rec { margin: 0 -16px -16px; }
+}
+</style>
+<style>
+.vn4-quando { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.vn4-tp .nm em, .vn4-h-n em { display: inline-grid; place-items: center; width: 15px; height: 15px; padding: 0; border-radius: 50%; font-size: 10px; background: var(--c-crit); color: #fff; font-style: normal; font-weight: 900; vertical-align: 1px; }
+.vn4-h-n { float: right; font-size: 10.5px; letter-spacing: 0; text-transform: none; font-weight: 600; display: inline-flex; gap: 5px; align-items: center; }
+</style>
+<style>
+@media (max-width: 640px) {
+  .vn4-cab { display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 10px 12px; }
+  .vn4-cab-n { width: 42px; height: 42px; font-size: 17px; }
+  .vn4-cab-tx h3 { font-size: 16.5px; }
+  .vn4-cab-tx p { grid-column: 1 / -1; }
+  .vn4-risco { order: 0; margin: 0; grid-column: 1 / -1; justify-self: start; }
+}
+</style>
+<style>
+@media (max-width: 640px) {
+  .vn4-cab-tx { display: contents; }
+  .vn4-cab-tx h3 { align-self: center; }
+  .vn4-cab-tx p { grid-column: 1 / -1; margin: 0; }
+}
+</style>
 
 </head>
 <body>
@@ -1990,8 +2121,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '4.0.0+0a2ccb14';
-const APP_NOTAS = 'Páginas organizadas em tópicos numerados, com títulos em destaque e barra de tópicos no topo.';
+const APP_VERSAO = '4.1.0+312a5d3b';
+const APP_NOTAS = 'Rede de vínculos: grupos com risco, busca e filtros; o que o grupo fez com tipos, gravidade e linha do tempo; onde atuou com mapa e escolas.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -7378,14 +7509,26 @@ const MAPA_DOC = (() => {
 
 /* Desenha o mapa. o = { cor: k => cor|null, pontos: [{lat,lng,r,cor,borda}], rotulos: [{k,t}], sedes: bool, titulo } */
 function mapaMT(o) {
-    const M = MAPA_DOC, pad = 8;
+    const M = MAPA_DOC;
+    // enquadramento: o estado inteiro ou, com o.zoom ([[lng,lat],...]), só a área de interesse
+    let vx = -8, vy = -8, vw = M.W + 16, vh = M.H + 16;
+    if (o.zoom && o.zoom.length) {
+        const ps = o.zoom.map(([lng, lat]) => M.pr(lng, lat));
+        let x0 = Math.min(...ps.map(p => p[0])), x1 = Math.max(...ps.map(p => p[0])), y0 = Math.min(...ps.map(p => p[1])), y1 = Math.max(...ps.map(p => p[1]));
+        const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+        let w = Math.max(x1 - x0, (y1 - y0) * M.W / M.H, o.zoomMin || 150) * 1.5;
+        w = Math.min(w, M.W + 16); const h = w * M.H / M.W;
+        vx = cx - w / 2; vy = cy - h / 2; vw = w; vh = h;
+    }
+    const k = vw / (M.W + 16); // fator: mantém traços, pontos e textos no mesmo tamanho visual
+    const f = v => (v * k).toFixed(2);
     const muns = M.mun.map(m => `<path d="${m.d}" fill="${(o.cor && o.cor(m.k)) || '#eef2f7'}"/>`).join('');
-    const sedes = o.sedes ? SEDES.map(s => { const [x, y] = M.pr(s.lng, s.lat); return `<rect x="${(x - 4).toFixed(1)}" y="${(y - 4).toFixed(1)}" width="8" height="8" rx="1.5" fill="#fff" stroke="#0b1a42" stroke-width="1.6"/>`; }).join('') : '';
-    const pts = (o.pontos || []).map(p => { const [x, y] = M.pr(p.lng, p.lat); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(p.r || 3.5).toFixed(1)}" fill="${p.cor || '#be123c'}" fill-opacity="${p.op || .85}" stroke="${p.borda || '#fff'}" stroke-width="1"/>`; }).join('');
-    const rot = (o.rotulos || []).map(r => { const m = M.mun.find(x => x.k === r.k); if (!m) return ''; const [x, y] = m.c; const t = esc(r.t); return `<text x="${x.toFixed(1)}" y="${(y - 9).toFixed(1)}" text-anchor="middle" font-size="17" font-weight="800" fill="#0b1a42" stroke="#fff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round">${t}</text><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.6" fill="#0b1a42" stroke="#fff" stroke-width="1"/>`; }).join('');
-    return `<svg class="dx-mapa-svg" viewBox="${-pad} ${-pad} ${(M.W + pad * 2).toFixed(0)} ${(M.H + pad * 2).toFixed(0)}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(o.titulo || 'Mapa de Mato Grosso')}">
-        <g stroke="#ffffff" stroke-width=".7" stroke-linejoin="round">${muns}</g>
-        <path d="${M.uf}" fill="none" stroke="#0b1a42" stroke-width="1.8" stroke-linejoin="round"/>
+    const sedes = o.sedes ? SEDES.map(s => { const [x, y] = M.pr(s.lng, s.lat); return `<rect x="${(x - 4 * k).toFixed(1)}" y="${(y - 4 * k).toFixed(1)}" width="${f(8)}" height="${f(8)}" rx="${f(1.5)}" fill="#fff" stroke="#0b1a42" stroke-width="${f(1.6)}"/>`; }).join('') : '';
+    const pts = (o.pontos || []).map(p => { const [x, y] = M.pr(p.lng, p.lat); return `<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${f(p.r || 3.5)}" fill="${p.cor || '#be123c'}" fill-opacity="${p.op || .85}" stroke="${p.borda || '#fff'}" stroke-width="${f(1)}"/>`; }).join('');
+    const rot = (o.rotulos || []).map(r => { const m = M.mun.find(x => x.k === r.k); if (!m) return ''; const [x, y] = m.c; return `<text x="${x.toFixed(2)}" y="${(y - 9 * k).toFixed(2)}" text-anchor="middle" font-size="${f(17)}" font-weight="800" fill="#0b1a42" stroke="#fff" stroke-width="${f(4.5)}" paint-order="stroke" stroke-linejoin="round">${esc(r.t)}</text><circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${f(3.6)}" fill="#0b1a42" stroke="#fff" stroke-width="${f(1)}"/>`; }).join('');
+    return `<svg class="dx-mapa-svg" viewBox="${vx.toFixed(1)} ${vy.toFixed(1)} ${vw.toFixed(1)} ${vh.toFixed(1)}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(o.titulo || 'Mapa de Mato Grosso')}">
+        <g stroke="#ffffff" stroke-width="${f(.7)}" stroke-linejoin="round">${muns}</g>
+        <path d="${M.uf}" fill="none" stroke="#0b1a42" stroke-width="${f(1.8)}" stroke-linejoin="round"/>
         ${sedes}${pts}${rot}</svg>`;
 }
 function legendaMapa(itens, extra) {
@@ -7779,6 +7922,149 @@ renderAba = function () { _renderAbaV19(); if (ABA) organizarTopicos(ABA); };
     const _irParaV19 = irPara;
     irPara = function (aba, semHash) { ir(); _irParaV19(aba, semHash); };
 })();
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.1 — Rede de vínculos: grupos encontrados, o que o
+   grupo fez e onde atuou, com contexto, risco, tempo e mapa
+   ===================================================================== */
+Object.assign(VN2, { gBusca: '', gOrd: 'risco', gFiltro: '' });
+const VN4_DIAS = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+const VN4_RISCO = { alto: ['Risco alto', 'var(--c-crit)'], medio: ['Risco médio', 'var(--c-alto)'], baixo: ['Risco baixo', 'var(--c-baixo)'] };
+
+/* Enriquecer cada grupo com contexto para a lista e o detalhe */
+function vn4Perfil(g) {
+    if (g._p) return g._p;
+    const hoje = A.hoje || new Date();
+    const regs = g.regs.filter(r => r.dt).sort((a, b) => a.dt - b.dt);
+    const ult = regs.length ? regs[regs.length - 1].dt : null, pri = regs.length ? regs[0].dt : null;
+    const dUlt = ult ? Math.max(0, diasEntre(ult, hoje)) : 9999;
+    const crit = {}; CRIT_ORD.forEach(c => crit[c] = 0); g.regs.forEach(r => { if (crit[r.crit] != null) crit[r.crit]++; });
+    const porEsc = new Map(); g.regs.forEach(r => porEsc.set(r.escK, (porEsc.get(r.escK) || 0) + 1));
+    const escs = [...porEsc.entries()].sort((a, b) => b[1] - a[1]);
+    const porMun = new Map(); g.regs.forEach(r => porMun.set(r.mun, (porMun.get(r.mun) || 0) + 1));
+    const muns = [...porMun.entries()].sort((a, b) => b[1] - a[1]);
+    const recentes = g.regs.filter(r => r.dt && diasEntre(r.dt, hoje) <= 30);
+    const graveRec = recentes.some(r => ehSevero(r.tipo) || r.crit === 'CRÍTICO');
+    const risco = graveRec || (g.coaut >= 3 && recentes.length) ? 'alto' : dUlt <= 90 || g.sev ? 'medio' : 'baixo';
+    const pontos = (risco === 'alto' ? 1000 : risco === 'medio' ? 500 : 0) + g.sev * 20 + crit['CRÍTICO'] * 12 + g.coaut * 2 + recentes.length * 6 - Math.min(dUlt, 400) / 10;
+    const autores = g.membros.filter(n => n.agr > n.vit).length, vitimas = g.membros.filter(n => n.vit > n.agr).length, ambos = g.membros.length - autores - vitimas;
+    const nomeEsc = k => { const e = A.escolas.get(k); return e ? e.nome : (g.regs.find(r => r.escK === k) || {}).esc || '—'; };
+    const escP = escs[0] ? nomeEsc(escs[0][0]) : '—';
+    const rotulo = escP + (escs.length > 1 ? ` e mais ${escs.length - 1}` : '');
+    const tipoP = g.tipos[0] ? g.tipos[0][0] : '—';
+    // quando age
+    const dias = Array(7).fill(0), horas = Array(24).fill(0); let comHora = 0;
+    g.regs.forEach(r => { if (!r.dt) return; dias[r.dt.getDay()]++; if (r.dt.getHours() || r.dt.getMinutes()) { horas[r.dt.getHours()]++; comHora++; } });
+    const dMax = dias.indexOf(Math.max(...dias));
+    let hIni = -1, hMelhor = 0; for (let h = 0; h < 22; h++) { const s = horas[h] + horas[h + 1] + horas[h + 2]; if (s > hMelhor) { hMelhor = s; hIni = h; } }
+    return g._p = { regs, ult, pri, dUlt, crit, escs, muns, recentes, risco, pontos, autores, vitimas, ambos, rotulo, escP, tipoP, nomeEsc, dias, dMax, hIni, hMelhor, comHora };
+}
+const vn4Quando = d => d >= 9999 ? 'sem data' : d === 0 ? 'hoje' : d === 1 ? 'ontem' : d < 60 ? `há ${d} dias` : d < 730 ? `há ${Math.round(d / 30)} meses` : `há ${Math.round(d / 365)} anos`;
+
+/* ---------- Lista: grupos encontrados ---------- */
+function vn4Lista(G) {
+    const q = chave(VN2.gBusca || '');
+    let L = G.grupos.map((g, i) => ({ g, i, p: vn4Perfil(g) }));
+    if (q) L = L.filter(({ g, p }) => g.membros.some(n => n.k.includes(q)) || p.escs.some(([k]) => chave(p.nomeEsc(k)).includes(q)) || p.muns.some(([m]) => chave(nomeMun(m)).includes(q)));
+    if (VN2.gFiltro === 'ativos') L = L.filter(x => x.p.dUlt <= 30);
+    if (VN2.gFiltro === 'sensiveis') L = L.filter(x => x.g.sev > 0);
+    if (VN2.gFiltro === 'coaut') L = L.filter(x => x.g.coaut > 0);
+    const ord = { risco: (a, b) => b.p.pontos - a.p.pontos, tamanho: (a, b) => b.g.membros.length - a.g.membros.length, recente: (a, b) => a.p.dUlt - b.p.dUlt, registros: (a, b) => b.g.regs.length - a.g.regs.length }[VN2.gOrd];
+    L.sort(ord);
+    const cont = { alto: 0, medio: 0, baixo: 0 }; G.grupos.forEach(g => cont[vn4Perfil(g).risco]++);
+    const fil = [['', 'Todos'], ['ativos', 'Ativos em 30 dias'], ['sensiveis', 'Com tipo sensível'], ['coaut', 'Com coautoria']];
+    return `<div class="card vn4-lista"><div class="card-pad" style="padding-bottom:10px">
+        <div class="card-tit" style="margin-bottom:10px"><div class="ico" style="--c:var(--roxo)">${ic('grid')}</div><div><h3>Grupos encontrados</h3><p>${fmtN(G.grupos.length)} grupos de 3 ou mais pessoas ligadas entre si</p></div></div>
+        <div class="vn4-riscos">${Object.entries(cont).map(([k, n]) => `<span style="--c:${VN4_RISCO[k][1]}"><i></i><b>${n}</b> ${VN4_RISCO[k][0].replace('Risco ', '')}</span>`).join('')}</div>
+        <div class="busca" style="margin-top:10px">${ic('search')}<input class="campo" id="vn4-q" placeholder="Buscar por pessoa, escola ou município" value="${esc(VN2.gBusca)}" autocomplete="off"></div>
+        <div class="vn4-ctl"><select class="campo" id="vn4-ord" aria-label="Ordenar grupos">${[['risco', 'Maior risco primeiro'], ['recente', 'Mais recentes'], ['tamanho', 'Mais pessoas'], ['registros', 'Mais registros']].map(([v, t]) => `<option value="${v}" ${VN2.gOrd === v ? 'selected' : ''}>${t}</option>`).join('')}</select></div>
+        <div class="vn4-fil">${fil.map(([v, t]) => `<button type="button" class="${VN2.gFiltro === v ? 'ativo' : ''}" onclick="VN2.gFiltro='${v}';rVinculos()">${t}</button>`).join('')}</div></div>
+        <div class="vn4-itens">${L.slice(0, 80).map(({ g, i, p }) => `<button type="button" class="vn4-it${i === VN2.grupo ? ' sel' : ''}" onclick="VN2.grupo=${i};rVinculos();vn4RolarDetalhe()" style="--c:${VN4_RISCO[p.risco][1]}">
+            <span class="vn4-it-n"><b>${g.membros.length}</b><small>pessoas</small></span>
+            <span class="vn4-it-tx"><span class="vn4-it-t">Grupo ${i + 1} · ${esc(p.rotulo)}</span>
+                <span class="vn4-it-s">${esc(p.tipoP)} · ${g.regs.length} registro(s) · ${esc(nomeMun((p.muns[0] || [''])[0]))}</span>
+                <span class="vn4-tags"><em class="r">${VN4_RISCO[p.risco][0]}</em>${p.dUlt <= 30 ? '<em class="at">ativo</em>' : ''}${g.sev ? `<em class="sv">${g.sev} sensível(is)</em>` : ''}${g.coaut ? `<em>${g.coaut} coautoria(s)</em>` : ''}</span></span>
+            <span class="vn4-it-d">${vn4Quando(p.dUlt)}</span></button>`).join('') || '<div class="vazio peq">Nenhum grupo com esses critérios.</div>'}</div>
+        ${L.length > 80 ? `<p class="peq mut" style="padding:8px 16px 12px;margin:0">Mostrando 80 de ${L.length}. Use a busca para encontrar outros.</p>` : ''}</div>`;
+}
+function vn4RolarDetalhe() { if (!matchMedia('(max-width: 900px)').matches) return; setTimeout(() => { const d = $('vn4-detalhe'), sec = $('aba-vinculos'); if (!d || !sec) return; const nav = sec.querySelector('.tp-nav'); sec.scrollTo({ top: d.getBoundingClientRect().top - sec.getBoundingClientRect().top + sec.scrollTop - (nav ? nav.offsetHeight + 14 : 12), behavior: 'smooth' }); }, 80); }
+
+/* ---------- Detalhe: cabeçalho e grafo ---------- */
+function vn4Cabecalho(g, p) {
+    const per = p.pri ? `entre ${fmtD(p.pri)} e ${fmtD(p.ult)}` : 'sem datas';
+    const frase = `${g.membros.length} pessoas (${p.autores} mais vezes autoras, ${p.vitimas} mais vezes vítimas${p.ambos ? ', ' + p.ambos + ' nos dois papéis' : ''}) ligadas por ${g.regs.length} registro(s) em ${p.escs.length} escola(s) de ${p.muns.length === 1 ? esc(nomeMun(p.muns[0][0])) : p.muns.length + ' municípios'}, ${per}.`;
+    const num = (v, t, c) => `<div style="--c:${c || 'var(--texto)'}"><b>${v}</b><small>${t}</small></div>`;
+    return `<div class="card card-pad" id="vn4-detalhe">
+        <div class="vn4-cab"><span class="vn4-cab-n" style="--c:${VN4_RISCO[p.risco][1]}">${VN2.grupo + 1}</span>
+            <div class="vn4-cab-tx"><h3>Grupo ${VN2.grupo + 1} · ${esc(p.rotulo)}</h3><p>${frase}</p></div>
+            <span class="vn4-risco" style="--c:${VN4_RISCO[p.risco][1]}">${VN4_RISCO[p.risco][0]}</span></div>
+        <div class="vn4-nums">${num(g.membros.length, 'pessoas', 'var(--roxo)')}${num(g.regs.length, 'registros')}${num(g.coaut, 'coautorias', 'var(--c-crit)')}${num(g.sev, 'tipos sensíveis', 'var(--c-alto)')}${num(p.escs.length, 'escolas')}${num(vn4Quando(p.dUlt), 'último fato', p.dUlt <= 30 ? 'var(--c-crit)' : 'var(--texto)')}</div>
+        <div class="vn2-tela"><canvas id="vn-canvas" aria-label="Grafo do grupo"></canvas><div class="mapa-painel" id="vn-dica" style="display:none;pointer-events:none"></div></div>
+        ${legendaGrafo()}
+        <div class="vn4-acoes"><button class="btn btn-s btn-sm" onclick="listaModal('Registros do grupo ${VN2.grupo + 1}', GRAFO.grupos[${VN2.grupo}].regs)">${ic('book')}Ver os ${g.regs.length} registros</button>
+            <details class="vn4-int"><summary>${ic('users')}Integrantes (${g.membros.length})</summary><div class="vn4-int-l">${g.membros.map(n => `<button type="button" onclick="VN2.modo='pessoa';VN2.pessoa='${esc(n.k)}';rVinculos()"><i style="--c:${n.agr && n.vit ? 'var(--roxo)' : n.agr ? 'var(--c-crit)' : 'var(--prim)'}"></i><b>${esc(n.nome)}</b><small>${n.agr} autor · ${n.vit} vítima</small></button>`).join('')}</div></details></div>
+    </div>`;
+}
+
+/* ---------- O que o grupo fez ---------- */
+function vn4OQueFez(g, p) {
+    const tot = g.regs.length || 1, max = g.tipos[0] ? g.tipos[0][1] : 1;
+    const tipos = g.tipos.slice(0, 6).map(([t, v]) => { const sev = g.regs.some(r => tipoCurto(r.tipo) === t && ehSevero(r.tipo)); return `<div class="vn4-tp"><span class="nm">${esc(t)}${sev ? ' <em title="Tipo sensível">!</em>' : ''}</span><span class="br"><i style="width:${Math.max(4, v / max * 100)}%;background:${sev ? 'var(--c-crit)' : 'var(--roxo)'}"></i></span><b>${v}</b><small>${Math.round(v / tot * 100)}%</small></div>`; }).join('');
+    const grav = `<div class="vn4-grav">${CRIT_ORD.map(c => p.crit[c] ? `<span style="flex:${p.crit[c]};background:${corCrit(c)}" title="${c}: ${p.crit[c]}"></span>` : '').join('')}</div>
+        <div class="vn4-grav-l">${CRIT_ORD.map(c => `<span><i style="background:${corCrit(c)}"></i>${c.charAt(0) + c.slice(1).toLowerCase()} <b>${p.crit[c]}</b></span>`).join('')}</div>`;
+    // linha do tempo: 12 meses até a data de referência
+    const hoje = A.hoje || new Date(), meses = [];
+    for (let i = 11; i >= 0; i--) { const d = new Date(hoje.getFullYear(), hoje.getMonth() - i, 1); meses.push({ k: d.getFullYear() * 12 + d.getMonth(), r: MES_ABR[d.getMonth()], n: 0, g: 0 }); }
+    g.regs.forEach(r => { if (!r.dt) return; const m = meses.find(x => x.k === r.dt.getFullYear() * 12 + r.dt.getMonth()); if (m) { m.n++; if (r.crit === 'CRÍTICO' || r.crit === 'ALTO' || ehSevero(r.tipo)) m.g++; } });
+    const mx = Math.max(1, ...meses.map(m => m.n)), fora = g.regs.filter(r => r.dt && !meses.some(m => m.k === r.dt.getFullYear() * 12 + r.dt.getMonth())).length;
+    const linha = `<div class="vn4-tl">${meses.map(m => `<div title="${m.r}: ${m.n} registro(s), ${m.g} grave(s)"><span class="b"><i style="height:${m.n ? Math.max(8, m.n / mx * 100) : 0}%"></i>${m.g ? `<i class="g" style="height:${Math.max(6, m.g / mx * 100)}%"></i>` : ''}</span><small>${m.r}</small></div>`).join('')}</div>
+        <p class="vn4-nota">${fora ? `${fora} registro(s) anteriores aos últimos 12 meses. ` : ''}Em vermelho, a parte crítica, alta ou de tipo sensível.</p>`;
+    const quando = `<div class="vn4-quando"><div>${ic('clock')}<span><small>Dia mais comum</small><b>${p.dias[p.dMax] ? VN4_DIAS[p.dMax] : '—'}</b></span></div>
+        <div>${ic('sun')}<span><small>Faixa de horário</small><b>${p.comHora && p.hIni >= 0 ? `${p.hIni}h às ${p.hIni + 3}h` : 'sem horário'}</b></span></div>
+        <div>${ic('repeat')}<span><small>Ritmo</small><b>${p.regs.length > 1 ? fmt1(Math.max(1, diasEntre(p.pri, p.ult)) / (p.regs.length - 1)) + ' dias entre fatos' : 'fato único'}</b></span></div></div>`;
+    const recentes = p.regs.slice(-4).reverse();
+    const ult = `<div class="lista vn4-rec">${recentes.map(r => `<button class="item" onclick="abrirOcorrencia('${esc(r.id)}')"><span class="ic" style="--c:${corCrit(r.crit)}">${ic(ehSevero(r.tipo) ? 'zap' : 'book')}</span><span class="tx"><b>${esc(tipoCurto(r.tipo))}</b><span>${fmtD(r.dt)} · ${esc(r.esc)}</span></span></button>`).join('')}</div>`;
+    return `<div class="card card-pad vn4-fez"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('bar')}</div><div><h3>O que o grupo fez</h3><p>Tipos, gravidade, quando age e os fatos mais recentes</p></div></div>
+        <h4 class="vn4-h">Tipos de fato <span class="vn4-h-n"><em>!</em> tipo sensível</span></h4><div class="vn4-tps">${tipos}</div>
+        <h4 class="vn4-h">Gravidade</h4>${grav}
+        <h4 class="vn4-h">Últimos 12 meses</h4>${linha}
+        <h4 class="vn4-h">Quando age</h4>${quando}
+        <h4 class="vn4-h">Fatos mais recentes</h4>${ult}</div>`;
+}
+
+/* ---------- Onde atuou ---------- */
+function vn4Onde(g, p) {
+    const tot = g.regs.length || 1, max = p.escs[0] ? p.escs[0][1] : 1;
+    const munSet = new Set(p.muns.map(([m]) => m));
+    const pontos = p.escs.map(([k, n]) => { const e = A.escolas.get(k), m = e ? MUN_POR_K.get(e.mun) : null; const lat = e && e.lat || (m && m.lat), lng = e && e.lng || (m && m.lng); return lat && lng ? { lat, lng, r: 11 + 13 * Math.sqrt(n / max), cor: '#a855f7', op: .85, borda: '#ffffff' } : null; }).filter(Boolean);
+    const mapa = typeof mapaMT === 'function' ? `<div class="vn4-mapa">${mapaMT({ cor: k => munSet.has(k) ? '#e9d5ff' : null, pontos, rotulos: p.muns.slice(0, 3).map(([m]) => ({ k: m, t: nomeMun(m) })), sedes: false, titulo: 'Onde o grupo atuou', zoom: [...pontos.map(x => [x.lng, x.lat]), ...p.muns.map(([m]) => { const mm = MUN_POR_K.get(m); return mm ? [mm.lng, mm.lat] : null; }).filter(Boolean)] })}</div>` : '';
+    const escs = p.escs.map(([k, n]) => { const e = A.escolas.get(k); return `<button class="vn4-esc" onclick="abrirEscola('${esc(k)}')"><span class="nm"><b>${esc(p.nomeEsc(k))}</b><small>${esc(nomeMun(e ? e.mun : (g.regs.find(r => r.escK === k) || {}).mun))}${e ? ' · índice ' + e.idx : ''}</small></span><span class="br"><i style="width:${Math.max(4, n / max * 100)}%"></i></span><span class="v"><b>${n}</b><small>${Math.round(n / tot * 100)}%</small></span></button>`; }).join('');
+    const muns = p.muns.map(([m, n]) => `<span>${ic('pin')}${esc(nomeMun(m))} <b>${n}</b></span>`).join('');
+    return `<div class="card card-pad vn4-onde"><div class="card-tit"><div class="ico">${ic('escola')}</div><div><h3>Onde atuou</h3><p>${p.escs.length} escola(s) em ${p.muns.length} município(s)${p.escs.length > 1 ? ` · ${Math.round(p.escs[0][1] / tot * 100)}% dos registros na principal` : ''}</p></div></div>
+        ${mapa}
+        <div class="vn4-muns">${muns}</div>
+        <h4 class="vn4-h">Escolas</h4><div class="vn4-escs">${escs}</div></div>`;
+}
+
+/* ---------- Montagem do modo Grupos ---------- */
+const _rVinculosV20 = rVinculos;
+rVinculos = function () {
+    if (VN2.modo !== 'grupos' || !podeVerPessoas()) return _rVinculosV20();
+    _rVinculosV20(); // monta abas, indicadores e o grafo do grupo
+    const G = GRAFO;
+    // na primeira vez, abre o grupo de maior risco
+    if (!VN2._ini && G && G.grupos.length) { VN2._ini = true; const m = G.grupos.map((x, i) => [vn4Perfil(x).pontos, i]).sort((a, b) => b[0] - a[0])[0]; if (m) VN2.grupo = m[1]; }
+    const g = G && G.grupos[VN2.grupo];
+    const grade = $('vn2-grade'); if (!grade) return;
+    const p = g ? vn4Perfil(g) : null;
+    grade.className = 'grade vn4-grade'; grade.removeAttribute('style');
+    grade.innerHTML = vn4Lista(G) + (g ? `<div class="pilha vn4-dir">${vn4Cabecalho(g, p)}<div class="grade vn4-g2">${vn4OQueFez(g, p)}${vn4Onde(g, p)}</div></div>` : '<div class="card"><div class="vazio">Nenhum grupo no recorte.</div></div>');
+    if (g) setTimeout(() => desenharSub(g.membros.map(n => n.k)), 30);
+    const qi = $('vn4-q'); let t;
+    if (qi) qi.oninput = () => { clearTimeout(t); t = setTimeout(() => { VN2.gBusca = qi.value; rVinculos(); const i = $('vn4-q'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 300); };
+    const os = $('vn4-ord'); if (os) os.onchange = () => { VN2.gOrd = os.value; rVinculos(); };
+    const sel = grade.querySelector('.vn4-it.sel'); if (sel) { const box = sel.parentElement; if (sel.offsetTop < box.scrollTop || sel.offsetTop > box.scrollTop + box.clientHeight - 60) box.scrollTop = sel.offsetTop - 40; }
+};
 
 </script>
 </body>

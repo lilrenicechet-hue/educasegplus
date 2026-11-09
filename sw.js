@@ -6,7 +6,7 @@
    e funcionamento offline do sistema. Os dados da API (Google Sheets)
    nunca são guardados pelo service worker.
    ===================================================================== */
-const VERSAO = 'educaseg-plus-v4.0.0';
+const VERSAO = 'educaseg-plus-v4.1.0';
 const CACHE_APP = VERSAO + '-app';
 const CACHE_LIB = VERSAO + '-lib';
 
