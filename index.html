@@ -1827,6 +1827,57 @@ button.rl-lnk:hover { color: var(--prim); }
 <style>
 @media (max-width: 640px) { .md-topo .md-num { order: -1; } #acoes-meudia .md-seg { width: 100%; } }
 </style>
+<style>
+/* ===== 3.9: filtros dentro das seções ===== */
+html.sem-recorte #recorte { display: none !important; }
+.fs-barra { background: var(--card); border: 1px solid var(--borda); border-radius: 14px; box-shadow: var(--sombra); margin-bottom: 12px; padding: 8px 10px; }
+.fs-linha { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.fs-abrir { position: relative; }
+.fs-n { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px; margin-left: 2px; border-radius: 999px; background: var(--prim); color: #fff; font-size: 10.5px; font-weight: 800; }
+.fs-per button { height: 28px; padding: 0 10px; font-size: 12px; }
+.fs-chip { display: inline-flex; align-items: center; gap: 5px; height: 30px; padding: 0 6px 0 11px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--prim) 35%, transparent); background: color-mix(in srgb, var(--prim) 9%, transparent); color: var(--texto2); font: inherit; font-size: 12px; cursor: pointer; max-width: 320px; }
+.fs-chip b { color: var(--prim); font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fs-chip svg { width: 14px; height: 14px; padding: 2px; border-radius: 50%; background: color-mix(in srgb, var(--prim) 16%, transparent); color: var(--prim); flex: none; }
+.fs-chip:hover { border-color: var(--prim); }
+.fs-limpar { background: none; border: 0; font: inherit; font-size: 12px; font-weight: 700; color: var(--muted); text-decoration: underline; cursor: pointer; }
+.fs-info { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--muted); }
+.fs-info b { color: var(--texto2); }
+.fs-form .inteiro { grid-column: 1 / -1; }
+@media (max-width: 640px) {
+  .fs-barra { padding: 8px; border-radius: 12px; }
+  .fs-linha { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: -2px; padding: 2px; }
+  .fs-linha::-webkit-scrollbar { display: none; }
+  .fs-linha > * { flex-shrink: 0; }
+  .fs-info { display: none; }
+  .fs-per button { min-height: 32px; height: 32px; }
+}
+/* ===== 3.9: "Como funciona esta página" em passos ===== */
+.legenda-pg.lg2 summary { padding: 10px 16px 10px 14px; gap: 10px; }
+.lg2-sic { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: color-mix(in srgb, var(--prim) 12%, transparent); color: var(--prim); flex: none; }
+.lg2-sic svg { width: 16px; height: 16px; }
+.lg2-dica { font-size: 12px; color: var(--muted); }
+.lg2-grade { list-style: none; margin: 0; padding: 16px 18px 18px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; border-top: 1px solid var(--borda); position: relative; }
+.lg2-passo { position: relative; min-width: 0; padding: 14px 14px 12px; border-radius: 12px; background: color-mix(in srgb, var(--c) 5%, var(--card)); border: 1px solid color-mix(in srgb, var(--c) 22%, var(--borda)); }
+.lg2-passo:not(:last-child)::after { content: ''; position: absolute; top: 27px; right: -15px; width: 16px; border-top: 2px dashed color-mix(in srgb, var(--c) 45%, transparent); }
+.lg2-cab { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+.lg2-n { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--c); color: #fff; font-size: 13.5px; font-weight: 900; flex: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 16%, transparent); }
+.lg2-ic { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); flex: none; }
+.lg2-ic svg { width: 15px; height: 15px; }
+.lg2-cab b { font-size: 13.5px; color: var(--texto); line-height: 1.25; }
+.lg2-passo ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.lg2-passo ul li { position: relative; padding-left: 15px; font-size: 12.5px; line-height: 1.5; color: var(--texto2); }
+.lg2-passo ul li::before { content: ''; position: absolute; left: 2px; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: var(--c); opacity: .7; }
+@media (max-width: 1100px) { .lg2-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lg2-passo:nth-child(2)::after { display: none; } }
+@media (max-width: 640px) {
+  .lg2-dica { display: none; }
+  .lg2-grade { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 14px 12px 14px; }
+  .lg2-passo:not(:last-child)::after { display: block !important; top: auto; bottom: -11px; right: auto; left: 27px; width: 0; height: 10px; border-top: 0; border-left: 2px dashed color-mix(in srgb, var(--c) 45%, transparent); }
+}
+</style>
+<style>
+.tc-ordem { display: none; }
+@media (max-width: 640px) { .tc-ordem { display: flex; } }
+</style>
 
 </head>
 <body>
@@ -1893,8 +1944,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '3.8.0+7953cb70';
-const APP_NOTAS = 'Documentos com mapas do território e paginação sem páginas em branco.';
+const APP_VERSAO = '3.9.0+005a2926';
+const APP_NOTAS = 'A barra Recorte saiu do topo: agora cada seção tem os próprios filtros. O guia Como funciona esta página ficou em passos numerados.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -3292,7 +3343,7 @@ function rRelatorio() {
             <div><label class="rot" for="rl-titulo">Título</label><input class="campo" id="rl-titulo" value="${esc(RL.titulo)}"></div>
             <div><label class="rot" for="rl-cls">Classificação</label><select class="campo" id="rl-cls"><option>RESERVADO</option><option>RESTRITO</option><option>USO INTERNO</option><option>OSTENSIVO</option></select></div>
             <div class="inteiro"><div class="rot">Seções</div><div class="chk-linha" id="rl-sec">${[['sintese', 'Síntese e indicadores'], ['frag', 'Fragilidades'], ['rec', 'Recorrências e reincidência'], ['verif', 'Verificação de consistência'], ['rec2', 'Recomendações'], ['livro', 'Anexo: ocorrências críticas']].map(([k, t]) => `<label><input type="checkbox" data-s="${k}" ${RL.sec[k] ? 'checked' : ''}> ${t}</label>`).join('')}</div>
-            <p class="dica">O relatório usa o recorte escolhido na barra superior. Nomes de crianças e adolescentes não entram no relatório. Os botões de download funcionam quando o sistema é aberto pelo arquivo .html.</p></div></div></div>
+            <p class="dica">O relatório usa o recorte escolhido em "Filtrar", no topo da seção. Nomes de crianças e adolescentes não entram no relatório. Os botões de download funcionam quando o sistema é aberto pelo arquivo .html.</p></div></div></div>
             <div class="rel-palco"><div id="rl-folha"></div></div>`;
         $('rl-titulo').oninput = () => { RL.titulo = $('rl-titulo').value; folhaRelatorio(); };
         $('rl-cls').onchange = () => { RL.cls = $('rl-cls').value; folhaRelatorio(); };
@@ -4717,7 +4768,7 @@ function rComparar() {
         $('cp-corte').onchange = () => { CP.corte = $('cp-corte').value; rComparar(); };
     } else {
         const grupos = CP.sel.filter(Boolean).map(k => ({ t: (op.find(o => o[0] === k) || ['', k])[1], k, regs: base.filter(r => r[campo] === k), dias: null }));
-        $('cont-comparar').innerHTML = `<div class="card card-pad barra-filtros">${selNivel}${[0, 1, 2].map(i => sel('cp-s' + i, CP.sel[i] || '', i < 2 ? 'Escolha' : '+ terceiro (opcional)')).join('')}<span class="peq mut">Usa o período, a criticidade e o tipo da barra de recorte.</span></div>${linhaComp(grupos)}`;
+        $('cont-comparar').innerHTML = `<div class="card card-pad barra-filtros">${selNivel}${[0, 1, 2].map(i => sel('cp-s' + i, CP.sel[i] || '', i < 2 ? 'Escolha' : '+ terceiro (opcional)')).join('')}<span class="peq mut">Usa o período, a criticidade e o tipo escolhidos em "Filtrar".</span></div>${linhaComp(grupos)}`;
         [0, 1, 2].forEach(i => { $('cp-s' + i).onchange = () => { CP.sel[i] = $('cp-s' + i).value; CP.sel = CP.sel.filter((v, j, a) => v || j < 2); rComparar(); }; });
     }
     $('cp-nivel').onclick = e => { const b = e.target.closest('button'); if (b) { CP.nivel = b.dataset.n; CP.sel = []; CP.alvo = ''; rComparar(); } };
@@ -5118,13 +5169,13 @@ function alternarGrupo(i) {
 
 /* ---------- 1. Legendas objetivas por página ---------- */
 const LEGENDAS = {
-    painel: { mostra: ['Volume, gravidade e tendência das ocorrências no recorte escolhido na barra superior.', 'Leitura automática com os principais pontos de atenção, escrita a partir dos números.'], fonte: ['Livro de Ocorrências do EducaSEG (planilha importada ou base do Google Sheets).', 'Data de referência: a ocorrência mais recente da base, não a data de hoje.'], calc: ['"Últimos 30 dias" é comparado com os 30 dias anteriores.', 'Tipos sensíveis: arma, facção, violência sexual, suicídio/autoagressão, tráfico, invasão, crimes contra a mulher e incêndio.'], usar: ['Clique num indicador ou numa barra do gráfico para ver os registros.', 'O pulso semanal mostra as últimas 12 semanas; clique para abrir os registros.'] },
+    painel: { mostra: ['Volume, gravidade e tendência das ocorrências no recorte escolhido em "Filtrar", no topo da seção.', 'Leitura automática com os principais pontos de atenção, escrita a partir dos números.'], fonte: ['Livro de Ocorrências do EducaSEG (planilha importada ou base do Google Sheets).', 'Data de referência: a ocorrência mais recente da base, não a data de hoje.'], calc: ['"Últimos 30 dias" é comparado com os 30 dias anteriores.', 'Tipos sensíveis: arma, facção, violência sexual, suicídio/autoagressão, tráfico, invasão, crimes contra a mulher e incêndio.'], usar: ['Clique num indicador ou numa barra do gráfico para ver os registros.', 'O pulso semanal mostra as últimas 12 semanas; clique para abrir os registros.'] },
     graficos: { mostra: ['Todos os gráficos do recorte, com a tabela de números de cada um (botão Tabela).', 'Calendário do ano e perfil de vítimas e autores por sexo e tipo de envolvido.'], fonte: ['Campos do Livro: data/hora, tipo, criticidade, status, DRE, município, perfil e envolvidos.', 'Registros sem horário (00:00) ficam fora dos gráficos de hora.'], calc: ['Cada registro conta uma vez; pessoas são contadas por citação.', 'Percentuais são sobre o total de cada grupo.'], usar: ['Clique numa barra, fatia ou ponto para abrir os registros daquele item.', 'Passe o mouse para ver os valores exatos.'] },
     alertas: { mostra: ['Situações de risco encontradas automaticamente, agrupadas por tipo de problema e por urgência.', 'Para cada tipo: por que importa, o que fazer e onde acontece.'], fonte: ['Padrões nos registros do Livro: tipos, datas, escolas, municípios e envolvidos.', 'Nenhuma informação externa é usada.'], calc: ['"Agir hoje": risco à integridade; "Agir nesta semana": tende a se agravar; "Acompanhar": sinais e falhas de processo.', 'As regras de cada problema estão no fim da página.'], usar: ['Clique num bloco de urgência para filtrar e num cartão para abrir os locais.', '"Analisar" abre a linha do tempo dos registros daquele local.'] },
     difusao: { mostra: ['Como um tipo de fato passa de um município para outro vizinho, que tipos costumam vir depois e por onde circulam os autores.'], fonte: ['Datas, municípios, tipos e autores do Livro; distâncias entre os centros dos municípios.'], calc: ['Há passagem quando o mesmo tipo aparece em município vizinho (até o raio escolhido) dentro da janela de dias.', 'Passagens que se repetem formam as rotas prováveis. É indício estatístico, não prova de ligação.'], usar: ['Escolha tipo, janela e raio no topo. Clique num município para abrir o detalhe.'] },
     vinculos: { mostra: ['Pessoas que aparecem juntas nos mesmos registros: grupos, pontes entre escolas e vítimas de vários autores.'], fonte: ['Campos Vítima(s) e Agressor(es) do Livro, pelo nome digitado.'], calc: ['Ligação vermelha: dois autores no mesmo registro (coautoria). Ligação cinza: autor e vítima no mesmo registro.', 'Grafias diferentes do mesmo nome aparecem como pessoas diferentes.'], usar: ['Clique num grupo para destacá-lo; clique numa pessoa para abrir o histórico.', 'Acesso restrito a Administrador e Inteligência (dados de crianças e adolescentes).'] },
     termos: { mostra: ['Palavras mais frequentes nos relatos, termos em alta e um radar de temas de risco mês a mês.'], fonte: ['Texto do campo Resumo dos Fatos.'], calc: ['Palavras genéricas (em mais de 20% dos relatos), números e nomes de pessoas são ignorados.', 'Em alta: frequência na janela recente pelo menos 2× maior que no período anterior, em 3 ou mais escolas.'], usar: ['Clique num termo ou tema para ver os relatos que o contêm.', 'Mude a janela recente no topo (15, 30 ou 60 dias).'] },
-    comparar: { mostra: ['Duas ou três DREs, municípios ou escolas lado a lado, com a mesma escala, ou uma unidade antes e depois de uma data.'], fonte: ['Livro de Ocorrências; matrículas vêm dos dados complementares, quando importados.'], calc: ['Usa período, criticidade e tipo da barra superior, ignorando DRE e município.', 'No modo antes e depois, os valores são normalizados por 30 dias.'], usar: ['Escolha o nível e as unidades nos seletores.', 'Clique nas barras para abrir os registros.'] },
+    comparar: { mostra: ['Duas ou três DREs, municípios ou escolas lado a lado, com a mesma escala, ou uma unidade antes e depois de uma data.'], fonte: ['Livro de Ocorrências; matrículas vêm dos dados complementares, quando importados.'], calc: ['Usa período, criticidade e tipo escolhidos em "Filtrar", ignorando DRE e município.', 'No modo antes e depois, os valores são normalizados por 30 dias.'], usar: ['Escolha o nível e as unidades nos seletores.', 'Clique nas barras para abrir os registros.'] },
     mapa: { mostra: ['Os 142 municípios coloridos pelo indicador escolhido, as escolas (tamanho = nº de ocorrências, cor = fragilidade) e as sedes das DREs.'], fonte: ['Limites municipais do IBGE; Boa Esperança do Norte tem limite aproximado.', 'Posição das escolas do cadastro georreferenciado; escolas fora dele ficam no centro do município.'], calc: ['Cores em faixas: as quebras se ajustam aos valores do recorte.', 'Tendência 30d: últimos 30 dias divididos pela média mensal dos 3 meses anteriores.'], usar: ['Clique num município ou escola para abrir o detalhe; clique no mapa para usar a roda do mouse.', 'Linha do tempo: arraste ou aperte play para ver mês a mês.'] },
     fragilidades: { mostra: ['Índice de 0 a 100 por escola, município e DRE, com a composição do índice de cada escola.'], fonte: ['Criticidade, datas, tipos, recorrências e autores reincidentes do Livro.'], calc: ['Gravidade (crítico 4, alto 3, médio 2, baixo 1), reduzida à metade a cada 90 dias.', '+2,5 por fato sensível em 180 dias, +1,5 por recorrência e +1 por autor reincidente; convertido para 0 a 100.'], usar: ['Ordene clicando no cabeçalho; clique numa linha para abrir a escola.', 'A barra de composição mostra de onde vem o índice.'] },
     recorrencias: { mostra: ['Mesmo tipo de fato repetido na mesma escola, autores e vítimas que reaparecem, escolas em escalada e o padrão de dia e hora.'], fonte: ['Datas, tipos, escolas e envolvidos do Livro.'], calc: ['Cadeia: fatos do mesmo tipo na mesma escola com intervalo de até N dias (janela no topo). Ativa se o último fato está dentro da janela.', 'Escalada: 3+ registros em 30 dias e ritmo 1,8× o trimestre anterior.'], usar: ['A faixa de datas mostra cada fato da cadeia nos últimos 180 dias.', 'Clique numa linha para abrir a linha do tempo.'] },
@@ -6481,7 +6532,7 @@ rRelatorio = function () {
             <label class="inteiro dx-anon"><input type="checkbox" id="rl-anon" ${dxAnon() ? 'checked' : ''}><span><b>Anonimizar o emissor e o endereço da base</b><small>No documento aparece o ID ${esc(idEmissor())} no lugar do nome e do e-mail, e o QR Code não mostra o endereço da planilha.</small></span></label>
             <div class="inteiro"><label class="rot" for="rl-dest">Destinatário</label><input class="campo" id="rl-dest" placeholder="Ex.: Gabinete da Secretaria · Coordenadoria de Segurança Escolar" value="${esc(RL.dest)}"></div>
             <div class="inteiro"><div class="rot">Seções</div><div class="chk-linha" id="rl-sec">${[['sintese', 'Síntese e indicadores'], ['mapa', 'Mapas do território'], ['frag', 'Fragilidades'], ['rec', 'Recorrências e reincidência'], ['verif', 'Verificação de consistência'], ['rec2', 'Recomendações'], ['livro', 'Anexo: ocorrências críticas']].map(([k, t]) => `<label><input type="checkbox" data-s="${k}" ${RL.sec[k] ? 'checked' : ''}> ${t}</label>`).join('')}</div>
-            <p class="dica">O documento usa o recorte da barra superior e sai com capa, selo de autenticidade, cabeçalho e rodapé em todas as páginas, marcas de documento restrito e aviso de sigilo com as penalidades. Nomes de crianças e adolescentes não entram no relatório.</p></div></div></div>
+            <p class="dica">O documento usa o recorte escolhido em "Filtrar" e sai com capa, selo de autenticidade, cabeçalho e rodapé em todas as páginas, marcas de documento restrito e aviso de sigilo com as penalidades. Nomes de crianças e adolescentes não entram no relatório.</p></div></div></div>
             <div class="rel-palco"><div id="rl-folha"></div></div>`;
         $('rl-titulo').oninput = () => { RL.titulo = $('rl-titulo').value; folhaRelatorio(); };
         $('rl-dest').oninput = () => { RL.dest = $('rl-dest').value; folhaRelatorio(); };
@@ -7044,7 +7095,7 @@ irPara = function (aba, semHash) { const r = $('recorte'); if (r && ehTelaPequen
     ABAS.splice(pos < 0 ? 1 : pos, 0, { id: 'meudia', t: 'Meu dia', ico: 'sun', h: 'Meu dia', p: 'O que aconteceu hoje (ou nesta semana) na rede, comparado com o período anterior, e o que precisa da sua atenção.' });
     if (typeof LEGENDAS !== 'undefined') LEGENDAS.meudia = {
         mostra: ['Resumo do dia ou da semana: quantos registros, gravidade, tipos, onde aconteceram e o que pede ação.', 'Comparação com o dia anterior (ou a semana anterior).'],
-        fonte: ['Livro de Ocorrências, respeitando o recorte da barra de filtros.', 'Notícias do Release, quando o servidor está conectado.'],
+        fonte: ['Livro de Ocorrências, respeitando os filtros escolhidos no topo da seção.', 'Notícias do Release, quando o servidor está conectado.'],
         calc: ['Dia: de 0h às 24h da data escolhida. Semana: de segunda a domingo.', 'Registros sem horário (00:00) entram nos totais, mas não no gráfico por hora.', '"Escola nova no radar": sem nenhum registro nos 90 dias anteriores.'],
         usar: ['Alterne entre Dia e Semana no topo; use as setas para ver datas anteriores.', 'Toque em qualquer item para abrir o registro, a escola ou o problema.', '"Compartilhar resumo" gera um texto sem nomes de pessoas.']
     };
@@ -7346,6 +7397,99 @@ function mapaRelease(lista) {
 /* numeração das figuras recomeça a cada documento */
 const _montarDocumentoV17 = montarDocumento;
 montarDocumento = function (o) { const h = _montarDocumentoV17(o); dxFig.zerar(); return h; };
+
+/* =====================================================================
+   EDUCASEG-PLUS 3.9 — filtros dentro de cada seção (sai a barra
+   "Recorte" do topo) e "Como funciona esta página" em passos 1-2-3-4
+   ===================================================================== */
+document.documentElement.classList.add('sem-recorte');
+
+/* ---------- Filtros por seção ---------- */
+const FS_FORA = new Set(['importar', 'usuarios', 'release', 'rede']);
+const FS_PER = [['', 'Tudo'], ['30', '30 dias'], ['90', '90 dias'], ['180', '180 dias'], ['ano', 'Ano']];
+const FS_ROT = { dre: 'DRE', mun: 'Município', per: 'Período', crit: 'Criticidade', tipo: 'Tipo' };
+function fsValorTxt(k, v) {
+    if (k === 'dre') return nomeDre(v);
+    if (k === 'mun') return nomeMun(v);
+    if (k === 'per') return (FS_PER.find(p => p[0] === v) || [, v])[1];
+    if (k === 'crit') return v === 'CA' ? 'Crítico + Alto' : v.charAt(0) + v.slice(1).toLowerCase();
+    if (k === 'tipo') return v === '__SEV' ? 'Somente sensíveis' : tipoCurto(v);
+    return v;
+}
+function fsSincronizar() {
+    ['dre', 'per', 'crit', 'tipo'].forEach(k => { const s = $('f-' + k); if (s) s.value = F[k]; });
+    if (typeof preencherMun === 'function') preencherMun();
+    const m = $('f-mun'); if (m) m.value = F.mun;
+}
+function fsDefinir(mud) {
+    Object.assign(F, mud);
+    if ('dre' in mud && !('mun' in mud) && F.mun) { const r = BASE.find(x => x.mun === F.mun); if (r && F.dre && r.dre !== F.dre) F.mun = ''; }
+    fsSincronizar();
+    aplicar();
+}
+function fsLimpar() { fsDefinir({ dre: '', mun: '', per: '', crit: '', tipo: '' }); }
+
+function fsBarraHTML(aba) {
+    const ativos = Object.keys(FS_ROT).filter(k => F[k]);
+    const chips = ativos.map(k => `<button type="button" class="fs-chip" onclick="fsDefinir({${k}:''})" title="Remover filtro">${esc(FS_ROT[k])}: <b>${esc(fsValorTxt(k, F[k]))}</b>${ic('x')}</button>`).join('');
+    const per = FS_PER.map(([v, t]) => `<button type="button" class="${F.per === v ? 'ativo' : ''}" onclick="fsDefinir({per:'${v}'})">${t}</button>`).join('');
+    return `<div class="fs-linha">
+        <button type="button" class="btn btn-s btn-sm fs-abrir" onclick="fsPainel()">${ic('filter')}Filtrar${ativos.length ? `<span class="fs-n">${ativos.length}</span>` : ''}</button>
+        <div class="seg fs-per" role="group" aria-label="Período">${per}</div>
+        ${chips}${ativos.length > 1 ? `<button type="button" class="fs-limpar" onclick="fsLimpar()">Limpar tudo</button>` : ''}
+        <span class="fs-info">${FONTE.demo ? '<span class="selo-demo">' + ic('info') + 'DEMONSTRAÇÃO</span>' : ''}<span><b>${fmtN(REG.length)}</b> de ${fmtN(BASE.length)} registros · referência ${A && A.hoje ? fmtD(A.hoje) : '—'}</span></span>
+    </div>`;
+}
+function fsGarantir() {
+    if (!ABA || FS_FORA.has(ABA)) return;
+    const sec = $('aba-' + ABA); if (!sec) return;
+    const cont = sec.querySelector('.conteudo'); if (!cont) return;
+    let b = cont.querySelector(':scope > .fs-barra');
+    if (!b) { b = document.createElement('div'); b.className = 'fs-barra'; b.setAttribute('role', 'region'); b.setAttribute('aria-label', 'Filtros desta seção'); cont.insertBefore(b, cont.firstChild); }
+    b.innerHTML = fsBarraHTML(ABA);
+}
+const _renderAbaV18 = renderAba;
+renderAba = function () { _renderAbaV18(); fsGarantir(); };
+
+function fsPainel() {
+    const opt = id => { const s = $(id); return s ? s.innerHTML : ''; };
+    const munOpts = dre => {
+        const muns = [...new Set(BASE.filter(r => !dre || r.dre === dre).map(r => r.mun))].sort((a, b) => nomeMun(a).localeCompare(nomeMun(b), 'pt'));
+        return '<option value="">Todos os municípios</option>' + muns.map(m => `<option value="${esc(m)}">${esc(nomeMun(m))}</option>`).join('');
+    };
+    const campo = (k, rot, html) => `<div><label class="rot" for="fs-${k}">${rot}</label><select class="campo" id="fs-${k}">${html}</select></div>`;
+    abrirModal({
+        titulo: 'Filtrar', sub: 'Vale para todas as seções do sistema até você limpar.', icone: 'filter', tam: 'md',
+        corpo: `<div class="form-grade fs-form">
+            ${campo('dre', 'DRE', opt('f-dre'))}${campo('mun', 'Município', munOpts(F.dre))}
+            ${campo('per', 'Período', opt('f-per'))}${campo('crit', 'Criticidade', opt('f-crit'))}
+            <div class="inteiro">${campo('tipo', 'Tipo de ocorrência', opt('f-tipo')).replace(/^<div>|<\/div>$/g, '')}</div>
+        </div>`,
+        pe: `<button class="btn btn-s" onclick="fecharModal();fsLimpar()">Limpar filtros</button><button class="btn btn-p" id="fs-aplicar">${ic('check')}Aplicar</button>`
+    });
+    ['dre', 'mun', 'per', 'crit', 'tipo'].forEach(k => { const s = $('fs-' + k); if (s) s.value = F[k]; });
+    $('fs-dre').onchange = () => { const v = $('fs-mun').value; $('fs-mun').innerHTML = munOpts($('fs-dre').value); $('fs-mun').value = v; if ($('fs-mun').value !== v) $('fs-mun').value = ''; };
+    $('fs-aplicar').onclick = () => { const v = {}; ['dre', 'mun', 'per', 'crit', 'tipo'].forEach(k => v[k] = $('fs-' + k).value); fecharModal(); fsDefinir(v); };
+}
+
+/* ---------- "Como funciona esta página": passos 1-2-3-4 ---------- */
+const LG_PASSOS = [
+    { k: 'mostra', t: 'O que mostra', i: 'eye', c: '#2563eb' },
+    { k: 'fonte', t: 'De onde vêm os dados', i: 'database', c: '#0d9488' },
+    { k: 'calc', t: 'Como é calculado', i: 'activity', c: '#7c3aed' },
+    { k: 'usar', t: 'Como usar', i: 'target', c: '#ea580c' }
+];
+const _legendaHTMLV18 = legendaHTML;
+legendaHTML = function (aba) {
+    const h = _legendaHTMLV18(aba), L = LEGENDAS[aba];
+    if (!h || !L) return h;
+    const aberto = /<details[^>]*\sopen[\s>]/.test(h);
+    const passos = LG_PASSOS.filter(p => L[p.k] && L[p.k].length).map((p, n) => `<li class="lg2-passo" style="--c:${p.c}">
+        <div class="lg2-cab"><span class="lg2-n">${n + 1}</span><span class="lg2-ic">${ic(p.i)}</span><b>${p.t}</b></div>
+        <ul>${L[p.k].map(x => `<li>${esc(x)}</li>`).join('')}</ul></li>`).join('');
+    return `<details class="legenda-pg lg2" id="leg-${aba}" ${aberto ? 'open' : ''}><summary><span class="lg2-sic">${ic('info')}</span><b>Como funciona esta página</b><span class="lg2-dica">4 passos para ler esta seção</span><span class="mut peq">${aberto ? 'ocultar' : 'mostrar'}</span></summary>
+        <ol class="lg2-grade">${passos}</ol></details>`;
+};
 
 </script>
 </body>
