@@ -2182,6 +2182,150 @@ html.sem-recorte #recorte { display: none !important; }
   .am-it { padding: 12px 14px; }
 }
 </style>
+<style>
+/* ===== 4.3 — animações gerais ===== */
+@keyframes anEntra { from { opacity: 0; transform: translateY(14px); } }
+@keyframes anTroca { from { opacity: .3; transform: translateY(6px); } }
+@keyframes anPag { from { opacity: .4; } }
+@keyframes anBarra { from { transform: scaleX(0); } }
+@keyframes anOnda { from { transform: scale(.15); opacity: .28; } to { transform: scale(1); opacity: 0; } }
+@keyframes anCorpo { from { opacity: 0; transform: translateY(-6px); } }
+@keyframes anPop { 0% { transform: scale(.6); opacity: 0; } 70% { transform: scale(1.06); } 100% { transform: scale(1); opacity: 1; } }
+.an-pag { animation: anPag .3s ease-out; }
+.an-entra { animation: anEntra .5s cubic-bezier(.16,1,.3,1) both; animation-delay: var(--an-d, 0ms); }
+.an-troca { animation: anTroca .35s cubic-bezier(.16,1,.3,1); }
+.an-rev { opacity: 0; transform: translateY(18px); transition: opacity .55s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1); }
+.an-rev.an-on { opacity: 1; transform: none; }
+.an-onda { position: fixed; z-index: 9999; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, color-mix(in srgb, var(--prim) 55%, transparent) 0, transparent 70%); animation: anOnda .55s ease-out forwards; }
+.barra span, .fluxo-b span, .df3-forca span, .tr3-pares .br span { transform-origin: left center; animation: anBarra .9s cubic-bezier(.16,1,.3,1) both; }
+.tp:not(.fechado) .tp-corpo { animation: anCorpo .35s cubic-bezier(.16,1,.3,1); }
+.tp-n { transition: transform .2s; } .tp:hover .tp-n { transform: scale(1.08) rotate(-4deg); }
+.kpi { transition: transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s, border-color .2s; }
+.kpi:hover { transform: translateY(-3px); box-shadow: 0 12px 26px -14px color-mix(in srgb, var(--c, var(--prim)) 60%, transparent); border-color: color-mix(in srgb, var(--c, var(--prim)) 35%, var(--borda)); }
+.radar-c { transition: transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s, border-color .2s; animation: anPop .45s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(var(--an-i, 0) * 45ms); }
+.radar-c:hover { transform: translateY(-3px); box-shadow: 0 12px 24px -16px rgba(15,23,42,.45); }
+.item .ic { transition: transform .2s cubic-bezier(.16,1,.3,1); }
+.item:hover .ic { transform: scale(1.1); }
+.chip { transition: transform .15s, border-color .15s, box-shadow .15s; }
+button.chip:hover { transform: translateY(-1px); border-color: var(--c, var(--prim)); box-shadow: 0 4px 10px -6px var(--c, var(--prim)); }
+.btn { transition: transform .12s, box-shadow .15s, background .15s; }
+.btn:active { transform: scale(.97); }
+.card { transition: box-shadow .25s, border-color .25s; }
+.lat-btn svg { transition: transform .2s; } .lat-btn:hover svg { transform: translateX(2px) scale(1.06); }
+.ico svg, .tp-ic svg { transition: transform .3s cubic-bezier(.16,1,.3,1); }
+.card:hover > .card-tit .ico svg, .card:hover > .card-pad > .card-tit .ico svg { transform: rotate(-8deg) scale(1.08); }
+@media print { .an-rev, .an-entra { opacity: 1 !important; transform: none !important; animation: none !important; } }
+
+/* ===== 4.3 — Termos ===== */
+.tr3-campo { max-width: 720px; }
+.tr3-campo .campo { height: 46px; font-size: 15px; border-radius: 12px; }
+.tr3-res { margin-top: 12px; }
+.tr3-res:empty { display: none; }
+.tr3-sug { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.tr3-res-cab { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; margin-bottom: 10px; }
+.tr3-res-cab h4 { margin: 0; font-size: 16px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.tr3-res-cab p { margin: 2px 0 0; }
+.tr3-res-ac { display: flex; gap: 6px; flex-wrap: wrap; }
+.tr3-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.tr3-junto { display: flex; flex-wrap: wrap; gap: 6px; }
+.tr3-jc { display: inline-flex; border: 1px solid var(--borda); border-radius: 999px; overflow: hidden; background: var(--card); transition: border-color .15s, transform .15s; }
+.tr3-jc:hover { border-color: var(--prim); transform: translateY(-1px); }
+.tr3-jc button { height: 30px; padding: 0 10px; font-size: 12.5px; font-weight: 600; color: var(--texto2); }
+.tr3-jc button small { color: var(--muted); font-weight: 700; margin-left: 2px; }
+.tr3-jc .mais { border-left: 1px solid var(--borda); padding: 0 9px; color: var(--prim); font-weight: 800; }
+.tr3-jc .mais:hover { background: var(--prim); color: #fff; }
+.tr3-tag { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); border: 1px solid color-mix(in srgb, var(--c) 30%, transparent); }
+.tr3-trechos .tr-ex { margin: 0; font-size: 12.5px; }
+.tr3-rede-top { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.tr3-ctl { display: flex; align-items: center; gap: 8px; }
+.tr3-ctl .rot { margin: 0; }
+.tr3-frase { margin: 12px 0; padding: 10px 14px; border-radius: 12px; background: color-mix(in srgb, var(--roxo) 7%, var(--card)); border: 1px solid color-mix(in srgb, var(--roxo) 18%, var(--borda)); line-height: 1.55; }
+.tr3-frase a { color: inherit; text-decoration: underline dotted; }
+.tr3-rede-grade { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 14px; align-items: start; }
+.tr3-palco { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--borda); background: radial-gradient(ellipse at 50% 45%, color-mix(in srgb, var(--prim) 6%, var(--card)) 0, var(--card) 70%); }
+.tr3-palco canvas { display: block; touch-action: pan-y; }
+.tr3-dica { position: absolute; z-index: 3; pointer-events: none; background: var(--card); border: 1px solid var(--borda); box-shadow: 0 10px 28px -12px rgba(0,0,0,.4); border-radius: 10px; padding: 8px 10px; font-size: 12px; max-width: 220px; display: flex; flex-direction: column; gap: 2px; animation: anTroca .18s ease-out; }
+.tr3-dica b { font-size: 13.5px; } .tr3-dica span { color: var(--texto2); } .tr3-dica em { color: var(--c-crit); font-style: normal; font-weight: 700; } .tr3-dica small { color: var(--muted); }
+.tr3-leg-min { position: absolute; left: 10px; bottom: 8px; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 11px; color: var(--muted); pointer-events: none; }
+.tr3-leg-min span { display: inline-flex; align-items: center; gap: 5px; }
+.tr3-leg-min i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.tr3-leg-min i.ln { width: 16px; height: 2px; border-radius: 2px; background: var(--muted2); }
+.tr3-leg-min i.anel { width: 10px; height: 10px; border: 1.8px dashed var(--c-crit); background: transparent; }
+.tr3-painel { border: 1px solid var(--borda); border-radius: 14px; padding: 14px; background: var(--card); min-height: 300px; }
+.tr3-p-cab { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.tr3-p-cab > div { flex: 1; min-width: 0; } .tr3-p-cab b { display: block; font-size: 14px; } .tr3-p-cab small { color: var(--muted); font-size: 11.5px; }
+.tr3-p-cab .ico { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent); flex-shrink: 0; }
+.tr3-p-w { font-size: 18px !important; letter-spacing: -.01em; }
+.tr3-p-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 8px; }
+.tr3-p-kpis > div { background: var(--suave); border-radius: 10px; padding: 7px 8px; }
+.tr3-p-kpis b { display: block; font-size: 17px; font-variant-numeric: tabular-nums; } .tr3-p-kpis small { font-size: 10.5px; color: var(--muted); } .tr3-p-kpis em { font-style: normal; font-weight: 700; }
+.tr3-pares { display: flex; flex-direction: column; gap: 2px; }
+.tr3-pares button { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) 38px; gap: 8px; align-items: center; padding: 6px 6px; border-radius: 8px; text-align: left; font-size: 12.5px; transition: background .12s; }
+.tr3-pares button:hover { background: var(--suave); }
+.tr3-pares .tx { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 4px; }
+.tr3-pares .tx i { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.tr3-pares .br { height: 7px; border-radius: 99px; background: var(--suave2); overflow: hidden; }
+.tr3-pares .br span { display: block; height: 100%; border-radius: 99px; background: var(--roxo); }
+.tr3-pares .q { text-align: right; font-weight: 800; font-variant-numeric: tabular-nums; }
+.tr3-p-acoes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.tr3-grupos { margin-top: 12px; }
+.tr3-gr-lista { display: flex; flex-wrap: wrap; gap: 6px; }
+.tr3-gr { display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 10px; border: 1px solid var(--borda); background: var(--card); font-size: 12px; transition: transform .15s, border-color .15s, background .15s; }
+.tr3-gr i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 20%, transparent); }
+.tr3-gr small { color: var(--muted); }
+.tr3-gr:hover { transform: translateY(-1px); border-color: var(--c); }
+.tr3-gr.ativo { background: color-mix(in srgb, var(--c) 12%, var(--card)); border-color: var(--c); }
+@media (max-width: 1100px) { .tr3-rede-grade { grid-template-columns: minmax(0, 1fr); } .tr3-painel { min-height: 0; } }
+@media (max-width: 640px) { .tr3-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; } .tr3-kpis .kpi { padding: 10px; } .tr3-kpis .kpi .v { font-size: 20px; } .tr3-kpis .kpi .s { display: none; } .tr3-leg-min { display: none; } }
+
+/* ===== 4.3 — Rotas prováveis ===== */
+.df3-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.df3-cheg { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.df3-cc { text-align: left; border: 1px solid color-mix(in srgb, var(--c) 30%, var(--borda)); border-radius: 14px; padding: 12px 14px; background: linear-gradient(135deg, color-mix(in srgb, var(--c) 8%, var(--card)), var(--card) 60%); transition: transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s; animation: anPop .45s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(var(--an-i, 0) * 60ms); }
+.df3-cc:hover { transform: translateY(-3px); box-shadow: 0 14px 28px -16px var(--c); }
+.df3-cc-top { display: flex; gap: 12px; align-items: center; }
+.df3-cc-top b { font-size: 15px; display: block; } .df3-cc-top small { font-size: 12px; color: var(--texto2); }
+.df3-anel { --p: 50; width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; background: conic-gradient(var(--c) calc(var(--p) * 1%), color-mix(in srgb, var(--c) 14%, transparent) 0); position: relative; }
+.df3-anel::before { content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--card); }
+.df3-anel b { position: relative; font-size: 13px !important; color: var(--c); font-variant-numeric: tabular-nums; }
+.df3-cc-or { margin-top: 9px; display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: var(--muted); }
+.df3-cc-or span { display: flex; align-items: center; gap: 4px; } .df3-cc-or svg { width: 12px; height: 12px; color: var(--c); } .df3-cc-or b { color: var(--texto2); }
+.df3-forca { display: block; height: 4px; border-radius: 99px; background: var(--suave2); overflow: hidden; margin-top: 5px; max-width: 220px; }
+.df3-forca span { display: block; height: 100%; border-radius: 99px; }
+.df3-player { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; margin-top: 10px; }
+.df3-player input[type=range] { flex: 1; min-width: 140px; accent-color: var(--c-crit); }
+.df3-player .tocando { background: var(--c-crit); border-color: var(--c-crit); }
+.df3-todas { display: flex; gap: 6px; align-items: center; margin-left: auto; }
+.df3-tempo { position: absolute; z-index: 500; top: 12px; left: 50%; transform: translateX(-50%); background: var(--card); border: 1px solid var(--borda); border-radius: 12px; padding: 8px 14px; box-shadow: 0 12px 30px -14px rgba(0,0,0,.45); display: flex; flex-direction: column; align-items: center; font-size: 12px; text-align: center; animation: anTroca .25s; }
+.df3-tempo b { font-size: 14px; font-variant-numeric: tabular-nums; } .df3-tempo span { color: var(--texto2); }
+.df3-fluxo { animation: df3flui 1.4s linear infinite; }
+@keyframes df3flui { to { stroke-dashoffset: -28; } }
+.df3-desenha { stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: df3desenha 1.4s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes df3desenha { to { stroke-dashoffset: 0; } }
+.df3-surge { stroke-dasharray: 900; stroke-dashoffset: 900; animation: df3desenha .6s ease-out forwards; }
+.df3-pulso { display: block; width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--c); animation: pulso 1.8s ease-out infinite; pointer-events: none; }
+.df3-alvo { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: color-mix(in srgb, var(--c-alto) 22%, transparent); border: 2px solid var(--c-alto); color: var(--c-alto); font-size: 9.5px; box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-alto) 50%, transparent); animation: df3alvo 2s ease-out infinite; cursor: pointer; }
+.df3-alvo b { color: #fff; background: var(--c-alto); border-radius: 6px; padding: 0 3px; font-variant-numeric: tabular-nums; }
+@keyframes df3alvo { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-alto) 55%, transparent); } 100% { box-shadow: 0 0 0 14px transparent; } }
+.df3-leg-alvo { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--c-alto); background: color-mix(in srgb, var(--c-alto) 25%, transparent); display: inline-block; }
+.df3-orig { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.df3-prev { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 12px; background: color-mix(in srgb, var(--c) 9%, var(--card)); border: 1px solid color-mix(in srgb, var(--c) 28%, var(--borda)); font-size: 13px; line-height: 1.5; }
+.df3-prev svg { color: var(--c); flex-shrink: 0; margin-top: 2px; }
+.df3-tl { width: 100%; height: auto; display: block; }
+.df3-tl .gm { stroke: var(--borda); stroke-width: 1; } .df3-tl .tm { font-size: 10px; fill: var(--muted); }
+.df3-tl .tr { font-size: 11px; font-weight: 700; fill: var(--texto2); }
+.df3-tl .eixo { stroke: var(--borda2); stroke-width: 2; stroke-linecap: round; }
+.df3-tl .po { fill: var(--c-alto); stroke: var(--card); stroke-width: 1.5; } .df3-tl .pd { fill: var(--c-crit); stroke: var(--card); stroke-width: 1.5; }
+.df3-tl .lg { fill: none; stroke: var(--c-crit); stroke-width: 1.6; opacity: .55; stroke-dasharray: 300; stroke-dashoffset: 300; animation: df3desenha .9s ease-out forwards; }
+.df3-ul { margin: 0; padding-left: 16px; font-size: 12.5px; line-height: 1.7; } .df3-ul b { color: var(--muted); font-weight: 700; margin-left: 4px; }
+@media (max-width: 900px) { .df3-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .df3-cheg { grid-template-columns: minmax(0, 1fr); } .df3-todas { margin-left: 0; } .df3-tempo { left: 8px; right: 8px; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .an-rev { opacity: 1; transform: none; } .df3-desenha, .df3-surge, .df3-tl .lg { stroke-dashoffset: 0 !important; } }
+</style>
+<style>.tr3-dest .card-tit, .df3-listas .card-tit { flex-wrap: nowrap; align-items: flex-start; } .tr3-dest .card-tit > div:not(.ico), .df3-listas .card-tit > div:not(.ico) { flex: 1; min-width: 0; }</style>
+<style>.df3-cc-top small.df3-base { display: block; color: var(--muted); font-size: 11px; } .df3-cc-top small.df3-base b { display: inline; font-size: 11px; color: var(--c); }</style>
+<style>#mapa-dif3 { height: 100%; width: 100%; background: var(--mapa-fundo); }
+.df3-cc-or span { display: block; line-height: 1.45; } .df3-cc-or svg { vertical-align: -2px; }</style>
 
 </head>
 <body>
@@ -2248,8 +2392,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '4.2.0+e016d572';
-const APP_NOTAS = 'Nova área Proteção: protocolos de resposta, ameaças, risco previsto, segurança das escolas, acompanhamento, intervenções e prevenção.';
+const APP_VERSAO = '4.3.0+ff59f77c';
+const APP_NOTAS = 'Termos com rede de conexões das palavras, pesquisa e comparação; Rotas prováveis com chegadas prováveis, mapa animado e reprodução semana a semana; sistema mais animado e interativo.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -8902,6 +9046,734 @@ rMeuDia = function () {
     if (card) card.insertAdjacentHTML('beforebegin', html); else cont.insertAdjacentHTML('afterbegin', html);
 };
 if (TOPICOS.meudia) { const t = TOPICOS.meudia.find(x => /pede ação/.test(x.t)); if (t) t.m = /Precisa da sua atenção|Proteção agora/; }
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.3 — Termos (rede de conexões das palavras, pesquisa
+   e comparação), Rotas prováveis (chegadas prováveis, fluxo animado,
+   reprodução da propagação, detalhe da rota) e camada de animações
+   ===================================================================== */
+const MOVE = () => !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------------------------------------------------------------------
+   1. CAMADA DE ANIMAÇÃO
+   --------------------------------------------------------------------- */
+function contarAte(el) {
+    if (!el || el._contado) return;
+    let alvoNo = el.childNodes.length === 1 && el.firstChild.nodeType === 3 ? el.firstChild : [...el.childNodes].find(n => n.nodeType === 3 && /\d/.test(n.textContent));
+    if (!alvoNo) return;
+    const t = alvoNo.textContent;
+    if ((t.match(/\d[\d.,]*/g) || []).length !== 1) return;
+    const m = t.match(/^([^\d]*?)(\d[\d.]*(?:,\d+)?)(.*)$/s); if (!m || /^[\/:]/.test(m[3])) return;
+    const alvo = parseFloat(m[2].replace(/\./g, '').replace(',', '.')); if (!isFinite(alvo) || alvo < 2) return;
+    const dec = (m[2].split(',')[1] || '').length;
+    el._contado = 1;
+    if (!MOVE()) return;
+    const ini = performance.now(), dur = 650 + Math.min(500, alvo * 2);
+    const passo = now => {
+        if (!alvoNo.isConnected) return;
+        const k = Math.min(1, (now - ini) / dur), e = 1 - Math.pow(1 - k, 3);
+        alvoNo.textContent = k >= 1 ? t : m[1] + (alvo * e).toLocaleString('pt-BR', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + m[3];
+        if (k < 1) requestAnimationFrame(passo);
+    };
+    requestAnimationFrame(passo);
+}
+function animarConteudo(raiz) {
+    if (!raiz) return;
+    raiz.querySelectorAll('.kpi .v, .md-num, .radar-v, [data-contar]').forEach(contarAte);
+    if (!MOVE()) return;
+    // entrada escalonada dos tópicos e cartões
+    const blocos = [...raiz.querySelectorAll(':scope > .tp, :scope > .tp-nav, :scope > .card, :scope > .kpis, :scope > .grade')];
+    blocos.forEach((b, i) => { b.classList.remove('an-entra'); void b.offsetWidth; b.style.setProperty('--an-d', Math.min(i, 8) * 55 + 'ms'); b.classList.add('an-entra'); });
+    // revelar ao rolar (cartões dentro dos tópicos)
+    if ('IntersectionObserver' in window) {
+        const io = raiz._io || (raiz._io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('an-on'); raiz._io.unobserve(e.target); } }), { rootMargin: '0px 0px -40px 0px', threshold: .04 }));
+        raiz.querySelectorAll('.tp-corpo > .card, .tp-corpo > .grade, .tp-corpo > .kpis').forEach((c, i) => {
+            const r = c.getBoundingClientRect();
+            if (r.top < innerHeight) return;
+            c.classList.add('an-rev'); io.observe(c);
+        });
+    }
+}
+const _renderAbaV23 = renderAba;
+renderAba = function () {
+    _renderAbaV23();
+    const c = ABA && $('cont-' + ABA);
+    if (c) requestAnimationFrame(() => requestAnimationFrame(() => animarConteudo(c)));
+    const sec = ABA && $('aba-' + ABA);
+    if (sec && MOVE()) { sec.classList.remove('an-pag'); void sec.offsetWidth; sec.classList.add('an-pag'); }
+};
+/* onda de toque em botões, itens e chips */
+document.addEventListener('pointerdown', e => {
+    if (!MOVE() || e.button) return;
+    const b = e.target.closest('.btn, .item, .chip, .kpi, .radar-c, .lat-btn, .seg button, .tp-nav button, .md-nav button, .nav-inf button');
+    if (!b) return;
+    const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height) * 1.6;
+    const o = document.createElement('span');
+    o.className = 'an-onda';
+    o.style.cssText = `left:${e.clientX - d / 2}px;top:${e.clientY - d / 2}px;width:${d}px;height:${d}px`;
+    document.body.appendChild(o);
+    setTimeout(() => o.remove(), 600);
+}, { passive: true });
+/* gráficos: animação suave padrão */
+if (typeof Chart !== 'undefined') { try { Chart.defaults.animation = MOVE() ? { duration: 800, easing: 'easeOutQuart' } : false; } catch (e) { } }
+
+/* ---------------------------------------------------------------------
+   2. TERMOS E TENDÊNCIAS
+   --------------------------------------------------------------------- */
+('dessa desse deste desta destes destas nessa nesse neste nesta formal institucionais institucional convocados convocadas comunicados comunicadas configurada configurado completar representante qualquer disso nisso isso incluindo novamente chegou chegaram apresentado apresentada apresentados estaria seguinte seguintes procurou competente competentes relacao acao acoes autoridade autoridades episodio motivo interna interno internos devida devido responsabilidade inadequada inadequado').split(' ').forEach(w => STOP.add(w));
+const TX = { cache: null, n: 50, per: 'tudo', sel: null, grupo: null, rede: null };
+const PAL_REDE = ['#2563eb', '#db2777', '#059669', '#d97706', '#7c3aed', '#0891b2', '#dc2626', '#65a30d', '#c026d3', '#0d9488'];
+function termosIndice() {
+    if (TX.cache && TX.cache.reg === REG && TX.cache.n === REG.length) return TX.cache;
+    const nomes = new Set(); A.pessoas.forEach(p => p.k.split(' ').forEach(w => nomes.add(w)));
+    const brutos = REG.map(r => tokens(r.resumo, nomes));
+    const g0 = new Map(); brutos.forEach(ws => new Set(ws).forEach(w => g0.set(w, (g0.get(w) || 0) + 1)));
+    // singular e plural contam como a mesma palavra (aparelho/aparelhos, agressão/agressões)
+    const canon = w => w.endsWith('OES') && g0.has(w.slice(0, -3) + 'AO') ? w.slice(0, -3) + 'AO' : w.endsWith('S') && g0.has(w.slice(0, -1)) ? w.slice(0, -1) : w;
+    const sets = brutos.map(ws => new Set(ws.map(canon)));
+    const txt = REG.map(r => chave(String(r.resumo || '').replace(/\*\*/g, ' ')));
+    const glob = new Map(); sets.forEach(s => s.forEach(w => glob.set(w, (glob.get(w) || 0) + 1)));
+    return TX.cache = { reg: REG, n: REG.length, sets, txt, glob };
+}
+const reTermo = q => new RegExp('\\b' + chave(q).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+function trBuscar(q) {
+    TR2.q = q; const i = $('tr2-q'); if (i) i.value = q;
+    trBuscaRender();
+    const s = document.querySelector('.tr3-busca'); if (s) s.scrollIntoView({ behavior: MOVE() ? 'smooth' : 'auto', block: 'start' });
+}
+function trComparar(w) {
+    const atuais = TR2.q.split(',').map(s => s.trim()).filter(Boolean);
+    if (!atuais.includes(w)) atuais.push(w);
+    trBuscar(atuais.slice(-4).join(', '));
+}
+
+/* rede de coocorrência ------------------------------------------------ */
+function redePalavras(T, I) {
+    const hoje = A.hoje;
+    const lista = TX.per === 'tudo' ? REG.map((_, i) => i) : REG.map((r, i) => i).filter(i => REG[i].dt && diasEntre(REG[i].dt, hoje) <= +TX.per && diasEntre(REG[i].dt, hoje) >= 0);
+    const freq = new Map(); lista.forEach(i => I.sets[i].forEach(w => freq.set(w, (freq.get(w) || 0) + 1)));
+    const lim = Math.max(10, lista.length * .2);
+    const vocab = [...freq.entries()].filter(([, n]) => n >= 3 && n <= lim).sort((a, b) => b[1] - a[1]).slice(0, TX.n).map(x => x[0]);
+    const V = new Map(vocab.map((w, i) => [w, i]));
+    const co = new Map();
+    lista.forEach(i => {
+        const ws = []; I.sets[i].forEach(w => { const k = V.get(w); if (k != null) ws.push(k); }); ws.sort((a, b) => a - b);
+        for (let x = 0; x < ws.length; x++) for (let y = x + 1; y < ws.length; y++) { const k = ws[x] * 1000 + ws[y]; co.set(k, (co.get(k) || 0) + 1); }
+    });
+    const emSet = new Set(T.emerg.map(e => e.w));
+    const nos = vocab.map((w, i) => ({ i, w, n: freq.get(w), em: emSet.has(w), viz: [], g: i }));
+    let arest = [];
+    co.forEach((c, k) => { if (c < 3) return; const a = Math.floor(k / 1000), b = k % 1000; arest.push({ a, b, c, s: c / Math.sqrt(nos[a].n * nos[b].n) }); });
+    // mantém as 4 ligações mais fortes de cada palavra
+    const manter = new Set();
+    nos.forEach(n => { arest.filter(e => e.a === n.i || e.b === n.i).sort((x, y) => y.s - x.s).slice(0, 4).forEach(e => manter.add(e)); });
+    arest = [...manter].sort((x, y) => y.s - x.s);
+    arest.forEach(e => { nos[e.a].viz.push(e); nos[e.b].viz.push(e); });
+    // grupos de assunto: propagação de rótulos ponderada
+    for (let it = 0; it < 12; it++) {
+        let mudou = false;
+        nos.forEach(n => {
+            if (!n.viz.length) return;
+            const sc = new Map(); n.viz.forEach(e => { const o = nos[e.a === n.i ? e.b : e.a]; sc.set(o.g, (sc.get(o.g) || 0) + e.s); });
+            sc.set(n.g, (sc.get(n.g) || 0) + 1e-6);
+            const melhor = [...sc.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0][0];
+            if (melhor !== n.g) { n.g = melhor; mudou = true; }
+        });
+        if (!mudou) break;
+    }
+    const gm = new Map(); nos.forEach(n => { if (!gm.has(n.g)) gm.set(n.g, []); gm.get(n.g).push(n); });
+    const grupos = [...gm.values()].filter(g => g.length >= 2).sort((a, b) => b.reduce((s, n) => s + n.n, 0) - a.reduce((s, n) => s + n.n, 0)).map((ns, k) => ({ k, ns: ns.sort((a, b) => b.n - a.n), cor: PAL_REDE[k % PAL_REDE.length] }));
+    nos.forEach(n => { n.grp = grupos.find(g => g.ns.includes(n)) || null; n.cor = n.grp ? n.grp.cor : '#94a3b8'; });
+    return { nos, arest, grupos, lista, total: lista.length };
+}
+function trRedeHTML() {
+    return `<div class="tr3-rede-top">
+        <div class="tr3-ctl"><span class="rot">Palavras</span><div class="seg" id="tr3-n">${[30, 50, 80].map(n => `<button data-n="${n}" class="${TX.n === n ? 'ativo' : ''}">${n}</button>`).join('')}</div></div>
+        <div class="tr3-ctl"><span class="rot">Relatos</span><div class="seg" id="tr3-per">${[['tudo', 'Todo o recorte'], ['90', 'Últimos 90 dias']].map(([k, t]) => `<button data-p="${k}" class="${TX.per === k ? 'ativo' : ''}">${t}</button>`).join('')}</div></div>
+        <button class="btn btn-s btn-sm" id="tr3-reorg">${ic('repeat')}Reorganizar</button>
+    </div>
+    <p class="peq tr3-frase" id="tr3-frase"></p>
+    <div class="tr3-rede-grade">
+        <div class="tr3-palco" id="tr3-palco"><canvas id="tr3-cv" aria-label="Rede de conexões entre palavras dos relatos" role="img"></canvas><div class="tr3-dica" id="tr3-dica" hidden></div>
+            <div class="tr3-leg-min"><span><i style="background:var(--muted2)"></i>tamanho = em quantos relatos aparece</span><span><i class="ln"></i>linha = aparecem juntas</span><span><i class="anel"></i>em alta</span></div></div>
+        <aside class="tr3-painel" id="tr3-painel"></aside>
+    </div>
+    <div class="tr3-grupos" id="tr3-grupos"></div>`;
+}
+function trRedeIniciar() {
+    const T = window.TERMOS, I = termosIndice();
+    const R = TX.rede = redePalavras(T, I);
+    if (TX.sel && !R.nos.some(n => n.w === TX.sel)) TX.sel = null;
+    TX.grupo = null;
+    const g0 = R.grupos[0], e0 = R.arest.slice().sort((a, b) => b.c - a.c)[0];
+    $('tr3-frase').innerHTML = !R.nos.length ? 'Poucos relatos no recorte para montar a rede.' :
+        `Nos <b>${fmtN(R.total)}</b> relatos analisados, as <b>${R.nos.length}</b> palavras mais usadas formam <b>${R.grupos.length}</b> grupos de assunto.${g0 ? ` O maior reúne <b>${g0.ns.slice(0, 3).map(n => n.w.toLowerCase()).join(', ')}</b>.` : ''}${e0 ? ` As duas palavras que mais aparecem juntas são <a href="javascript:void 0" onclick="trVerPar(${e0.a},${e0.b})"><b>${R.nos[e0.a].w.toLowerCase()}</b> e <b>${R.nos[e0.b].w.toLowerCase()}</b></a> (${fmtN(e0.c)} relatos).` : ''}`;
+    $('tr3-grupos').innerHTML = R.grupos.length ? `<div class="rot" style="margin:0 0 6px">Grupos de assunto · clique para destacar</div><div class="tr3-gr-lista">${R.grupos.map(g => `<button class="tr3-gr" data-g="${g.k}" style="--c:${g.cor}"><i></i><b>${g.ns.slice(0, 3).map(n => esc(n.w.toLowerCase())).join(' · ')}</b><small>${g.ns.length} palavras</small></button>`).join('')}</div>` : '';
+    $('tr3-grupos').onclick = e => { const b = e.target.closest('.tr3-gr'); if (!b) return; const k = +b.dataset.g; TX.grupo = TX.grupo === k ? null : k; TX.sel = null; document.querySelectorAll('.tr3-gr').forEach(x => x.classList.toggle('ativo', +x.dataset.g === TX.grupo)); trPainel(); REDE_SIM && REDE_SIM.acordar(.05); };
+    trPainel();
+    redeSimular(R);
+}
+function trVerPar(a, b) {
+    const R = TX.rede, I = termosIndice(); const wa = R.nos[a].w, wb = R.nos[b].w;
+    const rs = REG.filter((r, i) => I.sets[i].has(wa) && I.sets[i].has(wb));
+    listaModal(`Relatos com "${wa.toLowerCase()}" e "${wb.toLowerCase()}"`, rs);
+}
+function trPainel() {
+    const R = TX.rede, p = $('tr3-painel'); if (!p || !R) return;
+    const n = TX.sel && R.nos.find(x => x.w === TX.sel);
+    if (!n) {
+        const pares = R.arest.slice().sort((a, b) => b.c - a.c).slice(0, 7), mx = pares.length ? pares[0].c : 1;
+        p.innerHTML = `<div class="tr3-p-cab"><span class="ico" style="--c:var(--roxo)">${ic('layers')}</span><div><b>Pares mais ligados</b><small>Palavras que mais aparecem no mesmo relato</small></div></div>
+            <div class="tr3-pares">${pares.map(e => `<button onclick="trVerPar(${e.a},${e.b})"><span class="tx"><b>${esc(R.nos[e.a].w.toLowerCase())}</b> + <b>${esc(R.nos[e.b].w.toLowerCase())}</b></span><span class="br"><span style="width:${(100 * e.c / mx).toFixed(0)}%"></span></span><span class="q">${fmtN(e.c)}</span></button>`).join('') || '<div class="vazio peq">Sem ligações fortes.</div>'}</div>
+            <p class="dica" style="margin:12px 0 0">${ic('info')} Clique numa palavra da rede para ver com quais outras ela anda junto, a evolução e os relatos. Arraste para reorganizar.</p>`;
+        return;
+    }
+    const I = termosIndice(), J = TR.janela, hoje = A.hoje;
+    const rs = REG.filter((r, i) => I.sets[i].has(n.w));
+    const rec = rs.filter(r => r.dt && diasEntre(r.dt, hoje) <= J && diasEntre(r.dt, hoje) >= 0).length, ant = rs.filter(r => r.dt && diasEntre(r.dt, hoje) > J && diasEntre(r.dt, hoje) <= 2 * J).length;
+    const porMes = TERMOS.meses.map(m => rs.filter(r => r.dt && chaveMes(r.dt) === m).length);
+    const viz = n.viz.map(e => ({ o: R.nos[e.a === n.i ? e.b : e.a], e })).sort((a, b) => b.e.c - a.e.c), mx = viz.length ? viz[0].e.c : 1;
+    const escs = new Set(rs.map(r => r.escK)).size;
+    const varr = ant ? Math.round(100 * (rec - ant) / ant) : null;
+    const ult = rs.slice().sort((a, b) => (b.dt || 0) - (a.dt || 0))[0];
+    p.innerHTML = `<div class="tr3-p-cab"><span class="ico" style="--c:${n.cor}">${ic('search')}</span><div><b class="tr3-p-w">${esc(n.w.toLowerCase())}${n.em ? ' <span class="selo" style="--c:var(--c-crit)">em alta</span>' : ''}</b><small>${n.grp ? 'grupo: ' + n.grp.ns.slice(0, 2).map(x => esc(x.w.toLowerCase())).join(' · ') : 'sem grupo'}</small></div><button class="ic-btn" title="Limpar seleção" onclick="TX.sel=null;trPainel();REDE_SIM&&REDE_SIM.acordar(.05)">${ic('x')}</button></div>
+        <div class="tr3-p-kpis"><div><b data-contar>${fmtN(rs.length)}</b><small>relatos</small></div><div><b data-contar>${fmtN(escs)}</b><small>escolas</small></div><div><b>${fmtN(rec)}</b><small>em ${J} dias${varr != null ? ` <em style="color:${varr > 10 ? 'var(--c-crit)' : varr < -10 ? 'var(--verde)' : 'var(--muted)'}">${varr > 0 ? '▲' : varr < 0 ? '▼' : '■'}${Math.abs(varr)}%</em>` : ''}</small></div></div>
+        ${sparkline(porMes, n.cor, 44)}
+        <div class="rot" style="margin:10px 0 6px">Anda junto com</div>
+        <div class="tr3-pares">${viz.slice(0, 6).map(v => `<button onclick="TX.sel='${v.o.w}';trPainel();REDE_SIM&&REDE_SIM.acordar(.05)"><span class="tx"><i style="background:${v.o.cor}"></i><b>${esc(v.o.w.toLowerCase())}</b></span><span class="br"><span style="width:${(100 * v.e.c / mx).toFixed(0)}%;background:${n.cor}"></span></span><span class="q">${fmtN(v.e.c)}</span></button>`).join('') || '<div class="vazio peq">Sem ligações fortes.</div>'}</div>
+        ${podeVerPessoas() && ult ? `<p class="tr-ex" style="margin-top:10px" onclick="abrirOcorrencia('${esc(ult.id)}')"><b>${fmtD(ult.dt)} · ${esc(ult.esc)}</b><br>${trechoCom(ult.resumo, new RegExp('\\b' + n.w + '\\b'))}</p>` : ''}
+        <div class="tr3-p-acoes"><button class="btn btn-p btn-sm" onclick="verTermo('${n.w}')">${ic('book')}Ver relatos</button><button class="btn btn-s btn-sm" onclick="trBuscar('${n.w.toLowerCase()}')">${ic('search')}Pesquisar</button><button class="btn btn-s btn-sm" onclick="trComparar('${n.w.toLowerCase()}')">${ic('plus')}Comparar</button></div>`;
+    p.querySelectorAll('[data-contar]').forEach(contarAte);
+    if (MOVE()) { p.classList.remove('an-troca'); void p.offsetWidth; p.classList.add('an-troca'); }
+}
+
+/* simulação de forças em canvas --------------------------------------- */
+let REDE_SIM = null;
+function redeSimular(R) {
+    if (REDE_SIM) REDE_SIM.parar();
+    const cv = $('tr3-cv'), palco = $('tr3-palco'); if (!cv || !palco) return;
+    const ctx = cv.getContext('2d'), dpr = Math.min(2, devicePixelRatio || 1);
+    let W = 0, H = 0;
+    const medir = () => { W = palco.clientWidth || 600; H = innerWidth < 700 ? 420 : 540; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px'; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    medir();
+    const N = R.nos, E = R.arest, nmax = Math.max(1, ...N.map(n => n.n));
+    const ng = Math.max(1, R.grupos.length);
+    N.forEach((n, i) => {
+        const gi = n.grp ? n.grp.k : ng, ang = gi / (ng + 1) * Math.PI * 2;
+        n.r = 4 + 15 * Math.sqrt(n.n / nmax);
+        n.x = W / 2 + Math.cos(ang) * W * .22 + (Math.random() - .5) * 80; n.y = H / 2 + Math.sin(ang) * H * .22 + (Math.random() - .5) * 80;
+        n.vx = n.vy = 0;
+    });
+    let alpha = 1, hover = null, arr = null, raf = 0, vivo = true, t0 = performance.now();
+    const passo = () => {
+        const cx = W / 2, cy = H / 2;
+        for (let i = 0; i < N.length; i++) {
+            const a = N[i];
+            for (let j = i + 1; j < N.length; j++) {
+                const b = N[j]; let dx = b.x - a.x, dy = b.y - a.y, d2 = dx * dx + dy * dy || 1; const d = Math.sqrt(d2);
+                const f = -30 * alpha / Math.max(d, 8);
+                dx /= d; dy /= d; a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f;
+                const min = a.r + b.r + 10;
+                if (d < min) { const s = (min - d) / 2 * .5; a.x -= dx * s; a.y -= dy * s; b.x += dx * s; b.y += dy * s; }
+            }
+        }
+        E.forEach(e => {
+            const a = N[e.a], b = N[e.b]; const dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1;
+            const L = 70 + 120 * (1 - Math.min(1, e.s * 1.6)) + (a.r + b.r) * .6, k = (d - L) / d * .05 * alpha * (.4 + e.s);
+            a.vx += dx * k; a.vy += dy * k; b.vx -= dx * k; b.vy -= dy * k;
+        });
+        N.forEach(n => {
+            n.vx += (cx - n.x) * .004 * alpha; n.vy += (cy - n.y) * .007 * alpha;
+            if (n === arr) { n.vx = n.vy = 0; return; }
+            n.vx *= .62; n.vy *= .62; n.x += n.vx; n.y += n.vy;
+            const m = n.r + 6; n.x = Math.max(m, Math.min(W - m, n.x)); n.y = Math.max(m + 4, Math.min(H - m - 28, n.y));
+        });
+        alpha *= .985;
+    };
+    const cor = { txt: css('--texto'), txt2: css('--texto2'), card: css('--card'), linha: css('--borda2') || '#cbd5e1', crit: css('--c-crit') || '#be123c' };
+    const vizDe = n => new Set(n.viz.map(e => e.a === n.i ? e.b : e.a));
+    const desenhar = (agora) => {
+        ctx.clearRect(0, 0, W, H);
+        const sel = TX.sel ? N.find(n => n.w === TX.sel) : null, foco = hover || sel;
+        const fv = foco ? vizDe(foco) : null;
+        const ativo = n => foco ? (n === foco || fv.has(n.i)) : TX.grupo != null ? (n.grp && n.grp.k === TX.grupo) : true;
+        const entra = MOVE() ? Math.max(.02, Math.min(1, (agora - t0) / 700)) : 1;
+        E.forEach(e => {
+            const a = N[e.a], b = N[e.b];
+            const on = foco ? (e.a === foco.i || e.b === foco.i) : TX.grupo != null ? (ativo(a) && ativo(b)) : true;
+            ctx.globalAlpha = (on ? (foco ? .85 : .32) : .05) * entra;
+            ctx.strokeStyle = on && foco ? foco.cor : (a.grp && a.grp === b.grp ? a.cor : cor.linha);
+            ctx.lineWidth = (.6 + 4 * Math.min(1, e.s * 1.4)) * (on && foco ? 1.3 : 1);
+            ctx.beginPath(); ctx.moveTo(a.x, a.y);
+            const mx = (a.x + b.x) / 2 + (b.y - a.y) * .08, my = (a.y + b.y) / 2 - (b.x - a.x) * .08;
+            ctx.quadraticCurveTo(mx, my, b.x, b.y); ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+        N.forEach(n => {
+            const on = ativo(n), rr = n.r * (MOVE() ? Math.min(1, entra * 1.4) : 1) * (n === foco ? 1.18 : 1);
+            ctx.globalAlpha = on ? 1 : .14;
+            if (n === sel && MOVE()) { const ph = (agora % 1600) / 1600; ctx.beginPath(); ctx.arc(n.x, n.y, rr + 4 + ph * 14, 0, 7); ctx.strokeStyle = n.cor; ctx.lineWidth = 2; ctx.globalAlpha = (1 - ph) * .6; ctx.stroke(); ctx.globalAlpha = 1; }
+            if (n.em) { ctx.beginPath(); ctx.arc(n.x, n.y, rr + 3.5, 0, 7); ctx.setLineDash([3, 3]); ctx.strokeStyle = cor.crit; ctx.lineWidth = 1.8; ctx.stroke(); ctx.setLineDash([]); }
+            const gr = ctx.createRadialGradient(n.x - rr * .35, n.y - rr * .35, rr * .1, n.x, n.y, rr);
+            gr.addColorStop(0, n.cor + 'cc'); gr.addColorStop(1, n.cor);
+            ctx.beginPath(); ctx.arc(n.x, n.y, rr, 0, 7); ctx.fillStyle = gr; ctx.fill();
+            ctx.lineWidth = n === foco ? 2.5 : 1.5; ctx.strokeStyle = cor.card; ctx.stroke();
+        });
+        // rótulos: prioridade para foco, vizinhos e palavras maiores; pula os que se sobrepõem
+        const ord = N.slice().sort((a, b) => ((b === foco) * 1e6 + (foco && fv.has(b.i)) * 1e5 + b.n) - ((a === foco) * 1e6 + (foco && fv.has(a.i)) * 1e5 + a.n));
+        const postos = [], fam = css('--f-corpo') || 'Inter, sans-serif';
+        ord.forEach(n => {
+            const on = ativo(n), forca = n === foco || (foco && fv.has(n.i));
+            if (!on && !forca) return;
+            const fs = Math.round(10.5 + 4.5 * Math.sqrt(n.n / nmax));
+            ctx.font = `${n === foco ? 800 : 650} ${fs}px ${fam}`;
+            const tx = n.w.toLowerCase(), wd = ctx.measureText(tx).width;
+            let x = n.x + n.r + 4, y = n.y;
+            if (x + wd > W - 4) x = n.x - n.r - 4 - wd;
+            const R = { x0: x - 2, x1: x + wd + 2, y0: y - fs / 2 - 1, y1: y + fs / 2 + 1 };
+            if (postos.some(p => p.x0 < R.x1 && p.x1 > R.x0 && p.y0 < R.y1 && p.y1 > R.y0) && !forca) return;
+            if (!forca && postos.length >= (innerWidth < 700 ? 22 : 60)) return;
+            postos.push(R);
+            ctx.globalAlpha = entra;
+            ctx.textBaseline = 'middle';
+            ctx.lineWidth = 3.5; ctx.strokeStyle = cor.card; ctx.lineJoin = 'round'; ctx.strokeText(tx, x, y);
+            ctx.fillStyle = n === foco ? n.cor : cor.txt; ctx.fillText(tx, x, y);
+        });
+        ctx.globalAlpha = 1;
+    };
+    const laço = (agora) => {
+        if (!vivo || !cv.isConnected) { vivo = false; return; }
+        if (alpha > .015) { passo(); if (alpha > .2) passo(); }
+        desenhar(agora);
+        const sel = TX.sel || hover;
+        if (alpha > .015 || (sel && MOVE()) || agora - t0 < 900) raf = requestAnimationFrame(laço); else raf = 0;
+    };
+    if (!MOVE()) { for (let i = 0; i < 320; i++) passo(); alpha = 0; desenhar(performance.now() + 1e4); }
+    else raf = requestAnimationFrame(laço);
+    const acordar = (a) => { alpha = Math.max(alpha, a || 0); if (!raf && vivo) { if (MOVE()) raf = requestAnimationFrame(laço); else { while (alpha > .015) passo(); desenhar(performance.now() + 1e4); } } };
+    const ponto = ev => { const r = cv.getBoundingClientRect(); return { x: ev.clientX - r.left, y: ev.clientY - r.top }; };
+    const achar = p => { let m = null, md = 1e9; N.forEach(n => { const d = Math.hypot(n.x - p.x, n.y - p.y); if (d < Math.max(n.r + 6, 14) && d < md) { md = d; m = n; } }); return m; };
+    const dica = $('tr3-dica');
+    let ini = null;
+    cv.onpointerdown = ev => { const p = ponto(ev), n = achar(p); ini = { p, n, mov: 0 }; if (n) { arr = n; try { cv.setPointerCapture(ev.pointerId); } catch (e) { } } };
+    cv.onpointermove = ev => {
+        const p = ponto(ev);
+        if (arr && ini) { ini.mov += Math.abs(ev.movementX || 0) + Math.abs(ev.movementY || 0); arr.x = p.x; arr.y = p.y; acordar(.3); dica.hidden = true; return; }
+        const n = achar(p);
+        if (n !== hover) { hover = n; cv.style.cursor = n ? 'pointer' : 'default'; acordar(0); }
+        if (n) {
+            const viz = n.viz.map(e => ({ o: N[e.a === n.i ? e.b : e.a], c: e.c })).sort((a, b) => b.c - a.c).slice(0, 3);
+            dica.innerHTML = `<b>${esc(n.w.toLowerCase())}</b><span>${fmtN(n.n)} relatos${n.em ? ' · <em>em alta</em>' : ''}</span>${viz.length ? `<small>junto com ${viz.map(v => esc(v.o.w.toLowerCase()) + ' (' + v.c + ')').join(', ')}</small>` : ''}`;
+            dica.hidden = false; dica.style.left = Math.min(W - 230, p.x + 14) + 'px'; dica.style.top = Math.max(4, p.y - 10) + 'px';
+        } else dica.hidden = true;
+    };
+    cv.onpointerleave = () => { if (!arr) { hover = null; dica.hidden = true; acordar(0); } };
+    cv.onpointerup = ev => {
+        const n = ini && ini.n, mov = ini ? ini.mov : 99; arr = null; ini = null;
+        if (mov < 6) { TX.sel = n ? (TX.sel === n.w ? null : n.w) : null; TX.grupo = null; document.querySelectorAll('.tr3-gr').forEach(x => x.classList.remove('ativo')); trPainel(); acordar(0); }
+    };
+    let rt = 0; const aoRed = () => { clearTimeout(rt); rt = setTimeout(() => { if (!cv.isConnected) return; const w0 = W; medir(); if (w0 !== W) { N.forEach(n => n.x = n.x * W / w0); acordar(.25); } else acordar(0); }, 150); };
+    window.addEventListener('resize', aoRed);
+    REDE_SIM = { acordar, parar: () => { vivo = false; cancelAnimationFrame(raf); window.removeEventListener('resize', aoRed); }, reorganizar: () => { N.forEach(n => { n.x = W / 2 + (Math.random() - .5) * W * .6; n.y = H / 2 + (Math.random() - .5) * H * .6; }); t0 = performance.now(); acordar(1); } };
+}
+
+/* pesquisa e comparação ----------------------------------------------- */
+function trBuscaRender() {
+    const box = $('tr3-res'); if (!box) return;
+    const T = window.TERMOS, I = termosIndice(), J = TR.janela, hoje = A.hoje, pode = podeVerPessoas();
+    const termos = TR2.q.split(',').map(s => s.trim()).filter(s => s.length >= 3).slice(0, 4);
+    if (!termos.length) {
+        const sug = [...new Set([...T.emerg.slice(0, 5).map(x => x.w), ...T.top.slice(0, 7).map(x => x[0])])].slice(0, 10);
+        box.innerHTML = `<div class="tr3-sug"><span class="rot" style="margin:0">Sugestões</span>${sug.map(w => `<button class="chip" style="--c:${T.emerg.some(e => e.w === w) ? 'var(--c-crit)' : 'var(--prim)'}" onclick="trBuscar('${w.toLowerCase()}')"><span class="pt"></span>${w.toLowerCase()}</button>`).join('')}</div>`;
+        return;
+    }
+    const dados = termos.map((q, k) => {
+        const re = reTermo(q), idx = []; I.txt.forEach((t, i) => { if (re.test(t)) idx.push(i); });
+        const rs = idx.map(i => REG[i]).sort((a, b) => (b.dt || 0) - (a.dt || 0));
+        const rec = rs.filter(r => r.dt && diasEntre(r.dt, hoje) <= J && diasEntre(r.dt, hoje) >= 0).length, ant = rs.filter(r => r.dt && diasEntre(r.dt, hoje) > J && diasEntre(r.dt, hoje) <= 2 * J).length;
+        return { q, re, idx, rs, rec, ant, porMes: T.meses.map(m => rs.filter(r => r.dt && chaveMes(r.dt) === m).length), escs: new Set(rs.map(r => r.escK)).size, muns: new Set(rs.map(r => r.mun)).size, cor: PAL_REDE[k] };
+    });
+    window.BUSCA_TR = dados[0].rs; window.BUSCA_TR3 = dados;
+    const mesesRot = T.meses.map(m => MES_ABR[+m.slice(5) - 1] + '/' + m.slice(2, 4));
+    const vTxt = d => d.ant ? (() => { const v = Math.round(100 * (d.rec - d.ant) / d.ant); return `<span style="color:${v > 10 ? 'var(--c-crit)' : v < -10 ? 'var(--verde)' : 'var(--muted)'}">${v > 0 ? '▲' : v < 0 ? '▼' : '■'} ${Math.abs(v)}%</span>`; })() : (d.rec ? '<span style="color:var(--c-crit)">novo</span>' : '—');
+    if (dados.length === 1) {
+        const d = dados[0];
+        // palavras que acompanham: mais frequentes nestes relatos do que no geral
+        const cnt = new Map(); d.idx.forEach(i => I.sets[i].forEach(w => cnt.set(w, (cnt.get(w) || 0) + 1)));
+        const qk = chave(d.q).split(' ');
+        const junto = [...cnt.entries()].filter(([w, c]) => c >= 3 && !qk.includes(w)).map(([w, c]) => ({ w, c, lift: (c / d.idx.length) / ((I.glob.get(w) || 1) / REG.length) })).filter(x => x.lift > 1.5).sort((a, b) => b.c * Math.log(b.lift) - a.c * Math.log(a.lift)).slice(0, 12);
+        const pm = new Map(); d.rs.forEach(r => pm.set(r.mun, (pm.get(r.mun) || 0) + 1));
+        const mun = [...pm.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6);
+        box.innerHTML = `<div class="tr3-res-cab"><div><h4>"${esc(d.q)}" nos relatos</h4><p class="peq mut">${fmtN(d.rs.length)} relato(s) · ${fmtN(d.escs)} escola(s) · ${fmtN(d.muns)} município(s)</p></div>${d.rs.length ? `<div class="tr3-res-ac"><button class="btn btn-p btn-sm" onclick="listaModal('Relatos com &quot;${esc(d.q)}&quot;', BUSCA_TR)">${ic('book')}Ver os ${fmtN(d.rs.length)}</button><button class="btn btn-s btn-sm" onclick="trBuscar('')">${ic('x')}Limpar</button></div>` : ''}</div>
+        ${d.rs.length ? `<div class="kpis tr3-kpis">
+            <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('book')}Relatos</div><div class="v">${fmtN(d.rs.length)}</div><div class="s">no recorte</div></div>
+            <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('clock')}Últimos ${J} dias</div><div class="v">${fmtN(d.rec)}</div><div class="s">${vTxt(d)} vs. ${J} dias anteriores</div></div>
+            <div class="kpi" style="--c:var(--roxo)"><div class="r">${ic('escola')}Escolas</div><div class="v">${fmtN(d.escs)}</div><div class="s">em ${fmtN(d.muns)} município(s)</div></div></div>
+        <div class="grade g2" style="align-items:start;margin-top:12px">
+            <div><div class="rot">Relatos por mês</div><div style="height:190px"><canvas id="tr3-graf"></canvas></div></div>
+            <div><div class="rot">Palavras que acompanham <small class="mut">(clique para pesquisar · + para comparar)</small></div><div class="tr3-junto">${junto.map(x => `<span class="tr3-jc"><button onclick="trBuscar('${x.w.toLowerCase()}')">${x.w.toLowerCase()} <small>${x.c}</small></button><button class="mais" title="Comparar" onclick="trComparar('${x.w.toLowerCase()}')">+</button></span>`).join('') || '<span class="mut peq">Nenhuma palavra se destaca junto deste termo.</span>'}</div>
+                <div class="rot" style="margin-top:12px">Onde mais aparece</div>${hbar(mun.map(([k, n]) => ({ t: nomeMun(k), v: n, on: `abrirMun('${esc(k)}')` })))}</div></div>
+        ${pode ? `<div class="rot" style="margin-top:12px">Trechos mais recentes</div><div class="grade g3 tr3-trechos">${d.rs.slice(0, 3).map(r => `<p class="tr-ex" onclick="abrirOcorrencia('${esc(r.id)}')"><b>${fmtD(r.dt)} · ${esc(r.esc)}</b><br>${trechoCom(r.resumo, d.re)}</p>`).join('')}</div>` : '<p class="mut peq" style="margin-top:10px">Trechos dos relatos disponíveis para Administrador e Inteligência.</p>'}`
+            : '<p class="mut">Nenhum relato contém este termo no recorte. Tente uma parte da palavra (ex.: "amea" em vez de "ameaçou").</p>'}`;
+        if (d.rs.length) grafico('tr3-graf', { type: 'bar', data: { labels: mesesRot, datasets: [{ data: d.porMes, backgroundColor: d.porMes.map((_, i) => i === d.porMes.length - 1 ? css('--c-crit') : css('--prim')), borderRadius: 5, maxBarThickness: 28 }] }, options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } }, x: { grid: { display: false } } } } });
+    } else {
+        const juntos = REG.filter((r, i) => dados.every(d => d.re.test(I.txt[i])));
+        window.BUSCA_JUNTOS = juntos;
+        box.innerHTML = `<div class="tr3-res-cab"><div><h4>Comparando ${dados.map(d => `<span class="tr3-tag" style="--c:${d.cor}">${esc(d.q)}</span>`).join(' ')}</h4><p class="peq mut">Relatos por mês de cada termo. ${juntos.length ? `<a href="javascript:void 0" onclick="listaModal('Relatos com todos os termos', BUSCA_JUNTOS)">${fmtN(juntos.length)} relato(s) citam todos juntos</a>.` : 'Nenhum relato cita todos juntos.'}</p></div><div class="tr3-res-ac"><button class="btn btn-s btn-sm" onclick="trBuscar('')">${ic('x')}Limpar</button></div></div>
+        <div class="grade g32" style="align-items:start">
+            <div style="height:240px"><canvas id="tr3-graf"></canvas></div>
+            <div class="tab-wrap"><table class="tab"><thead><tr><th>Termo</th><th class="dir">Relatos</th><th class="dir">Escolas</th><th class="dir">${J} dias</th><th class="dir">Var.</th></tr></thead><tbody>${dados.map((d, k) => `<tr class="clic" onclick="listaModal('Relatos com &quot;${esc(d.q)}&quot;', BUSCA_TR3[${k}].rs)"><td><span class="tr3-tag" style="--c:${d.cor}">${esc(d.q)}</span></td><td class="dir num">${fmtN(d.rs.length)}</td><td class="dir num">${fmtN(d.escs)}</td><td class="dir num">${fmtN(d.rec)}</td><td class="dir num" style="white-space:nowrap">${vTxt(d)}</td></tr>`).join('')}</tbody></table></div></div>`;
+        grafico('tr3-graf', { type: 'line', data: { labels: mesesRot, datasets: dados.map(d => ({ label: d.q, data: d.porMes, borderColor: d.cor, backgroundColor: d.cor + '22', fill: dados.length === 2, tension: .35, pointRadius: 3, borderWidth: 2.4 })) }, options: { maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, usePointStyle: true } } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } }, x: { grid: { display: false } } } } });
+    }
+    box.querySelectorAll('.kpi .v').forEach(contarAte);
+    if (MOVE()) { box.classList.remove('an-troca'); void box.offsetWidth; box.classList.add('an-troca'); }
+}
+
+rTermos = function () {
+    $('acoes-termos').innerHTML = `<span class="peq" style="color:#9fb0c4">Comparar últimos</span><div class="seg" style="background:rgba(255,255,255,.08)" id="tr-jan">${[15, 30, 60].map(j => `<button data-j="${j}" class="${TR.janela === j ? 'ativo' : ''}" style="${TR.janela === j ? '' : 'color:#cbd5e1'}">${j} dias</button>`).join('')}</div>`;
+    $('tr-jan').onclick = e => { const b = e.target.closest('button'); if (b) { TR.janela = +b.dataset.j; rTermos(); } };
+    const T = window.TERMOS = analisarTermos();
+    const I = termosIndice();
+    const J = TR.janela, hoje = A.hoje, pode = podeVerPessoas();
+    const radar = T.radar.map(x => { const ant = x.regs.filter(r => r.dt && diasEntre(r.dt, hoje) > J && diasEntre(r.dt, hoje) <= 2 * J).length; const esc_ = new Map(); x.regs.filter(r => r.dt && diasEntre(r.dt, hoje) <= J).forEach(r => esc_.set(r.esc, (esc_.get(r.esc) || 0) + 1)); return Object.assign(x, { ant, var_: ant ? (x.rec - ant) / ant : (x.rec ? 1 : 0), escRec: [...esc_.entries()].sort((a, b) => b[1] - a[1]) }); }).sort((a, b) => b.rec - a.rec || b.regs.length - a.regs.length);
+    const emerg = T.emerg.slice(0, 10).map(x => { const rs = T.regsDe.get(x.w) || []; const re = new RegExp('\\b' + x.w + '\\b'); const ult = rs.slice().sort((a, b) => (b.dt || 0) - (a.dt || 0))[0]; return Object.assign(x, { ex: ult ? trechoCom(ult.resumo, re) : '', escs: new Set(rs.map(r => r.escK)).size }); });
+    // perdendo força: aparecia bastante e caiu na janela recente
+    const nRec = Math.max(1, T.nRec), nAnt = Math.max(1, T.nAnt);
+    const rec = new Map(), ant = new Map();
+    REG.forEach((r, i) => { if (!r.dt) return; const d = diasEntre(r.dt, hoje); const emR = d >= 0 && d <= J, emA = d > J && d <= 4 * J; if (!emR && !emA) return; I.sets[i].forEach(w => { if (emR) rec.set(w, (rec.get(w) || 0) + 1); if (emA) ant.set(w, (ant.get(w) || 0) + 1); }); });
+    const lim = REG.length * .2;
+    const queda = [...ant.entries()].filter(([w, n]) => n >= 10 && (I.glob.get(w) || 0) >= 20 && (I.glob.get(w) || 0) <= lim).map(([w, n]) => { const tr = (rec.get(w) || 0) / nRec, ta = n / nAnt; return { w, n: rec.get(w) || 0, a: n, f: ta ? tr / ta : 1 }; }).filter(x => x.f <= .45).sort((a, b) => a.f - b.f || b.a - a.a).slice(0, 8);
+    const top = T.top.slice(0, 18);
+    $('cont-termos').innerHTML = `
+    <div class="card card-pad tr3-busca"><div class="card-tit"><div class="ico">${ic('search')}</div><div><h3>Pesquisar e comparar</h3><p>Digite uma palavra ou expressão. Para comparar, separe por vírgula (ex.: <a href="javascript:void 0" onclick="trBuscar('faca, tesoura, canivete')">faca, tesoura, canivete</a>).</p></div></div>
+        <div class="busca tr3-campo">${ic('search')}<input class="campo" id="tr2-q" placeholder="Pesquisar nos relatos (ex.: vape, faca, desafio, pix)" value="${esc(TR2.q)}" autocomplete="off"></div>
+        <div id="tr3-res" class="tr3-res"></div></div>
+    <div class="card card-pad tr3-rede-card"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('layers')}</div><div><h3>Rede de conexões das palavras</h3><p>Cada bolha é uma palavra dos relatos; as linhas ligam palavras que aparecem no mesmo relato. Cores mostram grupos de assunto. Passe o mouse, clique ou arraste.</p></div></div>
+        ${trRedeHTML()}</div>
+    <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('target')}</div><div><h3>Radar de temas de risco</h3><p>Cada cartão conta os relatos que mencionam o tema. A seta compara os últimos ${J} dias com os ${J} anteriores. Clique para ver os relatos.</p></div></div>
+        <div class="radar-grade">${radar.map((x, i) => { const sobe = x.var_ > .1 && x.rec >= 2, desce = x.var_ < -.1; return `<button class="radar-c${sobe ? ' alta' : ''}" style="--an-i:${i}" onclick="listaModal('Tema: ${esc(x.t)}', TERMOS.radar.find(y=>y.t==='${esc(x.t)}').regs)"><div class="radar-top"><b>${esc(x.t)}</b><span style="color:${sobe ? 'var(--c-crit)' : desce ? 'var(--verde)' : 'var(--muted)'}">${sobe ? '▲' : desce ? '▼' : '■'} ${x.ant ? Math.abs(Math.round(x.var_ * 100)) + '%' : x.rec ? 'novo' : '—'}</span></div><div class="radar-v">${fmtN(x.rec)}<small> em ${J} dias · ${fmtN(x.regs.length)} no total</small></div>${sparkline(x.porMes, sobe ? css('--c-crit') : css('--prim'), 36)}<div class="radar-esc">${x.escRec[0] ? esc(x.escRec[0][0]) + (x.escRec.length > 1 ? ' e mais ' + (x.escRec.length - 1) : '') : 'sem registros recentes'}</div></button>`; }).join('')}</div></div>
+    <div class="grade g3 tr3-dest" style="align-items:start">
+        <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('trend')}</div><div><h3>Palavras em alta</h3><p>Ao menos 2× mais frequentes nos últimos ${J} dias, em 3 ou mais escolas</p></div></div></div>
+            <div class="lista">${emerg.map(x => `<button class="item tr-alta" onclick="trBuscar('${x.w.toLowerCase()}')"><span class="ic" style="--c:var(--c-crit)">${x.n}</span><span class="tx"><b>${x.w.toLowerCase()} <span class="selo" style="--c:var(--c-crit)">${x.novo ? 'novo' : '×' + fmt1(x.cresc)}</span></b><span>${x.escs} escola(s)</span>${pode && x.ex ? `<em>${x.ex}</em>` : ''}</span></button>`).join('') || '<div class="vazio peq">Nenhuma palavra em alta nesta janela.</div>'}</div></div>
+        <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--verde)">${ic('activity')}</div><div><h3>Perdendo força</h3><p>Eram comuns e caíram mais da metade nos últimos ${J} dias</p></div></div></div>
+            <div class="lista">${queda.map(x => `<button class="item" onclick="trBuscar('${x.w.toLowerCase()}')"><span class="ic" style="--c:var(--verde)">▼</span><span class="tx"><b>${x.w.toLowerCase()}</b><span>${Math.round((1 - x.f) * 100)}% menos frequente · ${x.n} relato(s) agora</span></span></button>`).join('') || '<div class="vazio peq">Nenhuma palavra em queda forte.</div>'}</div></div>
+        <div class="card card-pad"><div class="card-tit"><div class="ico">${ic('bar')}</div><div><h3>Palavras mais frequentes</h3><p>Cada relato conta uma vez</p></div></div>
+            ${hbar(top.map(([w, n]) => ({ t: w.toLowerCase(), v: n, c: T.emerg.some(e => e.w === w) ? 'var(--c-crit)' : 'var(--prim)', on: `trBuscar('${w.toLowerCase()}')` })))}
+            <div class="rot" style="margin-top:14px">Expressões que aparecem juntas</div><div style="display:flex;flex-wrap:wrap;gap:6px">${T.bigr.slice(0, 12).map(([b, n]) => `<button class="chip" style="--c:var(--roxo)" onclick="trBuscar('${esc(b.toLowerCase())}')"><span class="pt"></span>${esc(b.toLowerCase())} <span class="q">${n}</span></button>`).join('') || '<span class="mut peq">Sem expressões recorrentes.</span>'}</div></div>
+    </div>`;
+    let t; $('tr2-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { TR2.q = $('tr2-q').value; trBuscaRender(); }, 350); };
+    trBuscaRender();
+    $('tr3-n').onclick = e => { const b = e.target.closest('button'); if (!b) return; TX.n = +b.dataset.n; $('tr3-n').querySelectorAll('button').forEach(x => x.classList.toggle('ativo', x === b)); trRedeIniciar(); };
+    $('tr3-per').onclick = e => { const b = e.target.closest('button'); if (!b) return; TX.per = b.dataset.p; $('tr3-per').querySelectorAll('button').forEach(x => x.classList.toggle('ativo', x === b)); trRedeIniciar(); };
+    $('tr3-reorg').onclick = () => REDE_SIM && REDE_SIM.reorganizar();
+    setTimeout(trRedeIniciar, 40);
+};
+
+/* ---------------------------------------------------------------------
+   3. ROTAS PROVÁVEIS
+   --------------------------------------------------------------------- */
+const DF3 = { play: null, semana: null, vel: 1 };
+function datasPorMun() {
+    const DM = new Map(), vistos = new Set();
+    REG.forEach(r => {
+        if (!r.dt || +r.dt > +A.hoje + DIA) return;
+        if (!(DF.tipo === '' ? true : DF.tipo === '__SEV' ? ehSevero(r.tipo) : r.tipo === DF.tipo)) return;
+        const d = new Date(r.dt.getFullYear(), r.dt.getMonth(), r.dt.getDate()), k = r.mun + '|' + +d;
+        if (vistos.has(k)) return; vistos.add(k);
+        if (!DM.has(r.mun)) DM.set(r.mun, []); DM.get(r.mun).push(d);
+    });
+    DM.forEach(l => l.sort((a, b) => a - b));
+    return DM;
+}
+function enriquecerRotas(D, DM) {
+    const J = DF.janela;
+    let t0 = +A.hoje; DM.forEach(l => { if (l[0] && +l[0] < t0) t0 = +l[0]; });
+    const span = Math.max(30, (+A.hoje - t0) / DIA);
+    // chance "normal": o destino ter algum registro em J dias, sem olhar a origem
+    const base = k => { const n = (DM.get(k) || []).length, r = Math.min(1, n / span); return 1 - Math.pow(1 - r, J); };
+    D.arestas.forEach(a => {
+        const de = DM.get(a.de) || [], pa = DM.get(a.para) || [];
+        // passagem: dia com registro no destino precedido (1..J dias) por registro na origem
+        a.pass = pa.filter(d => de.some(o => { const x = diasEntre(o, d); return x >= 1 && x <= J; }));
+        // probabilidade empírica: dias na origem seguidos de registro no destino em até J dias
+        const seg = de.filter(o => pa.some(d => { const x = diasEntre(o, d); return x >= 1 && x <= J; })).length;
+        a.nde = de.length; a.prob = de.length ? seg / de.length : 0;
+        a.ultDe = de[de.length - 1] || null; a.ultPara = pa[pa.length - 1] || null;
+        a.base = base(a.para); a.ganho = a.prob - a.base;
+    });
+}
+function chegadasProvaveis(D) {
+    const hoje = A.hoje, J = DF.janela, por = new Map();
+    D.arestas.forEach((a, i) => {
+        if (!a.ultDe || a.prob < .2 || a.nde < 3 || a.ganho < .08) return;
+        const idade = diasEntre(a.ultDe, hoje); if (idade < 0 || idade > J) return;
+        if (a.ultPara && a.ultPara >= a.ultDe) return;
+        const esperado = new Date(+a.ultDe + Math.round(a.lag) * DIA);
+        if (!por.has(a.para)) por.set(a.para, { k: a.para, nome: nomeMun(a.para), origens: [] });
+        por.get(a.para).origens.push({ a, i, p: a.prob, esperado, limite: new Date(+a.ultDe + J * DIA) });
+    });
+    return [...por.values()].map(x => {
+        x.origens.sort((a, b) => b.p - a.p);
+        x.p = Math.min(.99, x.origens[0].p); x.base = x.origens[0].a.base; x.ganho = x.p - x.base;
+        x.esperado = new Date(Math.min(...x.origens.map(o => +o.esperado)));
+        x.limite = new Date(Math.max(...x.origens.map(o => +o.limite)));
+        x.dias = diasEntre(hoje, x.esperado);
+        return x;
+    }).sort((a, b) => b.ganho - a.ganho || b.p - a.p).slice(0, 9);
+}
+function curvaRota(p1, p2, k) {
+    k = k == null ? .2 : k;
+    const dx = p2.lng - p1.lng, dy = p2.lat - p1.lat;
+    const c = { lat: (p1.lat + p2.lat) / 2 + dx * k, lng: (p1.lng + p2.lng) / 2 - dy * k };
+    const pts = []; for (let i = 0; i <= 24; i++) { const t = i / 24, u = 1 - t; pts.push([u * u * p1.lat + 2 * u * t * c.lat + t * t * p2.lat, u * u * p1.lng + 2 * u * t * c.lng + t * t * p2.lng]); }
+    const t = .62, u = 1 - t;
+    const tg = { lat: 2 * u * (c.lat - p1.lat) + 2 * t * (p2.lat - c.lat), lng: 2 * u * (c.lng - p1.lng) + 2 * t * (p2.lng - c.lng) };
+    return { pts, seta: pts[15], ang: Math.atan2(-tg.lat, tg.lng) * 180 / Math.PI };
+}
+rDifusao = function () {
+    pararPropagacao();
+    $('acoes-difusao').innerHTML = `<select class="campo" id="df2-tipo" style="width:auto;height:34px">${selTipos(DF.tipo)}</select>
+        <select class="campo" id="df2-jan" style="width:auto;height:34px">${[15, 30, 60].map(j => `<option value="${j}" ${DF.janela === j ? 'selected' : ''}>passagem em até ${j} dias</option>`).join('')}</select>
+        <select class="campo" id="df2-raio" style="width:auto;height:34px">${[80, 150, 250].map(r => `<option value="${r}" ${DF.raio === r ? 'selected' : ''}>vizinhos até ${r} km</option>`).join('')}</select>`;
+    $('df2-tipo').onchange = () => { DF.tipo = $('df2-tipo').value; rDifusao(); };
+    $('df2-jan').onchange = () => { DF.janela = +$('df2-jan').value; rDifusao(); };
+    $('df2-raio').onchange = () => { DF.raio = +$('df2-raio').value; rDifusao(); };
+    const D = window.DIF2 = window.DIF3 = difusao(REG, { tipo: DF.tipo, janela: DF.janela, raio: DF.raio }, A);
+    const DM = window.DM3 = datasPorMun();
+    enriquecerRotas(D, DM);
+    const ativas = D.arestas.filter(a => a.recente), top = D.arestas.slice(0, DF2.todas ? 80 : 15);
+    const P = window.PRESS = pressaoMunicipios(D);
+    const C = window.CHEG3 = chegadasProvaveis(D);
+    const nomeTipo = DF.tipo === '__SEV' ? 'tipos sensíveis' : DF.tipo === '' ? 'ocorrências de todos os tipos' : tipoCurto(DF.tipo).toLowerCase();
+    const r1 = D.arestas[0];
+    const frase = !D.arestas.length ? `Com ${fmtN(D.total)} registros de ${nomeTipo} em ${D.nos.size} municípios, nenhuma passagem se repetiu entre municípios vizinhos. Tente uma janela maior ou um raio maior.`
+        : `Foram analisados <b>${fmtN(D.total)}</b> registros de <b>${esc(nomeTipo)}</b> em <b>${D.nos.size}</b> municípios. O sistema encontrou <b>${D.arestas.length}</b> rotas que se repetiram, <b>${ativas.length}</b> delas com passagem nos últimos 60 dias. A mais forte vai de <a href="javascript:void 0" onclick="abrirRota(0)"><b>${esc(nomeMun(r1.de))}</b> para <b>${esc(nomeMun(r1.para))}</b></a>: em <b>${Math.round(Math.min(.99, r1.prob) * 100)}%</b> das vezes em que houve caso na origem, o destino teve caso em até ${DF.janela} dias (intervalo médio de ${fmt1(r1.lag)} dias).${C[0] ? ` <b>Atenção:</b> ${esc(C[0].nome)} tem ${Math.round(C[0].p * 100)}% de chance de novo registro nos próximos dias (o normal seria ${Math.round(C[0].base * 100)}%).` : ''}`;
+    const papeis = { 'Polo emissor': 0, 'Receptor': 0, 'Corredor': 0 }; D.nos.forEach(n => { if (papeis[n.papel] != null) papeis[n.papel]++; });
+    const hoje = A.hoje;
+    const nivelCor = p => p >= .6 ? 'var(--c-crit)' : p >= .35 ? 'var(--c-alto)' : 'var(--c-medio)';
+    const quando = x => x.dias > 1 ? `por volta de ${fmtD(x.esperado).slice(0, 5)} (em ${x.dias} dias)` : x.dias >= -1 ? 'a qualquer momento' : `prazo médio já passou há ${-x.dias} dias · vigiar até ${fmtD(x.limite).slice(0, 5)}`;
+    $('cont-difusao').innerHTML = `
+    <div class="card card-pad df-frase"><div class="ico" style="--c:var(--c-crit)">${ic('trend')}</div><p>${frase}</p></div>
+    <div class="kpis df3-kpis">
+        <div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('trend')}Rotas ativas</div><div class="v">${fmtN(ativas.length)}</div><div class="s">de ${fmtN(D.arestas.length)} rotas que se repetiram</div></div>
+        <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('clock')}Chegadas prováveis</div><div class="v">${C.length}</div><div class="s">municípios que podem ser os próximos</div></div>
+        <div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('target')}Polos emissores</div><div class="v">${papeis['Polo emissor']}</div><div class="s">de onde os fatos mais saem</div></div>
+        <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('pin')}Receptores</div><div class="v">${papeis['Receptor']}</div><div class="s">aonde os fatos mais chegam</div></div></div>
+    <div class="card card-pad df3-prox"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('clock')}</div><div><h3>Próximas chegadas prováveis</h3><p>A origem teve registro recente e o destino ainda não. A chance vem do histórico: depois de um caso na origem, quantas vezes o destino teve caso. Só entram rotas em que a origem aumenta a chance em relação ao normal do destino.</p></div></div>
+        ${C.length ? `<div class="df3-cheg">${C.map((x, k) => `<button class="df3-cc" style="--c:${nivelCor(x.p)};--an-i:${k}" onclick="abrirRota(${x.origens[0].i})">
+            <div class="df3-cc-top"><span class="df3-anel" style="--p:${Math.round(x.p * 100)}"><b>${Math.round(x.p * 100)}%</b></span><div><b>${esc(x.nome)}</b><small>${quando(x)}</small><small class="df3-base">normal seria ${Math.round(x.base * 100)}% · <b>+${Math.round(x.ganho * 100)} pontos</b></small></div></div>
+            <div class="df3-cc-or">${x.origens.slice(0, 3).map(o => `<span>${ic('chevR')}de <b>${esc(nomeMun(o.a.de))}</b> · ${Math.round(o.p * 100)}% · caso em ${fmtD(o.a.ultDe).slice(0, 5)}</span>`).join('')}</div></button>`).join('')}</div>`
+            : '<div class="vazio peq">Nenhuma chegada provável agora: as origens não tiveram registro recente ou os destinos já registraram.</div>'}</div>
+    <div class="card df3-mapa"><div class="card-pad" style="padding-bottom:0"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('map')}</div><div><h3>Mapa das rotas</h3><p>As linhas animadas mostram o sentido das rotas ativas. Use <b>Reproduzir</b> para ver a propagação semana a semana no último ano.</p></div></div></div>
+        <div style="padding:12px 14px 14px"><div class="mapa-box" style="height:560px;min-height:420px"><div id="mapa-dif3" role="application" aria-label="Mapa das rotas prováveis"></div>
+            <div class="mapa-painel mapa-legenda" style="max-width:240px"><b>Papel do município</b>${Object.entries(PAPEL_COR).map(([p, c]) => `<div style="display:flex;gap:6px;align-items:center;margin-top:4px"><i style="width:10px;height:10px;border-radius:50%;background:${c}"></i>${p}</div>`).join('')}<div style="display:flex;gap:6px;align-items:center;margin-top:6px"><i style="width:12px;height:12px;border-radius:50%;border:2px dashed var(--c-alto)"></i>Sob pressão</div><div style="display:flex;gap:6px;align-items:center;margin-top:4px"><i class="df3-leg-alvo"></i>Chegada provável</div><div class="mut" style="margin-top:6px">Espessura: força · vermelho: ativa · pontos andando: sentido</div></div>
+            <div class="df3-tempo" id="df3-tempo" hidden><b id="df3-tdata"></b><span id="df3-tinfo"></span></div></div>
+            <div class="df3-player"><button class="btn btn-p btn-sm" id="df3-play">${ic('activity')}<span>Reproduzir propagação</span></button><input type="range" id="df3-t" min="0" max="51" value="51" aria-label="Semana"><button class="btn btn-s btn-sm" id="df3-vel" title="Velocidade">${DF3.vel}×</button><button class="btn btn-v btn-sm" id="df3-parar" hidden>${ic('x')}Voltar ao resumo</button>
+                <label class="peq df3-todas"><input type="checkbox" id="df2-todas" ${DF2.todas ? 'checked' : ''}> Todas as rotas</label></div></div></div>
+    <div class="grade g2 df3-listas" style="align-items:start">
+        <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-crit)">${ic('nav')}</div><div><h3>Rotas mais fortes</h3><p>Passe o mouse para destacar no mapa · clique para o detalhe</p></div></div></div>
+            <div class="lista" style="max-height:420px;overflow:auto">${top.slice(0, 15).map((a, i) => `<button class="item df-rota" data-i="${i}" onclick="abrirRota(${i})"><span class="ic" style="--c:${a.recente ? 'var(--c-crit)' : 'var(--muted)'}">${a.pass.length || a.n}</span><span class="tx"><b>${esc(nomeMun(a.de))} → ${esc(nomeMun(a.para))}</b><span>${Math.round(Math.min(.99, a.prob) * 100)}% de chance (normal ${Math.round(a.base * 100)}%) · ${Math.round(a.km)} km · ${fmt1(a.lag)} dias em média · ${esc(tipoCurto(a.tipoPred))}</span><span class="df3-forca"><span style="width:${Math.max(4, a.prob * 100).toFixed(0)}%;background:${a.recente ? 'var(--c-crit)' : 'var(--muted2)'}"></span></span></span><span class="fim">${a.recente ? '<span class="selo" style="--c:var(--c-crit)">ativa</span>' : '<span class="selo" style="--c:var(--muted)">antiga</span>'}</span></button>`).join('') || '<div class="vazio peq">Nenhuma rota repetida com estes parâmetros.</div>'}</div></div>
+        <div class="card"><div class="card-pad" style="padding-bottom:4px"><div class="card-tit" style="margin:0"><div class="ico" style="--c:var(--c-alto)">${ic('alerta')}</div><div><h3>Municípios sob pressão</h3><p>Sem registro nos últimos 30 dias, mas cercados de focos ativos</p></div></div></div>
+            <div class="lista">${P.slice(0, 10).map(x => { const c = x.nivel === 'alta' ? 'var(--c-crit)' : x.nivel === 'média' ? 'var(--c-alto)' : 'var(--c-medio)'; return `<button class="item" onclick="abrirMun('${esc(x.m.k)}')"><span class="ic" style="--c:${c}">${ic('pin')}</span><span class="tx"><b>${esc(x.m.nome)}</b><span>pressão ${x.nivel} · a ${Math.round(x.km)} km de ${esc(x.via.nome)}</span><span class="df3-forca"><span style="width:${Math.max(6, 100 * x.p / P[0].p).toFixed(0)}%;background:${c}"></span></span></span></button>`; }).join('') || '<div class="vazio peq">Nenhum município sob pressão.</div>'}</div></div></div>
+    <div class="card df3-agr"><div class="card-pad"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('repeat')}</div><div><h3>Agravamento entre tipos</h3><p>Quando um fato acontece, qual costuma ser o próximo? Olha o fato seguinte do mesmo autor (até ${DF.janela * 2} dias) e o fato seguinte de outro tipo na mesma escola (até 14 dias).</p></div></div><div id="df3-agr-corpo"></div></div></div>
+    <div class="card df3-aut"><div class="card-pad"><div class="card-tit"><div class="ico" style="--c:var(--prim)">${ic('users')}</div><div><h3>Autores que circulam</h3><p>Autores citados em registros de municípios diferentes, na ordem em que apareceram.</p></div></div><div id="df3-aut-corpo"></div></div></div>`;
+    $('df2-todas').onchange = e => { DF2.todas = e.target.checked; rDifusao(); };
+    $('df3-play').onclick = () => DF3.play ? pausarPropagacao() : reproduzirPropagacao();
+    $('df3-parar').onclick = () => { pararPropagacao(); desenharDif3(DIF3, DIF3._top, PRESS, CHEG3); };
+    $('df3-vel').onclick = () => { DF3.vel = DF3.vel === 1 ? 2 : DF3.vel === 2 ? 4 : 1; $('df3-vel').textContent = DF3.vel + '×'; if (DF3.play) { pausarPropagacao(); reproduzirPropagacao(); } };
+    $('df3-t').oninput = () => { pausarPropagacao(); quadroPropagacao(+$('df3-t').value); };
+    D._top = top;
+    agrRender(); autRender();
+    setTimeout(() => desenharDif3(D, top, P, C), 30);
+};
+function agrRender() {
+    const corpo = $('df3-agr-corpo'); if (!corpo) return;
+    const S = window.SEQ2 = sequenciasTipos(REG, DF.janela * 2);
+    const origens = [...S.saidas.entries()].filter(([, n]) => n >= 3).sort((a, b) => b[1] - a[1]).map(x => x[0]);
+    if (!origens.includes(DF2.deTipo)) DF2.deTipo = origens[0] || '';
+    const prox = S.L.filter(t => t.de === DF2.deTipo).sort((a, b) => b.n - a.n).slice(0, 8);
+    const agr = S.L.filter(t => t.agrava && t.n >= 3).sort((a, b) => b.n - a.n).slice(0, 8);
+    corpo.innerHTML = `<div class="df3-orig">${origens.slice(0, 10).map(t => `<button class="chip${t === DF2.deTipo ? ' ativo' : ''}" data-t="${esc(t)}" style="--c:var(--roxo)"><span class="pt"></span>${esc(tipoCurto(t))} <span class="q">${S.saidas.get(t)}</span></button>`).join('')}${origens.length > 10 ? `<select class="campo" id="df2-de" style="width:auto;max-width:260px;height:30px"><option value="">mais tipos…</option>${origens.slice(10).map(t => `<option value="${esc(t)}" ${t === DF2.deTipo ? 'selected' : ''}>${esc(tipoCurto(t))} (${S.saidas.get(t)})</option>`).join('')}</select>` : ''}</div>
+        <div class="grade g32" style="align-items:start;margin-top:12px">
+        <div class="fluxo"><div class="fluxo-de"><small>Fato inicial</small><b>${esc(tipoCurto(DF2.deTipo || '—'))}</b><span>${fmtN(S.saidas.get(DF2.deTipo) || 0)} sequências observadas</span></div><div class="fluxo-seta">${ic('chevR')}</div>
+            <div class="fluxo-para">${prox.map(t => `<div class="fluxo-l"><span class="fluxo-n">${esc(tipoCurto(t.para))}${t.agrava ? ' <span class="selo" style="--c:var(--c-crit)">agrava</span>' : ''}</span><span class="fluxo-b"><span style="width:${Math.max(3, 100 * t.p).toFixed(1)}%;background:${t.agrava ? 'var(--c-crit)' : 'var(--prim)'}"></span></span><span class="fluxo-v"><b>${Math.round(100 * t.p)}%</b><small>${t.n} vezes</small></span></div>`).join('') || '<div class="vazio peq">Sem sequências suficientes.</div>'}</div></div>
+        <div><div class="rot">Caminhos de agravamento mais comuns</div><div class="lista">${agr.map(t => `<div class="item" style="cursor:default"><span class="ic" style="--c:var(--c-crit)">${t.n}</span><span class="tx"><b>${esc(tipoCurto(t.de))} → ${esc(tipoCurto(t.para))}</b><span>${Math.round(100 * t.p)}% das vezes · ${t.autor} mesmo autor, ${t.escola} mesma escola</span></span></div>`).join('') || '<div class="vazio peq">Nenhum caminho de agravamento com 3 ou mais ocorrências.</div>'}</div></div></div>`;
+    corpo.querySelector('.df3-orig').onclick = e => { const b = e.target.closest('.chip'); if (b) { DF2.deTipo = b.dataset.t; agrRender(); } };
+    const s = $('df2-de'); if (s) s.onchange = () => { if (s.value) { DF2.deTipo = s.value; agrRender(); } };
+}
+function autRender() {
+    const corpo = $('df3-aut-corpo'); if (!corpo) return;
+    const pode = podeVerPessoas();
+    const porA = new Map();
+    REG.forEach(r => { if (!r.dt) return; r.agr.forEach(n => { const k = chave(n); if (k.length < 5 || !k.includes(' ') || /^(DESCONHECID|NAO IDENTIFICAD|SEM IDENTIFICA|ANONIM|PADRAST|MADRAST|MAE|PAI|AVO|TIO|TIA|IRMAO|IRMA|ALUNO|ALUNA|ESTUDANTE|PROFESSOR|RESPONSAVEL|VIZINHO|TERCEIRO|INDIVIDUO|ELEMENTO)\b/.test(k)) return; if (!porA.has(k)) porA.set(k, { k, nome: n, regs: [] }); porA.get(k).regs.push(r); }); });
+    const L = [...porA.values()].map(p => { p.regs.sort((a, b) => a.dt - b.dt); const cam = []; p.regs.forEach(r => { if (!cam.length || cam[cam.length - 1].mun !== r.mun) cam.push({ mun: r.mun, dt: r.dt, esc: r.esc }); }); p.cam = cam; p.muns = new Set(p.regs.map(r => r.mun)).size; return p; }).filter(p => p.muns >= 2).sort((a, b) => b.muns - a.muns || b.regs.length - a.regs.length);
+    corpo.innerHTML = `<p class="peq mut" style="margin-top:0">Indica transferência entre escolas ou atuação em mais de uma cidade.${pode ? '' : ' Nomes ocultos: disponível para Administrador e Inteligência.'}</p>
+        <div class="tab-wrap" style="max-height:480px"><table class="tab"><thead><tr><th>Autor</th><th class="dir">Municípios</th><th class="dir">Registros</th><th>Caminho</th></tr></thead><tbody>${L.slice(0, 60).map((p, i) => `<tr class="${pode ? 'clic' : ''}" ${pode ? `onclick="abrirPessoa('${esc(p.k)}')"` : ''}><td><b>${pode ? esc(p.nome) : 'Autor ' + (i + 1)}</b></td><td class="dir num">${p.muns}</td><td class="dir num">${p.regs.length}</td><td><div class="cam">${p.cam.map((c, j) => `${j ? `<span class="cam-s">${ic('chevR')}</span>` : ''}<span class="cam-p" title="${esc(c.esc)} · ${fmtD(c.dt)}">${esc(nomeMun(c.mun))}<small>${fmtD(c.dt).slice(0, 5)}</small></span>`).join('')}</div></td></tr>`).join('') || '<tr><td colspan="4"><div class="vazio">Nenhum autor citado em mais de um município.</div></td></tr>'}</tbody></table></div>`;
+}
+let MAPA_R3 = null, CAMADA_R3 = null, TEMPO_R3 = null;
+function desenharDif3(D, top, P, C) {
+    if (typeof L === 'undefined' || !$('mapa-dif3')) return;
+    if (MAPA_R3) { try { MAPA_R3.remove(); } catch (e) { } MAPA_R3 = null; }
+    MAPA_R3 = L.map('mapa-dif3', { attributionControl: false, zoomSnap: .25 });
+    L.geoJSON(GEO_MT.uf, { style: { fillColor: css('--mapa-vazio'), fillOpacity: 1, color: css('--texto2'), weight: 1.4 }, interactive: false }).addTo(MAPA_R3);
+    L.geoJSON({ type: 'FeatureCollection', features: MUNS.map(m => ({ type: 'Feature', properties: {}, geometry: m.g })) }, { style: { fill: false, color: css('--borda2'), weight: .5 }, interactive: false }).addTo(MAPA_R3);
+    MAPA_R3.fitBounds([[-18.1, -61.7], [-7.3, -50.2]]);
+    const g = CAMADA_R3 = L.layerGroup().addTo(MAPA_R3), linhas = [];
+    TEMPO_R3 = L.layerGroup();
+    const maxW = Math.max(1, ...top.map(a => a.w)), mov = MOVE();
+    top.forEach((a, i) => {
+        const p1 = MUN_POR_K.get(a.de), p2 = MUN_POR_K.get(a.para); if (!p1 || !p2) return;
+        const cor = a.recente ? css('--c-crit') : css('--muted2'), w = 1.5 + 5 * a.w / maxW;
+        const cv = curvaRota(p1, p2);
+        const ln = L.polyline(cv.pts, { color: cor, weight: w, opacity: a.recente ? .8 : .45, className: 'df3-linha' + (mov ? ' df3-desenha' : '') }).bindTooltip(`<b>${esc(p1.nome)} → ${esc(p2.nome)}</b><br>${Math.round(a.prob * 100)}% de chance · ${a.pass.length} passagens<br>${Math.round(a.km)} km · intervalo médio ${fmt1(a.lag)} dias<br>${esc(tipoCurto(a.tipoPred))}`, { sticky: true }).on('click', () => abrirRota(i)).addTo(g);
+        if (mov) { const el = ln.getElement(); if (el) el.style.animationDelay = (i * 60) + 'ms'; }
+        let fl = null;
+        if (a.recente) {
+            fl = L.polyline(cv.pts, { color: '#fff', weight: Math.max(1.6, w * .5), opacity: .95, dashArray: '1 13', lineCap: 'round', interactive: false, className: mov ? 'df3-fluxo' : '' }).addTo(g);
+            const el = fl.getElement(); if (el) el.style.animationDuration = Math.max(.6, Math.min(3, a.lag / 6)).toFixed(2) + 's';
+        }
+        L.marker(cv.seta, { interactive: false, icon: L.divIcon({ className: 'seta-rota', html: `<svg width="16" height="16" viewBox="0 0 16 16" style="transform:rotate(${cv.ang.toFixed(0)}deg)"><path d="M2 3 14 8 2 13 5 8Z" fill="${cor}"/></svg>`, iconSize: [16, 16], iconAnchor: [8, 8] }) }).addTo(g);
+        linhas[i] = { ln, w, fl, op: a.recente ? .8 : .45 };
+    });
+    const hoje = A.hoje;
+    D.nos.forEach(n => {
+        if (n.papel === 'Isolado' && !DF2.todas) return;
+        const cor = css(PAPEL_COR[n.papel].slice(4, -1));
+        const ult = (DM3.get(n.k) || []).slice(-1)[0], fresco = ult && diasEntre(ult, hoje) <= 7 && diasEntre(ult, hoje) >= 0;
+        if (fresco && mov) L.marker([n.lat, n.lng], { interactive: false, icon: L.divIcon({ className: '', html: `<span class="df3-pulso" style="--c:${cor}"></span>`, iconSize: [40, 40], iconAnchor: [20, 20] }) }).addTo(g);
+        L.circleMarker([n.lat, n.lng], { radius: Math.min(13, 4 + Math.sqrt(n.n) * 1.3), color: '#fff', weight: 1.5, fillColor: cor, fillOpacity: .95 }).bindTooltip(`<b>${esc(n.nome)}</b><br>${n.papel} · ${fmtN(n.n)} registro(s)${ult ? '<br>último: ' + fmtD(ult) : ''}`).on('click', () => abrirMun(n.k)).addTo(g);
+    });
+    P.forEach(x => L.circleMarker([x.m.lat, x.m.lng], { radius: 9, color: css('--c-alto'), weight: 2, dashArray: '3 3', fillOpacity: 0 }).bindTooltip(`<b>${esc(x.m.nome)}</b><br>Sob pressão ${x.nivel} · a ${Math.round(x.km)} km de ${esc(x.via.nome)}`).on('click', () => abrirMun(x.m.k)).addTo(g));
+    (C || []).forEach(x => { const m = MUN_POR_K.get(x.k); if (!m) return; L.marker([m.lat, m.lng], { icon: L.divIcon({ className: '', html: `<span class="df3-alvo"><b>${Math.round(x.p * 100)}%</b></span>`, iconSize: [34, 34], iconAnchor: [17, 17] }) }).bindTooltip(`<b>${esc(x.nome)}</b><br>Chegada provável: ${Math.round(x.p * 100)}%<br>vindo de ${x.origens.slice(0, 2).map(o => esc(nomeMun(o.a.de))).join(', ')}`).on('click', () => abrirRota(x.origens[0].i)).addTo(g); });
+    document.querySelectorAll('.df-rota').forEach(b => {
+        const l = linhas[+b.dataset.i]; if (!l) return;
+        b.onmouseenter = () => { linhas.forEach(o => o && o.ln.setStyle({ opacity: .1 })); l.ln.setStyle({ opacity: 1, weight: l.w + 3 }); l.ln.bringToFront(); if (l.fl) l.fl.bringToFront(); };
+        b.onmouseleave = () => linhas.forEach(o => o && o.ln.setStyle({ opacity: o.op, weight: o.w }));
+    });
+}
+/* reprodução semana a semana */
+function propagacaoDados() {
+    if (DF3._pd && DF3._pd.D === DIF3) return DF3._pd;
+    const hoje = A.hoje, semanas = [];
+    for (let i = 51; i >= 0; i--) semanas.push(new Date(+hoje - i * 7 * DIA));
+    const pass = []; DIF3.arestas.slice(0, 80).forEach(a => a.pass.forEach(d => pass.push({ a, d })));
+    return DF3._pd = { D: DIF3, semanas, pass };
+}
+function quadroPropagacao(i) {
+    if (!MAPA_R3 || !$('mapa-dif3')) { pararPropagacao(); return; }
+    const PD = propagacaoDados(), fim = PD.semanas[i], ini = new Date(+fim - 7 * DIA);
+    DF3.semana = i;
+    if (MAPA_R3.hasLayer(CAMADA_R3)) MAPA_R3.removeLayer(CAMADA_R3);
+    if (!MAPA_R3.hasLayer(TEMPO_R3)) TEMPO_R3.addTo(MAPA_R3);
+    TEMPO_R3.clearLayers();
+    const crit = css('--c-crit'), mut = css('--muted2'), alto = css('--c-alto');
+    let ativos = 0, novos = 0;
+    DM3.forEach((ds, k) => {
+        const m = MUN_POR_K.get(k); if (!m) return;
+        const rec = ds.filter(d => d > new Date(+fim - 28 * DIA) && d <= fim); if (!rec.length) return;
+        const ult = rec[rec.length - 1], idade = diasEntre(ult, fim), nova = ult > ini;
+        ativos++; if (nova) novos++;
+        if (nova && MOVE()) L.marker([m.lat, m.lng], { interactive: false, icon: L.divIcon({ className: '', html: `<span class="df3-pulso" style="--c:${crit}"></span>`, iconSize: [40, 40], iconAnchor: [20, 20] }) }).addTo(TEMPO_R3);
+        L.circleMarker([m.lat, m.lng], { radius: 3 + Math.min(9, rec.length * 1.4), color: '#fff', weight: 1, fillColor: nova ? crit : idade <= 14 ? alto : mut, fillOpacity: Math.max(.35, 1 - idade / 28) }).bindTooltip(`<b>${esc(m.nome)}</b><br>${rec.length} dia(s) com registro nas últimas 4 semanas`).addTo(TEMPO_R3);
+    });
+    let np = 0;
+    PD.pass.forEach(({ a, d }) => {
+        if (d <= new Date(+ini - 14 * DIA) || d > fim) return;
+        const p1 = MUN_POR_K.get(a.de), p2 = MUN_POR_K.get(a.para); if (!p1 || !p2) return;
+        const nova = d > ini; if (nova) np++;
+        L.polyline(curvaRota(p1, p2).pts, { color: nova ? crit : mut, weight: nova ? 3.5 : 2, opacity: nova ? .95 : .35, interactive: false, className: nova && MOVE() ? 'df3-surge' : '' }).addTo(TEMPO_R3);
+    });
+    const t = $('df3-tempo'); if (t) { t.hidden = false; $('df3-tdata').textContent = 'Semana até ' + fmtD(fim); $('df3-tinfo').textContent = `${novos} município(s) com registro novo · ${np} passagem(ns) · ${ativos} ativos em 4 semanas`; }
+    const s = $('df3-t'); if (s) s.value = i;
+    const pr = $('df3-parar'); if (pr) pr.hidden = false;
+}
+function reproduzirPropagacao() {
+    if (!MAPA_R3) return;
+    let i = DF3.semana == null || DF3.semana >= 51 ? 0 : DF3.semana + 1;
+    const b = $('df3-play'); if (b) { b.querySelector('span').textContent = 'Pausar'; b.classList.add('tocando'); }
+    quadroPropagacao(i);
+    DF3.play = setInterval(() => {
+        if (!$('mapa-dif3') || $('aba-difusao').hidden) { pararPropagacao(); return; }
+        i++; if (i > 51) { pausarPropagacao(); return; }
+        quadroPropagacao(i);
+    }, 700 / DF3.vel);
+}
+function pausarPropagacao() {
+    if (DF3.play) { clearInterval(DF3.play); DF3.play = null; }
+    const b = $('df3-play'); if (b) { b.querySelector('span').textContent = DF3.semana != null && DF3.semana < 51 ? 'Continuar' : 'Reproduzir de novo'; b.classList.remove('tocando'); }
+}
+function pararPropagacao() {
+    if (DF3.play) { clearInterval(DF3.play); DF3.play = null; }
+    DF3.semana = null;
+    if (MAPA_R3 && TEMPO_R3 && MAPA_R3.hasLayer(TEMPO_R3)) MAPA_R3.removeLayer(TEMPO_R3);
+    const t = $('df3-tempo'); if (t) t.hidden = true;
+    const b = $('df3-play'); if (b) { b.querySelector('span').textContent = 'Reproduzir propagação'; b.classList.remove('tocando'); }
+    const pr = $('df3-parar'); if (pr) pr.hidden = true;
+    const s = $('df3-t'); if (s) s.value = 51;
+}
+/* detalhe da rota */
+function abrirRota(i) {
+    const D = window.DIF3, a = D && D.arestas[i]; if (!a) return;
+    const hoje = A.hoje, de = DM3.get(a.de) || [], pa = DM3.get(a.para) || [];
+    const t0 = +hoje - 365 * DIA, W = 900, H = 140, x = d => 20 + (W - 40) * (+d - t0) / (365 * DIA);
+    const dd = de.filter(d => +d >= t0), pp = pa.filter(d => +d >= t0);
+    const liga = a.pass.filter(d => +d >= t0).map(d => { const o = de.filter(o => { const k = diasEntre(o, d); return k >= 1 && k <= DF.janela; }).slice(-1)[0]; return o ? { o, d } : null; }).filter(Boolean);
+    const meses = []; for (let k = 0; k <= 12; k++) { const m = new Date(hoje.getFullYear(), hoje.getMonth() - 12 + k, 1); if (+m >= t0) meses.push(m); }
+    const svg = `<svg viewBox="0 0 ${W} ${H}" class="df3-tl" role="img" aria-label="Linha do tempo da rota">
+        ${meses.map(m => `<line x1="${x(m)}" x2="${x(m)}" y1="14" y2="${H - 18}" class="gm"/><text x="${x(m) + 3}" y="${H - 5}" class="tm">${MES_ABR[m.getMonth()]}</text>`).join('')}
+        <text x="20" y="11" class="tr">${esc(nomeMun(a.de))} (origem)</text><text x="20" y="${H - 26}" class="tr" dy="-4">${esc(nomeMun(a.para))} (destino)</text>
+        <line x1="20" x2="${W - 20}" y1="30" y2="30" class="eixo"/><line x1="20" x2="${W - 20}" y1="${H - 40}" y2="${H - 40}" class="eixo"/>
+        ${liga.map((l, k) => `<path d="M${x(l.o)} 30 C ${x(l.o)} 60, ${x(l.d)} ${H - 70}, ${x(l.d)} ${H - 40}" class="lg" style="animation-delay:${k * 40}ms"/>`).join('')}
+        ${dd.map(d => `<circle cx="${x(d)}" cy="30" r="4" class="po"/>`).join('')}${pp.map(d => `<circle cx="${x(d)}" cy="${H - 40}" r="4" class="pd"/>`).join('')}
+    </svg>`;
+    const tipos = [...a.tipos.entries()].sort((x, y) => y[1] - x[1]).slice(0, 4);
+    const escDe = new Map(), escPa = new Map(); a.regs.forEach(r => { const m = r.mun === a.de ? escDe : r.mun === a.para ? escPa : null; if (m) m.set(r.esc, (m.get(r.esc) || 0) + 1); });
+    const tops = m => [...m.entries()].sort((x, y) => y[1] - x[1]).slice(0, 3).map(([e, n]) => `<li>${esc(e)} <b>${n}</b></li>`).join('') || '<li class="mut">—</li>';
+    const ch = (window.CHEG3 || []).find(c => c.k === a.para && c.origens.some(o => o.a === a));
+    const prev = ch ? `<div class="df3-prev" style="--c:var(--c-alto)">${ic('clock')}<div><b>Chegada provável</b> — ${esc(nomeMun(a.de))} teve registro em ${fmtD(a.ultDe)} e ${esc(nomeMun(a.para))} ainda não. Se o padrão se repetir, um novo caso é esperado por volta de <b>${fmtD(new Date(+a.ultDe + Math.round(a.lag) * DIA))}</b>.</div></div>`
+        : a.ultDe && a.ultPara && a.ultPara >= a.ultDe ? `<div class="df3-prev" style="--c:var(--verde)">${ic('check')}<div>O último caso na origem (${fmtD(a.ultDe)}) já foi seguido de caso no destino (${fmtD(a.ultPara)}).</div></div>` : '';
+    window.ROTA_REGS = a.regs;
+    abrirModal({
+        titulo: `${nomeMun(a.de)} → ${nomeMun(a.para)}`, sub: `${Math.round(a.km)} km · ${esc(tipoCurto(a.tipoPred))} predominante · ${a.recente ? 'rota ativa' : 'rota antiga'}`, icone: 'nav', cor: a.recente ? 'var(--c-crit)' : 'var(--muted)', tam: 'grd',
+        corpo: `<div class="kpis" style="margin-bottom:12px">
+            <div class="kpi" style="--c:var(--c-crit)"><div class="r">${ic('target')}Chance</div><div class="v">${Math.round(Math.min(.99, a.prob) * 100)}%</div><div class="s">caso no destino até ${DF.janela} dias depois · normal ${Math.round(a.base * 100)}%</div></div>
+            <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('repeat')}Passagens</div><div class="v">${a.pass.length}</div><div class="s">dias com caso no destino logo após a origem</div></div>
+            <div class="kpi" style="--c:var(--c-alto)"><div class="r">${ic('clock')}Intervalo médio</div><div class="v">${fmt1(a.lag)}</div><div class="s">dias entre origem e destino</div></div></div>
+            ${prev}
+            <div class="rot" style="margin-top:12px">Últimos 12 meses · pontos são dias com registro, curvas são passagens</div>${svg}
+            <div class="grade g3" style="margin-top:12px;align-items:start">
+                <div><div class="rot">Tipos que passam</div>${tipos.map(([t, n]) => `<span class="chip" style="--c:var(--c-crit);margin:0 4px 4px 0"><span class="pt"></span>${esc(tipoCurto(t))} <span class="q">${n}</span></span>`).join('')}</div>
+                <div><div class="rot">Escolas na origem</div><ul class="df3-ul">${tops(escDe)}</ul></div>
+                <div><div class="rot">Escolas no destino</div><ul class="df3-ul">${tops(escPa)}</ul></div></div>
+            <p class="dica" style="margin:12px 0 0">${ic('info')} Indício estatístico de repetição no tempo e no espaço, não prova de ligação entre os casos.</p>`,
+        pe: `<button class="btn btn-s" onclick="fecharModal();abrirMun('${esc(a.de)}')">${ic('pin')}Origem</button><button class="btn btn-s" onclick="fecharModal();abrirMun('${esc(a.para)}')">${ic('pin')}Destino</button><button class="btn btn-p" onclick="listaModal('${esc(nomeMun(a.de))} → ${esc(nomeMun(a.para))}', ROTA_REGS)">${ic('book')}Ver os ${fmtN(a.regs.length)} registros</button>`
+    });
+    document.querySelectorAll('#modal .kpi .v').forEach(contarAte);
+}
+
+/* ---------------------------------------------------------------------
+   4. TÓPICOS E LEGENDAS
+   --------------------------------------------------------------------- */
+Object.assign(TOPICOS, {
+    difusao: [
+        { t: 'Leitura automática', s: 'O resumo do que os dados mostram sobre o espalhamento', i: 'zap', m: /df-frase|df3-kpis/ },
+        { t: 'Próximas chegadas prováveis', s: 'Onde um novo caso pode aparecer nos próximos dias', i: 'clock', m: /df3-prox/ },
+        { t: 'Mapa das rotas', s: 'Rotas animadas e a propagação semana a semana', i: 'map', m: /df3-mapa/ },
+        { t: 'Rotas mais fortes e pressão', s: 'As rotas que mais se repetem e os municípios cercados de focos', i: 'nav', m: /df3-listas/ },
+        { t: 'Agravamento entre tipos', s: 'Que tipo de fato costuma vir depois', i: 'repeat', m: /df3-agr/ },
+        { t: 'Autores que circulam', s: 'Autores com registros em mais de um município', i: 'users', m: /df3-aut/ }
+    ],
+    termos: [
+        { t: 'Pesquisar e comparar', s: 'Busque um ou mais termos e veja evolução, onde aparecem e com quais palavras', i: 'search', m: /tr3-busca/ },
+        { t: 'Rede de conexões das palavras', s: 'Quais palavras aparecem juntas e os grupos de assunto', i: 'layers', m: /tr3-rede/ },
+        { t: 'Radar de temas de risco', s: 'Temas que aumentaram nos últimos dias', i: 'zap', m: /Radar de temas/ },
+        { t: 'Palavras em destaque', s: 'Em alta, perdendo força e mais frequentes', i: 'bar', m: /tr3-dest/ }
+    ]
+});
+Object.assign(LEGENDAS, {
+    difusao: { mostra: ['Resumo, chegadas prováveis, mapa animado com reprodução semanal, rotas mais fortes, municípios sob pressão, agravamento entre tipos e autores que circulam.'], fonte: ['Datas, municípios, tipos e autores do Livro; distância entre os centros dos municípios (IBGE).'], calc: ['Rota: o mesmo tipo aparece num município vizinho (até o raio) dentro da janela, 2+ vezes. Chance: dos dias com caso na origem, quantos foram seguidos de caso no destino.', 'Chegada provável: origem com caso recente, destino ainda sem caso; chance combinada das rotas que chegam ao destino.'], usar: ['Escolha tipo, janela e raio no topo. Clique numa rota para o detalhe e a linha do tempo.', 'Use Reproduzir no mapa para ver a propagação; arraste a barra para escolher a semana. É indício estatístico, não prova.'] },
+    termos: { mostra: ['Pesquisa e comparação de termos, rede de conexões entre palavras, radar de temas de risco e palavras em alta, em queda e mais frequentes.'], fonte: ['Texto do campo Resumo dos Fatos.'], calc: ['Rede: palavras que aparecem no mesmo relato; a força da linha considera quantas vezes aparecem juntas em relação à frequência de cada uma. Cores: grupos de assunto encontrados automaticamente.', 'Em alta: 2× mais frequente que antes, em 3+ escolas. Perdendo força: caiu mais da metade.'], usar: ['Separe termos por vírgula para comparar. Clique numa palavra da rede para ver ligações e relatos; arraste para reorganizar.', 'Clique num tema, palavra ou expressão para pesquisar.'] }
+});
 
 </script>
 </body>
