@@ -2400,6 +2400,37 @@ button.chip:hover { transform: translateY(-1px); border-color: var(--c, var(--pr
 @media (max-width: 760px) { .ins-sug { bottom: calc(76px + env(safe-area-inset-bottom)); right: 16px; } .ins-grande { width: 100%; justify-content: center; } }
 @media (prefers-reduced-motion: reduce) { .ins-pc, .ins-cel, .ins-cel-app, .btn-p.ins-grande { animation: none !important; } }
 </style>
+<style>
+/* ===== 4.5 — Importação de grande volume ===== */
+.car-barra { width: 260px; max-width: 70vw; height: 8px; border-radius: 99px; background: var(--suave2); overflow: hidden; margin: 14px auto 0; }
+.car-barra span { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, var(--prim), var(--roxo)); transition: width .3s ease; }
+.car-pct { font-size: 12px; font-weight: 800; color: var(--muted); margin-top: 6px; font-variant-numeric: tabular-nums; }
+#car-cancelar { margin: 12px auto 0; }
+#car-sub { font-variant-numeric: tabular-nums; }
+.im-solta { padding: 30px 20px; }
+.im-formatos { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 12px; }
+.im-formatos span { font-size: 11.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--suave); color: var(--texto2); }
+.im-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.im-per { font-size: 15px !important; line-height: 1.3; }
+.im-q { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.im-q li { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.im-q-n { min-width: 58px; text-align: center; padding: 3px 8px; border-radius: 8px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
+.im-arq { border: 1px solid var(--borda); border-radius: 12px; padding: 10px 12px; margin-bottom: 8px; }
+.im-arq summary { cursor: pointer; display: flex; flex-direction: column; gap: 2px; list-style: none; }
+.im-arq summary::-webkit-details-marker { display: none; }
+.im-arq summary span { font-size: 12px; color: var(--muted); }
+.im-arq .colmap { margin-top: 10px; }
+.colmap span small { color: var(--muted); font-weight: 500; margin-left: 2px; }
+.im-acoes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+.im-envio { margin-top: 14px; }
+.im-env-barra { height: 10px; border-radius: 99px; background: var(--suave2); overflow: hidden; }
+.im-env-barra span { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--verde), var(--prim)); }
+.im-alias { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px 14px; margin-bottom: 10px; }
+.im-alias div { font-size: 12px; line-height: 1.4; } .im-alias b { display: block; font-size: 12.5px; } .im-alias span { color: var(--muted); }
+@media (max-width: 760px) { .im-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+<style>.im-info .card-tit, .im-res .card-tit, .im-envio .card-tit { flex-wrap: nowrap; align-items: flex-start; } .im-info .card-tit > div:not(.ico), .im-res .card-tit > div:not(.ico), .im-envio .card-tit > div:not(.ico) { flex: 1; min-width: 0; }</style>
+<style>.im-kpis .im-per { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; } .im-kpis .kpi .s { white-space: normal; }</style>
 
 </head>
 <body>
@@ -2466,14 +2497,17 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '4.4.0+3d9cae74';
-const APP_NOTAS = 'Agora é um aplicativo para computador e celular: nova página Instalar aplicativo, instalação com um clique, atalhos no ícone e contador de problemas.';
+const APP_VERSAO = '4.5.0+27911981';
+const APP_NOTAS = 'Importação de grande volume: vários arquivos de uma vez, leitura rápida, conferência das linhas e envio em lotes com retomada.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
 const CRIT_ORD = ['CRÍTICO', 'ALTO', 'MÉDIO', 'BAIXO'];
 const CRIT_PESO = { 'CRÍTICO': 4, 'ALTO': 3, 'MÉDIO': 2, 'BAIXO': 1 };
 const DIA = 864e5;
+/* máximo/mínimo sem espalhar a lista (Math.max(...lista) estoura com centenas de milhares de itens) */
+function maxDe(a, ini) { let m = ini == null ? -Infinity : ini; for (let i = 0; i < a.length; i++) if (a[i] > m) m = a[i]; return m; }
+function minDe(a, ini) { let m = ini == null ? Infinity : ini; for (let i = 0; i < a.length; i++) if (a[i] < m) m = a[i]; return m; }
 
 function semAcento(s) { return String(s == null ? '' : s).normalize('NFD').replace(/[̀-ͯ]/g, ''); }
 function chave(s) {
@@ -2819,7 +2853,7 @@ function verificar(regs, hoje) {
     add('dre', 'DRE diferente da referência do município', 'A DRE informada não é a DRE que atende o município no cadastro de escolas.', 'baixo', dreX, 'Confirmar a jurisdição (pode ser escola de outra DRE).');
     const aprox = regs.filter(r => r.aprox);
     add('geo', 'Escola fora do cadastro georreferenciado', 'Escola não localizada no cadastro com coordenadas; no mapa e nas rotas usa-se o centro do município.', 'baixo', aprox, 'Cadastrar latitude e longitude da unidade.');
-    const curto = regs.filter(r => chave(r.resumo).length < 40);
+    const curto = regs.filter(r => String(r.resumo || '').length < 60 && chave(r.resumo).length < 40);
     add('resumo', 'Relato insuficiente', 'Resumo dos fatos com menos de 40 caracteres.', 'baixo', curto, 'Solicitar relato circunstanciado.');
     const dataX = regs.filter(r => !r.dt || r.dt > new Date(+hoje + DIA) || r.dt < new Date(+hoje - 3 * 365 * DIA));
     add('data', 'Data ausente ou inválida', 'Data/hora vazia, ilegível, no futuro ou mais de 3 anos antes da data de referência.', 'alto', dataX, 'Corrigir a data do fato.');
@@ -3296,7 +3330,7 @@ function cfgMensal(regs) {
 function hbar(itens, max, opts) {
     opts = opts || {};
     if (!itens.length) return '<div class="vazio peq">Sem dados no recorte.</div>';
-    max = max || Math.max(...itens.map(i => i.v), 1);
+    max = max || maxDe(itens.map(i => i.v), 1);
     return `<div class="hbar">${itens.map(i => `<div class="nm"${i.on ? ` style="cursor:pointer" onclick="${i.on}"` : ''}><span title="${esc(i.t)}">${esc(i.t)}</span><div class="barra" style="--c:${i.c || 'var(--prim)'}"><span style="width:${Math.max(2, 100 * i.v / max)}%"></span></div></div><div class="vl">${i.vt || fmtN(i.v)}${i.s ? `<small>${i.s}</small>` : ''}</div>`).join('')}</div>`;
 }
 
@@ -3973,7 +4007,7 @@ function rImportar() {
     s.ondrop = e => { e.preventDefault(); s.classList.remove('sobre'); if (e.dataTransfer.files[0]) importarArquivo(e.dataTransfer.files[0]); };
     $('imp-guardar').onchange = e => ls.set('esp_guardar', e.target.checked ? '1' : '0');
 }
-function periodoBase() { const ds = BASE.filter(r => r.dt && +r.dt <= Date.now() + DIA).map(r => +r.dt); return ds.length ? fmtD(new Date(Math.min(...ds))) + ' a ' + fmtD(new Date(Math.max(...ds))) : '—'; }
+function periodoBase() { const ds = BASE.filter(r => r.dt && +r.dt <= Date.now() + DIA).map(r => +r.dt); return ds.length ? fmtD(new Date(minDe(ds))) + ' a ' + fmtD(new Date(maxDe(ds))) : '—'; }
 function resImport(R) {
     const cols = Object.entries(ROT_COLS);
     return `<div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:${R.erro ? 'var(--vermelho)' : 'var(--verde)'}">${ic(R.erro ? 'alerta' : 'check')}</div><div><h3>${R.erro ? 'Não foi possível importar' : 'Planilha importada'}</h3><p>${esc(R.nome)} · ${(R.tam / 1048576).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} MB · ${R.ms} ms</p></div></div>
@@ -4371,7 +4405,7 @@ function rPainel() {
     const sev30 = r30.filter(r => ehSevero(r.tipo)).length, sev60 = r60.filter(r => ehSevero(r.tipo)).length;
     const vit = new Set(), agr = new Set(); REG.forEach(r => { r.vit.forEach(x => vit.add(chave(x))); r.agr.forEach(x => agr.add(chave(x))); });
     const valid = REG.filter(r => /VALIDAD/.test(chave(r.status))).length;
-    const dias = (() => { const ts = REG.filter(r => r.dt).map(r => +r.dt); return ts.length ? Math.max(1, diasEntre(new Date(Math.min(...ts)), h)) : 1; })();
+    const dias = (() => { const ts = REG.filter(r => r.dt).map(r => +r.dt); return ts.length ? Math.max(1, diasEntre(new Date(minDe(ts)), h)) : 1; })();
     const delta = (a, b) => b ? `<span style="color:${a > b ? 'var(--c-crit)' : 'var(--verde)'}">${a > b ? '▲' : '▼'} ${fmtVar(variacao(a, b))}</span> vs 30 dias anteriores` : 'sem base de comparação';
     $('acoes-painel').innerHTML = `<button class="btn btn-v btn-sm" onclick="abrirPaleta()">${ic('search')}Buscar <kbd style="background:transparent;color:#cbd5e1;border-color:rgba(255,255,255,.25)">Ctrl K</kbd></button>${conectado() ? `<button class="btn btn-v btn-sm" onclick="sincronizar()">${ic('repeat')}Sincronizar</button>` : ''}<button class="btn btn-v btn-sm" onclick="irPara('graficos')">${ic('bar')}Gráficos</button><button class="btn btn-l btn-sm" onclick="irPara('relatorio')">${ic('doc')}Gerar relatório</button>`;
     // comparativo por tipo
@@ -5348,7 +5382,7 @@ function analisarTermos() {
     REG.forEach(r => {
         const d = r.dt ? diasEntre(r.dt, hoje) : 999; const emRec = d <= J, emAnt = d > J && d <= J * 4;
         if (emRec) nRec++; if (emAnt) nAnt++;
-        const ws = tokens(r.resumo, nomes), vistos = new Set();
+        const ws = tokensReg(r, nomes), vistos = new Set();
         ws.forEach((w, i) => {
             if (!vistos.has(w)) { vistos.add(w); tot.set(w, (tot.get(w) || 0) + 1); if (emRec) rec.set(w, (rec.get(w) || 0) + 1); if (emAnt) ant.set(w, (ant.get(w) || 0) + 1); if (!regsDe.has(w)) regsDe.set(w, []); regsDe.get(w).push(r); if (emRec) { if (!escRec.has(w)) escRec.set(w, new Set()); escRec.get(w).add(r.escK); } }
             if (i && ws[i - 1] !== w) { const b = ws[i - 1] + ' ' + w; bi.set(b, (bi.get(b) || 0) + 1); }
@@ -5358,7 +5392,7 @@ function analisarTermos() {
     const lim = REG.length * 0.2; const top = [...tot.entries()].filter(([, n]) => n <= lim).sort((a, b) => b[1] - a[1]).slice(0, 80);
     const bigr = [...bi.entries()].filter(([, n]) => n >= 5).sort((a, b) => b[1] - a[1]).slice(0, 20);
     const meses = [...new Set(REG.filter(r => r.dt && +r.dt <= Date.now() + DIA).map(r => chaveMes(r.dt)))].sort().slice(-12);
-    const radar = RADAR.map(([t, re]) => { const rs = REG.filter(r => re.test(chave(r.resumo))); return { t, re, regs: rs, porMes: meses.map(m => rs.filter(r => r.dt && chaveMes(r.dt) === m).length), rec: rs.filter(r => r.dt && diasEntre(r.dt, hoje) <= J).length }; });
+    const radar = RADAR.map(([t, re]) => { const rs = REG.filter(r => re.test(kRes(r))); return { t, re, regs: rs, porMes: meses.map(m => rs.filter(r => r.dt && chaveMes(r.dt) === m).length), rec: rs.filter(r => r.dt && diasEntre(r.dt, hoje) <= J).length }; });
     return { top, emerg, bigr, radar, meses, regsDe, nRec, nAnt };
 }
 function rTermos() {
@@ -5632,9 +5666,9 @@ function gruposAlertas(lista) {
     const g = new Map();
     lista.forEach(a => { const k = a.nivel + '|' + (/^Alta abrupta/.test(a.titulo) ? 'Alta abrupta de um tipo de fato' : a.titulo); if (!g.has(k)) g.set(k, { k, nivel: a.nivel, titulo: k.split('|')[1], cat: a.cat, rec: a.rec, itens: [] }); g.get(k).itens.push(a); });
     const ord = { critico: 0, alto: 1, medio: 2 };
-    return [...g.values()].map(x => Object.assign(x, { regs: new Set(x.itens.flatMap(a => a.regs)).size, ultima: Math.max(...x.itens.flatMap(a => a.regs.map(r => +r.dt || 0))) })).sort((a, b) => ord[a.nivel] - ord[b.nivel] || b.itens.length - a.itens.length || b.regs - a.regs);
+    return [...g.values()].map(x => Object.assign(x, { regs: new Set(x.itens.flatMap(a => a.regs)).size, ultima: maxDe(x.itens.flatMap(a => a.regs.map(r => +r.dt || 0))) })).sort((a, b) => ord[a.nivel] - ord[b.nivel] || b.itens.length - a.itens.length || b.regs - a.regs);
 }
-const ultimaData = a => { const t = Math.max(0, ...a.regs.map(r => +r.dt || 0)); return t ? new Date(t) : null; };
+const ultimaData = a => { const t = maxDe(a.regs.map(r => +r.dt || 0), 0); return t ? new Date(t) : null; };
 rAlertas = function () {
     const q = chave(PD.q);
     const filtrados = AL.filter(a => (!PD.nivel || a.nivel === PD.nivel) && (!PD.cat || a.cat === PD.cat) && (!q || chave(a.titulo + ' ' + a.local + ' ' + (a.mun ? nomeMun(a.mun) : '') + ' ' + a.texto).includes(q)));
@@ -5779,10 +5813,12 @@ function pulsoSemanal() {
     ];
     window.PULSO = {};
     return `<div class="pulso">${series.map(s => {
-        const v = Array.from({ length: 12 }, (_, i) => { const [a, b] = sem(i); const rs = REG.filter(r => r.dt && r.dt > a && r.dt <= b && s.f(r)); return s.distinto ? new Set(rs.map(r => r.escK)).size : rs.length; });
+        const ini0 = +sem(0)[0], baldes = Array.from({ length: 12 }, () => s.distinto ? new Set() : 0), todos = [];
+        for (const r of REG) { if (!r.dt) continue; const t = +r.dt; if (t <= ini0 || t > +fim || !s.f(r)) continue; todos.push(r); const i = Math.min(11, Math.floor((t - ini0 - 1) / (7 * DIA))); if (s.distinto) baldes[i].add(r.escK); else baldes[i]++; }
+        const v = baldes.map(b => s.distinto ? b.size : b);
         const ult4 = v.slice(-4).reduce((x, y) => x + y, 0), ant4 = v.slice(-8, -4).reduce((x, y) => x + y, 0);
         const var_ = ant4 ? (ult4 - ant4) / ant4 : 0, sobe = var_ > 0.05, desce = var_ < -0.05;
-        window.PULSO[s.k] = REG.filter(r => r.dt && r.dt > sem(0)[0] && r.dt <= fim && s.f(r));
+        window.PULSO[s.k] = todos;
         return `<button class="pulso-card" onclick="listaModal('${s.t} — últimas 12 semanas', PULSO['${s.k}'])"><div class="pulso-top"><span>${s.t}</span><span class="pulso-var" style="color:${sobe ? 'var(--c-crit)' : desce ? 'var(--verde)' : 'var(--muted)'}">${sobe ? '▲' : desce ? '▼' : '■'} ${ant4 ? Math.abs(Math.round(var_ * 100)) + '%' : '—'}</span></div><div class="pulso-v">${fmtN(v[11])}<small> na última semana</small></div>${sparkline(v, s.cor)}<div class="pulso-rod"><span>12 semanas</span><span>4 últimas vs 4 anteriores</span></div></button>`;
     }).join('')}</div>`;
 }
@@ -6044,7 +6080,8 @@ let MAPA_R2 = null, CAM_R2 = null;
 function pressaoMunicipios(D) {
     // municípios sem registro na janela, próximos de focos ativos (últimos 30 dias)
     const hoje = A.hoje, raio = DF.raio;
-    const focos = [...D.nos.values()].map(n => ({ n, rec: REG.filter(r => r.mun === n.k && r.dt && diasEntre(r.dt, hoje) <= 30 && (DF.tipo === '' ? true : DF.tipo === '__SEV' ? ehSevero(r.tipo) : r.tipo === DF.tipo)).length })).filter(f => f.rec > 0);
+    const cont = new Map(); REG.forEach(r => { if (r.dt && diasEntre(r.dt, hoje) <= 30 && (DF.tipo === '' ? true : DF.tipo === '__SEV' ? ehSevero(r.tipo) : r.tipo === DF.tipo)) cont.set(r.mun, (cont.get(r.mun) || 0) + 1); });
+    const focos = [...D.nos.values()].map(n => ({ n, rec: cont.get(n.k) || 0 })).filter(f => f.rec > 0);
     const ativos = new Set(focos.map(f => f.n.k));
     const L = MUNS.filter(m => !ativos.has(m.k)).map(m => {
         let p = 0, via = null, vd = 0, km = 0;
@@ -6231,7 +6268,7 @@ function desenharSub(chaves, centro) {
     const base0 = Math.min(N.length > 90 ? 7 : N.length > 45 ? 10 : 13, Math.max(7, W / 32));
     N.forEach(n => n.r = base0 + Math.min(base0 * .8, Math.sqrt(n.regs.size || 1) * (base0 / 5)));
     // ajusta o desenho para ocupar a tela, com margem para os rótulos
-    if (N.length > 1) { const xs = N.map(n => n.x), ys = N.map(n => n.y), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    if (N.length > 1) { const xs = N.map(n => n.x), ys = N.map(n => n.y), x0 = minDe(xs), x1 = maxDe(xs), y0 = minDe(ys), y1 = maxDe(ys);
         const esc_ = Math.min((W - 150) / Math.max(1, x1 - x0), (H - 90) / Math.max(1, y1 - y0), 4);
         N.forEach(n => { n.x = W / 2 + (n.x - (x0 + x1) / 2) * esc_; n.y = H / 2 - 8 + (n.y - (y0 + y1) / 2) * esc_; }); }
     else if (N[0]) { N[0].x = W / 2; N[0].y = H / 2; }
@@ -6359,7 +6396,7 @@ rTermos = function () {
     let busca = '';
     if (TR2.q.trim().length >= 3) {
         const q = chave(TR2.q), re = new RegExp('\\b' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-        const rs = REG.filter(r => re.test(chave(r.resumo))).sort((a, b) => (b.dt || 0) - (a.dt || 0));
+        const rs = REG.filter(r => re.test(kRes(r))).sort((a, b) => (b.dt || 0) - (a.dt || 0));
         const porMes = T.meses.map(m => rs.filter(r => r.dt && chaveMes(r.dt) === m).length);
         const escs = new Map(); rs.forEach(r => escs.set(r.escK, (escs.get(r.escK) || 0) + 1));
         window.BUSCA_TR = rs;
@@ -6442,7 +6479,7 @@ rAlertas = function () {
         const P = PRIOR[x.nivel], cab = x.nivel !== ultNv ? `<div class="pd2-sec" style="--c:${P.cor}"><i></i>${P.nome}<span>${G.filter(y => y.nivel === x.nivel).length}</span></div>` : '';
         ultNv = x.nivel;
         const novo = x.ultima && diasEntre(new Date(x.ultima), A.hoje) <= 7;
-        const maxL = Math.max(...G.filter(y => y.nivel === x.nivel).map(y => y.itens.length), 1);
+        const maxL = maxDe(G.filter(y => y.nivel === x.nivel).map(y => y.itens.length), 1);
         return cab + `<button class="pd2-tipo${x.k === PD.sel ? ' sel' : ''}" style="--c:${P.cor}" onclick="abrirTipoPD('${esc(x.k)}')">
             <span class="pd2-tipo-ic">${ic(CAT_IC[x.cat] || 'alerta')}</span>
             <span class="pd2-tipo-tx" title=""><b>${esc(x.titulo)}</b><small>${esc(x.cat)} · ${x.itens.length} ${x.itens.length === 1 ? 'local' : 'locais'} · ${fmtN(x.regs)} reg.${novo ? ' · <em>● novo</em>' : ''}</small><span class="pd2-mini"><span style="width:${Math.max(4, 100 * x.itens.length / maxL)}%"></span></span></span>
@@ -6464,7 +6501,7 @@ rAlertas = function () {
         const ult = g.ultima ? new Date(g.ultima) : null;
         const passos = passosAcao(g.rec);
         const itens = g.itens.slice().sort((a, b) => (+ultimaData(b) || 0) - (+ultimaData(a) || 0) || b.regs.length - a.regs.length);
-        const maxR = Math.max(...itens.map(a => a.regs.length), 1);
+        const maxR = maxDe(itens.map(a => a.regs.length), 1);
         const cartao = a => {
             const i = AL.indexOf(a), u = ultimaData(a), marcas = marcasEvid(a), rec = u && diasEntre(u, A.hoje) <= 7;
             return `<button class="pd2-item" onclick="abrirAlerta(${i})">
@@ -7485,7 +7522,7 @@ function sincronizarNavInferior() {
     const mais = n.querySelector('[data-mais]'); if (mais) mais.classList.toggle('ativo', !naBarra && !!ABA);
     // número de problemas copiado do menu lateral
     const bol = document.querySelector('.lat-btn[data-aba="alertas"] .bolha'), alvo = n.querySelector('[data-aba="alertas"] .ni-bolha');
-    if (alvo) { const t = bol && bol.textContent.trim(); alvo.hidden = !t; alvo.textContent = t || ''; }
+    if (alvo) { const t = bol && !bol.hidden && bol.textContent.trim() !== '0' && bol.textContent.trim(); alvo.hidden = !t; alvo.textContent = t || ''; }
 }
 const _irParaV15 = irPara;
 irPara = function (aba, semHash) { _irParaV15(aba, semHash); sincronizarNavInferior(); };
@@ -7859,7 +7896,7 @@ function mapaMT(o) {
     let vx = -8, vy = -8, vw = M.W + 16, vh = M.H + 16;
     if (o.zoom && o.zoom.length) {
         const ps = o.zoom.map(([lng, lat]) => M.pr(lng, lat));
-        let x0 = Math.min(...ps.map(p => p[0])), x1 = Math.max(...ps.map(p => p[0])), y0 = Math.min(...ps.map(p => p[1])), y1 = Math.max(...ps.map(p => p[1]));
+        let x0 = minDe(ps.map(p => p[0])), x1 = maxDe(ps.map(p => p[0])), y0 = minDe(ps.map(p => p[1])), y1 = maxDe(ps.map(p => p[1]));
         const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
         let w = Math.max(x1 - x0, (y1 - y0) * M.W / M.H, o.zoomMin || 150) * 1.5;
         w = Math.min(w, M.W + 16); const h = w * M.H / M.W;
@@ -7919,7 +7956,7 @@ function mapasRelatorio() {
 function mapaRelease(lista) {
     const c = new Map(); (lista || []).forEach(n => { if (n.munK) { const o = c.get(n.munK) || { n: 0, v: 0 }; o.n++; if (typeof rlViol === 'function' && rlViol(n)) o.v++; c.set(n.munK, o); } });
     if (!c.size) return '';
-    const max = Math.max(...[...c.values()].map(o => o.n));
+    const max = maxDe([...c.values()].map(o => o.n));
     const pontos = [...c.entries()].map(([k, o]) => { const m = MUN_POR_K.get(k); return m ? { lat: m.lat, lng: m.lng, r: 7 + 20 * Math.sqrt(o.n / max), cor: o.v / o.n >= .5 ? '#be123c' : '#0f9488', op: .7, n: o.n } : null; }).filter(Boolean).sort((a, b) => b.r - a.r);
     const top = [...c.entries()].sort((a, b) => b[1].n - a[1].n);
     const f = dxFig.prox();
@@ -8300,7 +8337,7 @@ function vn4Perfil(g) {
     // quando age
     const dias = Array(7).fill(0), horas = Array(24).fill(0); let comHora = 0;
     g.regs.forEach(r => { if (!r.dt) return; dias[r.dt.getDay()]++; if (r.dt.getHours() || r.dt.getMinutes()) { horas[r.dt.getHours()]++; comHora++; } });
-    const dMax = dias.indexOf(Math.max(...dias));
+    const dMax = dias.indexOf(maxDe(dias));
     let hIni = -1, hMelhor = 0; for (let h = 0; h < 22; h++) { const s = horas[h] + horas[h + 1] + horas[h + 2]; if (s > hMelhor) { hMelhor = s; hIni = h; } }
     return g._p = { regs, ult, pri, dUlt, crit, escs, muns, recentes, risco, pontos, autores, vitimas, ambos, rotulo, escP, tipoP, nomeEsc, dias, dMax, hIni, hMelhor, comHora };
 }
@@ -8596,7 +8633,7 @@ function ameacaAchar(dias) {
     const regs = [];
     REG.forEach(r => {
         if (!r.dt || diasEntre(r.dt, A.hoje) > dias) return;
-        const txt = chave(r.resumo || '') + ' ' + chave(r.tipo); re.lastIndex = 0;
+        const txt = kRes(r) + ' ' + chave(r.tipo); re.lastIndex = 0;
         const ach = new Set(); let m; while ((m = re.exec(txt))) ach.add(m[1]);
         if (ach.size) regs.push({ r, termos: [...ach] });
     });
@@ -9200,12 +9237,12 @@ const PAL_REDE = ['#2563eb', '#db2777', '#059669', '#d97706', '#7c3aed', '#0891b
 function termosIndice() {
     if (TX.cache && TX.cache.reg === REG && TX.cache.n === REG.length) return TX.cache;
     const nomes = new Set(); A.pessoas.forEach(p => p.k.split(' ').forEach(w => nomes.add(w)));
-    const brutos = REG.map(r => tokens(r.resumo, nomes));
+    const brutos = REG.map(r => tokensReg(r, nomes));
     const g0 = new Map(); brutos.forEach(ws => new Set(ws).forEach(w => g0.set(w, (g0.get(w) || 0) + 1)));
     // singular e plural contam como a mesma palavra (aparelho/aparelhos, agressão/agressões)
     const canon = w => w.endsWith('OES') && g0.has(w.slice(0, -3) + 'AO') ? w.slice(0, -3) + 'AO' : w.endsWith('S') && g0.has(w.slice(0, -1)) ? w.slice(0, -1) : w;
     const sets = brutos.map(ws => new Set(ws.map(canon)));
-    const txt = REG.map(r => chave(String(r.resumo || '').replace(/\*\*/g, ' ')));
+    const txt = REG.map(kRes);
     const glob = new Map(); sets.forEach(s => s.forEach(w => glob.set(w, (glob.get(w) || 0) + 1)));
     return TX.cache = { reg: REG, n: REG.length, sets, txt, glob };
 }
@@ -9568,9 +9605,9 @@ function enriquecerRotas(D, DM) {
     D.arestas.forEach(a => {
         const de = DM.get(a.de) || [], pa = DM.get(a.para) || [];
         // passagem: dia com registro no destino precedido (1..J dias) por registro na origem
-        a.pass = pa.filter(d => de.some(o => { const x = diasEntre(o, d); return x >= 1 && x <= J; }));
+        a.pass = pa.filter(d => temEntre(de, +d - (J + .5) * DIA, +d - .5 * DIA));
         // probabilidade empírica: dias na origem seguidos de registro no destino em até J dias
-        const seg = de.filter(o => pa.some(d => { const x = diasEntre(o, d); return x >= 1 && x <= J; })).length;
+        const seg = de.filter(o => temEntre(pa, +o + .5 * DIA, +o + (J + .5) * DIA)).length;
         a.nde = de.length; a.prob = de.length ? seg / de.length : 0;
         a.ultDe = de[de.length - 1] || null; a.ultPara = pa[pa.length - 1] || null;
         a.base = base(a.para); a.ganho = a.prob - a.base;
@@ -9589,8 +9626,8 @@ function chegadasProvaveis(D) {
     return [...por.values()].map(x => {
         x.origens.sort((a, b) => b.p - a.p);
         x.p = Math.min(.99, x.origens[0].p); x.base = x.origens[0].a.base; x.ganho = x.p - x.base;
-        x.esperado = new Date(Math.min(...x.origens.map(o => +o.esperado)));
-        x.limite = new Date(Math.max(...x.origens.map(o => +o.limite)));
+        x.esperado = new Date(minDe(x.origens.map(o => +o.esperado)));
+        x.limite = new Date(maxDe(x.origens.map(o => +o.limite)));
         x.dias = diasEntre(hoje, x.esperado);
         return x;
     }).sort((a, b) => b.ganho - a.ganho || b.p - a.p).slice(0, 9);
@@ -10098,6 +10135,558 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 const _mostrarLoginV24 = mostrarLogin;
 mostrarLogin = function (msg) { _mostrarLoginV24(msg); setTimeout(insAtualizarBotoes, 0); const lg = $('lg-instalar'); if (lg) lg.onclick = instalarApp; };
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.5 — Importação de grande volume
+   Leitura rápida (em segundo plano quando o navegador permite), vários
+   arquivos de uma vez, reconhecimento flexível de colunas e datas,
+   relatório de qualidade, envio em lotes com retomada e sincronização
+   paginada com a planilha.
+   ===================================================================== */
+const COLS_PUB = ['Nº', 'Data/Hora', 'Perfil', 'DRE', 'Município', 'Escola', 'Endereço', 'Telefone', 'Tipo de Ocorrência', 'Criticidade', 'Status', 'Validado Por', 'Observação', 'Resumo dos Fatos', 'Vítima(s)', 'Tipo Vítima(s)', 'Sexo Vítima(s)', 'Agressor(es)', 'Tipo Agressor(es)', 'Sexo Agressor(es)'];
+const CAMPOS_PUB = ['n', 'dt', 'perfil', 'dre', 'mun', 'esc', 'end', 'tel', 'tipo', 'crit', 'status', 'valid', 'obs', 'resumo', 'vit', 'tVit', 'sVit', 'agr', 'tAgr', 'sAgr'];
+/* nomes aceitos no cabeçalho (sem acento, maiúsculas, pontuação vira espaço) */
+const ALIAS_COLS = {
+    n: ['N', 'NO', 'NUMERO', 'N DA OCORRENCIA', 'NUMERO DA OCORRENCIA', 'N OCORRENCIA', 'ID', 'ID OCORRENCIA', 'PROTOCOLO', 'CODIGO', 'COD'],
+    dt: ['DATA HORA', 'DATA E HORA', 'DATA HORA DA OCORRENCIA', 'DATA DA OCORRENCIA', 'DATA DO FATO', 'DATA DO REGISTRO', 'DATA REGISTRO', 'DATA'],
+    hora: ['HORA', 'HORARIO', 'HORA DA OCORRENCIA', 'HORA DO FATO'],
+    perfil: ['PERFIL', 'PERFIL DO REGISTRANTE'],
+    dre: ['DRE', 'DIRETORIA REGIONAL', 'DIRETORIA REGIONAL DE EDUCACAO', 'REGIONAL', 'POLO'],
+    mun: ['MUNICIPIO', 'CIDADE', 'MUNICIPIO DA ESCOLA'],
+    esc: ['ESCOLA', 'NOME DA ESCOLA', 'UNIDADE ESCOLAR', 'UNIDADE', 'INSTITUICAO', 'ESTABELECIMENTO'],
+    end: ['ENDERECO', 'ENDERECO DA ESCOLA', 'LOCAL'],
+    tel: ['TELEFONE', 'FONE', 'CONTATO', 'TELEFONE DA ESCOLA'],
+    tipo: ['TIPO DE OCORRENCIA', 'TIPO DA OCORRENCIA', 'TIPO', 'OCORRENCIA', 'NATUREZA', 'CATEGORIA', 'TIPIFICACAO'],
+    crit: ['CRITICIDADE', 'GRAVIDADE', 'NIVEL DE CRITICIDADE', 'PRIORIDADE', 'NIVEL'],
+    status: ['STATUS', 'SITUACAO'],
+    valid: ['VALIDADO POR', 'VALIDADOR', 'RESPONSAVEL PELA VALIDACAO'],
+    obs: ['OBSERVACAO', 'OBSERVACOES', 'PARECER', 'PARECER DA DRE'],
+    resumo: ['RESUMO DOS FATOS', 'RESUMO', 'DESCRICAO', 'DESCRICAO DOS FATOS', 'RELATO', 'HISTORICO', 'FATOS'],
+    vit: ['VITIMA S', 'VITIMAS', 'VITIMA', 'NOME DA VITIMA'],
+    tVit: ['TIPO VITIMA S', 'TIPO VITIMAS', 'TIPO VITIMA', 'TIPO DA VITIMA', 'VINCULO DA VITIMA'],
+    sVit: ['SEXO VITIMA S', 'SEXO VITIMAS', 'SEXO VITIMA', 'SEXO DA VITIMA'],
+    agr: ['AGRESSOR ES', 'AGRESSORES', 'AGRESSOR', 'AUTOR ES', 'AUTORES', 'AUTOR', 'NOME DO AGRESSOR'],
+    tAgr: ['TIPO AGRESSOR ES', 'TIPO AGRESSORES', 'TIPO AGRESSOR', 'TIPO DO AGRESSOR', 'TIPO AUTOR'],
+    sAgr: ['SEXO AGRESSOR ES', 'SEXO AGRESSORES', 'SEXO AGRESSOR', 'SEXO DO AGRESSOR', 'SEXO AUTOR']
+};
+const ALIAS_VER = {
+    n: 'Nº · Número · Nº da Ocorrência · ID · Protocolo', dt: 'Data/Hora · Data da Ocorrência · Data do Fato · Data', hora: 'Hora · Horário (junta com a data)',
+    perfil: 'Perfil', dre: 'DRE · Diretoria Regional · Regional · Polo', mun: 'Município · Cidade', esc: 'Escola · Unidade Escolar · Nome da Escola · Instituição',
+    end: 'Endereço · Local', tel: 'Telefone · Fone · Contato', tipo: 'Tipo de Ocorrência · Tipo · Natureza · Categoria', crit: 'Criticidade · Gravidade · Prioridade · Nível',
+    status: 'Status · Situação', valid: 'Validado Por · Validador', obs: 'Observação · Parecer', resumo: 'Resumo dos Fatos · Descrição · Relato · Histórico',
+    vit: 'Vítima(s) · Vítimas', tVit: 'Tipo Vítima(s) · Tipo da Vítima', sVit: 'Sexo Vítima(s) · Sexo da Vítima', agr: 'Agressor(es) · Autor(es)', tAgr: 'Tipo Agressor(es) · Tipo do Autor', sAgr: 'Sexo Agressor(es) · Sexo do Autor'
+};
+const IGNORAR_COLS = new Set(['REGISTRADO POR', 'REGISTRADO EM', 'ATUALIZADO POR', 'ATUALIZADO EM']);
+const PROIBIDAS_COLS = /NASCIMENTO|IDADE|CPF|RG\b|MATRICULA/;
+Object.assign(ROT_COLS, { hora: 'Hora (coluna separada)' });
+
+function mapearColunas2(cab) {
+    const ks = cab.map(c => chave(c instanceof Date ? '' : c)), idx = {}, origem = {};
+    Object.keys(ALIAS_COLS).forEach(k => idx[k] = -1);
+    const usados = new Set();
+    // 1) nome exato
+    Object.entries(ALIAS_COLS).forEach(([campo, nomes]) => {
+        for (const a of nomes) { const p = ks.findIndex((k, i) => k === a && !usados.has(i)); if (p >= 0) { idx[campo] = p; usados.add(p); origem[campo] = 'exato'; break; } }
+    });
+    // 2) nome parecido: começa com o apelido ou o contém como palavra (vence o apelido mais longo)
+    ks.forEach((k, i) => {
+        if (usados.has(i) || !k || IGNORAR_COLS.has(k) || PROIBIDAS_COLS.test(k)) return;
+        let melhor = null, pts = 0;
+        Object.entries(ALIAS_COLS).forEach(([campo, nomes]) => {
+            if (idx[campo] >= 0) return;
+            nomes.forEach(a => {
+                if (a.length < 4 && k !== a) return;
+                const p = k.startsWith(a + ' ') ? a.length + 5 : (' ' + k + ' ').includes(' ' + a + ' ') ? a.length : 0;
+                if (p > pts) { pts = p; melhor = campo; }
+            });
+        });
+        if (melhor) { idx[melhor] = i; usados.add(i); origem[melhor] = 'parecido'; }
+    });
+    const naoRec = cab.map((c, i) => ({ c: String(c == null ? '' : c).trim(), i })).filter(x => x.c && !usados.has(x.i) && !IGNORAR_COLS.has(chave(x.c)));
+    return { idx, origem, naoRec };
+}
+function acharCabecalho2(linhas) {
+    let melhor = { h: -1, pts: 0 };
+    for (let i = 0; i < Math.min(linhas.length, 40); i++) {
+        const l = linhas[i]; if (!l || l.length < 2) continue;
+        const { idx } = mapearColunas2(l);
+        const pts = Object.values(idx).filter(p => p >= 0).length + (idx.esc >= 0 ? 2 : 0) + (idx.tipo >= 0 ? 2 : 0);
+        if (pts > melhor.pts) melhor = { h: i, pts };
+    }
+    return melhor.pts >= 5 ? melhor.h : -1;
+}
+
+/* datas: dd/mm/aaaa, dd-mm-aa, aaaa-mm-dd, ISO, número de série do Excel, objeto Date, hora em coluna separada */
+function lerData2(v, hora) {
+    let d = null;
+    const serial = x => { const u = new Date(Math.round((x - 25569) * DIA)); return new Date(u.getUTCFullYear(), u.getUTCMonth(), u.getUTCDate(), u.getUTCHours(), u.getUTCMinutes(), u.getUTCSeconds()); };
+    if (v instanceof Date) d = isNaN(v) ? null : new Date(Math.round(+v / 6e4) * 6e4);
+    else if (typeof v === 'number') d = v > 20000 && v < 80000 ? serial(v) : null;
+    else {
+        const t = String(v == null ? '' : v).trim();
+        if (!t) return null;
+        let m;
+        if (/^\d{5}(\.\d+)?$/.test(t)) d = serial(+t);
+        else if ((m = t.match(/^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{2,4})(?:\s*(?:,|às|as|T|-|\s)\s*(\d{1,2})\s*[:hH]\s*(\d{2})(?:\s*:\s*(\d{2}))?)?/i))) {
+            let dd = +m[1], mm = +m[2], a = +m[3];
+            if (mm > 12 && dd <= 12) [dd, mm] = [mm, dd];
+            if (a < 100) a += a > 70 ? 1900 : 2000;
+            d = new Date(a, mm - 1, dd, +(m[4] || 0), +(m[5] || 0), +(m[6] || 0));
+            if (d.getMonth() !== mm - 1 || d.getDate() !== dd) d = null;
+        } else if ((m = t.match(/^(\d{4})[\/.\-](\d{1,2})[\/.\-](\d{1,2})(?:[T\s]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/))) {
+            d = /T.*(Z|[+-]\d\d:?\d\d)$/.test(t) ? new Date(t) : new Date(+m[1], +m[2] - 1, +m[3], +(m[4] || 0), +(m[5] || 0), +(m[6] || 0));
+        }
+    }
+    if (d && isNaN(d)) d = null;
+    if (d && hora != null && hora !== '' && d.getHours() === 0 && d.getMinutes() === 0) {
+        let hh = null, mi = 0;
+        if (hora instanceof Date) { hh = hora.getHours(); mi = hora.getMinutes(); }
+        else if (typeof hora === 'number' && hora >= 0 && hora < 1) { const x = Math.round(hora * 1440); hh = Math.floor(x / 60); mi = x % 60; }
+        else { const m = String(hora).match(/(\d{1,2})\s*[:hH]\s*(\d{2})?/); if (m) { hh = +m[1]; mi = +(m[2] || 0); } }
+        if (hh != null && hh < 24 && mi < 60) d.setHours(hh, mi);
+    }
+    if (d && (d.getFullYear() < 1990 || d.getFullYear() > 2100)) d = null;
+    return d;
+}
+const p2 = n => String(n).padStart(2, '0');
+const fmtDataLivro = d => `${p2(d.getDate())}/${p2(d.getMonth() + 1)}/${d.getFullYear()}, ${p2(d.getHours())}:${p2(d.getMinutes())}`;
+
+/* ---------- leitura dos arquivos (em segundo plano quando possível) ---------- */
+function decodificarTexto(buf) {
+    const u = new Uint8Array(buf);
+    if (u[0] === 0xFF && u[1] === 0xFE) return new TextDecoder('utf-16le').decode(u);
+    if (u[0] === 0xFE && u[1] === 0xFF) return new TextDecoder('utf-16be').decode(u);
+    try { return new TextDecoder('utf-8', { fatal: true }).decode(u); } catch (e) { return new TextDecoder('windows-1252').decode(u); }
+}
+function lerCSV2(texto) {
+    if (texto.charCodeAt(0) === 0xFEFF) texto = texto.slice(1);
+    const meta = {}, n = texto.length;
+    let ini = 0, delim = null;
+    const linhaEm = i => { const f = texto.indexOf('\n', i); return [texto.slice(i, f < 0 ? n : f).replace(/\r$/, ''), f < 0 ? n : f + 1]; };
+    for (;;) {
+        if (ini >= n) break;
+        const [lin, prox] = linhaEm(ini);
+        const sep = lin.match(/^"?sep=(.)"?$/i);
+        if (sep) { delim = sep[1]; ini = prox; continue; }
+        if (lin[0] !== '#') break;
+        const t = lin.slice(1).trim(); let m;
+        if ((m = t.match(/Gerado por:\s*(.+?)\s+em\s+(.+)$/i))) { meta.geradoPor = m[1]; meta.geradoEm = m[2]; }
+        else if ((m = t.match(/Selo:\s*(.+)$/i))) meta.selo = m[1].trim();
+        else if (/RELAT/i.test(t)) meta.titulo = t;
+        else if (t) meta.filtro = t;
+        ini = prox;
+    }
+    if (!delim) {
+        const amostra = linhaEm(ini)[0].replace(/"[^"]*"/g, '');
+        const cont = { ';': 0, ',': 0, '\t': 0, '|': 0 };
+        for (const c of amostra) if (c in cont) cont[c]++;
+        delim = Object.entries(cont).sort((a, b) => b[1] - a[1] || (a[0] === ';' ? -1 : 1))[0][0];
+        if (!cont[delim]) delim = ';';
+    }
+    const D = delim.charCodeAt(0), linhas = [];
+    let lin = [], i = ini;
+    while (i < n) {
+        let campo;
+        if (texto.charCodeAt(i) === 34) {
+            let j = i + 1; campo = '';
+            for (;;) {
+                const q = texto.indexOf('"', j);
+                if (q < 0) { campo += texto.slice(j); i = n; break; }
+                if (texto.charCodeAt(q + 1) === 34) { campo += texto.slice(j, q + 1); j = q + 2; }
+                else { campo += texto.slice(j, q); i = q + 1; break; }
+            }
+            let k = i; while (k < n) { const c = texto.charCodeAt(k); if (c === D || c === 10 || c === 13) break; k++; }
+            if (k > i) campo += texto.slice(i, k);
+            i = k;
+        } else {
+            let k = i; while (k < n) { const c = texto.charCodeAt(k); if (c === D || c === 10 || c === 13) break; k++; }
+            campo = texto.slice(i, k); i = k;
+        }
+        lin.push(campo);
+        if (i >= n) break;
+        const c = texto.charCodeAt(i);
+        if (c === D) { i++; if (i >= n) lin.push(''); continue; }
+        if (c === 13) { i++; if (texto.charCodeAt(i) === 10) i++; } else i++;
+        linhas.push(lin); lin = [];
+    }
+    if (lin.length) linhas.push(lin);
+    return { linhas: linhas.filter(l => l.length > 1 || (l[0] || '').trim()), meta, delim };
+}
+const XLSX_URL = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+function lerNoTrabalhador(tipo, buf) {
+    return new Promise((ok, falha) => {
+        let w;
+        try {
+            const src = `${decodificarTexto.toString()}\n${lerCSV2.toString()}\nself.onmessage=e=>{const d=e.data;try{if(d.tipo==='csv'){const r=lerCSV2(decodificarTexto(d.buf));postMessage({ok:true,linhas:r.linhas,meta:r.meta,delim:r.delim});}else{importScripts(d.url);const wb=XLSX.read(new Uint8Array(d.buf),{type:'array',cellDates:true,dense:true});postMessage({ok:true,folhas:wb.SheetNames.map(n=>({nome:n,linhas:XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,raw:true,defval:''})}))});}}catch(err){postMessage({ok:false,erro:String(err&&err.message||err)});}};`;
+            w = new Worker(URL.createObjectURL(new Blob([src], { type: 'application/javascript' })));
+        } catch (e) { return falha(e); }
+        const t = setTimeout(() => { w.terminate(); falha(new Error('tempo')); }, 10 * 60000);
+        w.onmessage = e => { clearTimeout(t); w.terminate(); e.data.ok ? ok(e.data) : falha(new Error(e.data.erro)); };
+        w.onerror = e => { clearTimeout(t); w.terminate(); falha(new Error(e.message || 'trabalhador')); };
+        w.postMessage({ tipo, buf, url: XLSX_URL }, [buf]);
+    });
+}
+const lerBuffer = f => new Promise((ok, erro) => { const fr = new FileReader(); fr.onload = () => ok(fr.result); fr.onerror = () => erro(fr.error); fr.readAsArrayBuffer(f); });
+async function lerArquivoBruto(f) {
+    const planilha = /\.(xlsx|xlsm|xlsb|xls|ods)$/i.test(f.name);
+    let r = null;
+    try { r = await lerNoTrabalhador(planilha ? 'xlsx' : 'csv', await lerBuffer(f)); } catch (e) { r = null; }
+    if (!r) {
+        const buf = await lerBuffer(f);
+        if (planilha) {
+            if (typeof XLSX === 'undefined') throw new Error('A biblioteca de planilhas não carregou. Salve como .csv e tente de novo.');
+            const wb = XLSX.read(new Uint8Array(buf), { type: 'array', cellDates: true, dense: true });
+            r = { folhas: wb.SheetNames.map(n => ({ nome: n, linhas: XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, raw: true, defval: '' }) })) };
+        } else { await pausa(); r = lerCSV2(decodificarTexto(buf)); }
+    }
+    if (r.folhas) {
+        // escolhe a aba com o cabeçalho do Livro de Ocorrências (ou a maior)
+        const cand = r.folhas.map(fl => ({ fl, h: acharCabecalho2(fl.linhas) })).sort((a, b) => (b.h >= 0) - (a.h >= 0) || b.fl.linhas.length - a.fl.linhas.length);
+        const fl = cand[0].fl, meta = {};
+        fl.linhas.slice(0, 8).forEach(l => { const s = String(l[0] || ''); let m; if ((m = s.match(/Selo:\s*(.+)/i))) meta.selo = m[1]; if ((m = s.match(/Gerado por:\s*(.+?)\s+em\s+(.+)/i))) { meta.geradoPor = m[1]; meta.geradoEm = m[2]; } });
+        return { linhas: fl.linhas, meta, folha: fl.nome, folhas: r.folhas.length };
+    }
+    return { linhas: r.linhas, meta: r.meta || {}, delim: r.delim };
+}
+const pausa = () => new Promise(r => setTimeout(r, 0));
+
+/* ---------- conversão para o formato do Livro (20 colunas) ---------- */
+async function canonizar(linhas, h, idx, nomeArq, prog) {
+    const rows = [], probs = [], st = { vazias: 0, semEscTipo: 0, semData: 0, munNao: new Map(), futuras: 0, semEsc: 0, semTipo: 0 };
+    const lim = Date.now() + 2 * DIA;
+    const get = (l, c) => { const p = idx[c]; if (p == null || p < 0) return ''; const v = l[p]; return v == null ? '' : v; };
+    const txt = v => v instanceof Date ? fmtDataLivro(v) : String(v).trim();
+    for (let i = h + 1; i < linhas.length; i++) {
+        if ((i - h) % 3000 === 0) { prog && prog((i - h) / (linhas.length - h)); await pausa(); }
+        const l = linhas[i];
+        if (!l || !l.some(c => c !== '' && c != null && String(c).trim() !== '')) { st.vazias++; continue; }
+        const esc_ = txt(get(l, 'esc')), tipo = txt(get(l, 'tipo'));
+        const linhaPl = i + 1;
+        if (!esc_ && !tipo) { st.semEscTipo++; if (probs.length < 20000) probs.push([nomeArq, linhaPl, txt(get(l, 'n')), 'Sem escola e sem tipo de ocorrência (linha ignorada)']); continue; }
+        if (!esc_) { st.semEsc++; probs.length < 20000 && probs.push([nomeArq, linhaPl, txt(get(l, 'n')), 'Sem escola']); }
+        if (!tipo) { st.semTipo++; probs.length < 20000 && probs.push([nomeArq, linhaPl, txt(get(l, 'n')), 'Sem tipo de ocorrência']); }
+        const bruto = get(l, 'dt'), d = lerData2(bruto, idx.hora >= 0 ? get(l, 'hora') : null);
+        let dtTxt;
+        if (d) { dtTxt = fmtDataLivro(d); if (+d > lim) { st.futuras++; probs.length < 20000 && probs.push([nomeArq, linhaPl, txt(get(l, 'n')), 'Data no futuro: ' + dtTxt]); } }
+        else { dtTxt = txt(bruto); st.semData++; probs.length < 20000 && probs.push([nomeArq, linhaPl, txt(get(l, 'n')), bruto === '' ? 'Sem data' : 'Data não reconhecida: ' + dtTxt]); }
+        const munTxt = txt(get(l, 'mun')), mun = munTxt ? resolverMun(munTxt) : null;
+        if (munTxt && !mun) st.munNao.set(munTxt, (st.munNao.get(munTxt) || 0) + 1);
+        const crit = txt(get(l, 'crit'));
+        const r = CAMPOS_PUB.map(c => c === 'dt' ? dtTxt : c === 'mun' ? (mun ? mun.nome : munTxt) : c === 'crit' ? (crit ? critNorm(crit) : '') : c === 'esc' ? esc_ : c === 'tipo' ? tipo : txt(get(l, c)));
+        r._pl = linhaPl; r._arq = nomeArq;
+        rows.push(r);
+    }
+    return { rows, probs, st };
+}
+/* registros para análise, em partes (não trava a tela) */
+async function registrosDeLinhas(linhas, prog) {
+    const h = acharCabecalho(linhas), cab = linhas[h] || [], idx = mapearColunas(cab), regs = [];
+    for (let i = h + 1; i < linhas.length; i++) {
+        if (i % 2500 === 0) { prog && prog(i / linhas.length); await pausa(); }
+        const l = linhas[i]; if (!l || l.every(c => !String(c == null ? '' : c).trim())) continue;
+        const get = c => idx[c] >= 0 ? (l[idx[c]] == null ? '' : (l[idx[c]] instanceof Date ? l[idx[c]] : String(l[idx[c]]))) : '';
+        const r = montarRegistro(get, i);
+        if (!String(get('n')).trim()) r.id = 'S' + hashStr(chave(r.dtTxt + '|' + r.esc + '|' + r.tipo + '|' + String(r.resumo).slice(0, 300))).toString(36);
+        regs.push(r);
+    }
+    return regs;
+}
+
+/* ---------- progresso ---------- */
+const PROG = { cancelar: false };
+function progresso(tit, sub, frac, cancelavel) {
+    const c = $('carregando'); if (!c) return;
+    c.hidden = false;
+    let b = $('car-barra');
+    if (!b) { c.querySelector('.car-caixa').insertAdjacentHTML('beforeend', `<div class="car-barra" id="car-barra"><span id="car-prog"></span></div><div class="car-pct" id="car-pct"></div><button class="btn btn-s btn-sm" id="car-cancelar" hidden>${ic('x')}Pausar envio</button>`); b = $('car-barra'); $('car-cancelar').onclick = () => { PROG.cancelar = true; $('car-cancelar').disabled = true; $('car-cancelar').lastChild.textContent = 'Pausando…'; }; }
+    if (tit != null) $('car-tit').textContent = tit;
+    if (sub != null) $('car-sub').textContent = sub;
+    b.hidden = frac == null; $('car-pct').hidden = frac == null;
+    if (frac != null) { $('car-prog').style.width = (Math.max(0, Math.min(1, frac)) * 100).toFixed(1) + '%'; $('car-pct').textContent = Math.round(frac * 100) + '%'; }
+    const cb = $('car-cancelar'); cb.hidden = !cancelavel; if (!cancelavel) { cb.disabled = false; cb.lastChild.textContent = 'Pausar envio'; }
+}
+function progressoFim() { const c = $('carregando'); if (c) c.hidden = true; const b = $('car-barra'); if (b) { b.hidden = true; $('car-pct').hidden = true; $('car-cancelar').hidden = true; } }
+
+/* ---------- importação ---------- */
+importarArquivo = async function (arqs) {
+    const lista = (arqs instanceof FileList || Array.isArray(arqs)) ? [...arqs] : [arqs];
+    if (!lista.length) return;
+    const t0 = performance.now();
+    const R = { arquivos: [], nome: lista.map(f => f.name).join(', '), tam: lista.reduce((s, f) => s + f.size, 0), probs: [], st: { vazias: 0, semEscTipo: 0, semData: 0, futuras: 0, semEsc: 0, semTipo: 0, repetidos: 0, munNao: new Map() } };
+    try {
+        let todas = [];
+        for (let k = 0; k < lista.length; k++) {
+            const f = lista[k], pre = lista.length > 1 ? `Arquivo ${k + 1} de ${lista.length} · ` : '';
+            progresso('Lendo planilha', pre + f.name + ' · ' + (f.size / 1048576).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' MB', null);
+            await pausa();
+            const b = await lerArquivoBruto(f);
+            const h = acharCabecalho2(b.linhas);
+            if (h < 0) throw new Error(`Não encontrei o cabeçalho do Livro de Ocorrências em "${f.name}"${b.folha ? ' (aba ' + b.folha + ')' : ''}. A planilha precisa ter ao menos as colunas Escola e Tipo de Ocorrência.`);
+            const { idx, origem, naoRec } = mapearColunas2(b.linhas[h]);
+            if (idx.esc < 0 && idx.tipo < 0) throw new Error(`"${f.name}" não tem as colunas Escola e Tipo de Ocorrência.`);
+            progresso('Conferindo linhas', pre + fmtN(b.linhas.length - h - 1) + ' linhas', 0);
+            const c = await canonizar(b.linhas, h, idx, f.name, fr => progresso(null, `${pre}${fmtN(Math.round(fr * (b.linhas.length - h - 1)))} de ${fmtN(b.linhas.length - h - 1)} linhas conferidas`, fr * .5));
+            R.arquivos.push({ nome: f.name, tam: f.size, folha: b.folha, folhas: b.folhas, delim: b.delim, linhas: b.linhas.length - h - 1, validas: c.rows.length, idx, origem, naoRec, cab: b.linhas[h].map(x => String(x == null ? '' : x)), meta: b.meta });
+            ['vazias', 'semEscTipo', 'semData', 'futuras', 'semEsc', 'semTipo'].forEach(s => R.st[s] += c.st[s]);
+            c.st.munNao.forEach((v, m) => R.st.munNao.set(m, (R.st.munNao.get(m) || 0) + v));
+            R.probs = R.probs.concat(c.probs);
+            todas = todas.concat(c.rows);
+            b.linhas = null;
+        }
+        // Nº repetido: fica a última versão (a mais recente no arquivo)
+        const porN = new Map(), sem = [];
+        todas.forEach(r => { const n = r[0]; if (!n) return sem.push(r); if (porN.has(n)) { R.st.repetidos++; R.probs.length < 20000 && R.probs.push([r._arq, r._pl, n, 'Nº repetido: ficou a última linha com este número']); } porN.set(n, r); });
+        const finais = [...porN.values()].concat(sem);
+        progresso('Montando a análise', fmtN(finais.length) + ' registros · cruzando com o cadastro de escolas', .5);
+        const regs = await registrosDeLinhas([COLS_PUB].concat(finais), fr => progresso(null, `${fmtN(Math.round(fr * finais.length))} de ${fmtN(finais.length)} registros`, .5 + fr * .45));
+        if (!regs.length) throw new Error('Nenhuma linha válida encontrada. Confira se a planilha tem as colunas Escola e Tipo de Ocorrência preenchidas.');
+        const mesclar = $('imp-mesclar') && $('imp-mesclar').checked && !FONTE.demo;
+        let nova = regs;
+        if (mesclar) { const m = new Map(BASE.map(r => [r.id, r])); regs.forEach(r => m.set(r.id, r)); nova = [...m.values()]; }
+        progresso('Atualizando os painéis', fmtN(nova.length) + ' registros', .97);
+        await pausa();
+        BASE = nova.sort((a, b) => (b.dt || 0) - (a.dt || 0));
+        const meta0 = R.arquivos[0].meta || {};
+        FONTE = { nome: lista.length > 1 ? lista.length + ' arquivos importados' : lista[0].name, demo: false, selo: meta0.selo, geradoPor: meta0.geradoPor, geradoEm: meta0.geradoEm };
+        const escs = new Set(regs.map(r => r.escK)), escOk = new Set(regs.filter(r => r.ref).map(r => r.escK));
+        Object.assign(R, { canon: finais.map(r => r.slice(0, 20)), n: regs.length, munOk: regs.filter(r => r.munOk).length, escTot: escs.size, escOk: escOk.size, meta: meta0, idx: R.arquivos[0].idx, linhas: true, enviado: 0, envio: null });
+        preencherFiltros(); aplicar();
+        R.periodo = periodoBase(); R.ms = Math.round(performance.now() - t0);
+        ULT_IMPORT = R;
+        if ($('imp-guardar') && $('imp-guardar').checked) guardar([COLS_PUB].concat(R.canon), meta0, FONTE.nome);
+        progressoFim();
+        toast(fmtN(regs.length) + ' registros importados', 'check');
+        if (ABA === 'importar') rImportar(); else irPara('importar');
+        setTimeout(() => { const e = document.querySelector('.im-res'); e && e.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
+    } catch (e) {
+        progressoFim();
+        ULT_IMPORT = { erro: e.message || String(e), nome: R.nome, tam: R.tam, ms: Math.round(performance.now() - t0) };
+        if (ABA === 'importar') rImportar(); else irPara('importar');
+    }
+};
+
+/* ---------- envio para a planilha em lotes, com retomada ---------- */
+async function apiPaciente(acao, dados, aviso) {
+    const esperas = [2000, 5000, 12000, 25000, 45000];
+    for (let t = 0; ; t++) {
+        try { return await api(acao, dados); }
+        catch (e) {
+            const m = String(e.message || e);
+            const temporario = /Muitas requisições|ocupado|Não foi possível falar|rede|Service invoked|tempo|timed out|Exceeded|Limite|unavailable|Erro no servidor/i.test(m);
+            if (!temporario || t >= esperas.length) throw e;
+            aviso && aviso(`Servidor pediu uma pausa. Nova tentativa em ${Math.round(esperas[t] / 1000)} s…`);
+            await new Promise(r => setTimeout(r, esperas[t]));
+        }
+    }
+}
+enviarParaBase = async function () {
+    const R = ULT_IMPORT; if (!R || !R.canon) return;
+    const rows = R.canon, total = rows.length;
+    R.envio = R.envio || { ins: 0, atu: 0, igu: 0, ign: 0, ini: Date.now() };
+    PROG.cancelar = false;
+    let i = R.enviado || 0;
+    const t0 = Date.now(), base = i;
+    try {
+        while (i < total) {
+            if (PROG.cancelar) break;
+            // lote de até 2.000 linhas e cerca de 4 MB
+            let fim = i, bytes = 0;
+            while (fim < total && fim - i < 2000 && bytes < 4e6) { bytes += rows[fim].reduce((s, v) => s + v.length + 3, 0); fim++; }
+            const pct = i / total, vel = (i - base) / Math.max(1, (Date.now() - t0) / 1000), falta = vel > 0 ? Math.round((total - i) / vel) : null;
+            progresso('Gravando na planilha', `${fmtN(i)} de ${fmtN(total)} linhas${falta != null && i > base ? ' · cerca de ' + (falta > 90 ? Math.round(falta / 60) + ' min' : falta + ' s') + ' restantes' : ''}`, pct, true);
+            const j = await apiPaciente('importar', { cabecalho: COLS_PUB, linhas: rows.slice(i, fim), arquivo: R.nome }, msg => progresso(null, msg, pct, true));
+            R.envio.ins += j.inseridos || 0; R.envio.atu += j.atualizados || 0; R.envio.igu += j.iguais || 0; R.envio.ign += j.ignorados || 0;
+            i = fim; R.enviado = i;
+        }
+        progressoFim();
+        if (i < total) { toast(`Envio pausado em ${fmtN(i)} de ${fmtN(total)} linhas. Clique em Continuar para retomar.`, 'info'); if (ABA === 'importar') rImportar(); return; }
+        R.concluido = true;
+        toast(`${fmtN(R.envio.ins)} inseridos, ${fmtN(R.envio.atu)} atualizados e ${fmtN(R.envio.igu)} sem mudança`, 'database');
+        await sincronizar();
+        if (ABA === 'importar') rImportar();
+    } catch (e) {
+        progressoFim();
+        toast(`Envio interrompido em ${fmtN(i)} de ${fmtN(total)} linhas: ${e.message}. Clique em Continuar para retomar de onde parou.`, 'alerta');
+        if (ABA === 'importar') rImportar();
+    }
+};
+
+/* ---------- sincronização paginada ---------- */
+sincronizar = async function (inicial) {
+    progresso('Sincronizando com a base', 'Google Sheets', null);
+    try {
+        let c = (await cacheSrv('ler')) || { cab: null, linhas: [], sync: '' };
+        let pag = 0, mais = true, novas = [], cab = c.cab, agora = '', removidos = [], total = 0, agoraAnt = '';
+        while (mais) {
+            const j = await apiPaciente('listar', { desde: c.sync || '', pagina: pag, tamanho: 3000, agoraAnterior: agoraAnt }, msg => progresso(null, msg, total ? novas.length / total : null));
+            cab = j.cabecalho; agora = j.agora; if (!agoraAnt) agoraAnt = j.agora;
+            for (const l of j.linhas) novas.push(l);
+            mais = j.mais; pag++; total = j.total || total;
+            if (j.removidos) removidos = removidos.concat(j.removidos);
+            progresso(null, fmtN(novas.length) + ' registros recebidos' + (total ? ' de ' + fmtN(total) : ''), total ? novas.length / total * .7 : null);
+        }
+        const iN = cab.indexOf('Nº');
+        const m = new Map(c.linhas.map(l => [String(l[iN]), l]));
+        novas.forEach(l => m.set(String(l[iN]), l));
+        removidos.forEach(n => m.delete(String(n)));
+        const linhas = [...m.values()];
+        cacheSrv('gravar', { cab, linhas, sync: agora });
+        const regs = await registrosDeLinhas([cab].concat(linhas), fr => progresso(null, `Montando a análise · ${fmtN(Math.round(fr * linhas.length))} de ${fmtN(linhas.length)}`, .7 + fr * .28));
+        BASE = regs.sort((a, b) => (b.dt || 0) - (a.dt || 0));
+        FONTE = { nome: 'Base Google Sheets', demo: false, servidor: true, selo: 'sincronizado ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) };
+        preencherFiltros(); aplicar();
+        if (!inicial) toast(novas.length ? fmtN(novas.length) + ' registro(s) atualizados' : 'Base já estava atualizada', 'database');
+    } catch (e) {
+        toast(e.message, 'alerta');
+        if (!BASE.length) { BASE = []; FONTE = { nome: 'Base Google Sheets (sem dados)', servidor: true }; preencherFiltros(); aplicar(); }
+    } finally { progressoFim(); }
+};
+carregarGuardados = async function () {
+    try {
+        const db = await idb();
+        const v = await new Promise(ok => { const q = db.transaction('dados').objectStore('dados').get('base'); q.onsuccess = () => ok(q.result); q.onerror = () => ok(null); });
+        if (!v || !v.linhas) return false;
+        const regs = await registrosDeLinhas(v.linhas.map(l => l.map(c => (c && typeof c === 'object' && !(c instanceof Date)) ? '' : c)));
+        if (!regs.length) return false;
+        BASE = regs.sort((a, b) => (b.dt || 0) - (a.dt || 0));
+        FONTE = { nome: v.nome, demo: false, selo: v.meta && v.meta.selo, geradoPor: v.meta && v.meta.geradoPor, geradoEm: v.meta && v.meta.geradoEm };
+        return true;
+    } catch (e) { return false; }
+};
+
+/* ---------- página ---------- */
+function baixarProblemas() {
+    const R = ULT_IMPORT; if (!R || !R.probs) return;
+    const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+    const csv = '﻿' + ['Arquivo;Linha da planilha;Nº;Problema'].concat(R.probs.map(p => p.map(q).join(';'))).join('\r\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'linhas-com-problema.csv'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+function baixarModelo() {
+    const csv = '﻿' + COLS_PUB.join(';') + '\r\n' + ['', '06/11/2026, 14:30', 'DIRETOR', 'DRE CUIABÁ', 'Cuiabá', 'Nome da escola', '', '', 'Agressão Física', 'ALTO', 'Pendente', '', '', 'Descreva o fato aqui.', '', '', '', '', '', ''].join(';') + '\r\n';
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'modelo-livro-de-ocorrencias.csv'; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+function imResultadoHTML(R) {
+    if (!R) return '';
+    if (R.erro) return `<div class="card card-pad im-res"><div class="card-tit"><div class="ico" style="--c:var(--vermelho)">${ic('alerta')}</div><div><h3>Não foi possível importar</h3><p>${esc(R.nome || '')}</p></div></div><div class="aviso alerta">${ic('alerta')}<div>${esc(R.erro)}</div></div><p class="dica">Dica: a primeira linha com títulos precisa ter ao menos <b>Escola</b> e <b>Tipo de Ocorrência</b>. Baixe o modelo para conferir os nomes aceitos.</p></div>`;
+    const st = R.st, ign = st.semEscTipo, avisos = st.semData + st.futuras + st.semEsc + st.semTipo + st.repetidos + [...st.munNao.values()].reduce((s, v) => s + v, 0);
+    const lidas = R.arquivos.reduce((s, a) => s + a.linhas, 0);
+    const mun = [...st.munNao.entries()].sort((a, b) => b[1] - a[1]);
+    const qual = Math.floor(1000 * (R.n - Math.min(R.n, avisos)) / Math.max(1, R.n)) / 10;
+    const corQ = qual >= 95 ? 'var(--verde)' : qual >= 80 ? 'var(--c-medio)' : 'var(--c-alto)';
+    const env = R.envio, total = R.canon.length, pctEnv = Math.round(100 * (R.enviado || 0) / Math.max(1, total));
+    const lin = (t, v, c) => v ? `<li><span class="im-q-n" style="--c:${c || 'var(--c-alto)'}">${fmtN(v)}</span>${t}</li>` : '';
+    return `<div class="card card-pad im-res">
+        <div class="card-tit"><div class="ico" style="--c:var(--verde)">${ic('check')}</div><div><h3>${R.arquivos.length > 1 ? R.arquivos.length + ' arquivos importados' : 'Planilha importada'}</h3><p>${esc(R.nome)} · ${(R.tam / 1048576).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} MB · ${(R.ms / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} s</p></div></div>
+        <div class="kpis im-kpis">
+            <div class="kpi" style="--c:var(--prim)"><div class="r">${ic('database')}Linhas lidas</div><div class="v">${fmtN(lidas)}</div><div class="s">${st.vazias ? fmtN(st.vazias) + ' vazias puladas' : 'em ' + R.arquivos.length + ' arquivo(s)'}</div></div>
+            <div class="kpi" style="--c:var(--verde)"><div class="r">${ic('check')}Registros válidos</div><div class="v">${fmtN(R.n)}</div><div class="s">${ign ? fmtN(ign) + ' ignorados' : 'nenhuma linha ignorada'}</div></div>
+            <div class="kpi" style="--c:${corQ}"><div class="r">${ic('shield')}Qualidade</div><div class="v">${qual.toLocaleString('pt-BR')}%</div><div class="s">${avisos ? fmtN(avisos) + ' aviso(s)' : 'sem avisos'}</div></div>
+            <div class="kpi" style="--c:var(--roxo)"><div class="r">${ic('clock')}Período</div><div class="v im-per">${esc(R.periodo)}</div><div class="s">${fmtN(R.munOk)} com município reconhecido</div></div></div>
+        <div class="grade g2" style="align-items:start;margin-top:14px">
+            <div><div class="rot">Conferência das linhas</div>
+                ${avisos || ign ? `<ul class="im-q">${lin('linhas sem escola e sem tipo (ignoradas)', ign, 'var(--c-crit)')}${lin('sem data ou com data não reconhecida', st.semData)}${lin('com data no futuro', st.futuras)}${lin('sem escola', st.semEsc)}${lin('sem tipo de ocorrência', st.semTipo)}${lin('com Nº repetido (ficou a última)', st.repetidos, 'var(--c-medio)')}${lin('com município não reconhecido', mun.reduce((s, x) => s + x[1], 0))}</ul>
+                ${mun.length ? `<p class="peq mut" style="margin:6px 0 0">Municípios não reconhecidos: ${mun.slice(0, 8).map(([m, n]) => `<b>${esc(m)}</b> (${fmtN(n)})`).join(', ')}${mun.length > 8 ? ' e mais ' + (mun.length - 8) : ''}.</p>` : ''}
+                <button class="btn btn-s btn-sm" style="margin-top:10px" onclick="baixarProblemas()">${ic('doc')}Baixar lista das linhas com aviso (.csv)</button>`
+                : `<div class="aviso info">${ic('check')}<div>Todas as linhas estão completas: escola, tipo, data e município reconhecidos.</div></div>`}
+                <p class="peq mut" style="margin-top:10px">${fmtN(R.escOk)} de ${fmtN(R.escTot)} escolas localizadas no cadastro georreferenciado.</p></div>
+            <div><div class="rot">Colunas de cada arquivo</div>${R.arquivos.map(a => `<details class="im-arq"${R.arquivos.length === 1 ? ' open' : ''}><summary><b>${esc(a.nome)}</b><span>${fmtN(a.validas)} de ${fmtN(a.linhas)} linhas${a.folha ? ' · aba ' + esc(a.folha) + (a.folhas > 1 ? ` (de ${a.folhas})` : '') : ''}${a.delim ? ' · separador ' + (a.delim === '\t' ? 'tabulação' : '"' + a.delim + '"') : ''}</span></summary>
+                <div class="colmap">${Object.keys(ALIAS_COLS).filter(k => k !== 'hora' || a.idx.hora >= 0).map(k => { const p = a.idx[k]; return `<span class="${p >= 0 ? 'ok' : 'nao'}" title="${p >= 0 ? 'Na planilha: ' + esc(a.cab[p]) : 'Não encontrada'}">${ic(p >= 0 ? 'check' : 'x')}${esc(ROT_COLS[k])}${p >= 0 && a.origem[k] === 'parecido' ? ` <small>← ${esc(a.cab[p])}</small>` : ''}</span>`; }).join('')}</div>
+                ${a.naoRec.length ? `<p class="peq mut" style="margin:8px 0 0">Colunas não usadas: ${a.naoRec.slice(0, 10).map(x => esc(x.c)).join(', ')}${a.naoRec.length > 10 ? '…' : ''}</p>` : ''}</details>`).join('')}</div></div>
+        <div class="im-acoes"><button class="btn btn-p" onclick="irPara('meudia')">${ic('sun')}Ver Meu dia</button><button class="btn btn-s" onclick="irPara('painel')">${ic('home')}Painel</button><button class="btn btn-s" onclick="irPara('verificacao')">${ic('check')}Verificação</button></div></div>
+    ${podeImportar() ? `<div class="card card-pad im-envio"><div class="card-tit"><div class="ico" style="--c:var(--verde)">${ic('database')}</div><div><h3>Gravar na base do Google Sheets</h3><p>Registros com o mesmo Nº são atualizados; os novos são acrescentados; os iguais não são reescritos. Linhas sem Nº recebem um identificador tirado do próprio conteúdo, então reimportar não duplica.</p></div></div>
+        ${R.enviado ? `<div class="im-env-barra"><span style="width:${pctEnv}%"></span></div><p class="peq" style="margin:6px 0 10px">${R.concluido ? 'Envio concluído' : 'Enviado'}: <b>${fmtN(R.enviado)}</b> de ${fmtN(total)} linhas (${pctEnv}%)${env ? ` · ${fmtN(env.ins)} inseridos · ${fmtN(env.atu)} atualizados · ${fmtN(env.igu)} sem mudança${env.ign ? ' · ' + fmtN(env.ign) + ' ignorados' : ''}` : ''}</p>` : ''}
+        ${R.concluido ? `<div class="aviso info">${ic('check')}<div>Tudo gravado. A base foi sincronizada.</div></div>` : `<button class="btn btn-p" onclick="enviarParaBase()">${ic('upload')}${R.enviado ? 'Continuar de onde parou' : 'Enviar ' + fmtN(total) + ' registros'}</button>
+        <p class="dica" style="margin-top:8px">${ic('info')} O envio é feito em lotes de até 2.000 linhas. Pode ser pausado e retomado; se a conexão cair, continue de onde parou. ${total > 20000 ? `Para ${fmtN(total)} linhas, conte com alguns minutos.` : ''}</p>`}</div>`
+        : conectado() ? `<div class="aviso info">${ic('info')}<div>Seu perfil não grava na base. A planilha está sendo analisada só nesta sessão.</div></div>` : ''}`;
+}
+rImportar = function () {
+    const R = ULT_IMPORT;
+    $('cont-importar').innerHTML = `
+    <div class="card card-pad im-solta-card">
+        <div class="solta im-solta" id="solta" tabindex="0" role="button" aria-label="Selecionar planilhas">${ic('upload')}<h4>Arraste as planilhas aqui ou clique para escolher</h4><p>Pode escolher <b>vários arquivos de uma vez</b> (por exemplo, um por mês). Aceita .csv, .txt, .xlsx, .xls e .ods, com qualquer quantidade de linhas.</p>
+            <div class="im-formatos">${['CSV (;  ,  tab)', 'Excel .xlsx/.xls', 'LibreOffice .ods', 'UTF-8, ANSI e UTF-16'].map(t => `<span>${t}</span>`).join('')}</div></div>
+        <div class="chk-linha" style="margin-top:12px"><label><input type="checkbox" id="imp-guardar" ${ls.get('esp_guardar') === '1' ? 'checked' : ''}> Manter os dados neste navegador</label><label><input type="checkbox" id="imp-mesclar"> Somar aos dados atuais (mesmo Nº é atualizado)</label></div>
+        <div class="aviso info" style="margin-top:12px">${ic('shield')}<div>A leitura e a conferência são feitas neste aparelho. Só vai para a planilha do Google o que você mandar gravar.</div></div></div>
+    ${imResultadoHTML(R)}
+    <div class="grade g2 im-info" style="align-items:start">
+        <div class="card card-pad"><div class="card-tit"><div class="ico">${ic('database')}</div><div><h3>Fonte atual</h3><p>${esc(FONTE.nome)}</p></div></div>
+            <dl class="dados-lista" style="grid-template-columns:minmax(0,1fr)"><div><dt>Registros</dt><dd>${fmtN(BASE.length)}</dd></div>${FONTE.selo ? `<div><dt>Selo</dt><dd class="mono">${esc(FONTE.selo)}</dd></div>` : ''}${FONTE.geradoPor ? `<div><dt>Gerado por</dt><dd>${esc(FONTE.geradoPor)} em ${esc(FONTE.geradoEm || '')}</dd></div>` : ''}<div><dt>Período</dt><dd>${periodoBase()}</dd></div></dl>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">${conectado() ? `<button class="btn btn-s btn-sm" onclick="sincronizar()">${ic('repeat')}Sincronizar agora</button>` : ''}${FONTE.demo ? '' : `<button class="btn btn-s btn-sm" onclick="usarDemo()">${ic('database')}Voltar à demonstração</button>`}<button class="btn btn-d btn-sm" onclick="apagarGuardados()">${ic('lixo')}Apagar dados guardados</button></div></div>
+        <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--marca2)">${ic('grid')}</div><div><h3>Colunas aceitas</h3><p>Os nomes são reconhecidos sem diferenciar acentos, maiúsculas e pontuação, inclusive nomes parecidos</p></div></div>
+            <div class="im-alias">${CAMPOS_PUB.concat(['hora']).map(k => `<div><b>${esc(ROT_COLS[k])}</b><span>${ALIAS_VER[k]}</span></div>`).join('')}</div>
+            <p class="dica">Obrigatórias: <b>Escola</b> e <b>Tipo de Ocorrência</b>. Data/Hora e Município são fortemente recomendadas. A data pode vir como 06/11/2026 14:30, 2026-11-06, 06-11-26 ou data do Excel; a hora pode estar numa coluna separada.</p>
+            <button class="btn btn-s btn-sm" onclick="baixarModelo()">${ic('doc')}Baixar planilha modelo</button></div></div>`;
+    const s = $('solta');
+    s.onclick = () => $('arquivo').click();
+    s.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('arquivo').click(); } };
+    s.ondragover = e => { e.preventDefault(); s.classList.add('sobre'); };
+    s.ondragleave = () => s.classList.remove('sobre');
+    s.ondrop = e => { e.preventDefault(); s.classList.remove('sobre'); if (e.dataTransfer.files.length) importarArquivo(e.dataTransfer.files); };
+    $('imp-guardar').onchange = e => ls.set('esp_guardar', e.target.checked ? '1' : '0');
+};
+Object.assign(TOPICOS, {
+    importar: [
+        { t: 'Enviar arquivos', s: 'Arraste uma ou várias planilhas', i: 'upload', m: /im-solta-card/ },
+        { t: 'Resultado da leitura', s: 'Conferência das linhas, colunas encontradas e gravação na base', i: 'check', m: /im-res|im-envio|^aviso/ },
+        { t: 'Fonte e formato', s: 'De onde vêm os dados e quais colunas são aceitas', i: 'grid', m: /im-info/ }
+    ]
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const inp = $('arquivo');
+    if (inp) { inp.multiple = true; inp.accept = '.csv,.txt,.tsv,.xlsx,.xlsm,.xls,.ods'; inp.onchange = e => { if (e.target.files.length) importarArquivo([...e.target.files]); e.target.value = ''; }; }
+});
+
+/* ---------- desempenho com bases grandes ---------- */
+/* chave(): memória para textos curtos (tipo, status, escola, município, nomes), que se repetem muito */
+const _chaveBase = chave, _CK = new Map();
+chave = function (s) {
+    if (typeof s === 'string' && s.length <= 160) { let v = _CK.get(s); if (v === undefined) { v = _chaveBase(s); if (_CK.size > 250000) _CK.clear(); _CK.set(s, v); } return v; }
+    return _chaveBase(s);
+};
+/* relato normalizado e palavras do relato, calculados uma vez por registro */
+function kRes(r) { return r._kr !== undefined ? r._kr : (r._kr = _chaveBase(String(r.resumo || '').replace(/\*\*/g, ' '))); }
+let _STOPU = new Set(), _STOPN = -1;
+function tokensReg(r, nomes) {
+    if (r._tk === undefined) { if (STOP.size !== _STOPN) { _STOPU = new Set([...STOP].map(w => w.toUpperCase())); _STOPN = STOP.size; } r._tk = kRes(r).split(' ').filter(w => w.length >= 4 && !_STOPU.has(w) && !/\d/.test(w)); }
+    return nomes && nomes.size ? r._tk.filter(w => !nomes.has(w)) : r._tk;
+}
+/* tipoTem(): sem montar a chave da lista a cada chamada */
+const _TT = new Map();
+tipoTem = function (tipo, lista) {
+    const lk = lista.length === 1 ? lista[0] : (lista._k || (lista._k = lista.join(',')));
+    let m = _TT.get(lk); if (!m) { m = new Map(); _TT.set(lk, m); }
+    let v = m.get(tipo);
+    if (v === undefined) { const k = chave(tipo); v = lista.some(t => k.includes(t)); m.set(tipo, v); }
+    return v;
+};
+/* existe algum valor (lista em ordem crescente de datas) no intervalo [lo, hi]? */
+function temEntre(lista, lo, hi) {
+    let a = 0, b = lista.length;
+    while (a < b) { const m = (a + b) >> 1; if (+lista[m] < lo) a = m + 1; else b = m; }
+    return a < lista.length && +lista[a] <= hi;
+}
+
+/* termos: a análise dos relatos é refeita só quando o recorte ou a janela mudam */
+const _analisarTermosBase = analisarTermos, _AT = { reg: null, j: null, n: 0, v: null };
+analisarTermos = function () {
+    if (_AT.reg === REG && _AT.j === TR.janela && _AT.n === REG.length && _AT.v) return _AT.v;
+    const v = _analisarTermosBase.apply(this, arguments);
+    Object.assign(_AT, { reg: REG, j: TR.janela, n: REG.length, v });
+    return v;
+};
+
+/* páginas pesadas com bases grandes: mostra "Analisando…" antes de calcular, em vez de congelar sem aviso */
+const PAG_PESADAS = new Set(['termos', 'difusao', 'vinculos', 'graficos', 'risco', 'recorrencias']);
+const _renderAbaV25 = renderAba;
+renderAba = function () {
+    if (PAG_PESADAS.has(ABA) && typeof REG !== 'undefined' && REG.length > 40000 && !renderAba._ja) {
+        const aba = ABA, t = (ABAS.find(a => a.id === aba) || {}).t || 'página';
+        progresso('Analisando ' + fmtN(REG.length) + ' registros', t, null);
+        setTimeout(() => { if (ABA !== aba) { progressoFim(); return; } renderAba._ja = true; try { _renderAbaV25(); } finally { renderAba._ja = false; progressoFim(); } }, 60);
+        return;
+    }
+    _renderAbaV25();
+};
 
 </script>
 </body>
