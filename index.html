@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="application-name" content="EDUCASEG-PLUS">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="EDUCASEG-PLUS">
@@ -2326,6 +2329,77 @@ button.chip:hover { transform: translateY(-1px); border-color: var(--c, var(--pr
 <style>.df3-cc-top small.df3-base { display: block; color: var(--muted); font-size: 11px; } .df3-cc-top small.df3-base b { display: inline; font-size: 11px; color: var(--c); }</style>
 <style>#mapa-dif3 { height: 100%; width: 100%; background: var(--mapa-fundo); }
 .df3-cc-or span { display: block; line-height: 1.45; } .df3-cc-or svg { vertical-align: -2px; }</style>
+<style>
+/* ===== 4.4 — Instalar aplicativo ===== */
+.ins-status { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; padding: 26px 28px; overflow: hidden; position: relative; background: radial-gradient(120% 140% at 100% 0, color-mix(in srgb, var(--c) 14%, var(--card)) 0, var(--card) 55%); border-color: color-mix(in srgb, var(--c) 28%, var(--borda)); }
+.ins-selo { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 800; letter-spacing: .02em; color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent); }
+.ins-selo svg { width: 14px; height: 14px; }
+.ins-status h3 { font-size: 26px; letter-spacing: -.02em; margin: 12px 0 6px; line-height: 1.15; }
+.ins-status p { color: var(--texto2); line-height: 1.6; margin: 0; max-width: 560px; }
+.ins-st-ac { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+.ins-st-ac:empty { display: none; }
+.ins-grande { height: 48px; padding: 0 22px; font-size: 15px; border-radius: 14px; }
+.btn-p.ins-grande { box-shadow: 0 12px 26px -12px var(--prim); animation: insBrilho 2.6s ease-in-out infinite; }
+@keyframes insBrilho { 50% { box-shadow: 0 14px 34px -10px var(--prim); transform: translateY(-1px); } }
+.ins-st-dispo { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 18px; font-size: 12px; color: var(--muted); }
+.ins-st-dispo span { display: inline-flex; align-items: center; gap: 6px; } .ins-st-dispo svg { width: 14px; height: 14px; }
+.ins-cena { position: relative; min-height: 230px; display: flex; align-items: center; justify-content: center; }
+.ins-pc { position: relative; width: 300px; animation: insFlutua 6s ease-in-out infinite; }
+.ins-pc-tela { height: 180px; border-radius: 12px 12px 4px 4px; background: linear-gradient(160deg, #0b1424, #13233d); border: 6px solid #1e293b; box-shadow: 0 30px 50px -28px rgba(2,6,23,.7); position: relative; overflow: hidden; }
+.ins-jan { display: flex; gap: 4px; padding: 6px 8px; } .ins-jan i { width: 7px; height: 7px; border-radius: 50%; background: #334155; } .ins-jan i:first-child { background: #f87171; } .ins-jan i:nth-child(2) { background: #fbbf24; } .ins-jan i:nth-child(3) { background: #34d399; }
+.ins-pc-app { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 18px; color: #e2e8f0; font-size: 12px; letter-spacing: .06em; animation: anPop .7s .2s cubic-bezier(.16,1,.3,1) both; }
+.ins-pc-base { height: 12px; margin: 0 -26px; border-radius: 0 0 12px 12px; background: linear-gradient(#cbd5e1, #94a3b8); }
+.ins-cel { position: absolute; right: 4%; bottom: 2px; width: 104px; height: 200px; border-radius: 22px; background: #0f172a; padding: 6px; box-shadow: 0 26px 40px -20px rgba(2,6,23,.75); animation: insFlutua 6s 1.2s ease-in-out infinite; }
+.ins-cel-tela { height: 100%; border-radius: 17px; background: linear-gradient(170deg, #1d4ed8, #0b1424 70%); display: flex; flex-direction: column; align-items: center; padding-top: 22px; }
+.ins-cel-grade { display: grid; grid-template-columns: repeat(4, 16px); gap: 6px; }
+.ins-cel-grade span { width: 16px; height: 16px; border-radius: 5px; background: rgba(255,255,255,.18); }
+.ins-cel-app { display: grid !important; place-items: center; background: #fff !important; overflow: hidden; animation: insIcone 2.4s ease-in-out infinite; }
+.ins-cel-app svg { width: 16px !important; height: 16px !important; }
+.ins-cel-tela small { margin-top: auto; margin-bottom: 10px; color: rgba(255,255,255,.7); font-size: 9px; letter-spacing: .08em; }
+@keyframes insFlutua { 50% { transform: translateY(-8px); } }
+@keyframes insIcone { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,.6); } 50% { transform: scale(1.18); box-shadow: 0 0 0 6px rgba(255,255,255,0); } }
+.ins-disp { margin-bottom: 12px; }
+.ins-navs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.ins-navs .chip small { opacity: .8; font-weight: 600; }
+.ins-passos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; counter-reset: p; position: relative; }
+.ins-passos li { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 14px; border: 1px solid var(--borda); background: var(--card); animation: anPop .5s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(var(--an-i) * 90ms); transition: transform .2s, box-shadow .2s, border-color .2s; }
+.ins-passos li:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--prim) 40%, var(--borda)); box-shadow: 0 14px 26px -18px var(--prim); }
+.ins-passos li > div > b { display: block; font-size: 14.5px; margin-bottom: 4px; }
+.ins-passos li > div p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--texto2); }
+.ins-n { position: absolute; top: 12px; right: 14px; font-size: 26px; font-weight: 800; color: color-mix(in srgb, var(--prim) 22%, transparent); font-variant-numeric: tabular-nums; }
+.ins-pic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, var(--prim), color-mix(in srgb, var(--prim) 60%, var(--roxo))); box-shadow: 0 8px 18px -10px var(--prim); }
+.ins-pic svg { width: 20px; height: 20px; }
+.ins-passos.compacto { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.ins-passos.compacto li { flex-direction: row; align-items: flex-start; padding: 12px; }
+.ins-passos.compacto .ins-n { display: none; }
+.ins-aviso { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, var(--c-alto) 10%, var(--card)); border: 1px solid color-mix(in srgb, var(--c-alto) 30%, var(--borda)); font-size: 13px; line-height: 1.5; }
+.ins-aviso svg { color: var(--c-alto); flex-shrink: 0; margin-top: 2px; } .ins-aviso p { margin: 0; }
+.ins-vgrade { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.ins-v { padding: 14px; border-radius: 14px; background: var(--suave); animation: anPop .5s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(var(--an-i) * 60ms); transition: transform .2s; }
+.ins-v:hover { transform: translateY(-2px); }
+.ins-v span { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; color: var(--verde); background: color-mix(in srgb, var(--verde) 14%, transparent); margin-bottom: 8px; }
+.ins-v span svg { width: 18px; height: 18px; }
+.ins-v b { display: block; font-size: 14px; } .ins-v p { margin: 4px 0 0; font-size: 12.5px; color: var(--texto2); line-height: 1.5; }
+.ins-qr-box { width: 180px; height: 180px; margin: 4px auto 0; padding: 10px; border-radius: 16px; background: #fff; box-shadow: 0 10px 26px -16px rgba(2,6,23,.5); }
+.ins-qr-box svg { width: 100%; height: 100%; display: block; }
+.ins-d { border-top: 1px solid var(--borda); }
+.ins-d summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 13px 2px; font-weight: 700; font-size: 14px; }
+.ins-d summary::-webkit-details-marker { display: none; }
+.ins-d summary svg { width: 16px; height: 16px; color: var(--muted); transition: transform .25s; flex-shrink: 0; }
+.ins-d[open] summary svg { transform: rotate(90deg); }
+.ins-d p { margin: 0 0 14px; color: var(--texto2); font-size: 13.5px; line-height: 1.6; animation: anCorpo .3s; }
+.ins-sug { position: fixed; z-index: 900; right: 20px; bottom: 20px; width: min(380px, calc(100vw - 32px)); display: flex; gap: 12px; align-items: flex-start; padding: 16px; border-radius: 18px; background: var(--card); border: 1px solid var(--borda); box-shadow: 0 24px 50px -20px rgba(2,6,23,.55); animation: insSobe .45s cubic-bezier(.16,1,.3,1) both; }
+.ins-sug.saindo { animation: insDesce .3s ease-in forwards; }
+@keyframes insSobe { from { opacity: 0; transform: translateY(30px) scale(.96); } }
+@keyframes insDesce { to { opacity: 0; transform: translateY(30px) scale(.96); } }
+.ins-sug-ic { flex-shrink: 0; } .ins-sug b { font-size: 15px; } .ins-sug p { margin: 4px 24px 10px 0; font-size: 12.5px; color: var(--texto2); line-height: 1.5; }
+.ins-sug-ac { display: flex; gap: 6px; flex-wrap: wrap; }
+.ins-sug-x { position: absolute; top: 8px; right: 8px; }
+.modo-app .so-navegador { display: none !important; }
+@media (max-width: 900px) { .ins-status { grid-template-columns: minmax(0, 1fr); padding: 20px; } .ins-cena { min-height: 200px; } .ins-pc { width: 230px; } .ins-pc-tela { height: 140px; } .ins-status h3 { font-size: 21px; } }
+@media (max-width: 760px) { .ins-sug { bottom: calc(76px + env(safe-area-inset-bottom)); right: 16px; } .ins-grande { width: 100%; justify-content: center; } }
+@media (prefers-reduced-motion: reduce) { .ins-pc, .ins-cel, .ins-cel-app, .btn-p.ins-grande { animation: none !important; } }
+</style>
 
 </head>
 <body>
@@ -2392,8 +2466,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '4.3.0+ff59f77c';
-const APP_NOTAS = 'Termos com rede de conexões das palavras, pesquisa e comparação; Rotas prováveis com chegadas prováveis, mapa animado e reprodução semana a semana; sistema mais animado e interativo.';
+const APP_VERSAO = '4.4.0+3d9cae74';
+const APP_NOTAS = 'Agora é um aplicativo para computador e celular: nova página Instalar aplicativo, instalação com um clique, atalhos no ícone e contador de problemas.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -9774,6 +9848,256 @@ Object.assign(LEGENDAS, {
     difusao: { mostra: ['Resumo, chegadas prováveis, mapa animado com reprodução semanal, rotas mais fortes, municípios sob pressão, agravamento entre tipos e autores que circulam.'], fonte: ['Datas, municípios, tipos e autores do Livro; distância entre os centros dos municípios (IBGE).'], calc: ['Rota: o mesmo tipo aparece num município vizinho (até o raio) dentro da janela, 2+ vezes. Chance: dos dias com caso na origem, quantos foram seguidos de caso no destino.', 'Chegada provável: origem com caso recente, destino ainda sem caso; chance combinada das rotas que chegam ao destino.'], usar: ['Escolha tipo, janela e raio no topo. Clique numa rota para o detalhe e a linha do tempo.', 'Use Reproduzir no mapa para ver a propagação; arraste a barra para escolher a semana. É indício estatístico, não prova.'] },
     termos: { mostra: ['Pesquisa e comparação de termos, rede de conexões entre palavras, radar de temas de risco e palavras em alta, em queda e mais frequentes.'], fonte: ['Texto do campo Resumo dos Fatos.'], calc: ['Rede: palavras que aparecem no mesmo relato; a força da linha considera quantas vezes aparecem juntas em relação à frequência de cada uma. Cores: grupos de assunto encontrados automaticamente.', 'Em alta: 2× mais frequente que antes, em 3+ escolas. Perdendo força: caiu mais da metade.'], usar: ['Separe termos por vírgula para comparar. Clique numa palavra da rede para ver ligações e relatos; arraste para reorganizar.', 'Clique num tema, palavra ou expressão para pesquisar.'] }
 });
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.4 — Aplicativo para computador e celular
+   Página "Instalar aplicativo", sugestão de instalação, atalhos,
+   contador no ícone e ajustes do modo aplicativo
+   ===================================================================== */
+const appInstalado = () => { try { return matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: minimal-ui)').matches || matchMedia('(display-mode: window-controls-overlay)').matches || navigator.standalone === true; } catch (e) { return false; } };
+function plataformaApp() {
+    const u = navigator.userAgent || '';
+    const ios = /iPad|iPhone|iPod/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1);
+    const android = /Android/.test(u);
+    const edge = /Edg(e|A|iOS)?\//.test(u), samsung = /SamsungBrowser/.test(u), firefox = /Firefox|FxiOS/.test(u), opera = /OPR\//.test(u);
+    const chrome = /Chrome|CriOS/.test(u) && !edge && !samsung && !opera;
+    const safari = /Safari/.test(u) && !chrome && !edge && !firefox && !samsung && !opera;
+    const disp = ios ? 'ios' : android ? 'android' : 'computador';
+    const nav = samsung ? 'samsung' : edge ? 'edge' : firefox ? 'firefox' : chrome ? 'chrome' : safari ? 'safari' : 'outro';
+    const so = ios ? (/iPad/.test(u) || navigator.maxTouchPoints > 1 && /Macintosh/.test(u) ? 'iPad' : 'iPhone') : android ? 'Android' : /Windows/.test(u) ? 'Windows' : /Macintosh/.test(u) ? 'Mac' : /CrOS/.test(u) ? 'Chromebook' : 'Linux';
+    const nomeNav = { chrome: 'Google Chrome', edge: 'Microsoft Edge', firefox: 'Firefox', safari: 'Safari', samsung: 'Samsung Internet', outro: 'seu navegador' }[nav];
+    return { ios, android, disp, nav, so, nomeNav };
+}
+const INS = { disp: null, nav: null };
+const INS_GUIAS = {
+    computador: {
+        t: 'Computador', s: 'Windows, Mac, Linux e Chromebook', i: 'grid',
+        navs: [
+            { k: 'chrome', t: 'Google Chrome', passos: [
+                ['ext', 'Abra o sistema', 'Entre no EDUCASEG-PLUS pelo endereço oficial, no Chrome.'],
+                ['download', 'Clique em instalar', 'Na barra de endereço, à direita, clique no ícone de <b>instalar</b> (um monitor com uma seta). Se não aparecer, abra o menu <b>⋮</b> → <b>Transmitir, salvar e compartilhar</b> → <b>Instalar</b>.'],
+                ['check', 'Confirme', 'Clique em <b>Instalar</b>. O sistema abre numa janela própria, sem barra de endereço.'],
+                ['pin', 'Deixe sempre à mão', 'No Windows, clique com o botão direito no ícone da barra de tarefas e escolha <b>Fixar</b>. No Mac, escolha <b>Manter no Dock</b>.']] },
+            { k: 'edge', t: 'Microsoft Edge', passos: [
+                ['ext', 'Abra o sistema', 'Entre no EDUCASEG-PLUS pelo endereço oficial, no Edge.'],
+                ['download', 'Clique em instalar', 'Clique no ícone de <b>instalar</b> na barra de endereço. Ou abra o menu <b>⋯</b> → <b>Aplicativos</b> → <b>Instalar este site como um aplicativo</b>.'],
+                ['check', 'Confirme', 'Clique em <b>Instalar</b>. Marque, se quiser, as opções de fixar na barra de tarefas e no menu Iniciar.'],
+                ['pin', 'Pronto', 'O EDUCASEG-PLUS aparece no menu Iniciar como qualquer programa.']] },
+            { k: 'safari', t: 'Safari (Mac)', passos: [
+                ['ext', 'Abra o sistema', 'Entre no EDUCASEG-PLUS pelo endereço oficial, no Safari (macOS Sonoma ou mais novo).'],
+                ['menu', 'Menu Arquivo', 'Na barra de menus, clique em <b>Arquivo</b> → <b>Adicionar ao Dock</b>.'],
+                ['check', 'Confirme', 'Clique em <b>Adicionar</b>. O ícone aparece no Dock e na pasta Aplicativos.']] },
+            { k: 'firefox', t: 'Firefox', aviso: 'O Firefox para computador ainda não instala aplicativos da web. Abra o sistema no <b>Google Chrome</b> ou no <b>Microsoft Edge</b> e siga os passos desses navegadores.' }
+        ]
+    },
+    android: {
+        t: 'Android', s: 'Celulares e tablets', i: 'user',
+        navs: [
+            { k: 'chrome', t: 'Google Chrome', passos: [
+                ['ext', 'Abra o sistema', 'Entre no EDUCASEG-PLUS pelo endereço oficial, no Chrome.'],
+                ['menu', 'Abra o menu', 'Toque nos três pontos <b>⋮</b> no canto de cima.'],
+                ['download', 'Instalar', 'Toque em <b>Instalar app</b> (em alguns aparelhos: <b>Adicionar à tela inicial</b> → <b>Instalar</b>).'],
+                ['check', 'Pronto', 'O ícone do EDUCASEG-PLUS aparece na tela inicial e na lista de aplicativos.']] },
+            { k: 'samsung', t: 'Samsung Internet', passos: [
+                ['ext', 'Abra o sistema', 'Entre no EDUCASEG-PLUS pelo endereço oficial, no Samsung Internet.'],
+                ['menu', 'Abra o menu', 'Toque em <b>≡</b> (embaixo, à direita).'],
+                ['download', 'Adicionar', 'Toque em <b>Adicionar página a</b> → <b>Tela inicial</b> (ou no ícone de instalar na barra de endereço).'],
+                ['check', 'Pronto', 'O ícone aparece na tela inicial.']] },
+            { k: 'edge', t: 'Microsoft Edge', passos: [
+                ['ext', 'Abra o sistema', 'Entre no EDUCASEG-PLUS pelo endereço oficial, no Edge.'],
+                ['menu', 'Abra o menu', 'Toque em <b>⋯</b> embaixo.'],
+                ['download', 'Adicionar ao telefone', 'Toque em <b>Adicionar ao telefone</b> → <b>Instalar</b>.'],
+                ['check', 'Pronto', 'O ícone aparece na tela inicial.']] }
+        ]
+    },
+    ios: {
+        t: 'iPhone e iPad', s: 'iOS e iPadOS', i: 'user',
+        navs: [
+            { k: 'safari', t: 'Safari', passos: [
+                ['ext', 'Abra no Safari', 'Entre no EDUCASEG-PLUS pelo endereço oficial, no Safari.'],
+                ['copy', 'Compartilhar', 'Toque no botão <b>Compartilhar</b> (o quadrado com a seta para cima), embaixo ou ao lado do endereço.'],
+                ['plus', 'Tela de Início', 'Role a lista e toque em <b>Adicionar à Tela de Início</b>. Se aparecer a opção <b>Abrir como App Web</b>, deixe ligada.'],
+                ['check', 'Adicionar', 'Toque em <b>Adicionar</b> no canto de cima. O ícone aparece na tela inicial.']] },
+            { k: 'chrome', t: 'Chrome no iPhone', passos: [
+                ['ext', 'Abra o sistema', 'Entre no EDUCASEG-PLUS pelo endereço oficial, no Chrome.'],
+                ['copy', 'Compartilhar', 'Toque no botão <b>Compartilhar</b> na barra de endereço.'],
+                ['plus', 'Tela de Início', 'Toque em <b>Adicionar à Tela de Início</b>.'],
+                ['check', 'Adicionar', 'Confirme em <b>Adicionar</b>.']] }
+        ]
+    }
+};
+function insGuiaHTML(disp, nav, compacto) {
+    const G = INS_GUIAS[disp], P = plataformaApp();
+    const navs = G.navs.slice().sort((a, b) => (b.k === P.nav && disp === P.disp) - (a.k === P.nav && disp === P.disp));
+    const atual = navs.find(n => n.k === nav) || navs[0];
+    return `<div class="ins-navs" role="tablist">${navs.map(n => `<button class="chip${n === atual ? ' ativo' : ''}" style="--c:var(--prim)" data-disp="${disp}" data-nav="${n.k}" role="tab" aria-selected="${n === atual}"><span class="pt"></span>${n.t}${n.k === P.nav && disp === P.disp ? ' <small>· o seu</small>' : ''}</button>`).join('')}</div>
+        ${atual.aviso ? `<div class="ins-aviso">${ic('info')}<p>${atual.aviso}</p></div>` : `<ol class="ins-passos${compacto ? ' compacto' : ''}">${atual.passos.map((p, i) => `<li style="--an-i:${i}"><span class="ins-n">${i + 1}</span><span class="ins-pic">${ic(p[0])}</span><div><b>${p[1]}</b><p>${p[2]}</p></div></li>`).join('')}</ol>`}`;
+}
+function insLigarGuia(raiz) {
+    raiz.addEventListener('click', e => {
+        const b = e.target.closest('.ins-navs .chip'); if (!b) return;
+        INS.disp = b.dataset.disp; INS.nav = b.dataset.nav;
+        const alvo = b.closest('.ins-guia'); alvo.innerHTML = insGuiaHTML(INS.disp, INS.nav, alvo.classList.contains('compacto'));
+    });
+}
+function insEndereco() { return location.origin + location.pathname.replace(/index\.html$/, ''); }
+function insQR(txt, px) {
+    try { if (typeof qrcode === 'undefined') return ''; const q = qrcode(0, 'M'); q.addData(txt); q.make(); return q.createSvgTag({ cellSize: Math.max(2, Math.floor(px / (q.getModuleCount() + 4))), margin: 2, scalable: true }); } catch (e) { return ''; }
+}
+
+/* ---------- página ---------- */
+function rInstalar() {
+    const P = plataformaApp(), inst = appInstalado(), ev = !!INSTALAR.evento, art = EM_ARTEFATO || !/^https?:$/.test(location.protocol);
+    if (!INS.disp) { INS.disp = P.disp; INS.nav = P.nav; }
+    const acoes = $('acoes-instalar'); if (acoes) acoes.innerHTML = '';
+    let st;
+    if (inst) st = { c: 'var(--verde)', i: 'check', t: 'Você já está usando o aplicativo', p: `O EDUCASEG-PLUS está instalado neste ${P.so === 'Windows' || P.so === 'Mac' || P.so === 'Linux' || P.so === 'Chromebook' ? 'computador' : 'aparelho'} e abre em janela própria. Para instalar em outro aparelho, use o código ao lado ou os passos abaixo.`, b: '' };
+    else if (art) st = { c: 'var(--c-alto)', i: 'info', t: 'Esta é uma prévia do sistema', p: 'A instalação funciona quando o sistema é aberto pelo endereço oficial publicado no GitHub Pages. Abra por lá e volte a esta página, ou siga os passos abaixo.', b: '' };
+    else if (ev) st = { c: 'var(--prim)', i: 'download', t: 'Pronto para instalar', p: `Instale o EDUCASEG-PLUS neste ${P.disp === 'computador' ? 'computador' : 'aparelho'} com um clique. Ele ganha ícone próprio, abre em janela própria e avisa quando houver atualização.`, b: `<button class="btn btn-p ins-grande" onclick="instalarApp()">${ic('download')}Instalar agora</button>` };
+    else if (P.disp === 'computador' && P.nav === 'firefox') st = { c: 'var(--c-alto)', i: 'info', t: 'Use o Chrome ou o Edge para instalar', p: 'O Firefox para computador ainda não instala aplicativos da web. Abra o EDUCASEG-PLUS no Google Chrome ou no Microsoft Edge.', b: `<button class="btn btn-s ins-grande" onclick="navigator.clipboard&&navigator.clipboard.writeText('${esc(insEndereco())}').then(()=>toast('Endereço copiado','copy'))">${ic('copy')}Copiar endereço</button>` };
+    else st = { c: 'var(--prim)', i: 'download', t: `Instale no seu ${P.so}`, p: `Detectamos <b>${P.so}</b> com <b>${P.nomeNav}</b>. A instalação leva menos de um minuto: siga os passos abaixo.`, b: `<button class="btn btn-p ins-grande" onclick="document.querySelector('.ins-passos-card').scrollIntoView({behavior:'smooth',block:'start'})">${ic('chevR')}Ver o passo a passo</button>` };
+    const qr = !art ? insQR(insEndereco(), 180) : '';
+    const vant = [
+        ['grid', 'Ícone próprio', 'Na área de trabalho, no menu Iniciar, no Dock ou na tela inicial do celular, ao lado dos outros aplicativos.'],
+        ['layers', 'Janela própria', 'Abre sem barra de endereço e sem abas, com mais espaço para mapas, gráficos e tabelas.'],
+        ['zap', 'Abre mais rápido', 'As partes do sistema ficam guardadas no aparelho. Com internet fraca, a tela abre na hora.'],
+        ['alerta', 'Contador no ícone', 'Em aparelhos compatíveis, o ícone mostra quantos problemas estão abertos.'],
+        ['nav', 'Atalhos', 'Clique com o botão direito (ou segure o dedo) no ícone para ir direto a Meu dia, Problemas, Mapa ou Rotas.'],
+        ['repeat', 'Sempre atualizado', 'Quando sair uma versão nova, o aplicativo avisa e atualiza com um toque.']
+    ];
+    const faq = [
+        ['O botão de instalar não aparece', 'Confira se o sistema foi aberto pelo endereço oficial (começa com https) e não por um arquivo salvo no computador. Recarregue a página uma vez. No iPhone, a instalação é sempre pelo botão Compartilhar do Safari. Em computadores da rede do governo, o administrador pode ter bloqueado a instalação: nesse caso, use o sistema pelo navegador normalmente.'],
+        ['Preciso entrar de novo depois de instalar?', 'Na primeira vez, sim: o aplicativo pede o mesmo e-mail e senha do sistema. O acesso, os perfis e as permissões são exatamente os mesmos.'],
+        ['Os dados ficam guardados no aparelho?', 'Não. O aplicativo guarda apenas as telas e as bibliotecas do sistema. Os registros vêm sempre da base oficial (Google Sheets) e não são copiados para o armazenamento do aplicativo. Em aparelho compartilhado, use sempre o botão Sair ao terminar.'],
+        ['Como atualizo?', 'Sozinho. Quando houver versão nova, aparece o aviso "Nova versão disponível": toque em Atualizar agora.'],
+        ['Como desinstalo?', 'Computador: abra o aplicativo, menu ⋯ no alto da janela → Desinstalar. Android: segure o ícone → Desinstalar ou Remover. iPhone: segure o ícone → Remover App → Apagar da Tela de Início.']
+    ];
+    $('cont-instalar').innerHTML = `
+    <div class="card ins-status" style="--c:${st.c}">
+        <div class="ins-st-txt">
+            <span class="ins-selo">${ic(st.i)}${inst ? 'Instalado' : art ? 'Prévia' : ev ? 'Disponível' : P.so + ' · ' + P.nomeNav}</span>
+            <h3>${st.t}</h3><p>${st.p}</p>
+            <div class="ins-st-ac">${st.b}</div>
+            <div class="ins-st-dispo"><span>${ic('grid')}Windows · Mac · Linux · Chromebook</span><span>${ic('user')}Android · iPhone · iPad</span></div>
+        </div>
+        <div class="ins-cena" aria-hidden="true">
+            <div class="ins-pc"><div class="ins-pc-tela"><div class="ins-jan"><i></i><i></i><i></i></div><div class="ins-pc-app">${emblema(54, 'ins-pc')}<b>EDUCASEG-PLUS</b></div></div><div class="ins-pc-base"></div></div>
+            <div class="ins-cel"><div class="ins-cel-tela"><div class="ins-cel-grade">${'<span></span>'.repeat(5)}<span class="ins-cel-app">${emblema(30, 'ins-cel')}</span>${'<span></span>'.repeat(2)}</div><small>EDUCASEG+</small></div></div>
+        </div>
+    </div>
+    <div class="card card-pad ins-passos-card"><div class="card-tit"><div class="ico">${ic('book')}</div><div><h3>Passo a passo</h3><p>Escolha o aparelho e o navegador. O seu já vem selecionado.</p></div></div>
+        <div class="seg ins-disp" role="tablist">${Object.entries(INS_GUIAS).map(([k, g]) => `<button data-d="${k}" class="${INS.disp === k ? 'ativo' : ''}">${g.t}${k === P.disp ? ' •' : ''}</button>`).join('')}</div>
+        <div class="ins-guia">${insGuiaHTML(INS.disp, INS.nav)}</div></div>
+    <div class="grade g32 ins-mais" style="align-items:start">
+        <div class="card card-pad ins-vant"><div class="card-tit"><div class="ico" style="--c:var(--verde)">${ic('zap')}</div><div><h3>Por que usar o aplicativo</h3><p>É o mesmo sistema, com o mesmo login, só que mais prático</p></div></div>
+            <div class="ins-vgrade">${vant.map((v, i) => `<div class="ins-v" style="--an-i:${i}"><span>${ic(v[0])}</span><b>${v[1]}</b><p>${v[2]}</p></div>`).join('')}</div></div>
+        <div class="card card-pad ins-qr"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('user')}</div><div><h3>Instalar no celular</h3><p>Aponte a câmera do celular para o código</p></div></div>
+            ${qr ? `<div class="ins-qr-box">${qr}</div><p class="peq mut" style="text-align:center;margin:8px 0 0">O código abre o sistema no celular. Depois, siga os passos de Android ou iPhone.</p>
+            <button class="btn btn-s btn-sm" style="margin:10px auto 0;display:flex" onclick="navigator.clipboard&&navigator.clipboard.writeText('${esc(insEndereco())}').then(()=>toast('Endereço copiado','copy'))">${ic('copy')}Copiar endereço</button>` : `<div class="ins-aviso">${ic('info')}<p>O código aparece quando o sistema é aberto pelo endereço oficial.</p></div>`}</div>
+    </div>
+    <div class="card card-pad ins-faq"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('info')}</div><div><h3>Dúvidas frequentes</h3><p>Instalação, segurança, atualização e como remover</p></div></div>
+        ${faq.map(f => `<details class="ins-d"><summary>${f[0]}${ic('chevR')}</summary><p>${f[1]}</p></details>`).join('')}</div>`;
+    const c = $('cont-instalar');
+    c.querySelector('.ins-disp').onclick = e => { const b = e.target.closest('button'); if (!b) return; INS.disp = b.dataset.d; INS.nav = null; c.querySelectorAll('.ins-disp button').forEach(x => x.classList.toggle('ativo', x === b)); const g = c.querySelector('.ins-guia'); g.innerHTML = insGuiaHTML(INS.disp, INS.disp === P.disp ? P.nav : null); };
+    insLigarGuia(c.querySelector('.ins-guia'));
+}
+
+/* ---------- instalar (um clique quando o navegador permite) ---------- */
+instalarApp = async function () {
+    if (INSTALAR.evento) {
+        const ev = INSTALAR.evento;
+        ev.prompt();
+        try { const r = await ev.userChoice; if (r && r.outcome === 'dismissed') toast('Instalação cancelada. Você pode instalar depois pelo menu Instalar aplicativo.', 'info'); } catch (e) { }
+        INSTALAR.evento = null; insAtualizarBotoes();
+        return;
+    }
+    if (A && USUARIO && ABAS.some(a => a.id === 'instalar')) { fecharModal && fecharModal(); irPara('instalar'); return; }
+    const P = plataformaApp();
+    abrirModal({ titulo: 'Instalar o EDUCASEG-PLUS', sub: 'Aplicativo para computador e celular', icone: 'download', corpo: `<p class="peq" style="margin-top:0">Detectamos <b>${P.so}</b> com <b>${P.nomeNav}</b>.</p><div class="ins-guia compacto">${insGuiaHTML(P.disp, P.nav, true)}</div>`, pe: '<button class="btn btn-p" data-fechar>Entendi</button>' });
+    const g = document.querySelector('#modal .ins-guia'); if (g) insLigarGuia(g);
+};
+function insAtualizarBotoes() {
+    const mostrar = !appInstalado();
+    ['btn-instalar', 'lg-instalar'].forEach(id => { const b = $(id); if (b) b.hidden = !mostrar; });
+    const mb = document.querySelector('.lat-btn[data-aba="instalar"] .bolha');
+    if (mb) { mb.hidden = !(mostrar && INSTALAR.evento); mb.textContent = 'novo'; }
+}
+window.addEventListener('beforeinstallprompt', () => setTimeout(() => { insAtualizarBotoes(); if (ABA === 'instalar' && A) rInstalar(); }, 0));
+window.addEventListener('appinstalled', () => { setTimeout(() => { insAtualizarBotoes(); if (ABA === 'instalar' && A) rInstalar(); }, 0); try { ls.set('esp_ins_feito', 1); } catch (e) { } const s = $('ins-sug'); if (s) s.remove(); });
+try { matchMedia('(display-mode: standalone)').addEventListener('change', () => { insAtualizarBotoes(); document.documentElement.classList.toggle('modo-app', appInstalado()); }); } catch (e) { }
+
+/* ---------- sugestão de instalação (uma vez por semana) ---------- */
+function sugerirInstalacao() {
+    if (appInstalado() || EM_ARTEFATO || !/^https?:$/.test(location.protocol) || !A || $('ins-sug') || ABA === 'instalar') return;
+    const P = plataformaApp();
+    if (P.disp === 'computador' && P.nav === 'firefox') return;
+    let ultima = 0; try { ultima = +ls.get('esp_ins_adiar') || 0; } catch (e) { }
+    if (Date.now() - ultima < 7 * 864e5) return;
+    const d = document.createElement('div');
+    d.id = 'ins-sug'; d.className = 'ins-sug'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-label', 'Instalar aplicativo');
+    d.innerHTML = `<span class="ins-sug-ic">${emblema(40, 'ins-sug')}</span><div><b>Instale o EDUCASEG-PLUS</b><p>Use como aplicativo no ${P.disp === 'computador' ? 'computador' : 'celular'}: ícone próprio, janela própria e abertura mais rápida.</p>
+        <div class="ins-sug-ac"><button class="btn btn-p btn-sm" id="ins-sug-sim">${ic('download')}${INSTALAR.evento ? 'Instalar' : 'Como instalar'}</button><button class="btn btn-s btn-sm" id="ins-sug-nao">Agora não</button></div></div>
+        <button class="ic-btn ins-sug-x" aria-label="Fechar" id="ins-sug-x">${ic('x')}</button>`;
+    document.body.appendChild(d);
+    const fechar = () => { try { ls.set('esp_ins_adiar', Date.now()); } catch (e) { } d.classList.add('saindo'); setTimeout(() => d.remove(), 300); };
+    $('ins-sug-sim').onclick = () => { fechar(); INSTALAR.evento ? instalarApp() : irPara('instalar'); };
+    $('ins-sug-nao').onclick = fechar; $('ins-sug-x').onclick = fechar;
+}
+
+/* ---------- atalhos do ícone (?abrir=aba) ---------- */
+const _abaInicialV24 = abaInicial;
+abaInicial = function () {
+    try {
+        const u = new URL(location.href), k = u.searchParams.get('abrir');
+        if (k && ABAS.some(a => a.id === k)) { u.searchParams.delete('abrir'); history.replaceState(null, '', u.pathname + (u.search || '') + u.hash); return k; }
+    } catch (e) { }
+    return _abaInicialV24();
+};
+
+/* ---------- contador no ícone do aplicativo ---------- */
+function insContadorIcone() {
+    if (!appInstalado() || !('setAppBadge' in navigator)) return;
+    const b = $('bolha-alertas'), n = b && !b.hidden ? parseInt(String(b.textContent).replace(/\D/g, ''), 10) || 0 : 0;
+    try { (n ? navigator.setAppBadge(n) : navigator.clearAppBadge()).catch(() => { }); } catch (e) { }
+}
+
+/* ---------- menu, página e ligação com o sistema ---------- */
+(function () {
+    const pos = ABAS.findIndex(a => a.g === 'Administração');
+    ABAS.splice(pos < 0 ? ABAS.length : pos, 0, { g: 'Aplicativo' },
+        { id: 'instalar', t: 'Instalar aplicativo', ico: 'download', h: 'Instalar aplicativo', p: 'Use o EDUCASEG-PLUS como aplicativo no computador e no celular: ícone próprio, janela própria, atalhos e abertura mais rápida.' });
+    Object.assign(TOPICOS, {
+        instalar: [
+            { t: 'Seu aparelho', s: 'Situação da instalação neste aparelho', i: 'download', m: /ins-status/ },
+            { t: 'Passo a passo', s: 'Computador, Android, iPhone e iPad', i: 'book', m: /ins-passos-card/ },
+            { t: 'Vantagens e celular', s: 'Por que instalar e o código para abrir no celular', i: 'zap', m: /ins-mais/ },
+            { t: 'Dúvidas frequentes', s: 'Instalação, segurança, atualização e remoção', i: 'info', m: /ins-faq/ }
+        ]
+    });
+    Object.assign(LEGENDAS, {
+        instalar: { mostra: ['Se o sistema já está instalado neste aparelho e como instalar em computador, Android e iPhone.'], fonte: ['O próprio navegador informa o aparelho e se a instalação está disponível.'], calc: ['O aparelho e o navegador são detectados automaticamente; você pode trocar a escolha.'], usar: ['Clique em Instalar agora quando aparecer, ou siga os passos do seu aparelho.', 'Para o celular, aponte a câmera para o código.'] }
+    });
+})();
+const _renderAbaV24 = renderAba;
+renderAba = function () {
+    if (ABA === 'instalar') {
+        rInstalar();
+        if (typeof organizarTopicos === 'function') organizarTopicos('instalar');
+        const c = $('cont-instalar'); if (c) requestAnimationFrame(() => requestAnimationFrame(() => animarConteudo(c)));
+    } else _renderAbaV24();
+    insContadorIcone();
+};
+document.addEventListener('DOMContentLoaded', () => {
+    document.documentElement.classList.toggle('modo-app', appInstalado());
+    const b = $('btn-instalar');
+    if (b) b.onclick = () => (A && USUARIO ? irPara('instalar') : instalarApp());
+    const lg = $('lg-instalar'); if (lg) lg.onclick = instalarApp;
+    insAtualizarBotoes();
+    let tent = 0;
+    const t = setInterval(() => { tent++; if (A && USUARIO && $('login') && $('login').hidden) { clearInterval(t); setTimeout(sugerirInstalacao, 6000); } else if (tent > 200) clearInterval(t); }, 1500);
+});
+const _mostrarLoginV24 = mostrarLogin;
+mostrarLogin = function (msg) { _mostrarLoginV24(msg); setTimeout(insAtualizarBotoes, 0); const lg = $('lg-instalar'); if (lg) lg.onclick = instalarApp; };
 
 </script>
 </body>

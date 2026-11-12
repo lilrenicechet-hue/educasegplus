@@ -1,0 +1,32 @@
+{
+  "id": "./index.html",
+  "name": "EDUCASEG-PLUS — Inteligência em Segurança Escolar",
+  "short_name": "EDUCASEG+",
+  "description": "Sistema de inteligência para segurança escolar da SEDUC-MT: problemas detectados, rotas prováveis, mapa, proteção das escolas e relatórios.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#0b1424",
+  "theme_color": "#0b1424",
+  "categories": ["education", "productivity", "government"],
+  "launch_handler": { "client_mode": ["focus-existing", "auto"] },
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "tela-computador.png", "sizes": "1280x800", "type": "image/png", "form_factor": "wide", "label": "EDUCASEG-PLUS no computador" },
+    { "src": "tela-celular.png", "sizes": "412x915", "type": "image/png", "form_factor": "narrow", "label": "EDUCASEG-PLUS no celular" }
+  ],
+  "shortcuts": [
+    { "name": "Meu dia", "short_name": "Meu dia", "url": "./index.html?abrir=meudia", "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Problemas detectados", "short_name": "Problemas", "url": "./index.html?abrir=alertas", "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Mapa de MT", "short_name": "Mapa", "url": "./index.html?abrir=mapa", "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Rotas prováveis", "short_name": "Rotas", "url": "./index.html?abrir=difusao", "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ]
+}
