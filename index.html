@@ -2431,6 +2431,19 @@ button.chip:hover { transform: translateY(-1px); border-color: var(--c, var(--pr
 </style>
 <style>.im-info .card-tit, .im-res .card-tit, .im-envio .card-tit { flex-wrap: nowrap; align-items: flex-start; } .im-info .card-tit > div:not(.ico), .im-res .card-tit > div:not(.ico), .im-envio .card-tit > div:not(.ico) { flex: 1; min-width: 0; }</style>
 <style>.im-kpis .im-per { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; } .im-kpis .kpi .s { white-space: normal; }</style>
+<style>
+/* ===== 4.5.1 — sincronização em segundo plano ===== */
+.sync-pilula { position: fixed; z-index: 950; left: 50%; bottom: 20px; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px); padding: 9px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--borda); box-shadow: 0 14px 34px -16px rgba(2,6,23,.55); font-size: 13px; font-weight: 600; color: var(--texto2); animation: insSobe .35s cubic-bezier(.16,1,.3,1) both; }
+.sync-pilula.saindo { animation: insDesce .3s ease-in forwards; }
+.sync-pilula.ok svg { color: var(--verde); } .sync-pilula.erro { border-radius: 16px; } .sync-pilula.erro svg { color: var(--c-alto); flex-shrink: 0; }
+.sync-pilula button { font-weight: 800; color: var(--prim); white-space: nowrap; } .sync-pilula button.x { color: var(--muted); display: grid; } .sync-pilula button.x svg { width: 14px; height: 14px; color: var(--muted); }
+.sync-giro { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--suave2); border-top-color: var(--prim); animation: giro .8s linear infinite; flex-shrink: 0; }
+@keyframes giro { to { transform: rotate(360deg); } }
+.car-soltar { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--borda); animation: anTroca .3s; }
+.car-soltar p { font-size: 12px; color: var(--muted); margin: 0 0 10px; max-width: 280px; }
+.car-soltar .btn { margin: 0 auto; }
+@media (max-width: 760px) { .sync-pilula { bottom: calc(78px + env(safe-area-inset-bottom)); } }
+</style>
 
 </head>
 <body>
@@ -2497,8 +2510,8 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '4.5.0+27911981';
-const APP_NOTAS = 'Importação de grande volume: vários arquivos de uma vez, leitura rápida, conferência das linhas e envio em lotes com retomada.';
+const APP_VERSAO = '4.5.1+4ecbf653';
+const APP_NOTAS = 'Correção: o sistema abre na hora com os dados salvos e sincroniza em segundo plano; nunca fica preso na sincronização.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
    ===================================================================== */
@@ -10686,6 +10699,167 @@ renderAba = function () {
         return;
     }
     _renderAbaV25();
+};
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.5.1 — Abertura e sincronização à prova de travamento
+   - toda chamada ao servidor tem tempo máximo
+   - o sistema abre na hora com os dados salvos no aparelho e sincroniza
+     em segundo plano
+   - na primeira vez (sem dados salvos), dá para abrir sem esperar
+   - páginas menores quando o servidor demora, e retomada da primeira
+     sincronização se ela for interrompida
+   ===================================================================== */
+const TEMPO_API = { listar: 90000, importar: 330000, login: 45000, ping: 20000 };
+api = async function (acao, dados) {
+    if (!API.url) throw new Error('Informe o endereço da API do Google Sheets.');
+    const corpo = JSON.stringify(Object.assign({ acao, token: API.token }, dados || {}));
+    const limite = TEMPO_API[acao] || 120000;
+    let ultimoErro = null;
+    for (const url of urlsApi(API.url)) {
+        let resp, j = null;
+        const ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        const t = ctl ? setTimeout(() => ctl.abort(), limite) : null;
+        try { resp = await fetch(url, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: corpo, signal: ctl ? ctl.signal : undefined }); }
+        catch (e) { clearTimeout(t); ultimoErro = e && e.name === 'AbortError' ? 'tempo' : 'rede'; if (ultimoErro === 'tempo') break; continue; }
+        try { j = await resp.json(); } catch (e) { clearTimeout(t); ultimoErro = e && e.name === 'AbortError' ? 'tempo' : 'formato'; if (ultimoErro === 'tempo') break; continue; }
+        clearTimeout(t);
+        if (url !== API.url) { API.url = url; try { ls.set('esp_api', url); } catch (e) { } }
+        if (!j.ok) { if (j.codigo === 'SESSAO') encerrarSessao(); const er = new Error(j.erro || 'Erro no servidor.'); er.codigo = j.codigo; throw er; }
+        return j;
+    }
+    if (ultimoErro === 'tempo') { const er = new Error('O servidor demorou demais para responder (tempo esgotado).'); er.codigo = 'TEMPO'; throw er; }
+    if (ultimoErro === 'formato') throw new Error('O servidor pediu login do Google em vez de responder. Na implantação do Apps Script, use "Executar como: Eu" e "Quem pode acessar: Qualquer pessoa".');
+    const er = new Error('Não foi possível falar com o servidor. Confira a conexão e se a implantação do Apps Script está com acesso para "Qualquer pessoa".'); er.codigo = 'REDE'; throw er;
+};
+const ehDemora = e => e && (e.codigo === 'TEMPO' || /tempo esgotado|Exceeded maximum execution|timed out|Service invoked too many/i.test(e.message));
+const ehLimite = e => e && (e.codigo === 'LIMITE' || /Muitas requisições|ocupado|Limite/i.test(e.message));
+
+/* indicador discreto de sincronização em segundo plano */
+function pilulaSync(txt, tipo) {
+    let p = $('sync-pilula');
+    if (txt == null) { if (p) { p.classList.add('saindo'); setTimeout(() => p && p.remove(), 300); } return; }
+    if (!p) { p = document.createElement('div'); p.id = 'sync-pilula'; p.className = 'sync-pilula'; p.setAttribute('role', 'status'); document.body.appendChild(p); }
+    p.className = 'sync-pilula' + (tipo ? ' ' + tipo : '');
+    p.innerHTML = `${tipo === 'erro' ? ic('alerta') : tipo === 'ok' ? ic('check') : '<span class="sync-giro"></span>'}<span>${txt}</span>${tipo === 'erro' ? `<button onclick="sincronizar()">Tentar de novo</button><button class="x" onclick="pilulaSync(null)" aria-label="Fechar">${ic('x')}</button>` : ''}`;
+}
+
+const SYNC = { rodando: null, soltar: null, fundo: false };
+sincronizar = function (inicial) {
+    if (SYNC.rodando) return SYNC.rodando;
+    SYNC.rodando = sincronizarReal(inicial).finally(() => { SYNC.rodando = null; });
+    return SYNC.rodando;
+};
+async function sincronizarReal(inicial) {
+    SYNC.fundo = BASE.length > 0 && !FONTE.demo;
+    const fundoIni = SYNC.fundo;
+    const aviso = (txt, frac) => SYNC.fundo ? pilulaSync(txt) : progresso('Sincronizando com a base', txt, frac);
+    let ok = false, novasN = 0;
+    SYNC.erro = null;
+    try {
+        aviso('Conferindo novidades na base…', null);
+        if (!fundoIni) mostrarSoltar();
+        const c = (await cacheSrv('ler')) || { cab: null, linhas: [], sync: '' };
+        let cab = c.cab, agoraAnt = '', novas = [], removidos = [], total = 0, ini = 0, tam = 2000, mais = true;
+        const completa = !c.sync;
+        if (completa && c.parcial && c.linhas && c.linhas.length) { novas = c.linhas; ini = c.parcial.ini; agoraAnt = c.parcial.agora; tam = c.parcial.tam || tam; c.linhas = []; }
+        let paginas = 0, falhas = 0;
+        while (mais) {
+            let j;
+            try {
+                j = await api('listar', { desde: c.sync || '', pagina: Math.floor(ini / tam), tamanho: tam, agoraAnterior: agoraAnt });
+                falhas = 0;
+            } catch (e) {
+                if (e.codigo === 'SESSAO') throw e;
+                falhas++;
+                if (falhas > 4) throw e;
+                if (ehDemora(e) && tam > 250) { tam = Math.max(250, tam / 2); aviso(`Servidor lento: buscando em partes menores (${fmtN(tam)} por vez)…`, total ? novas.length / total : null); continue; }
+                if (ehLimite(e) || ehDemora(e) || e.codigo === 'REDE') { const s = ehLimite(e) ? 20 : 5 * falhas; aviso(`Servidor ocupado. Nova tentativa em ${s} s…`, total ? novas.length / total : null); await new Promise(r => setTimeout(r, s * 1000)); continue; }
+                throw e;
+            }
+            cab = j.cabecalho; if (!agoraAnt) agoraAnt = j.agora;
+            for (const l of j.linhas) novas.push(l);
+            if (j.removidos) removidos = removidos.concat(j.removidos);
+            total = j.total || total; ini += tam; mais = !!j.mais; paginas++;
+            aviso(fmtN(novas.length) + ' registros recebidos' + (total ? ' de ' + fmtN(total) : ''), total ? Math.min(1, novas.length / total) * .7 : null);
+            // primeira sincronização grande: guarda o andamento para retomar se for interrompida
+            if (completa && mais && paginas % 10 === 0) cacheSrv('gravar', { cab, linhas: novas.slice(), sync: '', parcial: { ini, agora: agoraAnt, tam } });
+        }
+        novasN = novas.length;
+        const iN = cab.indexOf('Nº');
+        const m = new Map((c.linhas || []).map(l => [String(l[iN]), l]));
+        novas.forEach(l => m.set(String(l[iN]), l));
+        removidos.forEach(n => m.delete(String(n)));
+        const linhas = [...m.values()];
+        cacheSrv('gravar', { cab, linhas, sync: agoraAnt });
+        if (!fundoIni || novasN || removidos.length) {
+            aviso(SYNC.fundo ? 'Atualizando os painéis…' : 'Montando a análise…', .7);
+            const regs = await registrosDeLinhas([cab].concat(linhas), fr => !SYNC.fundo && progresso(null, `Montando a análise · ${fmtN(Math.round(fr * linhas.length))} de ${fmtN(linhas.length)}`, .7 + fr * .28));
+            BASE = regs.sort((a, b) => (b.dt || 0) - (a.dt || 0));
+        }
+        FONTE = { nome: 'Base Google Sheets', demo: false, servidor: true, selo: 'sincronizado ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) };
+        if (!fundoIni || novasN || removidos.length) { preencherFiltros(); aplicar(); if (SYNC.fundo && ABA && !document.querySelector('#cont-' + ABA + ' input:focus, #cont-' + ABA + ' textarea:focus')) renderAba(); }
+        ok = true;
+        if (SYNC.fundo) { pilulaSync(novasN ? fmtN(novasN) + ' registro(s) novos ou alterados' : 'Base atualizada', 'ok'); setTimeout(() => { const p = $('sync-pilula'); if (p && p.classList.contains('ok')) pilulaSync(null); }, 3500); }
+        else if (!inicial) toast(novasN ? fmtN(novasN) + ' registro(s) atualizados' : 'Base já estava atualizada', 'database');
+    } catch (e) {
+        let msg = e.message || String(e);
+        if (ehDemora(e)) { try { const v = await api('ping'); if (v && v.versao && v.versao < '2.7') msg += ` O servidor está na versão ${v.versao}: publique o Codigo.gs mais recente (Implantar → Gerenciar implantações → Nova versão).`; } catch (x) { } }
+        if (SYNC.fundo) pilulaSync(BASE.length ? 'Não foi possível sincronizar agora. Mostrando os dados salvos neste aparelho.' : 'Não foi possível sincronizar: ' + esc(msg), 'erro');
+        else toast(msg, 'alerta');
+        if (!BASE.length) { BASE = []; FONTE = { nome: 'Base Google Sheets (sem dados)', servidor: true }; preencherFiltros(); aplicar(); }
+        SYNC.erro = msg;
+    } finally {
+        if (!SYNC.fundo) progressoFim();
+        esconderSoltar();
+    }
+    return ok;
+}
+/* "Abrir sem esperar" na primeira sincronização */
+function mostrarSoltar() {
+    clearTimeout(SYNC.tSoltar);
+    SYNC.tSoltar = setTimeout(() => {
+        const cx = document.querySelector('#carregando .car-caixa'); if (!cx || $('car-soltar') || $('carregando').hidden) return;
+        cx.insertAdjacentHTML('beforeend', `<div id="car-soltar" class="car-soltar"><p>A primeira sincronização de uma base grande pode levar alguns minutos.</p><button class="btn btn-s btn-sm" type="button">${ic('chevR')}Abrir sem esperar</button></div>`);
+        $('car-soltar').querySelector('button').onclick = () => { SYNC.fundo = true; progressoFim(); esconderSoltar(); pilulaSync('Sincronizando em segundo plano…'); if (SYNC.soltar) SYNC.soltar(); };
+    }, 8000);
+}
+function esconderSoltar() { clearTimeout(SYNC.tSoltar); const s = $('car-soltar'); if (s) s.remove(); }
+
+/* abertura: usa na hora os dados salvos no aparelho e sincroniza em seguida */
+entrarServidor = async function () {
+    aposEntrar();
+    let c = null;
+    try { c = await cacheSrv('ler'); } catch (e) { }
+    if (c && c.cab && c.linhas && c.linhas.length && c.sync) {
+        progresso('Abrindo', fmtN(c.linhas.length) + ' registros salvos neste aparelho', null);
+        try {
+            const regs = await registrosDeLinhas([c.cab].concat(c.linhas), fr => progresso(null, `${fmtN(Math.round(fr * c.linhas.length))} de ${fmtN(c.linhas.length)} registros salvos neste aparelho`, fr));
+            BASE = regs.sort((a, b) => (b.dt || 0) - (a.dt || 0));
+            let quando = ''; try { quando = new Date(c.sync).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); } catch (e) { }
+            FONTE = { nome: 'Base Google Sheets', demo: false, servidor: true, selo: 'dados salvos ' + quando };
+            preencherFiltros(); aplicar();
+        } catch (e) { BASE = []; }
+        progressoFim();
+        if (BASE.length) { irPara(abaInicial()); setTimeout(() => sincronizar(true), 400); return; }
+    }
+    // primeira vez neste aparelho: espera a base, mas permite abrir antes
+    await Promise.race([sincronizar(true), new Promise(r => { SYNC.soltar = r; })]);
+    SYNC.soltar = null;
+    irPara(abaInicial());
+};
+/* o envio de planilha continua tentando de novo só em erros temporários, com o tempo máximo de cada chamada */
+apiPaciente = async function (acao, dados, aviso) {
+    const esperas = [3000, 8000, 20000, 40000];
+    for (let t = 0; ; t++) {
+        try { return await api(acao, dados); }
+        catch (e) {
+            const temporario = ehLimite(e) || ehDemora(e) || e.codigo === 'REDE';
+            if (!temporario || t >= esperas.length) throw e;
+            aviso && aviso(`${ehLimite(e) ? 'Servidor pediu uma pausa' : 'Servidor demorou ou a conexão falhou'}. Nova tentativa em ${Math.round(esperas[t] / 1000)} s…`);
+            await new Promise(r => setTimeout(r, esperas[t]));
+        }
+    }
 };
 
 </script>
