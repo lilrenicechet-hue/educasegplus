@@ -2720,6 +2720,186 @@ body.sem-rolagem { overflow: hidden; }
   .heroi-linha > .guia-btn { position: absolute; top: 0; right: 0; }
 }
 </style>
+<style>
+/* 4.6.1 · linha do tempo das reincidências */
+.rtl-topo { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.rtl-leg { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 11.5px; color: var(--muted); align-items: center; }
+.rtl-leg span { display: inline-flex; gap: 5px; align-items: center; } .rtl-leg span > i { width: 10px; height: 10px; border-radius: 50%; }
+.rtl-leg .tam i { width: var(--s); height: var(--s); border-radius: 50%; background: color-mix(in srgb, var(--texto2) 22%, transparent); border: 1.5px solid var(--muted2); }
+.rtl { display: flex; flex-direction: column; border: 1px solid var(--borda); border-radius: 14px; overflow: hidden; background: var(--card); }
+.rtl-l { display: grid; grid-template-columns: minmax(170px, 250px) minmax(0, 1fr); align-items: stretch; border-top: 1px solid var(--borda); animation: anTroca .45s both; animation-delay: calc(var(--an-i) * 35ms); transition: background .15s; }
+.rtl-l:not(.rtl-cab):hover { background: color-mix(in srgb, var(--c) 5%, var(--suave)); }
+.rtl-cab { border-top: 0; background: var(--suave); position: sticky; top: 0; z-index: 2; animation: none; }
+.rtl-nm { display: flex; flex-direction: column; justify-content: center; gap: 3px; padding: 9px 12px 9px 14px; text-align: left; min-width: 0; border-left: 3px solid transparent; }
+.rtl-l.ativa .rtl-nm { border-left-color: var(--c); }
+.rtl-nm b { font-size: 12.5px; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rtl-nm span { font-size: 11px; color: var(--muted); display: flex; gap: 6px; align-items: center; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rtl-nm em { font-style: normal; font-weight: 700; font-size: 10.5px; color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); padding: 1px 7px; border-radius: 99px; max-width: 160px; overflow: hidden; text-overflow: ellipsis; flex: 0 1 auto; }
+.rtl-nm:hover b { color: var(--prim); text-decoration: underline; }
+.rtl-eixo { position: relative; height: 30px; margin: 0 22px 0 18px; }
+.rtl-eixo span { position: absolute; top: 8px; transform: translateX(-50%); font-size: 11px; font-weight: 700; color: var(--muted); text-transform: capitalize; }
+.rtl-eixo .hj { color: var(--c-crit); text-transform: none; }
+.rtl-trk { position: relative; min-height: 46px; margin: 0 22px 0 18px; }
+.rtl-trk::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: var(--suave2); border-radius: 2px; }
+.rtl-gl { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1px dashed var(--borda2); }
+.rtl-per { position: absolute; top: 50%; height: 8px; margin-top: -4px; border-radius: 99px; background: linear-gradient(90deg, color-mix(in srgb, var(--c) 12%, transparent), color-mix(in srgb, var(--c) 38%, transparent)); transform-origin: left; animation: anBarra .9s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(var(--an-i) * 35ms); }
+.rtl-b { position: absolute; top: 50%; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: 50%; background: var(--c); border: 2px solid var(--card); box-shadow: 0 2px 6px -2px color-mix(in srgb, var(--c) 70%, #000); display: grid; place-items: center; padding: 0; z-index: 1; transition: transform .15s; animation: rtlPop .5s cubic-bezier(.34,1.56,.64,1) both; animation-delay: calc(var(--an-i) * 35ms + var(--an-d)); }
+.rtl-b span { font-size: 10px; font-weight: 800; color: #fff; line-height: 1; }
+.rtl-b:hover { transform: scale(1.3); z-index: 3; }
+@keyframes rtlPop { from { transform: scale(0); opacity: 0; } }
+.rtl-hoje { position: absolute; right: -14px; top: 50%; width: 10px; height: 10px; margin-top: -5px; border-radius: 50%; background: var(--c-crit); box-shadow: 0 0 0 0 var(--c-crit); animation: rtlPulso 1.8s infinite; }
+@keyframes rtlPulso { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-crit) 60%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }
+@media (prefers-reduced-motion: reduce) { .rtl-b, .rtl-per, .rtl-l, .rtl-hoje { animation: none; } }
+@media (max-width: 700px) { .rtl-l { grid-template-columns: minmax(0, 1fr); } .rtl-cab > div:first-child { display: none; } .rtl-nm { padding-bottom: 0; } .rtl-trk, .rtl-eixo { margin: 0 16px 0 12px; } }
+/* mini faixa dos cartões */
+.rcx-mini { display: flex; align-items: flex-end; gap: 1px; height: 26px; padding: 3px 4px; border-radius: 8px; background: color-mix(in srgb, var(--c) 6%, var(--suave)); }
+.rcx-mini i { flex: 1; min-width: 0; border-radius: 2px 2px 0 0; transform-origin: bottom; animation: rtlCresce .6s both; }
+.rcx-mini i.v { height: 2px; background: var(--borda2); border-radius: 1px; animation: none; }
+@keyframes rtlCresce { from { transform: scaleY(0); } }
+.rcx-mini-ex { display: flex; justify-content: space-between; margin-top: -5px; } .rcx-mini-ex small { font-size: 10px; color: var(--muted); }
+</style>
+<style>@media (max-width: 700px) { .rtl-b span { font-size: 9px; } .rtl-trk { margin-right: 20px; } }</style>
+<style>
+/* 4.7 · relatórios: modos */
+.rlx-modos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.rlx-modos button { display: flex; gap: 11px; align-items: center; text-align: left; padding: 12px 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--borda); box-shadow: var(--sombra-s, none); transition: transform .15s, border-color .15s, box-shadow .15s; min-width: 0; }
+.rlx-modos button:hover { transform: translateY(-2px); border-color: var(--prim); }
+.rlx-modos .ic { flex: none; width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--prim) 10%, transparent); color: var(--prim); } .rlx-modos .ic svg { width: 19px; height: 19px; }
+.rlx-modos b { display: block; font-size: 13px; line-height: 1.25; } .rlx-modos small { display: block; font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+.rlx-modos button.ativo { background: linear-gradient(135deg, var(--prim), color-mix(in srgb, var(--prim) 70%, var(--roxo))); border-color: transparent; color: #fff; box-shadow: 0 12px 24px -14px var(--prim); }
+.rlx-modos button.ativo .ic { background: rgba(255,255,255,.18); color: #fff; } .rlx-modos button.ativo small { color: rgba(255,255,255,.82); }
+.rlx-g { grid-template-columns: minmax(280px, 380px) minmax(0, 1fr); }
+.rlx-lista { max-height: 520px; overflow: auto; padding: 0 8px 10px; display: flex; flex-direction: column; gap: 2px; }
+.rlx-p { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 11px; text-align: left; border: 1px solid transparent; } .rlx-p:hover { background: var(--suave); }
+.rlx-p.ativo { background: color-mix(in srgb, var(--prim) 9%, var(--card)); border-color: color-mix(in srgb, var(--prim) 35%, transparent); }
+.rlx-p .tx { min-width: 0; display: flex; flex-direction: column; gap: 2px; } .rlx-p .tx b { font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rlx-p .tx > span { font-size: 11px; color: var(--muted); }
+.rlx-res { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; } .rlx-res b { display: block; font-size: 16px; } .rlx-res span { font-size: 12px; color: var(--muted); }
+.acp-av.grande { width: 48px; height: 48px; font-size: 16px; }
+.rlx-kpis { margin: 0 0 12px; } .rlx-kpis .kpi { padding: 10px 12px; } .rlx-kpis .v { font-size: 22px; }
+.rlx-temas { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; } .rlx-temas em { font-style: normal; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 99px; color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
+.rlx-palco { margin-top: 16px; }
+.rlx-sl { display: inline-flex; gap: 8px; align-items: center; font-size: 12.5px; font-weight: 600; } .rlx-sl input { width: 140px; accent-color: var(--prim); } .rlx-sl b { min-width: 22px; color: var(--prim); }
+.rlx-pj { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 10px; padding: 0 14px 14px; max-height: 640px; overflow: auto; }
+.rlx-pe { display: flex; gap: 10px; align-items: flex-start; padding: 11px; border-radius: 13px; border: 1px solid var(--borda); cursor: pointer; transition: border-color .15s, background .15s; animation: anTroca .4s both; animation-delay: calc(var(--an-i) * 25ms); }
+.rlx-pe.on { border-color: color-mix(in srgb, var(--prim) 45%, transparent); background: color-mix(in srgb, var(--prim) 5%, var(--card)); }
+.rlx-pe input { margin-top: 10px; width: 16px; height: 16px; accent-color: var(--prim); flex: none; }
+.rlx-pe .tx { min-width: 0; display: flex; flex-direction: column; gap: 2px; } .rlx-pe .tx b { font-size: 12.5px; } .rlx-pe .tx > span:not(.rlx-temas):not(.rlx-acs) { font-size: 11px; color: var(--muted); }
+.rlx-acs { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; } .rlx-acs i { font-style: normal; font-size: 11.5px; color: var(--texto2); padding-left: 10px; position: relative; } .rlx-acs i::before { content: ''; position: absolute; left: 0; top: 6px; width: 5px; height: 5px; border-radius: 50%; background: var(--prim); }
+@media (max-width: 1100px) { .rlx-modos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) { .rlx-g { grid-template-columns: minmax(0, 1fr); } .rlx-lista { max-height: 320px; } }
+@media (max-width: 520px) { .rlx-modos small { display: none; } .rlx-modos .ic { width: 32px; height: 32px; } }
+</style>
+<style>@media (max-width: 520px) { .rlx-modos { gap: 8px; } .rlx-modos button { padding: 10px; gap: 8px; } .rlx-modos b { font-size: 12px; hyphens: auto; overflow-wrap: anywhere; } }</style>
+<style>
+/* 4.8 · Meu dia: briefing de inteligência */
+.mdx { position: relative; overflow: hidden; border-radius: 22px; color: #e2e8f0; background: radial-gradient(120% 140% at 0% 0%, #1e3a8a 0%, #0b1a42 45%, #060d24 100%); box-shadow: 0 24px 50px -28px #0b1a42, inset 0 0 0 1px rgba(148,163,184,.14); margin-bottom: 16px; isolation: isolate; }
+.mdx-fundo { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.mdx-fundo i { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .5; animation: mdxFlut 18s ease-in-out infinite alternate; }
+.mdx-fundo i:nth-child(1) { width: 340px; height: 340px; background: #2563eb; left: -80px; top: -120px; }
+.mdx-fundo i:nth-child(2) { width: 280px; height: 280px; background: #7c3aed; right: -60px; top: 30%; animation-delay: -6s; opacity: .35; }
+.mdx-fundo i:nth-child(3) { width: 260px; height: 260px; background: #0891b2; left: 40%; bottom: -160px; animation-delay: -12s; opacity: .35; }
+.mdx-fundo::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgba(148,163,184,.16) 1px, transparent 1.4px); background-size: 22px 22px; mask-image: linear-gradient(180deg, #000, transparent 85%); }
+@keyframes mdxFlut { to { transform: translate(60px, 40px) scale(1.15); } }
+.mdx-cab { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px 6px; flex-wrap: wrap; }
+.mdx-marca { display: flex; gap: 12px; align-items: center; } .mdx-marca small { display: block; font-size: 12px; color: #93c5fd; font-weight: 600; } .mdx-marca b { font-family: var(--f-tit); font-size: 17px; color: #fff; }
+.mdx-pulso { width: 12px; height: 12px; border-radius: 50%; background: #22d3ee; box-shadow: 0 0 0 0 rgba(34,211,238,.6); animation: mdxPul 2s infinite; flex: none; }
+@keyframes mdxPul { to { box-shadow: 0 0 0 14px rgba(34,211,238,0); } }
+.mdx-ctl { display: flex; gap: 6px; }
+.mdx-ctl button { display: inline-flex; gap: 6px; align-items: center; font-size: 12.5px; font-weight: 700; color: #e2e8f0; padding: 7px 12px; border-radius: 99px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); transition: background .15s; } .mdx-ctl button:hover { background: rgba(255,255,255,.16); } .mdx-ctl svg { width: 15px; height: 15px; }
+.mdx-prog { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; padding: 8px 20px 0; }
+.mdx-prog button { display: flex; flex-direction: column; gap: 6px; text-align: left; color: #94a3b8; font-size: 11.5px; font-weight: 700; padding: 0; min-width: 0; }
+.mdx-prog button span { display: flex; gap: 5px; align-items: center; white-space: nowrap; overflow: hidden; } .mdx-prog svg { width: 13px; height: 13px; flex: none; }
+.mdx-prog button.on, .mdx-prog button.feito { color: #fff; }
+.mdx-prog em { display: block; height: 4px; border-radius: 99px; background: rgba(255,255,255,.14); overflow: hidden; }
+.mdx-prog em i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #38bdf8, #a78bfa); border-radius: 99px; }
+.mdx-prog .feito em i { width: 100%; } .mdx-prog .on em i { animation: mdxBar linear forwards; }
+.mdx.pausado .mdx-prog .on em i { animation-play-state: paused !important; }
+@keyframes mdxBar { from { width: 0; } to { width: 100%; } }
+.mdx-pista { position: relative; min-height: 330px; margin: 6px 0 0; }
+.mdx-s { position: absolute; inset: 0; padding: 14px 64px 18px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 28px; align-items: center; opacity: 0; visibility: hidden; transform: translateX(30px); transition: opacity .5s, transform .6s cubic-bezier(.16,1,.3,1), visibility 0s .6s; }
+.mdx-s.on { opacity: 1; visibility: visible; transform: none; transition: opacity .5s, transform .6s cubic-bezier(.16,1,.3,1); position: relative; }
+.mdx-txt small { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: #7dd3fc; font-weight: 800; }
+.mdx-txt h3 { font-family: var(--f-tit); font-size: 26px; line-height: 1.2; color: #fff; margin: 6px 0 8px; }
+.mdx-txt p { font-size: 14px; color: #cbd5e1; line-height: 1.55; margin: 6px 0 0; } .mdx-txt p b { color: #fff; }
+.mdx-big { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 4px 0; } .mdx-big > b { font-family: var(--f-tit); font-size: 64px; line-height: 1; color: #fff; letter-spacing: -.02em; background: linear-gradient(180deg, #fff, #93c5fd); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; } .mdx-big > span { font-size: 16px; color: #cbd5e1; }
+.mdx .md-var { background: rgba(255,255,255,.1); }
+.mdx-s.anima .mdx-txt > * { animation: mdxEntra .6s cubic-bezier(.16,1,.3,1) both; } .mdx-s.anima .mdx-txt > *:nth-child(2) { animation-delay: .08s; } .mdx-s.anima .mdx-txt > *:nth-child(3) { animation-delay: .16s; } .mdx-s.anima .mdx-txt > *:nth-child(4) { animation-delay: .24s; }
+@keyframes mdxEntra { from { opacity: 0; transform: translateY(14px); } }
+.mdx-viz svg { width: 100%; height: auto; display: block; overflow: visible; }
+.mdx-spark .ln { fill: none; stroke: #38bdf8; stroke-width: 2.6; stroke-linejoin: round; filter: drop-shadow(0 4px 10px rgba(56,189,248,.5)); stroke-dasharray: 2000; stroke-dashoffset: 2000; }
+.mdx-s.anima .mdx-spark .ln { animation: mdxTraco 1.6s .1s cubic-bezier(.16,1,.3,1) forwards; } .mdx-s.anima .mdx-spark .ar { animation: mdxFade 1s .4s both; }
+@keyframes mdxTraco { to { stroke-dashoffset: 0; } } @keyframes mdxFade { from { opacity: 0; } }
+.mdx-spark circle { fill: #e0f2fe; } .mdx-spark circle.ult { fill: #22d3ee; stroke: #fff; stroke-width: 2; animation: mdxPul 2s infinite; } .mdx-spark text { fill: #94a3b8; font-size: 11px; }
+.mdx-mini { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; } .mdx-mini span { font-size: 12px; color: #cbd5e1; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); padding: 5px 10px; border-radius: 99px; } .mdx-mini b { color: #fff; }
+.mdx-grav { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); } .mdx-donut { max-width: 250px; margin: 0 auto; }
+.mdx-donut .trilha { fill: none; stroke: rgba(255,255,255,.08); stroke-width: 22; }
+.mdx-donut .arc { fill: none; stroke: var(--c); stroke-width: 22; transform: rotate(-90deg); transform-origin: 90px 90px; transition: stroke-width .2s; }
+.mdx-s.anima .mdx-donut .arc { animation: mdxArc 1.2s cubic-bezier(.16,1,.3,1) both; } .mdx-donut .arc:hover { stroke-width: 28; }
+@keyframes mdxArc { from { stroke-dasharray: 0 999; } }
+.mdx-donut .n { fill: #fff; font-size: 40px; font-weight: 800; font-family: var(--f-tit); text-anchor: middle; } .mdx-donut .l { fill: #94a3b8; font-size: 12px; text-anchor: middle; }
+.mdx-crit { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.mdx-crit button { display: grid; grid-template-columns: 12px 70px 46px minmax(0, 1fr); gap: 10px; align-items: center; color: #e2e8f0; font-size: 13px; text-align: left; padding: 4px; border-radius: 8px; } .mdx-crit button:hover { background: rgba(255,255,255,.06); }
+.mdx-crit button > i { width: 12px; height: 12px; border-radius: 4px; background: var(--c); } .mdx-crit b { text-align: right; color: #fff; }
+.mdx-crit em { height: 8px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; } .mdx-crit em i { display: block; height: 100%; background: var(--c); border-radius: 99px; transform-origin: left; }
+.mdx-s.anima .mdx-crit em i { animation: anBarra 1s calc(var(--an-i) * 90ms + .2s) cubic-bezier(.16,1,.3,1) both; }
+.mdx-onde { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .mdx-mapa { max-height: 300px; max-width: 360px; margin: 0 auto; }
+.mdx-mapa .uf { fill: rgba(56,189,248,.08); stroke: #38bdf8; stroke-width: 1.6; stroke-dasharray: 3000; filter: drop-shadow(0 0 8px rgba(56,189,248,.45)); }
+.mdx-s.anima .mdx-mapa .uf { animation: mdxTraco 2s cubic-bezier(.16,1,.3,1) both; stroke-dashoffset: 3000; }
+.mdx-mapa .pt { cursor: pointer; } .mdx-mapa .b { fill: #38bdf8; fill-opacity: .8; stroke: #e0f2fe; stroke-width: 1; } .mdx-mapa .g .b { fill: #f43f5e; }
+.mdx-s.anima .mdx-mapa .pt { animation: rtlPop .5s calc(.5s + var(--an-i) * 25ms) cubic-bezier(.34,1.56,.64,1) both; transform-box: fill-box; transform-origin: center; }
+.mdx-mapa .onda { fill: none; stroke: #f43f5e; stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: mdxOnda 2.2s infinite; }
+@keyframes mdxOnda { from { transform: scale(1); opacity: .9; } to { transform: scale(2.6); opacity: 0; } }
+.mdx-rank { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
+.mdx-rank button { display: flex; gap: 10px; align-items: center; color: #e2e8f0; text-align: left; padding: 7px 10px; border-radius: 10px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); font-size: 13px; transition: background .15s, transform .15s; } .mdx-rank button:hover { background: rgba(255,255,255,.12); transform: translateX(3px); }
+.mdx-rank em { font-style: normal; width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; background: rgba(56,189,248,.18); color: #7dd3fc; font-weight: 800; font-size: 12px; flex: none; } .mdx-rank em svg { width: 14px; height: 14px; }
+.mdx-rank span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .mdx-rank b { color: #fff; }
+.mdx-s.anima .mdx-rank button { animation: mdxEntra .5s calc(.3s + var(--an-i) * 80ms) both; }
+.mdx-at { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+.mdx-cards { display: flex; flex-direction: column; gap: 8px; }
+.mdx-card { display: flex; gap: 12px; align-items: center; text-align: left; color: #e2e8f0; padding: 11px 14px; border-radius: 14px; background: linear-gradient(90deg, color-mix(in srgb, var(--c) 22%, transparent), rgba(255,255,255,.04)); border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); transition: transform .15s; } .mdx-card:hover { transform: translateX(4px); }
+.mdx-card .ic { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--c); color: #fff; flex: none; } .mdx-card .ic svg { width: 18px; height: 18px; } .mdx-card > svg { width: 16px; color: #94a3b8; }
+.mdx-card .tx { flex: 1; min-width: 0; display: flex; flex-direction: column; } .mdx-card em { font-style: normal; font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: color-mix(in srgb, var(--c) 60%, #fff); } .mdx-card b { color: #fff; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .mdx-card .tx > span { font-size: 12px; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mdx-s.anima .mdx-card { animation: mdxEntra .55s calc(.15s + var(--an-i) * 100ms) cubic-bezier(.16,1,.3,1) both; }
+.mdx-ok { display: flex; gap: 10px; align-items: center; color: #86efac; font-size: 18px; font-weight: 700; } .mdx-ok svg { width: 28px; height: 28px; }
+.mdx-barras rect { fill: rgba(147,197,253,.45); transform-box: fill-box; transform-origin: bottom; } .mdx-barras rect.atual { fill: #38bdf8; } .mdx-barras rect.proj { fill: none; stroke: #a78bfa; stroke-width: 2; stroke-dasharray: 5 4; }
+.mdx-barras text { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+.mdx-s.anima .mdx-barras g { animation: mdxCresce .7s calc(var(--an-i) * 70ms) cubic-bezier(.16,1,.3,1) both; transform-box: fill-box; transform-origin: bottom; }
+@keyframes mdxCresce { from { transform: scaleY(0); opacity: 0; } }
+.mdx-sin { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+.mdx-radar { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.mdx-varre { position: absolute; inset: -20px; pointer-events: none; background: conic-gradient(from 0deg, rgba(34,211,238,.18), transparent 25%); border-radius: 50%; animation: mdxGira 6s linear infinite; mask-image: radial-gradient(circle, #000 30%, transparent 70%); }
+@keyframes mdxGira { to { transform: rotate(360deg); } }
+.mdx-sinal { position: relative; display: flex; gap: 10px; align-items: center; text-align: left; color: #e2e8f0; padding: 10px; border-radius: 12px; background: rgba(15,23,42,.6); border: 1px solid rgba(255,255,255,.08); backdrop-filter: blur(6px); transition: border-color .15s, transform .15s; } .mdx-sinal:hover { border-color: var(--c); transform: translateY(-2px); }
+.mdx-sinal .ic { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 30%, transparent); color: color-mix(in srgb, var(--c) 50%, #fff); flex: none; } .mdx-sinal .ic svg { width: 16px; height: 16px; }
+.mdx-sinal .tx { min-width: 0; display: flex; flex-direction: column; } .mdx-sinal b { font-size: 13px; color: #fff; } .mdx-sinal .tx > span { font-size: 11.5px; color: #94a3b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mdx-s.anima .mdx-sinal { animation: rtlPop .5s calc(.2s + var(--an-i) * 90ms) cubic-bezier(.34,1.56,.64,1) both; }
+.mdx-seta { position: absolute; top: 52%; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); z-index: 3; transition: background .15s; } .mdx-seta:hover { background: rgba(255,255,255,.2); }
+.mdx-seta.e { left: 12px; } .mdx-seta.e svg { transform: rotate(180deg); } .mdx-seta.d { right: 12px; } .mdx-seta svg { width: 18px; height: 18px; }
+.mdx-ticker { overflow: hidden; border-top: 1px solid rgba(255,255,255,.08); background: rgba(2,6,23,.35); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.mdx-tk-in { display: flex; gap: 22px; width: max-content; padding: 10px 20px; animation: mdxTk 40s linear infinite; } .mdx-ticker:hover .mdx-tk-in { animation-play-state: paused; }
+@keyframes mdxTk { to { transform: translateX(-50%); } }
+.mdx-tk-in button { display: inline-flex; gap: 7px; align-items: center; font-size: 12.5px; color: #cbd5e1; white-space: nowrap; } .mdx-tk-in svg { width: 14px; height: 14px; color: var(--c); } .mdx-tk-in b { color: #fff; } .mdx-tk-in span { color: #94a3b8; }
+.mdx-tk-in button::after { content: '•'; margin-left: 15px; color: rgba(255,255,255,.25); }
+/* modo apresentação */
+.mdx.apresentando { border-radius: 0; display: flex; flex-direction: column; }
+.mdx.apresentando .mdx-pista { flex: 1; display: flex; align-items: center; }
+.mdx.apresentando .mdx-s { padding: 2vh 8vw; } .mdx.apresentando .mdx-s.on { width: 100%; }
+.mdx.apresentando .mdx-txt h3 { font-size: clamp(28px, 3.4vw, 52px); } .mdx.apresentando .mdx-txt p { font-size: clamp(15px, 1.4vw, 22px); }
+.mdx.apresentando .mdx-big > b { font-size: clamp(70px, 9vw, 150px); } .mdx.apresentando .mdx-mapa { max-height: 60vh; max-width: 40vw; } .mdx.apresentando .mdx-donut { max-width: 34vw; max-height: 60vh; }
+.mdx.apresentando .mdx-cab { padding: 2.5vh 3vw 1vh; } .mdx.apresentando .mdx-prog { padding: 0 3vw; }
+.mdx.tela-cheia { position: fixed; inset: 0; z-index: 9999; margin: 0; }
+@media (prefers-reduced-motion: reduce) { .mdx-fundo i, .mdx-tk-in, .mdx-varre, .mdx-pulso, .mdx-mapa .onda { animation: none !important; } }
+@media (max-width: 900px) {
+  .mdx-s { grid-template-columns: minmax(0, 1fr) !important; padding: 12px 18px 16px; gap: 14px; }
+  .mdx-pista { min-height: 0; } .mdx-seta { display: none; }
+  .mdx-prog { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px; padding: 8px 14px 0; } .mdx-prog button span { font-size: 0; justify-content: center; } .mdx-prog svg { width: 15px; height: 15px; }
+  .mdx-big > b { font-size: 52px; } .mdx-txt h3 { font-size: 21px; } .mdx-radar { grid-template-columns: minmax(0, 1fr); } .mdx-mapa { max-height: 240px; } .mdx-donut { max-width: 190px; }
+  .mdx-cab { padding: 14px 14px 4px; } .mdx-ctl span { display: none; }
+}
+</style>
+<style>.mdx-pista { display: grid; align-items: center; } @media (max-width: 900px) { .mdx-marca b { font-size: 15px; } .mdx-cab { flex-wrap: nowrap; } .mdx-marca { min-width: 0; } }</style>
+<style>@media (max-width: 900px) { .mdx-dt { display: none; } }</style>
+<style>@media (max-width: 900px) { .mdx-mapa { width: auto !important; height: 220px !important; max-height: 220px; } .mdx-txt p { font-size: 13.5px; } }</style>
 
 </head>
 <body>
@@ -2786,7 +2966,7 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '4.6.0+c6f8998f';
+const APP_VERSAO = '4.8.0+549567a3';
 const APP_NOTAS = 'Versão 4.6.0 — gráficos inovadores (mosaico, termômetro, fluxo, relógio, corrida, correnteza), guias e legendas recolhidas com botão "Como funciona", Rede de vínculos animada com tela cheia e zoom que não achata, Termos reorganizado, mapa no Release, Comparativo no tempo entre DREs, Reincidência, Verificação e páginas de Proteção (Protocolos, Ameaças, Segurança, Acompanhamento, Intervenções com mapa, Prevenção) renovadas; retiradas Rotas de visita, Risco previsto e Rede de proteção.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
@@ -11834,6 +12014,49 @@ const _hTit = ABAS.find(a => a.id === 'comparar'); if (_hTit) { _hTit.h = 'Compa
 /* =====================================================================
    3. REINCIDÊNCIA
    ===================================================================== */
+/* linha do tempo das reincidências: faixas por escola com bolhas semanais */
+const RTL = { filtro: 'todas', bins: [] };
+const critPeso = k => { const i = CRIT_ORD.indexOf(k); return i < 0 ? 0 : CRIT_ORD.length - i; };
+const piorCrit = regs => regs.reduce((m, r) => critPeso(r.crit) > critPeso(m) ? r.crit : m, regs[0].crit);
+const critNome = k => String(k || '').charAt(0) + String(k || '').slice(1).toLowerCase();
+function rtlBolha(i) { const b = RTL.bins[i]; if (!b) return; if (b.length === 1) abrirOcorrencia(b[0].id); else listaModal(`${b.length} fatos a partir de ${fmtD(b[0].dt).slice(0, 5)}`, b); }
+function rcxLinhaTempo(R, hoje) {
+    const ini = +hoje - 180 * DIA, fim = +hoje, P = t => ((t - ini) / (fim - ini) * 100), cel = innerWidth < 700, BD = cel ? 14 : 7;
+    let lin = R.filter(c => +c.fim >= ini);
+    if (RTL.filtro === 'ativas') lin = lin.filter(c => c.ativa);
+    lin = lin.sort((a, b) => b.ativa - a.ativa || b.regs.filter(r => +r.dt >= ini).length - a.regs.filter(r => +r.dt >= ini).length).slice(0, 18);
+    // marcas de mês
+    const meses = []; const d0 = new Date(ini); let m = new Date(d0.getFullYear(), d0.getMonth() + 1, 1);
+    while (+m <= fim) { meses.push(+m); m = new Date(m.getFullYear(), m.getMonth() + 1, 1); }
+    const grade = meses.map(t => `<i class="rtl-gl" style="left:${P(t).toFixed(2)}%"></i>`).join('');
+    RTL.bins = [];
+    const linhas = lin.map((c, j) => {
+        const regs = c.regs.filter(r => +r.dt >= ini), sem = new Map();
+        regs.forEach(r => { const k = Math.floor((+r.dt - ini) / (BD * DIA)); (sem.get(k) || sem.set(k, []).get(k)).push(r); });
+        const i = R.indexOf(c), t0 = regs.length ? +regs[0].dt : fim, t1 = regs.length ? +regs[regs.length - 1].dt : fim;
+        const bolhas = [...sem.entries()].map(([k, rs]) => {
+            const bi = RTL.bins.push(rs) - 1, t = Math.min(fim, ini + (k + .5) * BD * DIA), n = rs.length, pc = piorCrit(rs);
+            const tam = cel ? Math.min(24, 10 + 4 * Math.sqrt(n - 1)) : Math.min(30, 11 + 6 * Math.sqrt(n - 1));
+            return `<button class="rtl-b" style="left:${P(t).toFixed(2)}%;--s:${tam.toFixed(1)}px;--c:${css(COR_CRIT[pc] || '--prim')};--an-d:${(P(t) * 9).toFixed(0)}ms" onclick="rtlBolha(${bi})" aria-label="${n} fato(s)" data-dica="<b>${n} fato(s)</b> ${cel ? 'nas 2 semanas' : 'na semana'} de ${fmtD(rs[0].dt).slice(0, 5)}<br>pior criticidade: ${esc(critNome(pc))}">${n > 1 ? `<span>${n}</span>` : ''}</button>`;
+        }).join('');
+        const cor = css(COR_CRIT[piorCrit(regs.length ? regs : c.regs)] || '--prim');
+        return `<div class="rtl-l${c.ativa ? ' ativa' : ''}" style="--an-i:${j};--c:${cor}">
+            <button class="rtl-nm" onclick="abrirCadeia(${i})" title="${esc(c.escola.nome + ' · ' + nomeMun(c.escola.mun))}"><b>${esc(c.escola.nome)}</b><span><em>${esc(tipoCurto(c.tipo))}</em>${regs.length} fatos</span></button>
+            <div class="rtl-trk">${grade}<span class="rtl-per" style="left:${P(t0).toFixed(2)}%;width:${Math.max(.6, P(t1) - P(t0)).toFixed(2)}%"></span>${bolhas}${c.ativa ? '<span class="rtl-hoje" title="ativa"></span>' : ''}</div></div>`;
+    }).join('');
+    const eixo = meses.filter(t => P(t) < 95).map(t => `<span style="left:${P(t).toFixed(2)}%">${new Date(t).toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '')}</span>`).join('') + `<span class="hj" style="left:100%">hoje</span>`;
+    const crits = CRIT_ORD.filter(k => COR_CRIT[k]).map(k => `<span><i style="background:${css(COR_CRIT[k])}"></i>${esc(critNome(k))}</span>`).join('');
+    return `<div class="rtl-topo"><div class="seg">${[['todas', 'Mais intensas'], ['ativas', 'Só ativas']].map(([v, t]) => `<button class="${RTL.filtro === v ? 'ativo' : ''}" onclick="RTL.filtro='${v}';rRec();setTimeout(()=>{const x=document.querySelector('.rcx-tempo');x&&x.scrollIntoView({block:'start'})},30)">${t}</button>`).join('')}</div>
+        <div class="rtl-leg">${crits}<span class="tam"><i style="--s:10px"></i><i style="--s:17px"></i><i style="--s:24px"></i>1, 3 e 6+ fatos ${cel ? 'em 2 semanas' : 'na semana'}</span></div></div>
+        <div class="rtl"><div class="rtl-l rtl-cab"><div></div><div class="rtl-eixo">${eixo}</div></div>${linhas || `<div class="vazio">${ic('check')}Nenhuma cadeia nos últimos 180 dias.</div>`}</div>`;
+}
+/* faixa compacta dos últimos 60 dias para os cartões */
+function rcxMini(c, hoje) {
+    const N = 60, ini = +hoje - (N - 1) * DIA, dias = Array.from({ length: N }, () => []);
+    c.regs.forEach(r => { const k = Math.floor((+r.dt - ini) / DIA); if (k >= 0 && k < N) dias[k].push(r); });
+    const mx = maxDe(dias.map(d => d.length), 1);
+    return `<span class="rcx-mini" aria-label="Fatos nos últimos 60 dias">${dias.map((d, k) => d.length ? `<i style="height:${(30 + 70 * d.length / mx).toFixed(0)}%;background:${css(COR_CRIT[piorCrit(d)] || '--prim')}" data-dica="${fmtD(new Date(ini + k * DIA)).slice(0, 5)}: ${d.length} fato(s)"></i>` : '<i class="v"></i>').join('')}</span><span class="rcx-mini-ex"><small>60 dias atrás</small><small>hoje</small></span>`;
+}
 const RCX = { q: '', ord: 'ativa' };
 rRec = function () {
     $('acoes-recorrencias').innerHTML = `<span class="peq" style="color:#9fb0c4">Janela</span><div class="seg" style="background:rgba(255,255,255,.08)" id="seg-jan">${[7, 15, 30, 60, 90].map(j => `<button data-j="${j}" class="${JANELA === j ? 'ativo' : ''}" style="${JANELA === j ? '' : 'color:#cbd5e1'}">${j} dias</button>`).join('')}</div>`;
@@ -11852,10 +12075,6 @@ rRec = function () {
     const escDre = new Map(); A.escolas.forEach(e => escDre.set(e.dre, (escDre.get(e.dre) || 0) + 1));
     const porDre = new Map(); at.forEach(c => porDre.set(c.escola.dre, (porDre.get(c.escola.dre) || 0) + 1));
     const dres = [...porDre.entries()].map(([k, n]) => ({ k, n, t: n / (escDre.get(k) || 1) * 10 })).sort((a, b) => b.t - a.t).slice(0, 12), mxD = maxDe(dres.map(x => x.t), .1);
-    // linha do tempo (180 dias) das 18 cadeias mais intensas
-    const ini = +hoje - 180 * DIA, W = 1000, lin = R.filter(c => +c.fim >= ini).sort((a, b) => b.ativa - a.ativa || b.regs.length - a.regs.length).slice(0, 18);
-    const X = t => 230 + (t - ini) / (+hoje - ini) * (W - 250);
-    const marcas = []; for (let i = 0; i <= 6; i++) { const t = ini + i * 30 * DIA; marcas.push(`<line x1="${X(t)}" x2="${X(t)}" y1="0" y2="${lin.length * 30 + 4}" class="rcx-g"/><text x="${X(t)}" y="${lin.length * 30 + 18}" class="rcx-m">${new Date(t).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}</text>`); }
     let L = R.map((c, i) => ({ c, i }));
     if (RCX.q) { const q = chave(RCX.q); L = L.filter(x => chave(x.c.escola.nome + ' ' + nomeMun(x.c.escola.mun) + ' ' + x.c.tipo).includes(q)); }
     L.sort((a, b) => RCX.ord === 'fatos' ? b.c.regs.length - a.c.regs.length : RCX.ord === 'rec' ? b.c.fim - a.c.fim : (b.c.ativa - a.c.ativa) || b.c.regs.length - a.c.regs.length);
@@ -11870,11 +12089,10 @@ rRec = function () {
     <div class="card card-pad rcx-ativas"><div class="card-tit"><div class="ico" style="--c:var(--c-crit)">${ic('alerta')}</div><div><h3>Reincidências ativas agora</h3><p>As cadeias com mais fatos que seguem acontecendo, com a data em que o próximo fato pode ocorrer se o ritmo continuar</p></div></div>
         <div class="rcx-cards">${ativasOrd.map((c, k) => { const i = R.indexOf(c), p = prox(c), dias = Math.round((+p - +hoje) / DIA); return `<button class="rcx-c" style="--c:${corCrit(c.regs[c.regs.length - 1].crit)};--an-i:${k}" onclick="abrirCadeia(${i})">
             <span class="rcx-c-top"><span class="rcx-n"><b>${c.regs.length}</b><small>fatos</small></span><span class="rcx-c-tx"><b>${esc(c.escola.nome)}</b><span>${esc(tipoCurto(c.tipo))} · ${esc(nomeMun(c.escola.mun))}</span></span></span>
-            ${faixaDatas(c.regs)}
+            ${rcxMini(c, hoje)}
             <span class="rcx-c-pe"><span>${ic('repeat')}a cada ${fmt1(intervalo(c))} dias</span><span class="${dias < 0 ? 'atr' : ''}">${ic('clock')}${dias < 0 ? 'próximo pode ocorrer a qualquer momento' : dias === 0 ? 'próximo pode ser hoje' : `próximo por volta de ${fmtD(p).slice(0, 5)}`}</span></span></button>`; }).join('') || `<div class="vazio">${ic('check')}Nenhuma cadeia ativa na janela de ${JANELA} dias.</div>`}</div></div>
-    <div class="card card-pad rcx-tempo"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('clock')}</div><div><h3>Linha do tempo das reincidências</h3><p>Últimos 180 dias das 18 cadeias mais intensas. Cada ponto é um fato, colorido pela criticidade. Clique num ponto para abrir o registro.</p></div></div>
-        <div class="rcx-sw"><svg viewBox="0 0 ${W} ${lin.length * 30 + 24}" role="img" aria-label="Linha do tempo das reincidências">${marcas.join('')}
-            ${lin.map((c, j) => { const y = j * 30 + 15, pts = c.regs.filter(r => +r.dt >= ini).map(r => ({ r, x: X(+r.dt) })); const i = R.indexOf(c); return `<g class="rcx-l" style="--an-i:${j}"><text x="0" y="${y + 4}" class="rcx-nm" onclick="abrirCadeia(${i})">${esc(c.escola.nome.length > 24 ? c.escola.nome.slice(0, 23) + '…' : c.escola.nome)}</text><text x="222" y="${y + 4}" class="rcx-tp" text-anchor="end">${esc(tipoCurto(c.tipo).length > 13 ? tipoCurto(c.tipo).slice(0, 12) + '…' : tipoCurto(c.tipo))}</text>${pts.length > 1 ? `<line x1="${pts[0].x}" x2="${pts[pts.length - 1].x}" y1="${y}" y2="${y}" class="rcx-ln${c.ativa ? ' at' : ''}"/>` : ''}${pts.map(p => `<circle cx="${p.x.toFixed(1)}" cy="${y}" r="5.5" style="fill:${css(COR_CRIT[p.r.crit] || '--prim')}" data-id="${esc(p.r.id)}" data-dica="<b>${esc(tipoCurto(p.r.tipo))}</b><br>${fmtD(p.r.dt)} · ${esc(p.r.crit)}"/>`).join('')}</g>`; }).join('')}</svg></div></div>
+    <div class="card card-pad rcx-tempo"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('clock')}</div><div><h3>Linha do tempo das reincidências</h3><p>Últimos 180 dias das cadeias mais intensas. Cada bolha reúne os fatos de uma semana (duas no celular): o tamanho mostra quantos e a cor, a pior criticidade. Clique para abrir os registros.</p></div></div>
+        ${rcxLinhaTempo(R, hoje)}</div>
     <div class="grade g2 rcx-ritmo" style="align-items:start">
         <div class="card card-pad"><div class="card-tit"><div class="ico" style="--c:var(--c-alto)">${ic('repeat')}</div><div><h3>Em quanto tempo o fato se repete</h3><p>Intervalo entre um fato e o seguinte dentro das cadeias</p></div></div>
             <div class="rcx-hist">${faixas.map((f, j) => `<div class="rcx-h" style="--an-i:${j}"><span class="b"><i style="height:${(100 * hist[j] / mxH).toFixed(0)}%"></i></span><b>${Math.round(100 * hist[j] / totH)}%</b><small>${f[2]}</small></div>`).join('')}</div>
@@ -11891,7 +12109,7 @@ rRec = function () {
     <div class="card rcx-tab"><div class="card-pad" style="padding-bottom:10px"><div class="card-tit" style="margin-bottom:10px"><div class="ico">${ic('book')}</div><div><h3>Todas as cadeias</h3><p>${fmtN(L.length)} cadeia(s)${RCX.q ? ` com "${esc(RCX.q)}"` : ''}</p></div></div>
         <div class="pt-fil"><div class="busca" style="flex:1;min-width:200px">${ic('search')}<input class="campo" id="rcx-q" placeholder="Buscar escola, município ou tipo" value="${esc(RCX.q)}"></div>${[['ativa', 'Ativas primeiro'], ['fatos', 'Mais fatos'], ['rec', 'Mais recentes']].map(([v, t]) => `<button class="${RCX.ord === v ? 'ativo' : ''}" onclick="RCX.ord='${v}';rRec()">${t}</button>`).join('')}</div></div>
         <div class="tab-wrap" style="max-height:60vh"><table class="tab"><thead><tr><th>Escola</th><th>Tipo repetido</th><th class="dir">Fatos</th><th>Período</th><th class="dir">Intervalo</th><th>Situação</th><th>Últimos 180 dias</th></tr></thead><tbody>${L.slice(0, 300).map(({ c, i }) => `<tr class="clic" onclick="abrirCadeia(${i})" style="--faixa:${c.ativa ? 'var(--c-crit)' : 'var(--borda2)'}"><td class="esc-cel"><b>${esc(c.escola.nome)}</b><span>${esc(nomeMun(c.escola.mun))}</span></td><td>${esc(tipoCurto(c.tipo))}</td><td class="dir num"><b>${c.regs.length}</b></td><td class="peq">${fmtD(c.ini)} a ${fmtD(c.fim)}</td><td class="dir num">${fmt1(intervalo(c))} d</td><td>${c.ativa ? '<span class="selo" style="--c:var(--c-crit)">ativa</span>' : '<span class="selo" style="--c:var(--muted)">encerrada</span>'}</td><td>${faixaDatas(c.regs)}</td></tr>`).join('') || '<tr><td colspan="7"><div class="vazio">Nenhuma cadeia.</div></td></tr>'}</tbody></table></div></div>`;
-    const sw = document.querySelector('.rcx-sw'); if (sw) { ligarDicas(sw); sw.onclick = e => { const c = e.target.closest('circle[data-id]'); if (c) abrirOcorrencia(c.dataset.id); }; }
+    const sw = document.querySelector('.rcx-tempo'); if (sw) ligarDicas(sw); const ca = document.querySelector('.rcx-ativas'); if (ca) ligarDicas(ca);
     let t; $('rcx-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { RCX.q = $('rcx-q').value; rRec(); const i = $('rcx-q'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 350); };
 };
 Object.assign(TOPICOS, { recorrencias: [
@@ -12266,6 +12484,551 @@ Object.assign(LEGENDAS.seguranca, { mostra: ['A ficha de 14 itens de proteção 
 Object.assign(LEGENDAS.acompanhamento, { mostra: ['Pessoas que precisam de cuidado contínuo, a agenda de reavaliações, a situação por categoria e os encaminhamentos feitos.'] });
 Object.assign(LEGENDAS.intervencoes, { mostra: ['Mapa das intervenções e das escolas frágeis ainda sem ação, o efeito antes e depois de cada tipo e a lista de intervenções.'] });
 Object.assign(LEGENDAS.prevencao, { mostra: ['Plano de prevenção por escola com acompanhamento das ações, comparação dos temas com a DRE e Mato Grosso, campanhas do ano e canais de ajuda.'] });
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.7 — Relatórios: acompanhamento por estudante,
+   sugestões para a escola e projetos e palestras
+   ===================================================================== */
+const RLX = { modo: 'intel', alunoK: '', alunoQ: '', iniciais: false, resumo: false, hist: true, escK: '', projDre: '', projMin: 50, projSel: null, doc: null };
+
+/* ---------- base legal (textos resumidos; conferidos nas fontes oficiais) ---------- */
+const LEIS = {
+    eca13: ['ECA (Lei 8.069/1990), art. 13', 'Suspeita ou confirmação de castigo físico, tratamento cruel ou degradante e maus-tratos contra criança ou adolescente deve ser comunicada obrigatoriamente ao Conselho Tutelar.'],
+    eca245: ['ECA, art. 245', 'O professor ou responsável por estabelecimento de ensino que deixar de comunicar à autoridade competente suspeita ou confirmação de maus-tratos comete infração administrativa (multa).'],
+    eca56: ['ECA, art. 56', 'A direção da escola comunica ao Conselho Tutelar casos de maus-tratos, faltas injustificadas reiteradas e evasão (esgotados os recursos da escola) e elevados níveis de repetência.'],
+    eca53: ['ECA, art. 53', 'Direito à educação, com igualdade de condições de acesso e permanência na escola e direito de ser respeitado pelos educadores.'],
+    eca17: ['ECA, arts. 17 e 18', 'Direito ao respeito, à preservação da imagem e da identidade; dever de todos de velar pela dignidade da criança e do adolescente, a salvo de tratamento vexatório ou constrangedor.'],
+    eca100: ['ECA, art. 100, parágrafo único', 'Princípios das medidas de proteção: interesse superior, privacidade, intervenção precoce e mínima, responsabilidade parental e oitiva da criança ou do adolescente.'],
+    eca101: ['ECA, arts. 101 e 105', 'Medidas de proteção (orientação, apoio, acompanhamento, inclusão em programas, tratamento de saúde). Ato infracional de criança (até 12 anos) é tratado só com medidas de proteção.'],
+    eca103: ['ECA, arts. 103 e 112', 'Ato infracional é a conduta descrita como crime ou contravenção. Medidas socioeducativas só podem ser aplicadas pela Justiça da Infância e Juventude, não pela escola.'],
+    eca143: ['ECA, arts. 143 e 247', 'É vedada a divulgação de atos e documentos que identifiquem criança ou adolescente a quem se atribua ato infracional; a divulgação é infração sujeita a multa.'],
+    eca59a: ['ECA, art. 59-A (Lei 14.811/2024)', 'Estabelecimentos de ensino devem manter fichas cadastrais e certidões de antecedentes criminais atualizadas de todos os colaboradores.'],
+    l13431: ['Lei 13.431/2017 e Decreto 9.603/2018', 'Sistema de garantia de direitos da criança e do adolescente vítima ou testemunha de violência: escuta especializada pela rede de proteção, sem revitimização; a escola acolhe a revelação espontânea sem investigar detalhes.'],
+    l14344: ['Lei 14.344/2022 (Lei Henry Borel), arts. 23 e 26', 'Quem souber ou presenciar violência contra criança ou adolescente deve comunicar imediatamente ao Disque 100, ao Conselho Tutelar ou à autoridade policial. Deixar de comunicar é crime (detenção de 6 meses a 3 anos).'],
+    l13819: ['Lei 13.819/2019, art. 6º', 'Casos suspeitos ou confirmados de violência autoprovocada (tentativa de suicídio, automutilação) são de notificação compulsória e sigilosa pelos estabelecimentos de ensino ao Conselho Tutelar; a escola deve informar e treinar seus profissionais.'],
+    l14819: ['Lei 14.819/2024', 'Política Nacional de Atenção Psicossocial nas Comunidades Escolares: promoção da saúde mental, prevenção e atendimento integrado entre educação, saúde e assistência social.'],
+    l13935: ['Lei 13.935/2019', 'As redes públicas de educação básica devem contar com serviços de psicologia e de serviço social para atender às necessidades das políticas de educação.'],
+    l13185: ['Lei 13.185/2015', 'Programa de Combate à Intimidação Sistemática (bullying): dever da escola de prevenir, diagnosticar e combater; evitar a punição pura, privilegiando a responsabilização e a mudança de comportamento.'],
+    l14811: ['Lei 14.811/2024', 'Inclui a intimidação sistemática (bullying) e a virtual (cyberbullying) no Código Penal (art. 146-A) e prevê protocolos de proteção contra a violência nas escolas, com formação continuada dos profissionais.'],
+    l15100: ['Lei 15.100/2025', 'Restringe o uso de aparelhos eletrônicos portáteis pessoais pelos estudantes nas escolas de educação básica, inclusive no recreio, com exceções pedagógicas, de acessibilidade e de saúde.'],
+    ldb12: ['LDB (Lei 9.394/1996), art. 12, incisos VIII a X', 'A escola notifica ao Conselho Tutelar os alunos com faltas acima de 30% do permitido, promove medidas de conscientização, prevenção e combate a todos os tipos de violência e ações de cultura de paz.'],
+    l11343: ['Lei 11.343/2006 (SISNAD)', 'Prevenção do uso indevido de drogas, com ênfase em fatores de proteção, e atenção e reinserção social; para adolescentes, valem as regras do ECA.'],
+    l14164: ['Lei 14.164/2021', 'Inclui a prevenção da violência contra a mulher nos currículos e institui a Semana Escolar de Combate à Violência contra a Mulher (março).'],
+    l10826: ['Lei 10.826/2003 e Código Penal, art. 147', 'Posse ou porte ilegal de arma é crime; ameaça é crime. Diante de arma ou ameaça de ataque, a escola aciona imediatamente a polícia (190).'],
+    lgpd: ['LGPD (Lei 13.709/2018), arts. 6º, 11 e 14', 'Dados de crianças e adolescentes são tratados no seu melhor interesse, só com a finalidade e na medida necessária; dados sensíveis podem ser tratados para execução de políticas públicas, com segurança e sigilo.'],
+    lai31: ['Lei 12.527/2011 (LAI), art. 31', 'Informações pessoais têm acesso restrito a agentes públicos autorizados e à própria pessoa, por até 100 anos.']
+};
+const leiTab = ks => `<table class="t"><thead><tr><th style="width:34%">Norma</th><th>O que determina</th></tr></thead><tbody>${[...new Set(ks)].filter(k => LEIS[k]).map(k => `<tr><td><b>${esc(LEIS[k][0])}</b></td><td>${esc(LEIS[k][1])}</td></tr>`).join('')}</tbody></table>`;
+
+/* ---------- orientações por tema e por papel ---------- */
+const ORIENT = {
+    saude: { vit: ['Acolher em local reservado, com escuta sem julgamento; não deixar o estudante sozinho se houver risco imediato.', 'Notificar o Conselho Tutelar de forma sigilosa (notificação compulsória) e acionar a saúde: UBS, CAPSi ou SAMU 192 em situação de risco.', 'Comunicar a família ou o responsável, salvo se houver suspeita de que a violência venha do ambiente familiar.', 'Combinar com a equipe um ponto de referência na escola e evitar exposição do caso na turma.'],
+        agr: ['Tratar primeiro como situação de cuidado: o comportamento pode estar ligado a sofrimento psíquico.', 'Acionar a saúde (CAPSi/UBS) e o serviço de psicologia ou assistência social da rede.'], leis: ['l13819', 'l14819', 'l13935', 'eca13'] },
+    sexual: { vit: ['Acolher a revelação espontânea sem fazer perguntas sobre detalhes, sem pedir que repita o relato e sem confrontar o suposto autor.', 'Comunicar imediatamente ao Conselho Tutelar ou à polícia (Disque 100 também recebe denúncias); a omissão é crime.', 'Registrar apenas o que foi dito, com as palavras do estudante, e encaminhar para a escuta especializada da rede.', 'Garantir proteção na rotina escolar (trajetos, horários e espaços) e sigilo absoluto.'],
+        agr: ['Afastar o contato com a vítima na rotina escolar enquanto a rede de proteção atua.', 'Comunicar a autoridade competente: conduta com indício de crime é apurada pela polícia e pela Justiça, não pela escola.'], leis: ['l13431', 'l14344', 'eca13', 'eca245', 'l14164'] },
+    bullying: { vit: ['Escutar a vítima e garantir que ela saiba a quem recorrer na escola.', 'Acompanhar de perto os espaços de maior risco (recreio, entrada, saída e grupos virtuais).', 'Informar a família e combinar acompanhamento periódico.'],
+        agr: ['Responsabilizar de forma pedagógica, com reparação do dano e mudança de comportamento, sem humilhação.', 'Usar mediação ou círculo restaurativo com a turma quando houver segurança para a vítima.', 'Envolver a família em um plano de convivência com metas e prazo.'], leis: ['l13185', 'l14811', 'ldb12'] },
+    digital: { vit: ['Orientar a guardar provas (prints com data) e a não responder às agressões.', 'Pedir a remoção do conteúdo às plataformas e comunicar o Conselho Tutelar se houver exposição íntima.'],
+        agr: ['Trabalhar o uso responsável das redes e as consequências legais da exposição de terceiros.', 'Aplicar as regras de uso de celular da escola de forma consistente.'], leis: ['l15100', 'l14811', 'eca17'] },
+    drogas: { vit: ['Avaliar o contexto familiar e social e acionar a assistência social (CRAS/CREAS) quando houver vulnerabilidade.'],
+        agr: ['Abordar como questão de saúde e proteção, não só disciplinar.', 'Encaminhar ao CAPS AD ou CAPSi e envolver a família.', 'Em caso de tráfico ou risco à comunidade escolar, acionar a polícia.'], leis: ['l11343', 'eca101'] },
+    agressao: { vit: ['Prestar socorro e, se houver lesão, acionar o SAMU 192 e comunicar a família.', 'Comunicar o Conselho Tutelar quando houver violência grave ou repetida.'],
+        agr: ['Ouvir as partes separadamente e registrar os fatos de forma objetiva.', 'Lesão corporal ou ameaça têm indício de ato infracional: comunicar a autoridade competente.', 'Propor mediação e plano de convivência, sem afastar o estudante da escola sem decisão formal.'], leis: ['eca103', 'ldb12', 'eca53'] },
+    armas: { vit: ['Garantir a segurança imediata e acionar a polícia (190).', 'Oferecer acolhimento psicológico às pessoas afetadas.'],
+        agr: ['Acionar a polícia (190) diante de arma ou ameaça de ataque, sem tentar desarmar.', 'Comunicar o Conselho Tutelar e a família e acompanhar com a rede de saúde mental.', 'Monitorar sinais de planejamento (redes sociais, falas, desenhos) com sigilo.'], leis: ['l10826', 'eca103', 'l14811'] },
+    patrimonio: { vit: [], agr: ['Buscar a reparação pedagógica do dano junto com a família.', 'Investigar o que motivou o ato (conflito, pertencimento, ociosidade) e envolver o estudante em projetos de cuidado com a escola.'], leis: ['eca103', 'eca53'] },
+    evasao: { vit: ['Contatar a família no mesmo dia da ausência sem justificativa.', 'Esgotados os recursos da escola, notificar o Conselho Tutelar (faltas reiteradas ou acima de 30%).', 'Verificar se a ausência esconde violência, trabalho infantil ou gravidez.'],
+        agr: ['Contatar a família no mesmo dia e investigar o motivo da saída sem autorização.', 'Notificar o Conselho Tutelar se a situação se repetir.'], leis: ['eca56', 'ldb12'] }
+};
+const GERAL = { vit: ['Garantir acolhimento e um adulto de referência na escola.', 'Evitar expor o estudante diante da turma e manter sigilo sobre o caso.'], agr: ['A escola não aplica medidas socioeducativas: responsabiliza de forma pedagógica e comunica a autoridade quando há indício de ato infracional.', 'Preservar o direito à educação: transferência ou afastamento só com decisão formal e acompanhamento.'] };
+
+/* ---------- estudante: papel, temas, leitura da situação ---------- */
+const papelEm = (r, k) => ({ vit: r.vit.some(n => chave(n) === k), agr: r.agr.some(n => chave(n) === k) });
+const temasDe = regs => PREV.map(p => ({ p, n: regs.filter(r => p.re.test(chave(r.tipo))).length })).filter(x => x.n).sort((a, b) => b.n - a.n);
+const iniciaisDe = nome => nome.trim().split(/\s+/).filter(x => x.length > 2 || /^[A-ZÀ-Ú]$/i.test(x)).map(x => x[0].toUpperCase() + '.').join(' ');
+function rlxPessoa(k) {
+    const p = A.pessoas.get(k); if (!p) return null;
+    const regs = [...new Map(p.regs.filter(r => r.dt).map(r => [r.id, r])).values()].sort((a, b) => a.dt - b.dt);
+    const papeis = regs.map(r => papelEm(r, k)), nV = papeis.filter(x => x.vit).length, nA = papeis.filter(x => x.agr).length;
+    const it = prtGet('pessoa', k), plano = it && it.dados;
+    const temas = temasDe(regs), ult = regs[regs.length - 1], ini = regs[0];
+    const graves = regs.filter(r => r.crit === 'CRÍTICO' || r.crit === 'ALTO').length;
+    const ano = regs.filter(r => diasEntre(r.dt, A.hoje) <= 365).length, tri = regs.filter(r => diasEntre(r.dt, A.hoje) <= 90).length;
+    const triAnt = regs.filter(r => { const d = diasEntre(r.dt, A.hoje); return d > 90 && d <= 180; }).length;
+    const escs = [...p.escolas].map(e => A.escolas.get(e)).filter(Boolean);
+    const intervalo = regs.length > 1 ? diasEntre(ini.dt, ult.dt) / (regs.length - 1) : null;
+    const perfil = [...p.perfil.keys()].join(', ').toLowerCase();
+    return { p, k, regs, papeis, nV, nA, plano, temas, ult, ini, graves, ano, tri, triAnt, escs, intervalo, perfil };
+}
+function rlxLeitura(S) {
+    const L = [];
+    const papel = S.nV && S.nA ? `aparece como vítima em ${S.nV} e como autor em ${S.nA} registro(s)` : S.nV ? `aparece como vítima em ${S.nV} registro(s)` : `aparece como autor em ${S.nA} registro(s)`;
+    L.push(`O estudante ${papel}, entre ${fmtD(S.ini.dt)} e ${fmtD(S.ult.dt)}${S.escs.length > 1 ? `, em ${S.escs.length} escolas diferentes` : ''}.`);
+    if (S.intervalo != null) L.push(`Em média, um novo registro a cada ${fmt1(S.intervalo)} dias. ${S.tri} registro(s) nos últimos 90 dias${S.triAnt ? ` contra ${S.triAnt} nos 90 dias anteriores` : ''}.`);
+    if (S.graves) L.push(`${S.graves} registro(s) de criticidade crítica ou alta.`);
+    if (S.temas.length) L.push(`Temas predominantes: ${S.temas.slice(0, 3).map(x => x.p.t.toLowerCase() + ' (' + x.n + ')').join(', ')}.`);
+    const al = [];
+    if (S.temas.some(x => x.p.id === 'saude')) al.push('Há registro ligado à saúde mental (autoagressão ou ideação): exige notificação compulsória e cuidado imediato.');
+    if (S.temas.some(x => x.p.id === 'sexual') && S.nV) al.push('Há registro de violência sexual com o estudante como vítima: comunicação imediata e escuta especializada pela rede.');
+    if (S.temas.some(x => x.p.id === 'armas')) al.push('Há registro envolvendo arma ou ameaça de ataque: avaliar risco com a segurança pública.');
+    if (S.nA >= 3) al.push('Autoria repetida: indica necessidade de plano individual com a família e a rede, não só de medidas disciplinares.');
+    if (S.nV >= 2) al.push('Vitimização repetida: verificar se há perseguição sistemática (bullying) e reforçar a proteção na rotina.');
+    if (S.tri > S.triAnt && S.triAnt) al.push('Os registros aumentaram no último trimestre.');
+    return { L, al };
+}
+function rlxPlanoAcao(S) {
+    const t = new Set(S.temas.map(x => x.p.id)), imed = [], sem = [], mes = [];
+    imed.push(S.nV ? 'Acolher o estudante com um adulto de referência e garantir a segurança imediata.' : 'Conversar com o estudante em local reservado, com escuta e sem exposição.');
+    if (t.has('saude')) imed.push('Notificar o Conselho Tutelar (Lei 13.819/2019) e acionar a saúde.');
+    if (t.has('sexual') && S.nV) imed.push('Comunicar o Conselho Tutelar ou a polícia (Lei 14.344/2022) e encaminhar para escuta especializada.');
+    if (t.has('armas')) imed.push('Acionar a polícia (190) se houver risco atual e comunicar o Conselho Tutelar.');
+    imed.push('Contatar a família ou o responsável, salvo suspeita de violência no ambiente familiar.');
+    sem.push('Montar o plano individual com responsável, encaminhamentos e data de reavaliação no sistema (Acompanhamento).');
+    if (t.has('bullying') || t.has('agressao')) sem.push('Realizar mediação ou círculo restaurativo, se houver segurança para a vítima.');
+    if (t.has('drogas') || t.has('saude')) sem.push('Confirmar o atendimento no CAPSi/CAPS AD ou na UBS.');
+    if (t.has('evasao')) sem.push('Acompanhar a frequência diariamente e combinar metas com a família.');
+    sem.push('Informar a equipe de professores sobre as combinações, sem expor detalhes do caso.');
+    mes.push('Reavaliar o plano em 30 dias: novos registros, frequência, convivência e retorno da rede.');
+    mes.push('Registrar no sistema o que foi feito e decidir se o acompanhamento continua ou é concluído.');
+    return { imed, sem, mes };
+}
+function rlxDocAluno(k) {
+    const S = rlxPessoa(k); if (!S || !S.regs.length) return null;
+    const nome = RLX.iniciais ? iniciaisDe(S.p.nome) : S.p.nome, esc0 = S.escs[S.escs.length - 1] || {};
+    const Lt = rlxLeitura(S), PA = rlxPlanoAcao(S), pl = S.plano;
+    const leis = ['eca17', 'eca100', 'eca53'];
+    const orV = [], orA = [];
+    S.temas.forEach(x => { const o = ORIENT[x.p.id]; if (!o) return; if (S.nV) orV.push(...o.vit.map(t => [x.p.t, t])); if (S.nA) orA.push(...o.agr.map(t => [x.p.t, t])); leis.push(...o.leis); });
+    if (S.nV) { orV.push(...GERAL.vit.map(t => ['Geral', t])); leis.push('eca13', 'l14344'); }
+    if (S.nA) { orA.push(...GERAL.agr.map(t => ['Geral', t])); leis.push('eca101', 'eca103', 'eca143'); }
+    leis.push('lgpd', 'lai31');
+    const lista = arr => { const g = new Map(); arr.forEach(([t, x]) => { if (!g.has(t)) g.set(t, []); if (!g.get(t).includes(x)) g.get(t).push(x); }); return [...g.entries()].map(([t, xs]) => `<p style="margin:8px 0 2px"><b>${esc(t)}</b></p><ul>${xs.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`).join(''); };
+    const encFeitos = pl && pl.enc ? ACP_ENC.filter(([id]) => pl.enc[id]).map(([, t]) => t) : [];
+    const encSug = new Set(); const t = new Set(S.temas.map(x => x.p.id));
+    if (S.nV || t.has('evasao') || t.has('saude')) encSug.add('Conselho Tutelar'); encSug.add('Família ou responsável');
+    if (t.has('saude') || t.has('drogas')) encSug.add('CAPS / CAPSi / saúde');
+    if (S.nA >= 2 || S.nV >= 2) encSug.add('Psicólogo ou assistente social');
+    if (t.has('bullying') || t.has('agressao')) encSug.add('Mediação ou círculo restaurativo');
+    if (t.has('armas') || (t.has('sexual') && S.nV)) encSug.add('Polícia / delegacia');
+    const codigo = codigoVerificacao('aluno|' + k + '|' + S.regs.length);
+    const secoes = [
+        { t: 'Identificação e finalidade', html: `<div class="dx-kpis"><div><small>Registros</small><b>${S.regs.length}</b></div><div><small>Como vítima</small><b>${S.nV}</b></div><div><small>Como autor</small><b>${S.nA}</b></div><div><small>Últimos 90 dias</small><b>${S.tri}</b></div></div>
+            <table class="t"><tbody><tr><td style="width:34%"><b>Estudante</b></td><td>${esc(nome)}${S.perfil ? ' · ' + esc(S.perfil) : ''}</td></tr><tr><td><b>Escola(s)</b></td><td>${S.escs.map(e => esc(e.nome) + ' · ' + esc(nomeMun(e.mun))).join('<br>')}</td></tr><tr><td><b>DRE</b></td><td>${esc(nomeDre(esc0.dre || ''))}</td></tr><tr><td><b>Situação do acompanhamento</b></td><td>${pl ? (pl.situacao === 'concluido' ? 'Concluído' : 'Em acompanhamento') + (pl.resp ? ' · responsável: ' + esc(pl.resp) : '') + (pl.proxima ? ' · reavaliação em ' + fmtD(dataDeISO(pl.proxima)) : '') : 'Sem plano registrado no sistema'}</td></tr></tbody></table>
+            <p>Este relatório reúne o histórico do estudante no Livro de Ocorrências e orientações para o seu acompanhamento pela escola e pela rede de proteção, com base na legislação federal. Ele existe para <b>proteger</b> o estudante e garantir o seu direito à educação, e deve ser usado apenas por quem atua diretamente no caso.</p>` },
+        { t: 'Histórico de registros', html: `<table class="t"><thead><tr><th>Data</th><th>Escola</th><th>Tipo</th><th>Papel</th><th>Criticidade</th></tr></thead><tbody>${S.regs.map((r, i) => `<tr><td style="white-space:nowrap">${fmtD(r.dt)}</td><td>${esc(r.esc)}</td><td>${esc(tipoCurto(r.tipo))}</td><td>${S.papeis[i].vit && S.papeis[i].agr ? 'vítima e autor' : S.papeis[i].vit ? 'vítima' : 'autor'}</td><td>${esc(r.crit)}</td></tr>${RLX.resumo && r.resumo ? `<tr><td></td><td colspan="4" style="font-size:.92em;color:#475569">${esc(String(r.resumo).slice(0, 400))}</td></tr>` : ''}`).join('')}</tbody></table>` },
+        { t: 'Leitura da situação', html: `${Lt.L.map(x => `<p>${esc(x)}</p>`).join('')}${Lt.al.length ? `<div style="border:1px solid #fca5a5;background:#fef2f2;border-radius:8px;padding:8px 12px;margin-top:8px"><b>Pontos de atenção</b><ul>${Lt.al.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}<p style="font-size:.92em;color:#475569">Leitura automática a partir dos registros: são indícios para orientar a equipe, não diagnóstico nem conclusão sobre os fatos.</p>` },
+        { t: 'Recomendações e orientações', html: `${orV.length ? `<h3 style="margin:6px 0">Para a proteção do estudante como vítima</h3>${lista(orV)}` : ''}${orA.length ? `<h3 style="margin:10px 0 6px">Para a responsabilização pedagógica como autor</h3>${lista(orA)}` : ''}` },
+        { t: 'Plano de ação sugerido', html: `<table class="t"><thead><tr><th style="width:22%">Prazo</th><th>Ação</th></tr></thead><tbody>${[['Imediato (até 24 h)', PA.imed], ['Até 7 dias', PA.sem], ['Em 30 dias', PA.mes]].map(([p, xs]) => xs.map((x, i) => `<tr><td>${i === 0 ? '<b>' + p + '</b>' : ''}</td><td>${esc(x)}</td></tr>`).join('')).join('')}</tbody></table>
+            <p><b>Encaminhamentos já feitos:</b> ${encFeitos.length ? esc(encFeitos.join(', ')) : 'nenhum registrado no sistema'}.<br><b>Encaminhamentos recomendados:</b> ${esc([...encSug].filter(x => !encFeitos.includes(x)).join(', ') || 'manter os atuais')}.</p>` },
+        ...(RLX.hist && pl && pl.hist && pl.hist.length ? [{ t: 'Registro do acompanhamento', html: `<table class="t"><thead><tr><th style="width:22%">Data</th><th>O que foi feito</th></tr></thead><tbody>${pl.hist.slice().reverse().map(h => `<tr><td>${new Date(h.em).toLocaleDateString('pt-BR')}</td><td>${esc(h.txt)}</td></tr>`).join('')}</tbody></table>` }] : []),
+        { t: 'Fundamentação legal', html: leiTab(leis) + '<p style="font-size:.92em;color:#475569">Resumo das normas para orientar a equipe. Não substitui a leitura do texto legal nem a orientação jurídica da Secretaria.</p>' },
+        { t: 'Cuidados com os dados pessoais', html: `<ul><li>Compartilhe este relatório só com quem atua no caso (direção, equipe de acompanhamento, Conselho Tutelar e serviços da rede de proteção) e apenas o necessário para a proteção do estudante (LGPD, arts. 6º e 14).</li><li>Não envie por aplicativos de mensagem nem grupos; não fotografe; guarde a versão impressa em local fechado.</li><li>Não divulgue o nome do estudante a quem se atribua ato infracional (ECA, arts. 143 e 247).</li><li>Não registre diagnósticos de saúde: registre fatos, ações e encaminhamentos.</li><li>Quando o acompanhamento terminar, mantenha o documento só pelo tempo exigido pelas normas de arquivo.</li></ul>` }
+    ];
+    if (FONTE.demo) secoes.unshift({ t: 'Observação', html: '<p style="background:#fef3c7;border:1px solid #f59e0b;padding:8px 10px;border-radius:6px"><b>Atenção:</b> relatório gerado com dados de demonstração fictícios.</p>' });
+    return { S, n: S.regs.length, recorte: 'Acompanhamento individual · ' + (esc0.nome || ''), o: { tipo: 'Relatório de acompanhamento individual', titulo: 'Acompanhamento e recomendações por estudante', subtitulo: (esc0.nome || '') + ' · ' + nomeMun(esc0.mun || '') + ' · emitido em ' + fmtD(new Date()), cls: 'DOCUMENTO RESTRITO', codigo, destinatario: RLX.dest || 'Direção da escola e equipe de acompanhamento', secoes,
+        ficha: [['Nº do documento', codigo], ['Estudante', nome], ['Escola de referência', esc0.nome || '—'], ['Registros analisados', String(S.regs.length)], ['Fonte', 'Livro de Ocorrências e plano de acompanhamento']] } };
+}
+
+/* ---------- escola: diagnóstico e sugestões ---------- */
+function temasEscola(e) {
+    const hoje = A.hoje, r180 = rs => rs.filter(r => r.dt && diasEntre(r.dt, hoje) <= 180 && diasEntre(r.dt, hoje) >= 0);
+    const share = regs => { const t = regs.length || 1; return PREV.map(p => regs.filter(r => p.re.test(chave(r.tipo))).length / t); };
+    const rE = r180(e.regs), sE = share(rE), sD = share(r180(REG.filter(r => r.dre === e.dre))), sM = share(r180(REG));
+    return PREV.map((p, i) => ({ p, e: sE[i], d: sD[i], m: sM[i], n: rE.filter(r => p.re.test(chave(r.tipo))).length, dif: sE[i] - sM[i] })).filter(x => x.n).sort((a, b) => b.dif - a.dif || b.n - a.n);
+}
+const SEM_NOME = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+function rlxDocEscola(k) {
+    const e = A.escolas.get(k); if (!e) return null;
+    const hoje = A.hoje, d = r => diasEntre(r.dt, hoje);
+    const tri = e.regs.filter(r => r.dt && d(r) >= 0 && d(r) < 90), ant = e.regs.filter(r => r.dt && d(r) >= 90 && d(r) < 180), r180 = tri.concat(ant);
+    const varia = ant.length ? Math.round((tri.length - ant.length) / ant.length * 100) : null;
+    const T = temasEscola(e), acima = T.filter(x => x.dif > .03), f = fichaEstado(e.k);
+    const posMT = escolasOrd().findIndex(x => x.k === e.k) + 1, daDre = escolasOrd().filter(x => x.dre === e.dre), posD = daDre.findIndex(x => x.k === e.k) + 1;
+    const sem = [0, 0, 0, 0, 0, 0, 0], hr = { manhã: 0, tarde: 0, noite: 0 };
+    r180.forEach(r => { sem[r.dt.getDay()]++; const h = r.dt.getHours(); if (h || r.dt.getMinutes()) hr[h < 12 ? 'manhã' : h < 18 ? 'tarde' : 'noite']++; });
+    const diaPico = sem.indexOf(maxDe(sem, 0)), turno = Object.entries(hr).sort((a, b) => b[1] - a[1])[0];
+    const tipos = new Map(); r180.forEach(r => tipos.set(tipoCurto(r.tipo), (tipos.get(tipoCurto(r.tipo)) || 0) + 1));
+    const tiposL = [...tipos.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const prot = typeof protCasos === 'function' ? protCasos().filter(c => c.r.escK === e.k) : [], protAt = prot.filter(c => !c.concluido && c.atras.length).length;
+    const rec = (A.recorrencias || []).filter(c => c.escola.k === e.k && c.ativa).length;
+    const itv = prtLista('intervencao').filter(i => i.dados && i.dados.escK === e.k);
+    const ids = new Set(T.map(x => x.p.id)), leis = ['ldb12', 'l14811', 'eca59a', 'l13935', 'eca13', 'eca245'];
+    T.slice(0, 5).forEach(x => leis.push(...((ORIENT[x.p.id] || {}).leis || [])));
+    const gestao = ['Atualizar o regimento escolar com regras de convivência construídas com estudantes e famílias e com o fluxo de resposta a cada tipo de violência (LDB, art. 12, IX e X).',
+        'Definir por escrito quem comunica o Conselho Tutelar e em que prazo, e treinar toda a equipe nesse fluxo (ECA, arts. 13, 56 e 245).',
+        'Manter atualizadas as fichas cadastrais e certidões de antecedentes criminais dos colaboradores (ECA, art. 59-A).',
+        'Solicitar o apoio do serviço de psicologia e de assistência social da rede (Lei 13.935/2019).'];
+    if (ids.has('saude')) gestao.push('Treinar os profissionais na notificação compulsória de autoagressão e ideação suicida (Lei 13.819/2019, art. 6º, § 5º).');
+    if (ids.has('digital')) gestao.push('Aplicar a restrição ao uso de celular prevista na Lei 15.100/2025, com regras claras e exceções pedagógicas.');
+    if (ids.has('bullying')) gestao.push('Instituir o programa de combate à intimidação sistemática, com canal de escuta para as vítimas (Lei 13.185/2015).');
+    const est = f.preenchida ? f.faltam.map(id => (FICHA_ITENS.find(x => x[1] === id) || [, , id])[2]) : [];
+    const crono = [['Primeiros 30 dias', ['Apresentar o diagnóstico à equipe e ao conselho escolar.', 'Ajustar o fluxo de comunicação ao Conselho Tutelar e à rede.', acima[0] ? `Iniciar a primeira ação do tema "${acima[0].p.t.toLowerCase()}".` : 'Iniciar as ações de convivência.']],
+        ['30 a 60 dias', [est.length ? 'Resolver os itens de segurança pendentes de menor custo.' : 'Revisar a ficha de segurança.', 'Realizar palestra ou roda de conversa com estudantes e famílias sobre os temas principais.', 'Registrar no sistema as intervenções feitas.']],
+        ['60 a 90 dias', ['Comparar os registros com o trimestre anterior na página Intervenções.', 'Ajustar o plano com a DRE e definir as próximas ações.']]];
+    const codigo = codigoVerificacao('escola|' + e.k + '|' + tri.length);
+    const secoes = [
+        { t: 'Panorama da escola', html: `<div class="dx-kpis"><div><small>Registros em 90 dias</small><b>${fmtN(tri.length)}</b></div><div><small>Variação</small><b>${varia == null ? '—' : (varia > 0 ? '+' : '') + varia + '%'}</b></div><div><small>Índice de fragilidade</small><b>${e.idx}</b></div><div><small>Posição na DRE</small><b>${posD}º de ${daDre.length}</b></div></div>
+            <p>${esc(e.nome)} tem ${fmtN(tri.length)} registro(s) nos últimos 90 dias${ant.length ? ` contra ${fmtN(ant.length)} nos 90 dias anteriores` : ''}. É a ${posMT}ª escola mais frágil de Mato Grosso no recorte. ${r180.length >= 6 ? `Os fatos se concentram ${diaPico >= 0 ? 'às ' + SEM_NOME[diaPico] + 's' : ''}${turno && turno[1] ? ' e no período da ' + turno[0] : ''}.` : ''}</p>
+            ${tiposL.length ? `<table class="t"><thead><tr><th>Tipo de ocorrência (6 meses)</th><th style="text-align:right">Registros</th></tr></thead><tbody>${tiposL.map(([t, v]) => `<tr><td>${esc(t)}</td><td style="text-align:right">${v}</td></tr>`).join('')}</tbody></table>` : ''}` },
+        { t: 'Temas que pedem atenção', html: T.length ? `<table class="t"><thead><tr><th>Tema</th><th style="text-align:right">Escola</th><th style="text-align:right">DRE</th><th style="text-align:right">MT</th></tr></thead><tbody>${T.slice(0, 8).map(x => `<tr><td>${x.dif > .03 ? '<b>' + esc(x.p.t) + '</b> ▲' : esc(x.p.t)}</td><td style="text-align:right">${Math.round(x.e * 100)}%</td><td style="text-align:right">${Math.round(x.d * 100)}%</td><td style="text-align:right">${Math.round(x.m * 100)}%</td></tr>`).join('')}</tbody></table><p>Parte dos registros dos últimos 6 meses em cada tema. Os temas com ▲ estão acima da média de Mato Grosso.</p>` : '<p>Sem registros nos últimos 6 meses.</p>' },
+        { t: 'Sugestões por tema', html: T.slice(0, 4).map(x => `<p style="margin:10px 0 2px"><b>${esc(x.p.t)}</b> · ${x.n} registro(s)</p><ul>${x.p.acoes.map(a => `<li>${esc(a)}</li>`).join('')}</ul>${x.p.refs.length ? `<p style="font-size:.92em;color:#475569">Referências: ${esc(x.p.refs.join('; '))}</p>` : ''}`).join('') || '<p>Manter as ações de convivência e prevenção.</p>' },
+        { t: 'Gestão, normas e equipe', html: `<ul>${gestao.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` },
+        { t: 'Estrutura e segurança', html: f.preenchida ? `<p>A ficha de segurança tem <b>${Math.round(f.nota * 100)}%</b> dos itens de proteção presentes${f.velha ? ' e está desatualizada (mais de 6 meses)' : ''}.</p>${est.length ? `<p>Itens a melhorar:</p><ul>${est.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Todos os itens estão presentes.</p>'}` : '<p>A escola ainda não tem ficha de segurança preenchida. Preencher a ficha (página Segurança das escolas) é o primeiro passo para planejar melhorias de estrutura.</p>' },
+        { t: 'Casos em andamento', html: `<ul><li>${prot.length} caso(s) com protocolo de resposta${protAt ? `, <b>${protAt} com passo atrasado</b>` : ''}.</li><li>${rec} reincidência(s) ativa(s) do mesmo tipo de fato.</li><li>${itv.length} intervenção(ões) registrada(s) no sistema${itv.length ? ': ' + esc([...new Set(itv.map(i => i.dados.tipo))].join(', ')) : ''}.</li></ul><p style="font-size:.92em;color:#475569">Os nomes dos estudantes não entram neste documento. O acompanhamento individual é feito em relatório próprio, de acesso restrito.</p>` },
+        { t: 'Cronograma sugerido', html: `<table class="t"><thead><tr><th style="width:22%">Quando</th><th>O que fazer</th></tr></thead><tbody>${crono.map(([p, xs]) => xs.map((x, i) => `<tr><td>${i === 0 ? '<b>' + p + '</b>' : ''}</td><td>${esc(x)}</td></tr>`).join('')).join('')}</tbody></table>` },
+        { t: 'Fundamentação legal', html: leiTab(leis) }
+    ];
+    if (FONTE.demo) secoes.unshift({ t: 'Observação', html: '<p style="background:#fef3c7;border:1px solid #f59e0b;padding:8px 10px;border-radius:6px"><b>Atenção:</b> relatório gerado com dados de demonstração fictícios.</p>' });
+    return { n: r180.length, recorte: e.nome, o: { tipo: 'Sugestões para a escola', titulo: 'Diagnóstico e sugestões · ' + e.nome, subtitulo: nomeMun(e.mun) + ' · ' + nomeDre(e.dre) + ' · dados até ' + fmtD(hoje), cls: 'USO INTERNO', codigo, destinatario: RLX.dest || 'Direção da escola e DRE', secoes,
+        ficha: [['Nº do documento', codigo], ['Escola', e.nome], ['Município', nomeMun(e.mun)], ['DRE', nomeDre(e.dre)], ['Fonte', 'Livro de Ocorrências · sem dados pessoais']] } };
+}
+
+/* ---------- projetos e palestras ---------- */
+const PROJ = {
+    bullying: [['Projeto', 'Estudantes mediadores', 'Estudantes do 6º ano ao ensino médio', '1 semestre', 'Formar um grupo de estudantes para mediar conflitos e acolher colegas, com apoio de um professor de referência.', 'Núcleo de mediação da DRE'], ['Palestra', 'Bullying não é brincadeira', 'Estudantes por turno', '1 h', 'Mostrar o que é intimidação sistemática, os efeitos para quem sofre e como pedir ajuda, com base na Lei 13.185/2015.', 'Defensoria Pública / Ministério Público'], ['Oficina', 'Regras de convivência da turma', 'Cada turma', '2 encontros', 'Construir com a turma combinados de respeito e as consequências de quebrá-los.', 'Coordenação pedagógica']],
+    digital: [['Palestra', 'Segurança e respeito nas redes', 'Estudantes e famílias', '1 h', 'Cyberbullying, exposição de imagens, golpes e o que diz a lei (Lei 14.811/2024).', 'Polícia Civil · delegacia especializada'], ['Projeto', 'Escola sem tela no recreio', 'Toda a escola', '1 bimestre', 'Implantar a restrição da Lei 15.100/2025 com jogos, esporte e leitura no recreio.', 'Grêmio estudantil']],
+    saude: [['Formação', 'Sinais de alerta e notificação', 'Professores e equipe', '3 h', 'Reconhecer sinais de sofrimento, acolher e notificar casos de autoagressão (Lei 13.819/2019).', 'CAPSi · Secretaria Municipal de Saúde'], ['Projeto', 'Rodas de cuidado emocional', 'Estudantes', '1 semestre', 'Encontros quinzenais sobre emoções, ansiedade e pedidos de ajuda, conduzidos por psicólogo da rede.', 'Psicólogos da rede (Lei 13.935/2019)'], ['Palestra', 'Setembro Amarelo: falar é a melhor solução', 'Estudantes do ensino médio', '1 h', 'Valorização da vida e canais de apoio (CVV 188).', 'CVV · CAPS']],
+    sexual: [['Palestra', 'Meu corpo, meus limites', 'Estudantes por faixa etária', '1 h', 'Prevenção da violência sexual com linguagem adequada à idade e canais de denúncia (Disque 100).', 'Conselho Tutelar · CREAS'], ['Formação', 'Revelação espontânea e escuta protegida', 'Professores e equipe', '3 h', 'Como acolher sem revitimizar e a quem comunicar (Lei 13.431/2017 e Lei 14.344/2022).', 'Rede de proteção do município'], ['Projeto', 'Semana Escolar de Combate à Violência contra a Mulher', 'Toda a escola', '1 semana (março)', 'Atividades sobre respeito e igualdade previstas na Lei 14.164/2021.', 'Patrulha Maria da Penha · CRAM']],
+    drogas: [['Palestra', 'Escolhas e riscos: álcool, vape e outras drogas', 'Estudantes do 7º ano ao ensino médio', '1 h', 'Informação sem alarmismo e fatores de proteção.', 'CAPS AD · PROERD/PM'], ['Projeto', 'Esporte e cultura no contraturno', 'Estudantes em vulnerabilidade', '1 semestre', 'Ocupar o contraturno com atividades que fortalecem vínculos com a escola.', 'Secretaria de Esporte e Cultura']],
+    agressao: [['Projeto', 'Círculos restaurativos', 'Turmas com mais conflitos', '1 semestre', 'Resolver conflitos com diálogo, reparação do dano e responsabilização.', 'Núcleo de justiça restaurativa (TJMT)'], ['Palestra', 'Cultura de paz na escola', 'Estudantes e famílias', '1 h', 'Comunicação não violenta e consequências legais das agressões.', 'Ministério Público · Polícia Militar']],
+    armas: [['Formação', 'Plano de segurança e resposta a ameaças', 'Direção e equipe', '3 h', 'Protocolo diante de ameaça de ataque, controle de acesso e acionamento da polícia.', 'Polícia Militar · DRE'], ['Palestra', 'Ameaça não é brincadeira', 'Estudantes', '1 h', 'Consequências legais de ameaças e boatos nas redes e como avisar a escola.', 'Polícia Civil']],
+    patrimonio: [['Projeto', 'Escola é nossa', 'Estudantes e comunidade', '1 bimestre', 'Mutirões de cuidado, grafite autorizado e adoção de espaços pelas turmas.', 'Associação de pais · grêmio']],
+    evasao: [['Projeto', 'Busca ativa escolar', 'Estudantes infrequentes', 'contínuo', 'Contato diário com as famílias, visitas e plano de retorno.', 'Conselho Tutelar · CRAS'], ['Palestra', 'Família na escola', 'Famílias', '1 h', 'Direitos e deveres da frequência (ECA, art. 56; LDB, art. 12).', 'Conselho Tutelar']]
+};
+const projDe = (temas, max) => { const out = [], ls = temas.map(x => (PROJ[x.p.id] || []).map(p => ({ tema: x.p, p }))); for (let i = 0; out.length < (max || 4) && ls.some(l => l[i]); i++) ls.forEach(l => { if (l[i] && out.length < (max || 4)) out.push(l[i]); }); return out; };
+function rlxEscolasProj() {
+    let L = escolasOrd().filter(e => e.idx >= RLX.projMin);
+    if (RLX.projDre) L = L.filter(e => e.dre === RLX.projDre);
+    return L.slice(0, 60).map(e => { const T = temasEscola(e), acima = T.filter(x => x.dif > .02); return { e, T, temas: (acima.length ? acima : T).slice(0, 3) }; });
+}
+function rlxDocProjetos() {
+    const L = rlxEscolasProj().filter(x => RLX.projSel && RLX.projSel.has(x.e.k)); if (!L.length) return null;
+    const todos = new Map(); L.forEach(x => projDe(x.temas, 3).forEach(y => { const k = y.p[1]; const o = todos.get(k) || { y, esc: [] }; o.esc.push(x.e.nome); todos.set(k, o); }));
+    const cats = new Map(); L.forEach(x => x.temas.forEach(t => cats.set(t.p.id, (cats.get(t.p.id) || 0) + 1)));
+    const leis = ['ldb12', 'l14811', 'l13185', 'l13935']; cats.forEach((_, id) => leis.push(...((ORIENT[id] || {}).leis || [])));
+    const codigo = codigoVerificacao('projetos|' + L.map(x => x.e.k).join(','));
+    const meses = (typeof PREV_CAL !== 'undefined' ? PREV_CAL : []).filter(c => cats.has(c[3]));
+    const secoes = [
+        { t: 'Critério de seleção', html: `<div class="dx-kpis"><div><small>Escolas</small><b>${L.length}</b></div><div><small>Índice mínimo</small><b>${RLX.projMin}</b></div><div><small>Ações propostas</small><b>${todos.size}</b></div><div><small>Temas</small><b>${cats.size}</b></div></div>
+            <p>Foram selecionadas escolas com índice de fragilidade igual ou acima de ${RLX.projMin}${RLX.projDre ? ' na ' + esc(nomeDre(RLX.projDre)) : ''}. Para cada escola, as ações respondem aos temas que estão acima da média de Mato Grosso nos últimos 6 meses.</p>` },
+        { t: 'Escolas priorizadas', html: `<table class="t"><thead><tr><th>Escola</th><th>Município</th><th style="text-align:right">Índice</th><th>Temas principais</th></tr></thead><tbody>${L.map(x => `<tr><td>${esc(x.e.nome)}</td><td>${esc(nomeMun(x.e.mun))}</td><td style="text-align:right"><b>${x.e.idx}</b></td><td>${esc(x.temas.map(t => t.p.t).join('; ') || '—')}</td></tr>`).join('')}</tbody></table>` },
+        { t: 'Propostas por escola', html: L.map(x => `<p style="margin:12px 0 4px"><b>${esc(x.e.nome)}</b> · ${esc(nomeMun(x.e.mun))} · índice ${x.e.idx}</p><table class="t"><thead><tr><th style="width:13%">Tipo</th><th style="width:30%">Ação</th><th style="width:30%">Público e duração</th><th>Parceiro sugerido</th></tr></thead><tbody>${projDe(x.temas, 3).map(({ p }) => `<tr><td>${esc(p[0])}</td><td><b>${esc(p[1])}</b></td><td>${esc(p[2])} · ${esc(p[3])}</td><td>${esc(p[5])}</td></tr>`).join('') || '<tr><td colspan="4">Ações gerais de convivência.</td></tr>'}</tbody></table>`).join('') },
+        { t: 'Descrição das ações', html: [...todos.values()].map(({ y, esc: es }) => `<p style="margin:10px 0 2px"><b>${esc(y.p[0])} · ${esc(y.p[1])}</b> <span style="color:#475569">(${esc(y.tema.t)})</span></p><p style="margin:0">${esc(y.p[4])}</p><p style="margin:2px 0 0;font-size:.92em;color:#475569">Público: ${esc(y.p[2])} · Duração: ${esc(y.p[3])} · Parceiro: ${esc(y.p[5])} · ${es.length} escola(s)</p>`).join('') },
+        { t: 'Calendário sugerido', html: `${meses.length ? `<table class="t"><thead><tr><th style="width:18%">Mês</th><th>Data ou campanha</th></tr></thead><tbody>${meses.map(c => `<tr><td>${MES3[c[0] - 1]}</td><td>${esc(c[2])}</td></tr>`).join('')}</tbody></table>` : ''}<p>Aproveitar as datas acima para as palestras e distribuir os projetos ao longo do semestre, começando pelas escolas de maior índice.</p>` },
+        { t: 'Como medir o resultado', html: `<ul><li>Registrar cada palestra ou projeto na página Intervenções, com a data de início.</li><li>Comparar os registros dos 90 dias anteriores com os 90 dias seguintes, por escola e por tema.</li><li>Ouvir estudantes e professores ao final de cada projeto (questionário curto).</li><li>Rever a lista de escolas a cada trimestre.</li></ul>` },
+        { t: 'Fundamentação legal', html: leiTab(leis) }
+    ];
+    return { n: L.length, recorte: 'Projetos e palestras · ' + L.length + ' escola(s)', o: { tipo: 'Plano de projetos e palestras', titulo: 'Projetos e palestras para escolas com índices altos', subtitulo: (RLX.projDre ? nomeDre(RLX.projDre) : 'Mato Grosso') + ' · ' + L.length + ' escola(s) · dados até ' + fmtD(A.hoje), cls: 'USO INTERNO', codigo, destinatario: RLX.dest || 'Coordenadoria de Segurança Escolar e DREs', secoes,
+        ficha: [['Nº do documento', codigo], ['Recorte', RLX.projDre ? nomeDre(RLX.projDre) : 'Todas as DREs'], ['Escolas', String(L.length)], ['Índice mínimo', String(RLX.projMin)], ['Fonte', 'Livro de Ocorrências · sem dados pessoais']] } };
+}
+
+/* ---------- emissão ---------- */
+function rlxEmitir(D, nome) {
+    if (!D) { toast('Escolha o que entra no documento primeiro', 'alerta'); return; }
+    RLX.doc = Object.assign(D, { destAnt: RL.dest, base: 'EDUCASEG-PLUS_' + nome + '_' + D.o.codigo + '_' + hojeArq() });
+    RL.dest = D.o.destinatario;
+    escolherFormato('Gerar: ' + D.o.tipo.toLowerCase(), 'rlxBaixar', 'rlx');
+}
+function rlxBaixar(fmt) {
+    const D = RLX.doc; if (!D) return;
+    D.o.destinatario = RL.dest || D.o.destinatario; RLX.dest = RL.dest; RL.dest = D.destAnt;
+    const html = montarDocumento(D.o);
+    if (conectado()) api('registrarRelatorio', { codigo: D.o.codigo, titulo: D.o.titulo, classificacao: D.o.cls, recorte: D.recorte, registros: D.n, hash: DX_DIG[D.o.codigo] || '' }).catch(e => toast('Documento gerado, mas o código não foi registrado no servidor: ' + e.message, 'alerta'));
+    exportarDocumento(html, D.o.titulo, D.base, fmt);
+}
+const rlxPrevia = D => `<div class="rel-palco rlx-palco">${D ? montarDocumento(D.o) : `<div class="vazio">${ic('doc')}A pré-visualização aparece aqui.</div>`}</div>`;
+const rlxDest = ph => `<div class="inteiro"><label class="rot" for="rlx-dest">Destinatário</label><input class="campo" id="rlx-dest" placeholder="${esc(ph)}" value="${esc(RLX.dest)}"></div>`;
+function rlxLigarDest(fn) { const i = $('rlx-dest'); if (!i) return; let t; i.oninput = () => { clearTimeout(t); t = setTimeout(() => { RLX.dest = i.value.trim(); fn(); }, 400); }; }
+
+/* ---------- abas da página ---------- */
+const RLX_MODOS = [['intel', 'doc', 'Relatório de inteligência', 'Panorama do recorte, com seções'], ['aluno', 'user', 'Acompanhamento por estudante', 'Histórico, recomendações e leis'], ['escola', 'escola', 'Sugestões para a escola', 'Diagnóstico e plano de ação'], ['projetos', 'users', 'Projetos e palestras', 'Para escolas com índices altos']];
+function rlxModos() {
+    let el = $('rlx-modos');
+    if (!el) { el = document.createElement('div'); el.id = 'rlx-modos'; el.className = 'rlx-modos'; $('cont-relatorio').before(el); }
+    el.innerHTML = RLX_MODOS.map(([v, i, t, s]) => `<button class="${RLX.modo === v ? 'ativo' : ''}" onclick="RLX.modo='${v}';renderAba()"><span class="ic">${ic(i)}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('');
+}
+const RLX_TOP = {
+    aluno: [{ t: 'Estudante e opções', s: 'Busque pelo nome e escolha o que entra no documento', i: 'user', m: /aviso|rlx-g/ }, { t: 'Pré-visualização', s: 'Como o documento vai sair', i: 'eye', m: /rel-palco/ }],
+    escola: [{ t: 'Escolher a escola', s: 'Diagnóstico resumido', i: 'escola', m: /rlx-esc/ }, { t: 'Pré-visualização', s: 'Como o documento vai sair', i: 'eye', m: /rel-palco/ }],
+    projetos: [{ t: 'Escolher as escolas', s: 'Índice mínimo, DRE e seleção', i: 'target', m: /rlx-proj/ }, { t: 'Pré-visualização', s: 'Como o documento vai sair', i: 'eye', m: /rel-palco/ }]
+};
+const _TOP_REL = TOPICOS.relatorio, _LEG_REL = LEGENDAS.relatorio;
+const RLX_LEG = {
+    aluno: { mostra: ['Relatório individual de acompanhamento do estudante: histórico de registros, leitura da situação, recomendações, plano de ação e a base legal (ECA, LGPD, Lei 13.431/2017, Lei 13.819/2019, Lei 14.344/2022, entre outras).'], fonte: ['Registros do Livro de Ocorrências em que o nome aparece como vítima ou autor e o plano salvo na página Acompanhamento.'], calc: ['Os temas são identificados pelo tipo de ocorrência. As orientações combinam o papel (vítima ou autor) com os temas encontrados.'], usar: ['Disponível só para os perfis Administrador e Inteligência.', 'Compartilhe apenas com quem atua no caso. O título e o registro do código no servidor não levam o nome do estudante.'] },
+    escola: { mostra: ['Diagnóstico da escola com temas acima da média, sugestões por tema, gestão e normas, estrutura, casos em andamento e cronograma de 90 dias.'], fonte: ['Livro de Ocorrências, ficha de segurança, protocolos e intervenções da escola.'], calc: ['Temas: parte dos registros dos últimos 6 meses em cada tema, comparada com a DRE e com Mato Grosso.'], usar: ['Escolha a escola e baixe o documento. Não contém nomes de pessoas.'] },
+    projetos: { mostra: ['Plano de projetos, palestras, oficinas e formações para as escolas com índice de fragilidade alto, escolhidos pelos temas de cada escola.'], fonte: ['Índice de fragilidade e tipos de ocorrência dos últimos 6 meses.'], calc: ['Para cada escola, os temas acima da média de Mato Grosso definem as ações sugeridas.'], usar: ['Ajuste o índice mínimo e a DRE, marque as escolas e baixe o plano.'] }
+};
+const _rRelX = rRelatorio;
+rRelatorio = function () {
+    rlxModos();
+    TOPICOS.relatorio = RLX.modo === 'intel' ? _TOP_REL : RLX_TOP[RLX.modo];
+    LEGENDAS.relatorio = RLX.modo === 'intel' ? _LEG_REL : Object.assign({}, _LEG_REL, RLX_LEG[RLX.modo]);
+    if (RLX.modo !== 'intel' && $('rl-titulo')) $('cont-relatorio').innerHTML = '';
+    if (RLX.modo === 'intel') return _rRelX();
+    ({ aluno: rlxAluno, escola: rlxEscola, projetos: rlxProjetos })[RLX.modo]();
+};
+
+/* ---------- tela: estudante ---------- */
+function rlxAluno() {
+    const cont = $('cont-relatorio');
+    if (!podeVerPessoas()) { $('acoes-relatorio').innerHTML = ''; cont.innerHTML = `<div class="card"><div class="vazio">${ic('shield')}O relatório por estudante mostra dados pessoais de crianças e adolescentes e está liberado só para os perfis Administrador e Inteligência.</div></div>`; return; }
+    const prio = new Map(); try { acpCandidatos().forEach(x => prio.set(x.k, x)); } catch (e) { }
+    let L = [...A.pessoas.values()].filter(p => p.regs.length);
+    if (RLX.alunoQ) { const q = chave(RLX.alunoQ); L = L.filter(p => p.k.includes(q)); }
+    L.sort((a, b) => (prio.has(b.k) ? prio.get(b.k).prio + 1 : 0) - (prio.has(a.k) ? prio.get(a.k).prio + 1 : 0) || b.regs.length - a.regs.length);
+    if (!RLX.alunoK || !A.pessoas.has(RLX.alunoK)) RLX.alunoK = (L[0] || {}).k || '';
+    const D = RLX.alunoK ? rlxDocAluno(RLX.alunoK) : null, S = D && D.S;
+    $('acoes-relatorio').innerHTML = D ? `<button class="btn btn-v btn-sm" onclick="abrirPlano('${esc(RLX.alunoK)}')">${ic('users')}Plano de acompanhamento</button><button class="btn btn-p btn-sm" onclick="rlxEmitir(rlxDocAluno(RLX.alunoK),'acompanhamento')">${ic('download')}Baixar documento</button>` : '';
+    cont.innerHTML = `<div class="aviso info">${ic('shield')}<div>Documento com dados pessoais de criança ou adolescente. Use só para proteção e acompanhamento, compartilhe apenas com quem atua no caso e não registre diagnósticos (ECA, arts. 17, 18 e 143; LGPD, art. 14).</div></div>
+    <div class="grade rlx-g" style="align-items:start">
+        <div class="card rlx-busca"><div class="card-pad" style="padding-bottom:8px"><div class="card-tit" style="margin-bottom:10px"><div class="ico" style="--c:var(--roxo)">${ic('user')}</div><div><h3>Estudante</h3><p>${fmtN(L.length)} pessoa(s) citada(s) nos registros · prioritárias primeiro</p></div></div>
+            <div class="busca">${ic('search')}<input class="campo" id="rlx-q" placeholder="Buscar pelo nome" value="${esc(RLX.alunoQ)}"></div></div>
+            <div class="rlx-lista">${L.slice(0, 60).map(p => { const c = prio.get(p.k); return `<button class="rlx-p${p.k === RLX.alunoK ? ' ativo' : ''}" onclick="RLX.alunoK='${esc(p.k)}';rlxAluno()"><span class="acp-av" style="--c:${c ? ACP_CAT[c.cats[0]][1] : 'var(--muted)'}">${esc(p.nome.trim().split(/\s+/).map(x => x[0]).slice(0, 2).join(''))}</span><span class="tx"><b>${esc(p.nome)}</b><span>${p.vit ? p.vit + ' como vítima' : ''}${p.vit && p.agr ? ' · ' : ''}${p.agr ? p.agr + ' como autor' : ''} · ${p.escolas.size} escola(s)</span>${c ? `<span class="vn4-tags">${c.cats.map(k => `<em style="background:color-mix(in srgb, ${ACP_CAT[k][1]} 13%, transparent);color:${ACP_CAT[k][1]}">${ACP_CAT[k][0]}</em>`).join('')}</span>` : ''}</span></button>`; }).join('') || '<div class="vazio peq">Ninguém com esse nome.</div>'}</div></div>
+        <div class="card card-pad rlx-cfg">${S ? `<div class="rlx-res"><span class="acp-av grande" style="--c:var(--roxo)">${esc(S.p.nome.trim().split(/\s+/).map(x => x[0]).slice(0, 2).join(''))}</span><div><b>${esc(S.p.nome)}</b><span>${esc(S.escs.map(e => e.nome).join(' · '))}</span></div></div>
+            <div class="kpis rlx-kpis"><div class="kpi" style="--c:var(--roxo)"><div class="r">Registros</div><div class="v">${S.regs.length}</div></div><div class="kpi" style="--c:var(--prim)"><div class="r">Vítima</div><div class="v">${S.nV}</div></div><div class="kpi" style="--c:var(--c-alto)"><div class="r">Autor</div><div class="v">${S.nA}</div></div><div class="kpi" style="--c:var(--c-crit)"><div class="r">Graves</div><div class="v">${S.graves}</div></div></div>
+            ${faixaDatas(S.regs)}
+            <div class="rlx-temas">${S.temas.map(x => `<em style="--c:${x.p.cor}">${esc(x.p.t)} · ${x.n}</em>`).join('')}</div>
+            <div class="form-grade" style="margin-top:14px">${rlxDest('Ex.: Direção da escola · Conselho Tutelar')}
+                <label class="inteiro dx-anon"><input type="checkbox" id="rlx-ini" ${RLX.iniciais ? 'checked' : ''}><span><b>Identificar só pelas iniciais</b><small>Recomendado quando o documento for para fora da escola.</small></span></label>
+                <label class="inteiro dx-anon"><input type="checkbox" id="rlx-res" ${RLX.resumo ? 'checked' : ''}><span><b>Incluir o resumo dos fatos</b><small>Traz o texto de cada registro. Inclua só se for necessário para quem vai receber.</small></span></label>
+                <label class="inteiro dx-anon"><input type="checkbox" id="rlx-hist" ${RLX.hist ? 'checked' : ''}><span><b>Incluir o registro do acompanhamento</b><small>As anotações feitas no plano de acompanhamento.</small></span></label></div>` : '<div class="vazio">Escolha um estudante na lista.</div>'}</div></div>
+    ${rlxPrevia(D)}`;
+    let t; $('rlx-q').oninput = () => { clearTimeout(t); t = setTimeout(() => { RLX.alunoQ = $('rlx-q').value; RLX.alunoK = ''; rlxAluno(); const i = $('rlx-q'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 350); };
+    [['rlx-ini', 'iniciais'], ['rlx-res', 'resumo'], ['rlx-hist', 'hist']].forEach(([id, k]) => { const c = $(id); if (c) c.onchange = () => { RLX[k] = c.checked; rlxAluno(); }; });
+    rlxLigarDest(rlxAluno);
+}
+
+/* ---------- tela: escola ---------- */
+function rlxEscola() {
+    const escs = escolasOrd(), cont = $('cont-relatorio');
+    if (!RLX.escK || !A.escolas.has(RLX.escK)) RLX.escK = (PV.escK && A.escolas.has(PV.escK) ? PV.escK : (escs[0] || {}).k) || '';
+    const e = A.escolas.get(RLX.escK), D = e ? rlxDocEscola(e.k) : null;
+    $('acoes-relatorio').innerHTML = D ? `<button class="btn btn-p btn-sm" onclick="rlxEmitir(rlxDocEscola(RLX.escK),'sugestoes')">${ic('download')}Baixar documento</button>` : '';
+    const T = e ? temasEscola(e) : [];
+    cont.innerHTML = `<div class="card card-pad rlx-esc"><div class="form-grade"><div class="inteiro"><label class="rot" for="rlx-e">Escola</label><input class="campo" id="rlx-e" list="rlx-es" value="${e ? esc(e.nome + ' — ' + nomeMun(e.mun)) : ''}" autocomplete="off" placeholder="Digite o nome da escola"><datalist id="rlx-es">${escs.map(x => `<option value="${esc(x.nome + ' — ' + nomeMun(x.mun))}">`).join('')}</datalist></div>${rlxDest('Ex.: Direção da escola · DRE')}</div>
+        ${e ? `<div class="pvx-res" style="margin-top:14px"><div><small>Fragilidade</small><b>${seloIdx(e.idx)}</b></div><div><small>Registros</small><b>${fmtN(e.n)}</b></div><div><small>Temas acima de MT</small><b>${T.filter(x => x.dif > .03).length}</b></div><div><small>Ficha de segurança</small><b>${fichaEstado(e.k).preenchida ? Math.round(fichaEstado(e.k).nota * 100) + '%' : '—'}</b></div><div><small>Reincidências ativas</small><b>${(A.recorrencias || []).filter(c => c.escola.k === e.k && c.ativa).length}</b></div></div>
+        <div class="rlx-temas" style="margin-top:12px">${T.slice(0, 6).map(x => `<em style="--c:${x.p.cor}">${x.dif > .03 ? '▲ ' : ''}${esc(x.p.t)} · ${Math.round(x.e * 100)}%</em>`).join('')}</div>` : ''}</div>
+    ${rlxPrevia(D)}`;
+    const inp = $('rlx-e'); inp.onchange = () => { const x = escs.find(o => (o.nome + ' — ' + nomeMun(o.mun)) === inp.value); if (x) { RLX.escK = x.k; rlxEscola(); } };
+    rlxLigarDest(rlxEscola);
+}
+
+/* ---------- tela: projetos ---------- */
+function rlxProjetos() {
+    const cont = $('cont-relatorio'), L = rlxEscolasProj();
+    if (!RLX.projSel) RLX.projSel = new Set(L.slice(0, 10).map(x => x.e.k));
+    const sel = L.filter(x => RLX.projSel.has(x.e.k)), D = sel.length ? rlxDocProjetos() : null;
+    $('acoes-relatorio').innerHTML = D ? `<button class="btn btn-p btn-sm" onclick="rlxEmitir(rlxDocProjetos(),'projetos')">${ic('download')}Baixar plano</button>` : '';
+    const dres = [...new Set(escolasOrd().map(e => e.dre))].sort((a, b) => nomeDre(a).localeCompare(nomeDre(b)));
+    cont.innerHTML = `<div class="card rlx-proj"><div class="card-pad" style="padding-bottom:10px"><div class="card-tit" style="margin-bottom:12px"><div class="ico" style="--c:var(--c-alto)">${ic('target')}</div><div><h3>Escolas com índices altos</h3><p>${L.length} escola(s) no critério · ${sel.length} selecionada(s). As ações seguem os temas acima da média de cada escola.</p></div></div>
+        <div class="pt-fil"><label class="rlx-sl">Índice mínimo <input type="range" id="rlx-min" min="25" max="90" step="5" value="${RLX.projMin}"><b id="rlx-min-v">${RLX.projMin}</b></label>
+            <select class="campo" id="rlx-dre" style="width:auto;height:32px;font-size:12.5px"><option value="">Todas as DREs</option>${dres.map(d => `<option value="${esc(d)}" ${RLX.projDre === d ? 'selected' : ''}>${esc(nomeDre(d))}</option>`).join('')}</select>
+            <button onclick="RLX.projSel=new Set(rlxEscolasProj().map(x=>x.e.k));rlxProjetos()">Marcar todas</button><button onclick="RLX.projSel=new Set();rlxProjetos()">Limpar</button></div>
+        ${rlxDest('Ex.: Coordenadoria de Segurança Escolar · DREs').replace('class="inteiro"', 'style="margin-top:10px"')}</div>
+        <div class="rlx-pj">${L.map((x, i) => `<label class="rlx-pe${RLX.projSel.has(x.e.k) ? ' on' : ''}" style="--an-i:${Math.min(i, 20)}"><input type="checkbox" data-k="${esc(x.e.k)}" ${RLX.projSel.has(x.e.k) ? 'checked' : ''}>
+            <span class="fc-idx" style="--c:${corIdx(x.e.idx)}">${x.e.idx}</span><span class="tx"><b>${esc(x.e.nome)}</b><span>${esc(nomeMun(x.e.mun))} · ${fmtN(x.e.n)} registro(s)</span>
+            <span class="rlx-temas">${x.temas.map(t => `<em style="--c:${t.p.cor}">${esc(t.p.t)}</em>`).join('')}</span>
+            <span class="rlx-acs">${projDe(x.temas, 3).map(({ p }) => `<i>${esc(p[0])}: ${esc(p[1])}</i>`).join('')}</span></span></label>`).join('') || '<div class="vazio">Nenhuma escola com esse índice no recorte.</div>'}</div></div>
+    ${rlxPrevia(D)}`;
+    $('rlx-min').oninput = e => { $('rlx-min-v').textContent = e.target.value; };
+    $('rlx-min').onchange = e => { RLX.projMin = +e.target.value; RLX.projSel = null; rlxProjetos(); };
+    $('rlx-dre').onchange = e => { RLX.projDre = e.target.value; RLX.projSel = null; rlxProjetos(); };
+    cont.querySelector('.rlx-pj').onchange = e => { const c = e.target.closest('input[data-k]'); if (!c) return; if (c.checked) RLX.projSel.add(c.dataset.k); else RLX.projSel.delete(c.dataset.k); rlxProjetos(); };
+    rlxLigarDest(rlxProjetos);
+}
+
+/* atalhos: da ficha da pessoa e do plano para o relatório */
+function relatorioAluno(k) { RLX.modo = 'aluno'; RLX.alunoK = k; RLX.alunoQ = ''; fecharModal(); if (typeof fecharGaveta === 'function') fecharGaveta(); irPara('relatorio'); }
+const _abrirPessoaRlx = abrirPessoa;
+abrirPessoa = function (k) {
+    _abrirPessoaRlx(k);
+    if (!podeVerPessoas()) return;
+    setTimeout(() => { const g = document.querySelector('.gaveta .acoes-t, #gaveta .acoes-t'); if (g && !g.querySelector('.rlx-atalho')) g.insertAdjacentHTML('beforeend', ` <button class="btn btn-s btn-sm rlx-atalho" onclick="relatorioAluno('${esc(k)}')">${ic('doc')}Relatório do estudante</button>`); }, 30);
+};
+const _abrirPlanoRlx = abrirPlano;
+abrirPlano = function (k) {
+    _abrirPlanoRlx(k);
+    const pe = document.querySelector('#modal .modal-pe, #modal footer');
+    if (pe && podeVerPessoas() && !pe.querySelector('.rlx-atalho')) pe.insertAdjacentHTML('afterbegin', `<button class="btn btn-v rlx-atalho" style="margin-right:auto" onclick="relatorioAluno('${esc(k)}')">${ic('doc')}Relatório do estudante</button>`);
+};
+const _abaRel = ABAS.find(a => a.id === 'relatorio'); if (_abaRel) { _abaRel.t = 'Relatórios'; _abaRel.h = 'Relatórios'; _abaRel.p = 'Relatório de inteligência, acompanhamento por estudante, sugestões para a escola e plano de projetos e palestras, com selo de autenticidade.'; }
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.8 — Meu dia: apresentação de inteligência
+   Painel em slides animados (panorama, gravidade, mapa, atenção,
+   tendência) com modo apresentação em tela cheia e radar de sinais
+   ===================================================================== */
+Object.assign(ICONES, Object.fromEntries(Object.entries({
+    pause: '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>',
+    play: '<polygon points="7 4 20 12 7 20 7 4"/>',
+    expand: '<polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>'
+}).filter(([k]) => !ICONES[k])));
+const MDX = { i: 0, play: true, dur: 8000, t: null, ini: 0, resto: 0 };
+const MDX_SL = [['sun', 'Panorama'], ['alerta', 'Gravidade'], ['map', 'Onde'], ['target', 'Atenção'], ['trend', 'Tendência'], ['zap', 'Sinais']];
+
+/* projeção simples do mapa de MT para SVG */
+const MDX_BB = { x0: -61.7, x1: -50.1, y0: -18.1, y1: -7.3 };
+const mdxXY = (lng, lat, W, H) => [((lng - MDX_BB.x0) / (MDX_BB.x1 - MDX_BB.x0) * W), ((MDX_BB.y1 - lat) / (MDX_BB.y1 - MDX_BB.y0) * H)];
+let _mdxUF = null;
+function mdxContorno(W, H) {
+    if (_mdxUF && _mdxUF.W === W) return _mdxUF.d;
+    const anel = c => c.map((p, i) => (i ? 'L' : 'M') + mdxXY(p[0], p[1], W, H).map(v => v.toFixed(1)).join(',')).join('') + 'Z';
+    const g = GEO_MT.uf, polys = g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates];
+    const d = polys.map(p => p.map(anel).join('')).join('');
+    _mdxUF = { W, d }; return d;
+}
+const mdxPos = r => { const e = A.escolas.get(r.escK); if (e && e.lat != null && e.lng != null) return [e.lng, e.lat]; const m = MUN_POR_K && MUN_POR_K.get ? MUN_POR_K.get(r.mun) : null; return m ? [m.lng, m.lat] : null; };
+
+/* sinais de inteligência: frases curtas e clicáveis */
+function mdxSinais(D) {
+    const S = [], { P, cur, prev } = D;
+    const sobe = [...D.tipos.entries()].map(([t, v]) => [t, v - (D.tiposA.get(t) || 0)]).sort((a, b) => b[1] - a[1])[0];
+    if (sobe && sobe[1] >= 2) S.push({ c: 'var(--c-alto)', i: 'trend', t: `${tipoCurto(sobe[0])} subiu`, s: `+${sobe[1]} em relação a ${P.nomeAnt}`, on: `filtrarPor('tipo',${JSON.stringify(sobe[0]).replace(/"/g, '&quot;')})` });
+    const at = typeof protCasos === 'function' ? protCasos().filter(c => !c.concluido && c.atras.length).length : 0;
+    if (at) S.push({ c: 'var(--c-crit)', i: 'check', t: `${at} protocolo(s) atrasado(s)`, s: 'Casos com passo vencido', on: `irPara('protocolos')` });
+    const am = typeof ameacaAchar === 'function' ? ameacaAchar(7).regs.length : 0;
+    if (am) S.push({ c: 'var(--c-crit)', i: 'alerta', t: `${am} sinal(is) de ameaça`, s: 'Termos vigiados nos últimos 7 dias', on: `irPara('ameacas')` });
+    if (A.escalada.length) S.push({ c: 'var(--c-alto)', i: 'activity', t: `${A.escalada.length} escola(s) em escalada`, s: A.escalada[0].nome, on: `abrirEscola('${esc(A.escalada[0].k)}')` });
+    const rec = (A.recorrencias || []).filter(c => c.ativa).length;
+    if (rec) S.push({ c: 'var(--roxo)', i: 'repeat', t: `${rec} reincidência(s) ativa(s)`, s: 'Mesmo fato voltando na mesma escola', on: `irPara('recorrencias')` });
+    if (D.novas.length) S.push({ c: 'var(--roxo)', i: 'escola', t: `${D.novas.length} escola(s) nova(s) no radar`, s: 'Sem registro nos 90 dias anteriores', on: `abrirEscola('${esc(D.novas[0])}')` });
+    if (D.pendVelhas) S.push({ c: 'var(--c-medio)', i: 'clock', t: `${D.pendVelhas} aguardando validação`, s: 'Há mais de 3 dias', on: `irPara('verificacao')` });
+    const hs = Array(24).fill(0); cur.concat(prev).forEach(r => { if (mdHora(r.dt)) hs[r.dt.getHours()]++; });
+    const hp = hs.indexOf(maxDe(hs, 0)); if (maxDe(hs, 0) >= 3) S.push({ c: 'var(--prim)', i: 'clock', t: `Pico às ${hp}h`, s: 'Horário com mais registros recentes', on: `irPara('graficos')` });
+    if (!S.length) S.push({ c: 'var(--verde)', i: 'check', t: 'Nenhum sinal fora do normal', s: 'Indicadores dentro do esperado', on: `irPara('painel')` });
+    return S;
+}
+
+/* série dos últimos 30 dias e semanas para tendência */
+function mdxSeries(D) {
+    const hoje = mdIni(D.P.atual ? new Date() : new Date(+D.P.fim - DIA)), d30 = [];
+    for (let i = 29; i >= 0; i--) d30.push({ d: new Date(+hoje - i * DIA), n: 0 });
+    const i0 = +d30[0].d; REG.forEach(r => { if (!r.dt) return; const k = Math.floor((+mdIni(r.dt) - i0) / DIA); if (k >= 0 && k < 30) d30[k].n++; });
+    const seg = mdSeg(hoje), sem = [];
+    for (let i = 7; i >= 0; i--) sem.push({ d: new Date(+seg - i * 7 * DIA), n: 0 });
+    const s0 = +sem[0].d; REG.forEach(r => { if (!r.dt) return; const k = Math.floor((+r.dt - s0) / (7 * DIA)); if (k >= 0 && k < 8) sem[k].n++; });
+    const base = sem.slice(0, 7).map(x => x.n), m = base.length, xm = (m - 1) / 2, ym = base.reduce((a, b) => a + b, 0) / m;
+    const inc = base.reduce((s, y, x) => s + (x - xm) * (y - ym), 0) / (base.reduce((s, _, x) => s + (x - xm) ** 2, 0) || 1);
+    const proj = Math.max(0, Math.round(ym + inc * (m - xm)));
+    return { d30, sem, proj, inc, ym };
+}
+
+/* ---------- slides ---------- */
+function mdxSlide(i, D, X) {
+    const { P, cur, prev } = D, n = cur.length, na = prev.length, sem = MD.modo === 'semana';
+    if (i === 0) {
+        const mx = maxDe(X.d30.map(x => x.n), 1), W = 520, H = 120;
+        const pts = X.d30.map((x, k) => [k * W / 29, H - 8 - x.n / mx * (H - 20)]);
+        const d = pts.map((p, k) => (k ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('');
+        const g = X.d30.reduce((a, b) => a + b.n, 0);
+        return `<div class="mdx-s mdx-pan"><div class="mdx-txt"><small>${esc(P.rot)}</small><div class="mdx-big"><b data-conta="${n}">${fmtN(n)}</b><span>registro${n === 1 ? '' : 's'}</span>${mdVar(n, na)}</div><p>${mdFrase(D)}</p></div>
+            <div class="mdx-viz"><svg viewBox="0 0 ${W} ${H + 18}" class="mdx-spark" aria-label="Registros por dia nos últimos 30 dias"><defs><linearGradient id="mdx-gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity=".55"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></linearGradient></defs>
+                <path d="${d}L${W},${H}L0,${H}Z" fill="url(#mdx-gr)" class="ar"/><path d="${d}" class="ln"/>${pts.map((p, k) => X.d30[k].n ? `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${k === 29 ? 5 : 2.4}" class="${k === 29 ? 'ult' : ''}" data-dica="${mdFmt(X.d30[k].d)}: ${X.d30[k].n}"/>` : '').join('')}
+                <text x="0" y="${H + 15}">${mdFmt(X.d30[0].d)}</text><text x="${W}" y="${H + 15}" text-anchor="end">${mdFmt(X.d30[29].d)}</text></svg>
+                <div class="mdx-mini"><span><b>${fmtN(g)}</b> em 30 dias</span><span><b>${fmt1(g / 30)}</b> por dia</span><span><b>${fmtN(D.escolas.size)}</b> escola(s) ${sem ? 'na semana' : 'no dia'}</span></div></div></div>`;
+    }
+    if (i === 1) {
+        const base = n ? cur : X.d30.length ? REG.filter(r => r.dt && r.dt >= X.d30[0].d) : [], tot = base.length || 1;
+        const cs = CRIT_ORD.map(c => ({ c, n: base.filter(r => r.crit === c).length }));
+        const R = 70, C = 2 * Math.PI * R; let acc = 0;
+        const arcos = cs.map(x => { const f = x.n / tot, a = `<circle r="${R}" cx="90" cy="90" class="arc" style="--c:${corCrit(x.c)};stroke-dasharray:${(f * C).toFixed(1)} ${C.toFixed(1)};stroke-dashoffset:${(-acc * C).toFixed(1)}" data-dica="${x.c}: ${x.n}"/>`; acc += f; return a; }).join('');
+        const graves = cs[0].n + cs[1].n;
+        return `<div class="mdx-s mdx-grav"><div class="mdx-viz"><svg viewBox="0 0 180 180" class="mdx-donut"><circle r="${R}" cx="90" cy="90" class="trilha"/>${arcos}<text x="90" y="86" class="n">${fmtN(graves)}</text><text x="90" y="106" class="l">graves</text></svg></div>
+            <div class="mdx-txt"><small>${n ? esc(P.rot) : 'Últimos 30 dias'} · gravidade</small><h3>${Math.round(graves / tot * 100)}% dos registros são críticos ou altos</h3>
+            <div class="mdx-crit">${cs.map((x, k) => `<button onclick="filtrarPor('crit','${x.c}')" style="--c:${corCrit(x.c)};--an-i:${k}"><i></i><span>${x.c.charAt(0) + x.c.slice(1).toLowerCase()}</span><b>${fmtN(x.n)}</b><em><i style="width:${(x.n / tot * 100).toFixed(1)}%"></i></em></button>`).join('')}</div></div></div>`;
+    }
+    if (i === 2) {
+        const W = 420, H = Math.round(W * (MDX_BB.y1 - MDX_BB.y0) / (MDX_BB.x1 - MDX_BB.x0));
+        const base = n ? cur : REG.filter(r => r.dt && r.dt >= X.d30[0].d);
+        const pm = new Map(); base.forEach(r => { const p = mdxPos(r); if (!p) return; const k = r.escK; const o = pm.get(k) || { p, n: 0, g: 0, r }; o.n++; if (mdAlta(r)) o.g++; pm.set(k, o); });
+        const pts = [...pm.values()].sort((a, b) => a.n - b.n);
+        const lc = [...(n ? D.locais : new Map(base.reduce((m, r) => { const k = D.porDre ? r.dre : r.mun; m.set(k, (m.get(k) || 0) + 1); return m; }, new Map()))).entries()].sort((a, b) => b[1] - a[1]).slice(0, 4);
+        return `<div class="mdx-s mdx-onde"><div class="mdx-viz"><svg viewBox="-6 -6 ${W + 12} ${H + 12}" class="mdx-mapa"><path d="${mdxContorno(W, H)}" class="uf"/>
+            ${pts.map((o, k) => { const [x, y] = mdxXY(o.p[0], o.p[1], W, H); const r = Math.min(14, 3 + Math.sqrt(o.n) * 2.2); return `<g class="pt${o.g ? ' g' : ''}" style="--an-i:${Math.min(k, 40)}" onclick="abrirEscola('${esc(o.r.escK)}')" data-dica="<b>${esc(o.r.esc)}</b><br>${o.n} registro(s)">${o.g ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" class="onda"/>` : ''}<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" class="b"/></g>`; }).join('')}</svg></div>
+            <div class="mdx-txt"><small>${n ? esc(P.rot) : 'Últimos 30 dias'} · território</small><h3>${fmtN(pts.length)} escola(s) com registro</h3><p>Pontos vermelhos tiveram fato crítico ou alto. Toque num ponto para abrir a escola.</p>
+            <div class="mdx-rank">${lc.map(([k, v], j) => `<button onclick="filtrarPor('${D.porDre ? 'dre' : 'mun'}','${esc(k)}')" style="--an-i:${j}"><em>${j + 1}</em><span>${esc(D.porDre ? nomeDre(k) : nomeMun(k))}</span><b>${fmtN(v)}</b></button>`).join('')}</div></div></div>`;
+    }
+    if (i === 3) {
+        const it = [];
+        cur.filter(r => r.crit === 'CRÍTICO').slice(0, 3).forEach(r => it.push({ c: 'var(--c-crit)', ic: 'alerta', tag: 'Crítico', t: tipoCurto(r.tipo), s: `${r.esc} · ${nomeMun(r.mun)}`, on: `abrirOcorrencia('${esc(r.id)}')` }));
+        if (typeof protCasos === 'function') protCasos().filter(c => !c.concluido && c.atras.length).slice(0, 2).forEach(c => it.push({ c: 'var(--c-alto)', ic: 'check', tag: 'Protocolo', t: c.prox.t, s: `${tipoCurto(c.r.tipo)} · ${c.r.esc}`, on: `abrirProtocolo('${esc(c.r.id)}')` }));
+        D.alertas.slice(0, 2).forEach(({ a, i: k }) => it.push({ c: 'var(--roxo)', ic: 'target', tag: 'Problema', t: a.titulo, s: a.local, on: `abrirAlerta(${k})` }));
+        if (it.length < 3) A.escalada.slice(0, 3 - it.length).forEach(e => it.push({ c: 'var(--c-alto)', ic: 'trend', tag: 'Escalada', t: e.nome, s: `${e.r30} registros em 30 dias · ${fmt1(e.tend)}× o ritmo anterior`, on: `abrirEscola('${esc(e.k)}')` }));
+        return `<div class="mdx-s mdx-at"><div class="mdx-txt"><small>Prioridades</small><h3>${it.length ? 'O que pede ação primeiro' : 'Nada urgente agora'}</h3><p>${it.length ? 'Críticos do período, protocolos com passo vencido, problemas detectados e escolas em escalada.' : 'Sem críticos, protocolos atrasados ou problemas no período.'}</p></div>
+            <div class="mdx-cards">${it.slice(0, 4).map((x, k) => `<button class="mdx-card" style="--c:${x.c};--an-i:${k}" onclick="${x.on}"><span class="ic">${ic(x.ic)}</span><span class="tx"><em>${x.tag}</em><b>${esc(x.t)}</b><span>${esc(x.s)}</span></span>${ic('chevR')}</button>`).join('') || `<div class="mdx-ok">${ic('check')}Tudo em dia</div>`}</div></div>`;
+    }
+    if (i === 4) {
+        const mx = maxDe(X.sem.map(x => x.n).concat([X.proj]), 1), W = 520, H = 150, bw = W / 10;
+        const tend = X.inc > X.ym * .08 ? ['subindo', 'var(--c-crit)', '▲'] : X.inc < -X.ym * .08 ? ['caindo', 'var(--verde)', '▼'] : ['estável', 'var(--c-medio)', '='];
+        return `<div class="mdx-s mdx-tend"><div class="mdx-txt"><small>Últimas 8 semanas</small><h3>Tendência <span style="color:${tend[1]}">${tend[2]} ${tend[0]}</span></h3><p>Se o ritmo das últimas semanas continuar, a próxima semana deve ter cerca de <b>${fmtN(X.proj)}</b> registros (média de ${fmt1(X.ym)} por semana).</p>
+            ${A.escalada.length ? `<div class="mdx-rank">${A.escalada.slice(0, 3).map((e, j) => `<button onclick="abrirEscola('${esc(e.k)}')" style="--an-i:${j}"><em>${ic('trend')}</em><span>${esc(e.nome)}</span><b>${fmt1(e.tend)}×</b></button>`).join('')}</div>` : ''}</div>
+            <div class="mdx-viz"><svg viewBox="0 0 ${W} ${H + 20}" class="mdx-barras">${X.sem.map((x, k) => { const h = x.n / mx * (H - 16); return `<g style="--an-i:${k}"><rect x="${(k * bw + 6).toFixed(1)}" y="${(H - h).toFixed(1)}" width="${(bw - 12).toFixed(1)}" height="${h.toFixed(1)}" rx="5" class="${k === 7 ? 'atual' : ''}" data-dica="Semana de ${mdFmt(x.d)}: ${x.n}"/><text x="${(k * bw + bw / 2).toFixed(1)}" y="${H + 15}">${mdFmt(x.d)}</text></g>`; }).join('')}
+                <g style="--an-i:9"><rect x="${(8 * bw + 6 + bw / 2).toFixed(1)}" y="${(H - X.proj / mx * (H - 16)).toFixed(1)}" width="${(bw - 12).toFixed(1)}" height="${(X.proj / mx * (H - 16)).toFixed(1)}" rx="5" class="proj" data-dica="Projeção: ${X.proj}"/><text x="${(8.5 * bw + bw / 2).toFixed(1)}" y="${H + 15}">próx.</text></g></svg></div></div>`;
+    }
+    const S = mdxSinais(D);
+    return `<div class="mdx-s mdx-sin"><div class="mdx-txt"><small>Radar de inteligência</small><h3>${S.length} sinal(is) para acompanhar</h3><p>Leitura automática do sistema a partir dos registros, protocolos, ameaças e reincidências.</p></div>
+        <div class="mdx-radar"><div class="mdx-varre"></div>${S.slice(0, 8).map((x, k) => `<button class="mdx-sinal" style="--c:${x.c};--an-i:${k}" onclick="${x.on}"><span class="ic">${ic(x.i)}</span><span class="tx"><b>${esc(x.t)}</b><span>${esc(x.s)}</span></span></button>`).join('')}</div></div>`;
+}
+
+/* ---------- controle da apresentação ---------- */
+function mdxIr(i, manual) {
+    const box = $('mdx'); if (!box) return;
+    const n = MDX_SL.length; MDX.i = (i + n) % n;
+    box.querySelectorAll('.mdx-pista > .mdx-s').forEach((s, k) => { s.classList.toggle('on', k === MDX.i); s.setAttribute('aria-hidden', k === MDX.i ? 'false' : 'true'); });
+    box.querySelectorAll('.mdx-prog button').forEach((b, k) => { b.classList.toggle('feito', k < MDX.i); b.classList.toggle('on', k === MDX.i); });
+    const at = box.querySelector('.mdx-pista > .mdx-s.on'); if (at) { at.classList.remove('anima'); void at.offsetWidth; at.classList.add('anima'); at.querySelectorAll('[data-conta]').forEach(el => { el._contado = 0; contarAte(el); }); }
+    if (manual) MDX.resto = 0;
+    mdxTimer();
+}
+function mdxTimer() {
+    clearTimeout(MDX.t);
+    const box = $('mdx'); if (!box) return;
+    box.classList.toggle('pausado', !MDX.play);
+    const pb = box.querySelector('.mdx-prog button.on i'); if (pb) { pb.style.animation = 'none'; void pb.offsetWidth; pb.style.animation = ''; pb.style.animationDuration = MDX.dur + 'ms'; pb.style.animationPlayState = MDX.play ? 'running' : 'paused'; }
+    if (!MDX.play) return;
+    MDX.t = setTimeout(() => { if (ABA !== 'meudia' || document.hidden || !$('mdx')) { MDX.t = setTimeout(mdxTimer, 1500); return; } mdxIr(MDX.i + 1); }, MDX.dur);
+}
+function mdxPlay(v) { MDX.play = v == null ? !MDX.play : v; const b = document.querySelector('#mdx .mdx-pp'); if (b) b.innerHTML = MDX.play ? ic('pause') + '<span>Pausar</span>' : ic('play') + '<span>Continuar</span>'; mdxTimer(); }
+function mdxTela() {
+    const box = $('mdx'); if (!box) return;
+    telaCheiaRede(box, () => { const on = !!document.fullscreenElement || box.classList.contains('tela-cheia'); box.classList.toggle('apresentando', on); const b = box.querySelector('.mdx-fs'); if (b) b.innerHTML = on ? ic('x') + '<span>Sair</span>' : ic('expand') + '<span>Apresentar</span>'; if (on) mdxPlay(true); });
+}
+document.addEventListener('keydown', e => {
+    if (ABA !== 'meudia' || !$('mdx') || /INPUT|TEXTAREA|SELECT/.test((e.target.tagName || ''))) return;
+    const ap = $('mdx').classList.contains('apresentando');
+    if (e.key === 'ArrowRight' && ap) { mdxIr(MDX.i + 1, 1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' && ap) { mdxIr(MDX.i - 1, 1); e.preventDefault(); }
+    else if (e.key === ' ' && ap) { mdxPlay(); e.preventDefault(); }
+});
+
+function mdxMontar() {
+    const cont = $('cont-meudia'); if (!cont || !A) return;
+    const D = mdDados(), X = mdxSeries(D), S = mdxSinais(D);
+    const hr = new Date().getHours(), saud = hr < 12 ? 'Bom dia' : hr < 18 ? 'Boa tarde' : 'Boa noite';
+    const nome = USUARIO && USUARIO.nome ? esc(String(USUARIO.nome).split(' ')[0]) : '';
+    const html = `<section class="mdx" id="mdx" aria-roledescription="apresentação" aria-label="Apresentação de inteligência">
+        <div class="mdx-fundo" aria-hidden="true"><i></i><i></i><i></i></div>
+        <header class="mdx-cab"><div class="mdx-marca"><span class="mdx-pulso"></span><div><small>${saud}${nome ? ', ' + nome : ''}</small><b>Briefing de inteligência<span class="mdx-dt"> · ${esc(D.P.rot)}</span></b></div></div>
+            <div class="mdx-ctl"><button class="mdx-pp" onclick="mdxPlay()">${MDX.play ? ic('pause') + '<span>Pausar</span>' : ic('play') + '<span>Continuar</span>'}</button><button class="mdx-fs" onclick="mdxTela()">${ic('expand')}<span>Apresentar</span></button></div></header>
+        <nav class="mdx-prog" aria-label="Slides">${MDX_SL.map(([i, t], k) => `<button onclick="mdxIr(${k},1)" aria-label="${t}"><span>${ic(i)}${t}</span><em><i></i></em></button>`).join('')}</nav>
+        <div class="mdx-pista">${MDX_SL.map((_, k) => mdxSlide(k, D, X)).join('')}</div>
+        <button class="mdx-seta e" onclick="mdxIr(MDX.i-1,1)" aria-label="Anterior">${ic('chevR')}</button><button class="mdx-seta d" onclick="mdxIr(MDX.i+1,1)" aria-label="Próximo">${ic('chevR')}</button>
+        <div class="mdx-ticker" aria-label="Sinais"><div class="mdx-tk-in">${S.concat(S).map(x => `<button style="--c:${x.c}" onclick="${x.on}">${ic(x.i)}<b>${esc(x.t)}</b><span>${esc(x.s)}</span></button>`).join('')}</div></div>
+    </section>`;
+    const topo = cont.querySelector('.md-topo');
+    if (topo) topo.outerHTML = html; else cont.insertAdjacentHTML('afterbegin', html);
+    const box = $('mdx');
+    box.addEventListener('mouseenter', () => { if (!box.classList.contains('apresentando')) { MDX._hover = MDX.play; if (MDX.play) { MDX.play = false; mdxTimer(); } } });
+    box.addEventListener('mouseleave', () => { if (MDX._hover) { MDX.play = true; MDX._hover = false; mdxTimer(); } });
+    let x0 = null; box.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) mdxIr(MDX.i + (dx < 0 ? 1 : -1), 1); x0 = null; });
+    if (typeof ligarDicas === 'function') ligarDicas(box);
+    if (!MOVE()) MDX.play = false;
+    mdxIr(MDX.i);
+}
+const _rMeuDiaMdx = rMeuDia;
+rMeuDia = function () { _rMeuDiaMdx(); try { mdxMontar(); } catch (e) { console.error(e); } };
+if (TOPICOS.meudia) { const t = TOPICOS.meudia[0]; t.t = 'Briefing e resumo'; t.s = 'A apresentação de inteligência e os principais números'; t.m = /mdx|md-topo|md-vazio|md-kpis/; }
 
 </script>
 </body>
