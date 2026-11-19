@@ -2900,6 +2900,267 @@ body.sem-rolagem { overflow: hidden; }
 <style>.mdx-pista { display: grid; align-items: center; } @media (max-width: 900px) { .mdx-marca b { font-size: 15px; } .mdx-cab { flex-wrap: nowrap; } .mdx-marca { min-width: 0; } }</style>
 <style>@media (max-width: 900px) { .mdx-dt { display: none; } }</style>
 <style>@media (max-width: 900px) { .mdx-mapa { width: auto !important; height: 220px !important; max-height: 220px; } .mdx-txt p { font-size: 13.5px; } }</style>
+<style>
+/* 4.9 · modo apresentação */
+.apx-esc3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.apx-esc3 button { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 16px; border-radius: 16px; border: 1px solid var(--borda); background: var(--card); text-align: left; transition: transform .15s, border-color .15s; }
+.apx-esc3 button:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--prim); } .apx-esc3 button:disabled { opacity: .45; cursor: not-allowed; }
+.apx-esc3 .ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in srgb, var(--prim) 10%, transparent); color: var(--prim); margin-bottom: 6px; } .apx-esc3 .ic svg { width: 20px; height: 20px; }
+.apx-esc3 b { font-size: 15px; } .apx-esc3 small { font-size: 12px; color: var(--muted); }
+.apx-esc3 button.ativo { background: linear-gradient(135deg, #0b1a42, #1e3a8a); color: #fff; border-color: transparent; box-shadow: 0 14px 28px -16px #1e3a8a; } .apx-esc3 button.ativo .ic { background: rgba(255,255,255,.14); color: #7dd3fc; } .apx-esc3 button.ativo small { color: #bfdbfe; }
+.sw-l { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; font-weight: 600; } .sw-l input { accent-color: var(--prim); width: 16px; height: 16px; }
+.apx-resumo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px; } .apx-resumo > div { background: var(--suave); border-radius: 12px; padding: 10px 12px; min-width: 0; } .apx-resumo small { display: block; font-size: 11px; color: var(--muted); } .apx-resumo b { font-size: 15px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.apx-thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.apx-thumbs button { position: relative; aspect-ratio: 16/10; border-radius: 12px; padding: 12px; text-align: left; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; color: #e2e8f0; overflow: hidden; background: radial-gradient(120% 120% at 0 0, #1e3a8a, #0b1a42 60%, #060d24); transition: transform .15s, box-shadow .15s; animation: anTroca .4s both; animation-delay: calc(var(--an-i) * 35ms); }
+.apx-thumbs button:hover { transform: translateY(-3px); box-shadow: 0 14px 24px -14px #0b1a42; }
+.apx-thumbs .n { position: absolute; top: 10px; left: 12px; font: 800 22px var(--f-tit); color: #38bdf8; opacity: .8; } .apx-thumbs b { font-size: 13px; color: #fff; }
+.apx-thumbs i { position: absolute; top: 12px; right: 12px; width: 26px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.2); } .apx-thumbs i.esp { background: #f43f5e; }
+@media (max-width: 700px) { .apx-esc3, .apx-resumo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .apx-esc3 button:last-child { grid-column: 1 / -1; } }
+/* player */
+.apx { position: fixed; inset: 0; z-index: 10050; color: #e2e8f0; background: radial-gradient(130% 120% at 0% 0%, #1e3a8a 0%, #0b1a42 42%, #050b1f 100%); display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; font-size: clamp(14px, 1.1vw, 18px); -webkit-user-select: none; user-select: none; }
+.apx-fundo { position: absolute; inset: 0; pointer-events: none; } .apx-fundo i { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .45; animation: mdxFlut 20s ease-in-out infinite alternate; }
+.apx-fundo i:nth-child(1) { width: 40vw; height: 40vw; background: #2563eb; left: -10vw; top: -15vw; } .apx-fundo i:nth-child(2) { width: 30vw; height: 30vw; background: #7c3aed; right: -8vw; top: 30%; animation-delay: -7s; opacity: .3; } .apx-fundo i:nth-child(3) { width: 28vw; height: 28vw; background: #0891b2; left: 35%; bottom: -16vw; animation-delay: -13s; opacity: .3; }
+.apx-fundo canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.apx-dagua { position: absolute; inset: -30%; pointer-events: none; transform: rotate(-24deg); display: flex; flex-direction: column; justify-content: space-around; opacity: .045; z-index: 1; }
+.apx-dagua span { white-space: nowrap; font: 800 22px var(--f-tit); letter-spacing: .2em; color: #fff; }
+.apx-topo { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 24px; }
+.apx-id { display: flex; gap: 10px; align-items: center; min-width: 0; } .apx-id span { display: flex; flex-direction: column; font-size: 12px; color: #94a3b8; min-width: 0; } .apx-id b { color: #fff; font-size: 13px; letter-spacing: .04em; }
+.apx-tarja { display: inline-flex; gap: 7px; align-items: center; font-weight: 800; font-size: 12px; letter-spacing: .18em; color: #fecaca; padding: 6px 14px; border: 1.5px solid #f43f5e; border-radius: 6px; background: rgba(244,63,94,.12); } .apx-tarja svg { width: 15px; height: 15px; }
+.apx-bt { display: flex; gap: 6px; } .apx-bt button { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; color: #e2e8f0; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); } .apx-bt button:hover { background: rgba(255,255,255,.16); } .apx-bt svg { width: 17px; height: 17px; }
+.apx-palco { position: relative; z-index: 2; min-height: 0; }
+.apx-s { position: absolute; inset: 0; padding: 2vh 7vw 3vh; display: flex; flex-direction: column; justify-content: center; gap: 2.4vh; opacity: 0; visibility: hidden; transform: translateX(4vw) scale(.98); transition: opacity .55s, transform .7s cubic-bezier(.16,1,.3,1), visibility 0s .7s; overflow: auto; }
+.apx-s.antes { transform: translateX(-4vw) scale(.98); }
+.apx-s.on { opacity: 1; visibility: visible; transform: none; transition: opacity .55s, transform .7s cubic-bezier(.16,1,.3,1); }
+.apx .k { font-size: .78em; letter-spacing: .14em; text-transform: uppercase; color: #7dd3fc; font-weight: 800; }
+.apx-txt h2, .apx-sig h2 { font: 800 clamp(26px, 3.2vw, 54px)/1.1 var(--f-tit); color: #fff; margin: .25em 0 .2em; }
+.apx-txt p { color: #cbd5e1; font-size: 1.05em; margin: 0; max-width: 60ch; }
+.apx-s.anima .apx-txt > * { animation: mdxEntra .7s cubic-bezier(.16,1,.3,1) both; } .apx-s.anima .apx-txt > *:nth-child(2) { animation-delay: .08s; } .apx-s.anima .apx-txt > *:nth-child(3) { animation-delay: .16s; }
+/* capa */
+.apx-capa { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 5vw; align-items: center; }
+.apx-orb { position: relative; width: clamp(160px, 20vw, 300px); aspect-ratio: 1; display: grid; place-items: center; }
+.apx-orb span { position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid rgba(56,189,248,.45); animation: apxOrb 6s linear infinite; } .apx-orb span:nth-child(2) { inset: 12%; border-style: dashed; border-color: rgba(167,139,250,.5); animation-duration: 10s; animation-direction: reverse; } .apx-orb span:nth-child(3) { inset: 24%; border-color: rgba(34,211,238,.35); box-shadow: 0 0 60px rgba(56,189,248,.35) inset; animation-duration: 14s; }
+.apx-orb span:nth-child(1)::after { content: ''; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 14px #38bdf8; }
+@keyframes apxOrb { to { transform: rotate(360deg); } }
+.apx-orb svg { width: 42%; height: auto; filter: drop-shadow(0 0 22px rgba(56,189,248,.5)); }
+.apx-capa h1 { font: 800 clamp(34px, 5vw, 84px)/1.02 var(--f-tit); margin: .15em 0; background: linear-gradient(180deg, #fff 30%, #93c5fd); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.apx-capa h2 { font: 700 clamp(18px, 2vw, 32px) var(--f-tit); color: #e0f2fe; margin: 0 0 .3em; } .apx-capa p { color: #94a3b8; margin: 0; }
+.apx-carimbo { display: flex; width: fit-content; flex-direction: column; align-items: center; padding: 8px 18px; border: 3px double #f43f5e; color: #fda4af; font-weight: 900; letter-spacing: .22em; font-size: .85em; transform: rotate(-4deg); margin-bottom: 1.6vh; border-radius: 6px; background: rgba(244,63,94,.08); } .apx-carimbo small { font-size: .7em; letter-spacing: .12em; font-weight: 700; }
+.apx-s.anima .apx-carimbo { animation: apxCarimbo .7s .4s cubic-bezier(.34,1.56,.64,1) both; } @keyframes apxCarimbo { from { transform: rotate(-4deg) scale(2.4); opacity: 0; } }
+.apx-s.anima .apx-capa-tx > :not(.apx-carimbo) { animation: mdxEntra .8s cubic-bezier(.16,1,.3,1) both; } .apx-s.anima .apx-capa-tx > :nth-child(3) { animation-delay: .1s; } .apx-s.anima .apx-capa-tx > :nth-child(4) { animation-delay: .2s; } .apx-s.anima .apx-capa-tx > :nth-child(5) { animation-delay: .3s; } .apx-s.anima .apx-capa-tx > :nth-child(6) { animation-delay: .45s; }
+.apx-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2.4vh; } .apx-meta span { display: inline-flex; gap: 6px; align-items: center; font-size: .8em; padding: 6px 12px; border-radius: 99px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); } .apx-meta svg { width: 14px; height: 14px; color: #7dd3fc; }
+.apx-selo-f { width: clamp(150px, 18vw, 260px); } .apx-selo-f svg { width: 100%; height: auto; filter: drop-shadow(0 0 24px rgba(56,189,248,.35)); } .apx-s.anima .apx-selo-f { animation: apxGiro 1.2s cubic-bezier(.16,1,.3,1) both; } @keyframes apxGiro { from { transform: rotate(-120deg) scale(.4); opacity: 0; } }
+.apx-qr { display: inline-flex; gap: 12px; align-items: center; margin-top: 2vh; padding: 10px; background: #fff; border-radius: 12px; color: #0b1a42; font-size: .8em; font-weight: 700; } .apx-qr svg { width: 84px; height: 84px; }
+/* sigilo */
+.apx-sig { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.apx-cad { width: 84px; height: 84px; border-radius: 24px; display: grid; place-items: center; background: linear-gradient(135deg, #be123c, #f43f5e); box-shadow: 0 0 0 10px rgba(244,63,94,.12), 0 20px 40px -10px #be123c; margin-bottom: 2vh; } .apx-cad svg { width: 42px; height: 42px; color: #fff; }
+.apx-s.anima .apx-cad { animation: rtlPop .7s cubic-bezier(.34,1.56,.64,1) both; }
+.apx-sig-g { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 1000px; text-align: left; margin-top: 2vh; }
+.apx-sig-g > div { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; padding: 16px; border-radius: 16px; background: rgba(15,23,42,.55); border: 1px solid rgba(244,63,94,.25); } .apx-sig-g svg { width: 22px; height: 22px; color: #fb7185; grid-row: span 2; } .apx-sig-g b { color: #fff; } .apx-sig-g span { color: #cbd5e1; font-size: .9em; }
+.apx-s.anima .apx-sig-g > div { animation: mdxEntra .6s both; } .apx-s.anima .apx-sig-g > div:nth-child(2) { animation-delay: .1s; } .apx-s.anima .apx-sig-g > div:nth-child(3) { animation-delay: .2s; } .apx-s.anima .apx-sig-g > div:nth-child(4) { animation-delay: .3s; }
+.apx-rast { margin-top: 2vh; font: 600 .8em var(--f-mono, monospace); color: #fda4af; letter-spacing: .04em; }
+/* roteiro */
+.apx-agenda { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 4vw; max-width: 1100px; }
+.apx-agenda li { display: flex; gap: 14px; align-items: center; font-size: 1.15em; font-weight: 600; color: #fff; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.1); } .apx-agenda span { font: 800 1.1em var(--f-tit); color: #38bdf8; }
+.apx-s.anima .apx-agenda li { animation: mdxEntra .5s calc(.1s + var(--an-i) * 60ms) both; }
+/* kpis */
+.apx-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.apx-kpi { position: relative; padding: 2.4vh 20px; border-radius: 20px; background: linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.12); display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
+.apx-kpi::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--c); box-shadow: 0 0 18px var(--c); }
+.apx-kpi .ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 25%, transparent); color: color-mix(in srgb, var(--c) 40%, #fff); margin-bottom: 6px; } .apx-kpi .ic svg { width: 20px; height: 20px; }
+.apx-kpi > b { font: 800 clamp(34px, 4vw, 68px)/1 var(--f-tit); color: #fff; } .apx-kpi .t { color: #cbd5e1; font-weight: 600; } .apx-kpi small { color: #64748b; font-size: .75em; }
+.apx-kpis.peq .apx-kpi > b { font-size: clamp(28px, 3vw, 48px); }
+.apx-s.anima .apx-kpi { animation: rtlPop .6s calc(.15s + var(--an-i) * 90ms) cubic-bezier(.34,1.56,.64,1) both; }
+.apx-var { white-space: nowrap; display: inline-block; width: fit-content; font-size: .8em; font-weight: 800; padding: 2px 8px; border-radius: 99px; background: rgba(255,255,255,.08); color: #cbd5e1; } .apx-var.s { color: #fda4af; background: rgba(244,63,94,.15); } .apx-var.d { color: #86efac; background: rgba(34,197,94,.15); }
+.apx-nota { color: #94a3b8; margin: 0; } .apx-nota b { color: #fff; }
+/* gráficos */
+.apx-viz svg { width: 100%; height: auto; display: block; overflow: visible; max-height: 58vh; }
+.apx-linha .gr { stroke: rgba(255,255,255,.08); } .apx-linha .ey, .apx-linha .ex { fill: #94a3b8; font-size: 12px; } .apx-linha .ex { text-anchor: middle; }
+.apx-linha .ln { fill: none; stroke: #38bdf8; stroke-width: 3.5; stroke-linejoin: round; filter: drop-shadow(0 6px 14px rgba(56,189,248,.5)); stroke-dasharray: 3000; stroke-dashoffset: 3000; }
+.apx-linha .ln2 { fill: none; stroke: #f43f5e; stroke-width: 2.5; stroke-dasharray: 3000; stroke-dashoffset: 3000; }
+.apx-s.anima .apx-linha .ln { animation: mdxTraco 2s .2s cubic-bezier(.16,1,.3,1) forwards; } .apx-s.anima .apx-linha .ln2 { animation: mdxTraco 2s .6s cubic-bezier(.16,1,.3,1) forwards; } .apx-s.anima .apx-linha .ar { animation: mdxFade 1.2s .6s both; }
+.apx-linha circle { fill: #e0f2fe; } .apx-linha circle.ult { fill: #22d3ee; stroke: #fff; stroke-width: 2; animation: mdxPul 2s infinite; }
+.apx-2 { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 5vw; align-items: center; } .apx-2.mapa { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); }
+.apx-donut { max-width: 380px; margin: 0 auto; } .apx-donut .trilha { fill: none; stroke: rgba(255,255,255,.07); stroke-width: 26; } .apx-donut .arc { fill: none; stroke: var(--c); stroke-width: 26; transform: rotate(-90deg); transform-origin: 100px 100px; } .apx-s.anima .apx-donut .arc { animation: mdxArc 1.4s cubic-bezier(.16,1,.3,1) both; }
+.apx-donut .n { fill: #fff; font-size: 42px; font-weight: 800; font-family: var(--f-tit); text-anchor: middle; } .apx-donut .l { fill: #94a3b8; font-size: 13px; text-anchor: middle; }
+.apx-leg { display: flex; flex-wrap: wrap; gap: 8px 16px; justify-content: center; margin-top: 12px; font-size: .9em; } .apx-leg i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; } .apx-leg b { color: #fff; }
+.apx-barras, .apx-rank, .apx-temas { display: flex; flex-direction: column; gap: 1.3vh; margin-top: 1.5vh; }
+.apx-barras > div, .apx-rank > div, .apx-temas > div { display: grid; grid-template-columns: minmax(120px, 1fr) minmax(0, 1.4fr) 56px 64px; gap: 12px; align-items: center; }
+.apx-rank > div { grid-template-columns: 28px minmax(100px, 1fr) minmax(0, 1.2fr) 56px; } .apx-temas > div { grid-template-columns: minmax(150px, 1fr) minmax(0, 1.6fr) 56px; }
+.apx .nm { color: #e2e8f0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .apx .nm em { font-style: normal; color: #fb7185; }
+.apx .br { position: relative; height: 12px; border-radius: 99px; background: rgba(255,255,255,.08); } .apx .br i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #2563eb, #38bdf8); transform-origin: left; } .apx-temas .br i { background: var(--c); } .apx-temas .br u { position: absolute; top: -4px; bottom: -4px; width: 3px; border-radius: 2px; background: #fff; box-shadow: 0 0 8px #fff; }
+.apx-barras b, .apx-rank b, .apx-temas b { color: #fff; text-align: right; font-size: 1.05em; }
+.apx-rank em { font-style: normal; width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: rgba(56,189,248,.18); color: #7dd3fc; font-weight: 800; }
+.apx-s.anima .apx-barras > div, .apx-s.anima .apx-rank > div, .apx-s.anima .apx-temas > div { animation: mdxEntra .5s calc(.2s + var(--an-i) * 70ms) both; } .apx-s.anima .apx .br i, .apx-s.anima .br i { animation: anBarra 1s calc(.3s + var(--an-i) * 70ms) cubic-bezier(.16,1,.3,1) both; }
+/* mapa */
+.apx-mapa { max-height: 62vh !important; } .apx-mapa .mu { fill: rgba(56,189,248,calc(var(--a) * .9 + .03)); stroke: rgba(148,163,184,.25); stroke-width: .6; transition: fill .2s; } .apx-mapa .mu.f { stroke: rgba(125,211,252,.7); stroke-width: 1; } .apx-mapa .mu:hover { fill: #f59e0b; }
+.apx-mapa .uf { fill: none; stroke: #38bdf8; stroke-width: 2; filter: drop-shadow(0 0 10px rgba(56,189,248,.6)); }
+.apx-s.anima .apx-mapa .mu { animation: mdxFade .6s calc(var(--an-i) * 12ms) both; }
+.apx-mapa .b { fill: #38bdf8; stroke: #fff; stroke-width: 1.2; } .apx-mapa .g .b { fill: #f43f5e; } .apx-mapa .onda { fill: none; stroke: #38bdf8; stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: mdxOnda 2.4s infinite; } .apx-mapa .g .onda { stroke: #f43f5e; }
+/* escolas */
+.apx-escs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.apx-esc { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; padding: 14px 16px; border-radius: 16px; background: rgba(15,23,42,.55); border: 1px solid rgba(255,255,255,.1); border-left: 4px solid var(--c); }
+.apx-esc .pos { grid-row: span 2; font: 800 2em var(--f-tit); color: var(--c); align-self: center; } .apx-esc b { color: #fff; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .apx-esc > div > span { color: #94a3b8; font-size: .85em; }
+.apx-esc .nums { display: flex; gap: 14px; flex-wrap: wrap; font-size: .8em; color: #94a3b8; } .apx-esc .nums b { display: inline; font-size: 1.3em; margin-right: 4px; }
+.apx-s.anima .apx-esc { animation: mdxEntra .55s calc(.15s + var(--an-i) * 80ms) both; }
+/* horas */
+.apx-horas { display: flex; align-items: flex-end; gap: 4px; height: 18vh; } .apx-horas i { flex: 1; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, #38bdf8, rgba(56,189,248,.2)); transform-origin: bottom; } .apx-horas i.pico { background: linear-gradient(180deg, #f43f5e, rgba(244,63,94,.25)); box-shadow: 0 0 18px rgba(244,63,94,.5); }
+.apx-s.anima .apx-horas i { animation: mdxCresce .6s calc(.3s + var(--an-i) * 25ms) both; } .apx-horas-ex { display: flex; justify-content: space-between; color: #64748b; font-size: .75em; margin-top: -1.6vh; }
+/* proteção */
+.apx-prot { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3vw; }
+.apx-anel { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+.apx-anel .r { width: clamp(130px, 14vw, 220px); aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--c) calc(var(--p) * 1%), rgba(255,255,255,.08) 0); position: relative; filter: drop-shadow(0 0 20px color-mix(in srgb, var(--c) 40%, transparent)); }
+.apx-anel .r::before { content: ''; position: absolute; inset: 12%; border-radius: 50%; background: #0b1a42; } .apx-anel .r b { position: relative; font: 800 clamp(26px, 3vw, 48px) var(--f-tit); color: #fff; }
+.apx-anel .t { display: inline-flex; gap: 6px; align-items: center; font-weight: 700; color: #fff; } .apx-anel .t svg { width: 18px; height: 18px; color: var(--c); } .apx-anel small { color: #94a3b8; }
+.apx-s.anima .apx-anel { animation: rtlPop .7s calc(.15s + var(--an-i) * 120ms) cubic-bezier(.34,1.56,.64,1) both; }
+/* recomendações e conclusão */
+.apx-recs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.apx-rec { padding: 16px; border-radius: 18px; background: rgba(15,23,42,.55); border: 1px solid rgba(255,255,255,.1); border-top: 3px solid var(--c); display: flex; flex-direction: column; gap: 8px; } .apx-rec > b { color: #fff; font-size: 1.05em; } .apx-rec ul { margin: 0; padding-left: 18px; color: #cbd5e1; font-size: .9em; display: flex; flex-direction: column; gap: 4px; }
+.apx-rec .pj { font-size: .8em; color: #7dd3fc; font-weight: 700; } .apx-rec small { color: #64748b; font-size: .75em; }
+.apx-s.anima .apx-rec { animation: mdxEntra .6s calc(.15s + var(--an-i) * 100ms) both; }
+.apx-ger { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; } .apx-ger li { display: flex; gap: 8px; align-items: flex-start; color: #e2e8f0; } .apx-ger svg { width: 18px; height: 18px; color: #4ade80; flex: none; margin-top: 2px; }
+.apx-s.anima .apx-ger li { animation: mdxEntra .5s calc(.2s + var(--an-i) * 80ms) both; }
+.apx-con { display: flex; flex-direction: column; gap: 1.4vh; max-width: 1100px; }
+.apx-con > div { display: flex; gap: 16px; align-items: center; padding: 1.6vh 18px; border-radius: 16px; background: linear-gradient(90deg, color-mix(in srgb, var(--c) 18%, transparent), rgba(255,255,255,.03)); border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); }
+.apx-con .ic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: var(--c); color: #fff; flex: none; } .apx-con .ic svg { width: 22px; height: 22px; } .apx-con b { display: block; color: #fff; font-size: 1.15em; } .apx-con span { color: #cbd5e1; font-size: .9em; }
+.apx-s.anima .apx-con > div { animation: mdxEntra .6s calc(.15s + var(--an-i) * 120ms) cubic-bezier(.16,1,.3,1) both; }
+/* rodapé e controles */
+.apx-rod { position: relative; z-index: 3; display: flex; align-items: center; gap: 16px; padding: 10px 24px 14px; font-size: 12px; color: #94a3b8; }
+.apx-lei { flex: 1; min-width: 0; color: #fda4af; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.apx-pontos { display: flex; gap: 6px; } .apx-pontos button { width: 9px; height: 9px; border-radius: 99px; background: rgba(255,255,255,.2); transition: width .3s, background .3s; padding: 0; } .apx-pontos .feito { background: rgba(125,211,252,.6); } .apx-pontos .on { width: 26px; background: #38bdf8; }
+.apx-cont { font-weight: 700; color: #e2e8f0; min-width: 52px; text-align: right; }
+.apx-prog { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.06); z-index: 4; } .apx-prog i { display: block; height: 100%; background: linear-gradient(90deg, #38bdf8, #a78bfa); transition: width .6s cubic-bezier(.16,1,.3,1); }
+.apx-lado { position: absolute; top: 15%; bottom: 15%; width: 6vw; z-index: 2; background: none; cursor: w-resize; } .apx-lado.e { left: 0; } .apx-lado.d { right: 0; cursor: e-resize; }
+.apx-sum { position: absolute; inset: 0; z-index: 6; background: rgba(2,6,23,.75); backdrop-filter: blur(8px); display: grid; place-items: center; } .apx-sum[hidden] { display: none; }
+.apx-sum-in { width: min(900px, 92vw); } .apx-sum-in h3 { color: #fff; font: 800 28px var(--f-tit); margin: 0 0 16px; } .apx-sum-in > div { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+.apx-sum-in button { text-align: left; padding: 14px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); color: #fff; font-weight: 600; display: flex; gap: 10px; align-items: center; } .apx-sum-in button:hover { background: rgba(56,189,248,.18); border-color: #38bdf8; } .apx-sum-in span { font: 800 18px var(--f-tit); color: #38bdf8; }
+.apx-cortina { position: absolute; inset: 0; z-index: 8; background: #050b1f; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #fff; cursor: pointer; } .apx-cortina[hidden] { display: none; } .apx-cortina svg { width: 54px; height: 54px; color: #f43f5e; } .apx-cortina b { font: 800 26px var(--f-tit); } .apx-cortina span { color: #94a3b8; }
+@media print { .apx { display: none !important; } }
+@media (prefers-reduced-motion: reduce) { .apx * { animation: none !important; transition: none !important; } }
+@media (max-width: 800px) {
+  .apx-topo { padding: 10px 12px; } .apx-id span { display: none; } .apx-tarja { font-size: 10px; letter-spacing: .1em; padding: 4px 8px; } .apx-bt button { width: 34px; height: 34px; }
+  .apx-s { padding: 2vh 18px 3vh; justify-content: flex-start; } .apx-capa, .apx-2, .apx-2.mapa { grid-template-columns: minmax(0, 1fr); gap: 3vh; } .apx-orb { width: 140px; margin: 0 auto; }
+  .apx-kpis, .apx-escs, .apx-recs, .apx-sig-g, .apx-agenda, .apx-ger { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .apx-escs, .apx-recs, .apx-sig-g, .apx-agenda, .apx-ger { grid-template-columns: minmax(0, 1fr); }
+  .apx-prot { grid-template-columns: minmax(0, 1fr); gap: 2vh; } .apx-anel .r { width: 120px; }
+  .apx-barras > div, .apx-temas > div { grid-template-columns: minmax(0, 1fr) 46px; } .apx-barras .br, .apx-temas .br { grid-column: 1 / -1; grid-row: 2; } .apx-barras .apx-var { display: none; }
+  .apx-rank > div { grid-template-columns: 28px minmax(0, 1fr) 46px; } .apx-rank .br { display: none; }
+  .apx-lei { display: none; } .apx-lado { display: none; } .apx-mapa { max-height: 40vh !important; }
+}
+</style>
+<style>:root { --f-tit: var(--f-corpo); --f-mono: var(--f-dado); }</style>
+<style>.apx-viz svg.apx-mapa { overflow: hidden; border-radius: 18px; }</style>
+<style>
+/* 5.0 · apresentação: fundo cartográfico, mapa satélite e capa com a bandeira */
+.apx { background: #04070d; }
+.apx-fundo i { display: none; }
+.apg-grade { position: absolute; inset: 0; background-image: linear-gradient(rgba(148,163,184,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,.07) 1px, transparent 1px), linear-gradient(rgba(148,163,184,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,.03) 1px, transparent 1px); background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px; mask-image: radial-gradient(120% 90% at 50% 45%, #000 40%, transparent 100%); }
+.apx-fundo::before { content: ''; position: absolute; inset: 0; background: radial-gradient(60% 50% at 85% 20%, rgba(11,58,158,.35), transparent 70%), radial-gradient(50% 50% at 10% 90%, rgba(0,155,58,.16), transparent 70%), radial-gradient(40% 40% at 50% 110%, rgba(252,209,22,.08), transparent 70%); }
+.apg-mt { position: absolute; right: -4vw; top: 50%; height: 120vh; width: auto; transform: translateY(-50%); opacity: .5; } .apg-mt path { fill: rgba(252,209,22,.025); stroke: rgba(252,209,22,.16); stroke-width: 1.2; }
+.apg-varre { position: absolute; top: 0; bottom: 0; width: 30vw; background: linear-gradient(90deg, transparent, rgba(34,211,238,.05), transparent); animation: apgVarre 9s linear infinite; }
+@keyframes apgVarre { from { left: -30vw; } to { left: 100vw; } }
+.apx-dagua { opacity: .028; } .apx-dagua span { font-size: 18px; }
+.apx .k { color: #fcd116; }
+.apx-tarja { color: #fecaca; }
+.apg-bmini { border-radius: 3px; box-shadow: 0 2px 8px rgba(0,0,0,.4); flex: none; } .apx-id > svg:not(.apg-bmini) { display: none; }
+/* mapa */
+.apx-geo { position: absolute; inset: 0; z-index: 1; opacity: 0; pointer-events: none; transition: opacity .8s; background: #0b1220; }
+.apx.modo-geo .apx-geo { opacity: 1; pointer-events: auto; }
+.apx.modo-geo .apx-fundo { opacity: 0; transition: opacity .8s; }
+.apg-veu { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .8s; background: linear-gradient(180deg, rgba(4,7,13,.85), transparent 14%, transparent 86%, rgba(4,7,13,.9)); }
+.apx.modo-geo .apg-veu { opacity: 1; }
+.apx.modo-geo:has(.apx-s.capa2.on) .apg-veu { background: linear-gradient(90deg, rgba(4,7,13,.94) 0, rgba(4,7,13,.7) 40%, rgba(4,7,13,.1) 72%, transparent), linear-gradient(180deg, rgba(4,7,13,.8), transparent 18%, transparent 82%, rgba(4,7,13,.9)); }
+.apx-geo .leaflet-control-attribution { background: rgba(4,7,13,.6); color: #94a3b8; font-size: 10px; margin-bottom: 44px !important; } .apx-geo .leaflet-control-attribution a { color: #cbd5e1; }
+.apg-uf { filter: drop-shadow(0 0 6px rgba(252,209,22,.8)); } .apg-esc { filter: drop-shadow(0 0 6px rgba(125,211,252,.8)); }
+.apx-s.geo { padding: 0; pointer-events: none; display: block; overflow: visible; }
+.apx-s.geo .apg-pn, .apx-s.geo .apg-capa-in, .apx-s.geo button, .apx-s.geo a { pointer-events: auto; }
+.apg-pulso { display: block; width: var(--s); height: var(--s); border-radius: 50%; border: 2px solid var(--c); box-shadow: 0 0 14px var(--c), inset 0 0 10px var(--c); animation: apgP 2s ease-out infinite; }
+@keyframes apgP { from { transform: scale(.4); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+.apg-num { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fcd116; color: #04070d; font-weight: 900; font-size: 14px; border: 3px solid #04070d; box-shadow: 0 0 0 2px #fcd116, 0 4px 14px rgba(0,0,0,.5); cursor: pointer; }
+.apg-km { display: inline-block; padding: 2px 8px; border-radius: 99px; background: rgba(4,7,13,.85); color: #fcd116; font: 700 11px var(--f-dado); white-space: nowrap; border: 1px solid rgba(252,209,22,.4); }
+path.apg-lig { animation: apgDash 1.2s linear infinite; filter: drop-shadow(0 0 4px currentColor); } @keyframes apgDash { to { stroke-dashoffset: -24; } }
+path.apg-pt { transition: transform .2s; }
+.apg-popup .leaflet-popup-content-wrapper, .apg-popup .leaflet-popup-tip { background: #0b1220; color: #e2e8f0; border: 1px solid rgba(255,255,255,.15); box-shadow: 0 14px 30px rgba(0,0,0,.5); }
+.apg-pop { display: flex; flex-direction: column; gap: 3px; font-family: var(--f-corpo); } .apg-pop > b { font-size: 13.5px; color: #fff; } .apg-pop > span { font-size: 11.5px; color: #94a3b8; }
+.apg-pop .n { display: flex; gap: 12px; margin: 6px 0; } .apg-pop em { font-style: normal; font-size: 11px; color: #94a3b8; } .apg-pop em b { display: block; font-size: 18px; color: #fcd116; } .apg-pop i { font-style: normal; font-size: 11.5px; color: #cbd5e1; }
+.apg-tip { background: #0b1220; color: #fff; border: 1px solid rgba(255,255,255,.2); } .apg-tip::before { display: none; }
+/* painéis sobre o mapa */
+.apg-pn { position: absolute; left: 3vw; top: 84px; max-height: calc(100% - 140px); width: min(440px, 34vw); overflow: auto; padding: 24px; border-radius: 22px; background: rgba(4,7,13,.74); backdrop-filter: blur(14px) saturate(1.2); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 24px 60px -20px rgba(0,0,0,.7); display: flex; flex-direction: column; gap: 12px; }
+.apg-pn.dir { left: auto; right: 3vw; }
+.apg-pn h2 { font: 800 clamp(22px, 2.2vw, 36px)/1.15 var(--f-tit); color: #fff; margin: 0; } .apg-pn p { color: #cbd5e1; margin: 0; font-size: .92em; }
+.apx-s.anima .apg-pn { animation: apgPainel .8s .3s cubic-bezier(.16,1,.3,1) both; } .apx-s.anima .apg-pn.dir { animation-name: apgPainelD; }
+@keyframes apgPainel { from { opacity: 0; transform: translateX(-30px); } } @keyframes apgPainelD { from { opacity: 0; transform: translateX(30px); } }
+.apg-st { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .apg-st > div { padding: 10px; border-radius: 12px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); } .apg-st b { display: block; font: 800 26px var(--f-tit); color: #fcd116; } .apg-st small { color: #94a3b8; font-size: .75em; }
+.apg-leg { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: .8em; color: #cbd5e1; } .apg-leg i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; } .apg-leg .h i { width: 34px; border-radius: 99px; background: linear-gradient(90deg, #22d3ee, #fcd116, #fb923c, #e11d48); }
+.apg-lst { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; color: #fcd116; } .apg-lst b { display: block; color: #fff; font-size: .9em; } .apg-lst span { color: #94a3b8; font-size: .8em; }
+/* varredura */
+.apg-tour { display: flex; flex-direction: column; gap: 10px; } .apg-tour h3 { font: 800 clamp(20px, 1.9vw, 30px)/1.15 var(--f-tit); color: #fff; margin: 0; } .apg-tour > p { color: #94a3b8; margin: 0; }
+.apg-tk { display: flex; justify-content: space-between; gap: 8px; font-size: .72em; font-weight: 800; letter-spacing: .1em; color: #22d3ee; } .apg-tk .mono { font-family: var(--f-dado); letter-spacing: 0; color: #fcd116; }
+.apg-ns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; } .apg-ns > div { text-align: center; padding: 8px 4px; border-radius: 10px; background: rgba(255,255,255,.05); } .apg-ns b { display: block; font: 800 22px var(--f-tit); color: #fff; } .apg-ns small { font-size: .68em; color: #94a3b8; }
+.apg-tps { display: flex; flex-direction: column; gap: 5px; } .apg-tps span { position: relative; display: flex; justify-content: space-between; padding: 5px 8px; border-radius: 8px; overflow: hidden; font-size: .82em; } .apg-tps i { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(244,63,94,.22); border-radius: 8px; animation: anBarra .8s both; transform-origin: left; } .apg-tps em, .apg-tps b { position: relative; font-style: normal; color: #fff; }
+.apg-obs { font-size: .8em !important; color: #94a3b8 !important; } .apg-obs b { color: #fcd116; }
+.apg-tour > * { animation: mdxEntra .5s both; }
+.apg-alvos { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 10px; }
+.apg-alvos button { display: flex; gap: 8px; align-items: center; text-align: left; padding: 6px 8px; border-radius: 9px; color: #cbd5e1; font-size: .8em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } .apg-alvos button:hover { background: rgba(255,255,255,.06); }
+.apg-alvos span { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: rgba(252,209,22,.18); color: #fcd116; font-weight: 800; font-size: 11px; }
+.apg-alvos button.on { background: rgba(252,209,22,.12); color: #fff; } .apg-alvos button.on span { background: #fcd116; color: #04070d; }
+/* capa */
+.apg-capa { position: absolute; inset: 0; display: flex; align-items: center; }
+.apg-capa-in { margin-left: 6vw; max-width: min(820px, 58vw); display: flex; flex-direction: column; gap: 1.4vh; }
+.apg-gov { display: flex; gap: 18px; align-items: center; } .apg-gov b { display: block; color: #fff; letter-spacing: .14em; font-size: .95em; } .apg-gov span { display: block; color: #cbd5e1; font-size: .85em; }
+.apg-bandeira { flex: none; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.15); transform-origin: left center; animation: apgOnda 5s ease-in-out infinite; }
+.apg-bandeira .brilho { animation: apgBrilho 4.5s ease-in-out infinite; }
+@keyframes apgOnda { 0%, 100% { transform: perspective(500px) rotateY(0) skewY(0); } 50% { transform: perspective(500px) rotateY(-12deg) skewY(-1.5deg); } }
+@keyframes apgBrilho { 0% { transform: translateX(0); } 60%, 100% { transform: translateX(220px); } }
+.capa2 h1 { font: 900 clamp(40px, 5.4vw, 96px)/1 var(--f-tit); margin: 0; letter-spacing: -.02em; background: linear-gradient(180deg, #fff 35%, #fde68a); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; }
+.capa2 h2 { font: 700 clamp(18px, 2vw, 32px) var(--f-tit); color: #7dd3fc; margin: 0; }
+.capa2 .apx-carimbo { position: absolute; right: 6vw; top: 96px; transform: rotate(-6deg); font-size: 1em; } .apx-s.anima.capa2 .apx-carimbo { animation: apxCarimbo .7s 1.4s cubic-bezier(.34,1.56,.64,1) both; }
+.apg-chips { display: flex; flex-wrap: wrap; gap: 8px; } .apg-chips span { display: inline-flex; gap: 7px; align-items: center; padding: 8px 14px; border-radius: 99px; background: rgba(252,209,22,.12); border: 1px solid rgba(252,209,22,.35); color: #fef3c7; font-weight: 600; font-size: .9em; } .apg-chips svg { width: 15px; height: 15px; color: #fcd116; }
+.apx-s.anima .apg-capa-in > * { animation: mdxEntra .9s cubic-bezier(.16,1,.3,1) both; } .apx-s.anima .apg-capa-in > :nth-child(3) { animation-delay: .5s; } .apx-s.anima .apg-capa-in > :nth-child(4) { animation-delay: .7s; } .apx-s.anima .apg-capa-in > :nth-child(5) { animation-delay: .85s; } .apx-s.anima .apg-capa-in > :nth-child(6) { animation-delay: 1s; } .apx-s.anima .apg-capa-in > :nth-child(7) { animation-delay: 1.15s; }
+.apg-mira { position: absolute; right: 16vw; top: 50%; width: 220px; height: 220px; margin-top: -110px; pointer-events: none; }
+.apg-mira::before, .apg-mira::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid rgba(252,209,22,.55); } .apg-mira::after { inset: 34%; border-color: rgba(34,211,238,.8); box-shadow: 0 0 20px rgba(34,211,238,.5); }
+.apg-mira i { position: absolute; inset: -30px; background: linear-gradient(rgba(252,209,22,.6), rgba(252,209,22,.6)) center / 1.5px 100% no-repeat, linear-gradient(rgba(252,209,22,.6), rgba(252,209,22,.6)) center / 100% 1.5px no-repeat; animation: apgGira 14s linear infinite; mask-image: radial-gradient(circle, transparent 28%, #000 30%); }
+@keyframes apgGira { to { transform: rotate(360deg); } }
+.apg-mira span { position: absolute; top: calc(100% + 34px); left: 50%; transform: translateX(-50%); white-space: nowrap; font: 700 13px var(--f-dado); color: #fcd116; text-shadow: 0 2px 8px #000; }
+.apx-s.anima .apg-mira { animation: rtlPop 1s 1.8s cubic-bezier(.34,1.56,.64,1) both; }
+.enc2 .apg-capa-in { gap: 1.6vh; } .apg-aviso { display: flex; gap: 8px; align-items: center; color: #fecaca; margin: 0; } .apg-aviso svg { width: 18px; height: 18px; color: #f43f5e; }
+.apg-fimrow { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; } .enc2 .apx-selo-f { width: clamp(120px, 12vw, 180px); } .apx-qr span { line-height: 1.4; }
+/* números */
+.apg-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; }
+.apg-box { padding: 18px; border-radius: 20px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); display: flex; flex-direction: column; gap: 12px; }
+.apg-spark { width: 100%; height: auto; max-height: 24vh; } .apg-spark rect { fill: rgba(34,211,238,.45); transform-box: fill-box; transform-origin: bottom; } .apg-spark rect.u { fill: #fcd116; } .apg-spark text { fill: #94a3b8; font-size: 11px; text-anchor: middle; }
+.apx-s.anima .apg-spark rect { animation: mdxCresce .6s calc(.3s + var(--an-i) * 50ms) cubic-bezier(.16,1,.3,1) both; }
+.apg-pilha { display: flex; height: 44px; border-radius: 12px; overflow: hidden; gap: 2px; } .apg-pilha i { display: grid; place-items: center; min-width: 0; transform-origin: left; } .apg-pilha b { color: #fff; font-size: .85em; text-shadow: 0 1px 3px rgba(0,0,0,.5); }
+.apx-s.anima .apg-pilha i { animation: anBarra 1s .4s cubic-bezier(.16,1,.3,1) both; }
+.apg-mini { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .85em; color: #cbd5e1; } .apg-mini i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; } .apg-mini b { color: #fff; }
+.apg-part { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; color: #cbd5e1; font-size: .85em; } .apg-part div { height: 10px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; } .apg-part div i { display: block; height: 100%; background: #fcd116; } .apg-part b { color: #fcd116; font-size: 1.3em; }
+.apx-linha .vl { fill: #e2e8f0; font-size: 12px; font-weight: 700; text-anchor: middle; } .apx-linha .ln { stroke: #22d3ee; } .apx-linha .ln2 { stroke: #f43f5e; }
+.apx-viz .apx-linha { max-height: 60vh; }
+/* plano */
+.apg-plano { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.apg-fase { border-radius: 20px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); overflow: hidden; display: flex; flex-direction: column; }
+.apg-fase header { padding: 14px 18px; background: linear-gradient(90deg, rgba(11,58,158,.6), rgba(0,155,58,.35)); display: flex; justify-content: space-between; align-items: baseline; } .apg-fase em { font-style: normal; font: 900 1.6em var(--f-tit); color: #fff; } .apg-fase header b { color: #fcd116; letter-spacing: .12em; text-transform: uppercase; font-size: .8em; }
+.apg-lane { padding: 10px 18px; border-top: 1px solid rgba(255,255,255,.06); display: flex; flex-direction: column; gap: 4px; } .apg-lane > b { color: var(--c); font-size: .72em; letter-spacing: .14em; text-transform: uppercase; } .apg-lane span { color: #e2e8f0; font-size: .85em; padding-left: 12px; position: relative; } .apg-lane span::before { content: ''; position: absolute; left: 0; top: .55em; width: 5px; height: 5px; border-radius: 50%; background: var(--c); }
+.apx-s.anima .apg-fase { animation: mdxEntra .7s calc(.2s + var(--an-i) * 150ms) cubic-bezier(.16,1,.3,1) both; }
+/* referências */
+.apg-docs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.apg-doc { display: flex; gap: 14px; padding: 18px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); position: relative; overflow: hidden; }
+.apg-doc::after { content: ''; position: absolute; right: -20px; top: -20px; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(252,209,22,.18), transparent 60%); transform: rotate(45deg); }
+.apg-doc .ic { flex: none; width: 46px; height: 56px; border-radius: 6px 14px 6px 6px; display: grid; place-items: center; background: linear-gradient(160deg, #f8fafc, #cbd5e1); color: #0b3a9e; box-shadow: 0 8px 18px rgba(0,0,0,.4); } .apg-doc .ic svg { width: 22px; height: 22px; }
+.apg-doc b { display: block; color: #fff; } .apg-doc small { color: #fcd116; font-size: .75em; font-weight: 700; } .apg-doc p { margin: 6px 0 0; color: #cbd5e1; font-size: .85em; }
+.apx-s.anima .apg-doc { animation: mdxEntra .6s calc(.15s + var(--an-i) * 90ms) both; }
+.apx-agenda li { cursor: pointer; transition: color .15s; } .apx-agenda li:hover { color: #fcd116; } .apx-agenda li em { font-style: normal; display: inline-flex; gap: 4px; align-items: center; font-size: .6em; color: #22d3ee; border: 1px solid rgba(34,211,238,.4); padding: 1px 7px; border-radius: 99px; margin-left: 6px; } .apx-agenda li em svg { width: 11px; height: 11px; }
+.apx-agenda span { color: #fcd116; } .apx-agenda li { padding: 7px 0; font-size: 1.02em; }
+.apx-kpi { background: linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.015)); }
+.apx-pontos .on { background: #fcd116; } .apx-prog i { background: linear-gradient(90deg, #0b3a9e, #009b3a, #fcd116); }
+@media (max-width: 800px) {
+  .apg-pn, .apg-pn.dir { left: 10px; right: 10px; width: auto; top: auto; bottom: 46px; max-height: 46vh; padding: 16px; }
+  .apg-capa { align-items: flex-end; padding-bottom: 60px; } .apg-capa-in { margin: 0 18px; max-width: none; } .apg-mira { right: 50%; margin-right: -110px; top: 26%; transform: scale(.7); } .capa2 .apx-carimbo { display: none; }
+  .apx.modo-geo:has(.apx-s.capa2.on) .apg-veu { background: linear-gradient(0deg, rgba(4,7,13,.95) 0, rgba(4,7,13,.75) 45%, transparent 75%); }
+  .apg-row, .apg-plano, .apg-docs { grid-template-columns: minmax(0, 1fr); } .apg-gov { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+</style>
+<style>.apg-mira { position: relative; width: 200px; height: 200px; margin: 0; top: 0; right: auto; animation: rtlPop 1s cubic-bezier(.34,1.56,.64,1) both; }
+@media (max-width: 800px) { .apg-mira { right: auto; margin: 0; top: 0; transform: scale(.7); } }</style>
+<style>.apx { grid-template-columns: minmax(0, 1fr); } @media (max-width: 800px) { .apx-tarja { font-size: 9px; padding: 4px 7px; } .apx-topo { gap: 6px; } .apx-bt { gap: 4px; } .apx-bt button { width: 32px; height: 32px; } .apg-pn .apg-alvos { display: none; } .apg-capa-in .apx-meta { display: none; } }</style>
 
 </head>
 <body>
@@ -2966,7 +3227,7 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '4.8.0+549567a3';
+const APP_VERSAO = '5.0.0+00f61ebd';
 const APP_NOTAS = 'Versão 4.6.0 — gráficos inovadores (mosaico, termômetro, fluxo, relógio, corrida, correnteza), guias e legendas recolhidas com botão "Como funciona", Rede de vínculos animada com tela cheia e zoom que não achata, Termos reorganizado, mapa no Release, Comparativo no tempo entre DREs, Reincidência, Verificação e páginas de Proteção (Protocolos, Ameaças, Segurança, Acompanhamento, Intervenções com mapa, Prevenção) renovadas; retiradas Rotas de visita, Risco previsto e Rede de proteção.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
@@ -13029,6 +13290,528 @@ function mdxMontar() {
 const _rMeuDiaMdx = rMeuDia;
 rMeuDia = function () { _rMeuDiaMdx(); try { mdxMontar(); } catch (e) { console.error(e); } };
 if (TOPICOS.meudia) { const t = TOPICOS.meudia[0]; t.t = 'Briefing e resumo'; t.s = 'A apresentação de inteligência e os principais números'; t.m = /mdx|md-topo|md-vazio|md-kpis/; }
+
+/* =====================================================================
+   EDUCASEG-PLUS 4.9 — Modo apresentação (SEDUC · DRE · Município)
+   Deck de slides animado, com selos de acesso restrito, abertura,
+   sigilo, análise, recomendações e conclusão
+   ===================================================================== */
+const APX = { esc: 'seduc', dre: '', mun: '', dias: 90, auto: false, seg: 12, i: 0, t: null, deck: null, cod: '' };
+const apxDk = s => chave(String(s || '')).replace(/^DRE /, '');
+
+(function () {
+    const pos = ABAS.findIndex(a => a.id === 'painel');
+    ABAS.splice(pos < 0 ? 2 : pos + 1, 0, { id: 'apresentacao', t: 'Modo apresentação', ico: 'expand', h: 'Modo apresentação', p: 'Apresentação animada para reuniões, com abertura, selos de acesso restrito, análise, recomendações e conclusão, para toda a SEDUC, uma DRE ou um município.' });
+    LEGENDAS.apresentacao = {
+        mostra: ['Uma apresentação em slides montada automaticamente com os dados do escopo escolhido: abertura, aviso de sigilo, números, evolução, gravidade, território, escolas prioritárias, padrões, proteção, temas, recomendações e conclusão.'],
+        fonte: ['Livro de Ocorrências (todos os registros carregados, sem o filtro do topo), protocolos, fichas de segurança e intervenções.'],
+        calc: ['O período escolhido é comparado com o período anterior de mesmo tamanho.', 'Temas em destaque: parte dos registros do escopo em cada tema comparada com a rede estadual.'],
+        usar: ['Escolha SEDUC, DRE ou município, o período e clique em Iniciar. Setas do teclado ou toque nas laterais para navegar; S abre o sumário; P liga a passagem automática; Esc sai.', 'A apresentação não mostra nomes de pessoas. Cada slide leva o selo de acesso restrito e o ID de quem apresenta.']
+    };
+    TOPICOS.apresentacao = [{ t: 'Configurar', s: 'Escopo, período e passagem automática', i: 'doc', m: /apx-cfg/ }, { t: 'Roteiro', s: 'Os slides que serão apresentados', i: 'layers', m: /apx-rot/ }];
+})();
+
+/* ---------- dados do escopo ---------- */
+function apxEscopos() {
+    const u = USUARIO || {}, restrito = u.perfil === 'DRE' || u.perfil === 'ESCOLA';
+    const dres = new Map(), muns = new Map();
+    BASE.forEach(r => { if (r.dre) dres.set(r.dre, (dres.get(r.dre) || 0) + 1); if (r.mun) muns.set(r.mun, { n: ((muns.get(r.mun) || {}).n || 0) + 1, dre: r.dre }); });
+    let D = [...dres.keys()].sort((a, b) => nomeDre(a).localeCompare(nomeDre(b)));
+    if (restrito && u.dre) D = D.filter(k => apxDk(k) === apxDk(u.dre));
+    let M = [...muns.entries()].filter(([, o]) => !restrito || !u.dre || apxDk(o.dre) === apxDk(u.dre)).map(([k]) => k).sort((a, b) => nomeMun(a).localeCompare(nomeMun(b)));
+    return { restrito, D, M };
+}
+function apxDados() {
+    const hoje = A.hoje, ini = new Date(+hoje - APX.dias * DIA), ant = new Date(+ini - APX.dias * DIA);
+    const noEsc = r => APX.esc === 'seduc' ? true : APX.esc === 'dre' ? r.dre === APX.dre : r.mun === APX.mun;
+    const todos = BASE.filter(r => r.dt && noEsc(r)), cur = todos.filter(r => r.dt >= ini && r.dt <= hoje), prev = todos.filter(r => r.dt >= ant && r.dt < ini);
+    const mtCur = BASE.filter(r => r.dt && r.dt >= ini && r.dt <= hoje);
+    const nome = APX.esc === 'seduc' ? 'Rede estadual de Mato Grosso' : APX.esc === 'dre' ? nomeDre(APX.dre) : nomeMun(APX.mun) + (cur[0] ? ' · ' + nomeDre(cur[0].dre) : '');
+    const curto = APX.esc === 'seduc' ? 'SEDUC-MT' : APX.esc === 'dre' ? nomeDre(APX.dre) : nomeMun(APX.mun);
+    const graves = cur.filter(r => r.crit === 'CRÍTICO' || r.crit === 'ALTO'), sev = cur.filter(r => ehSevero(r.tipo));
+    const escs = new Map(); cur.forEach(r => { const o = escs.get(r.escK) || { k: r.escK, nome: r.esc, mun: r.mun, dre: r.dre, n: 0, g: 0, ult: r.dt, regs: [] }; o.n++; if (r.crit === 'CRÍTICO' || r.crit === 'ALTO') o.g++; if (r.dt > o.ult) o.ult = r.dt; o.regs.push(r); escs.set(r.escK, o); });
+    const escsA = new Map(); prev.forEach(r => escsA.set(r.escK, (escsA.get(r.escK) || 0) + 1));
+    const escL = [...escs.values()].map(o => { const e = A.escolas.get(o.k); return Object.assign(o, { idx: e ? e.idx : null, ant: escsA.get(o.k) || 0, sc: o.n + o.g * 2 + Math.max(0, o.n - (escsA.get(o.k) || 0)) }); }).sort((a, b) => b.sc - a.sc);
+    // sub-unidades para o ranking: DREs (SEDUC), municípios (DRE) ou escolas (município)
+    const subK = APX.esc === 'seduc' ? r => r.dre : APX.esc === 'dre' ? r => r.mun : r => r.escK;
+    const subN = APX.esc === 'seduc' ? k => nomeDre(k) : APX.esc === 'dre' ? k => nomeMun(k) : k => (escs.get(k) || {}).nome || k;
+    const sub = new Map(); cur.forEach(r => { const k = subK(r); const o = sub.get(k) || { k, n: 0, g: 0, a: 0 }; o.n++; if (r.crit === 'CRÍTICO' || r.crit === 'ALTO') o.g++; sub.set(k, o); }); prev.forEach(r => { const o = sub.get(subK(r)); if (o) o.a++; });
+    const subL = [...sub.values()].sort((a, b) => b.n - a.n).map(o => Object.assign(o, { nome: subN(o.k) }));
+    // meses (12)
+    const meses = mesesRecentes(12), im = new Map(meses.map((m, i) => [m, i])), pm = meses.map(() => 0), pg = meses.map(() => 0);
+    todos.forEach(r => { const i = im.get(chaveMes(r.dt)); if (i != null) { pm[i]++; if (r.crit === 'CRÍTICO' || r.crit === 'ALTO') pg[i]++; } });
+    // tipos
+    const tp = new Map(); cur.forEach(r => tp.set(tipoCurto(r.tipo), (tp.get(tipoCurto(r.tipo)) || 0) + 1));
+    const tpA = new Map(); prev.forEach(r => tpA.set(tipoCurto(r.tipo), (tpA.get(tipoCurto(r.tipo)) || 0) + 1));
+    const tipos = [...tp.entries()].sort((a, b) => b[1] - a[1]).slice(0, 7).map(([t, n]) => ({ t, n, a: tpA.get(t) || 0 }));
+    // temas comparados com MT
+    const share = rs => { const t = rs.length || 1; return PREV.map(p => rs.filter(r => p.re.test(chave(r.tipo))).length / t); };
+    const sE = share(cur), sM = share(mtCur);
+    const temas = PREV.map((p, i) => ({ p, e: sE[i], m: sM[i], n: cur.filter(r => p.re.test(chave(r.tipo))).length })).filter(x => x.n).sort((a, b) => (b.e - b.m) - (a.e - a.m) || b.n - a.n);
+    // padrões
+    const kEsc = new Set(escs.keys());
+    const rec = (A.recorrencias || []).filter(c => kEsc.has(c.escola.k)), recA = rec.filter(c => c.ativa);
+    const reinc = (A.reincidentes || []).filter(p => [...p.escolas].some(k => kEsc.has(k)));
+    const esca = (A.escalada || []).filter(e => kEsc.has(e.k));
+    // proteção
+    const prot = typeof protCasos === 'function' ? protCasos().filter(c => noEsc(c.r)) : [];
+    const protAt = prot.filter(c => !c.concluido && c.atras.length), protC = prot.filter(c => c.concluido);
+    const escTodas = [...A.escolas.values()].filter(e => APX.esc === 'seduc' || (APX.esc === 'dre' ? e.dre === APX.dre : e.mun === APX.mun));
+    const fichas = escTodas.map(e => fichaEstado(e.k)).filter(f => f.preenchida);
+    const itv = prtLista('intervencao').filter(i => i.dados && A.escolas.has(i.dados.escK) && noEsc({ dre: A.escolas.get(i.dados.escK).dre, mun: A.escolas.get(i.dados.escK).mun }));
+    const itvAv = itv.map(i => itvEfeito(i)).filter(e => e && !e.aguardando);
+    const crit = CRIT_ORD.map(c => ({ c, n: cur.filter(r => r.crit === c).length }));
+    const horas = Array(24).fill(0); cur.forEach(r => { if (r.dt.getHours() || r.dt.getMinutes()) horas[r.dt.getHours()]++; });
+    const semana = Array(7).fill(0); cur.forEach(r => semana[r.dt.getDay()]++);
+    return { hoje, ini, ant, cur, prev, todos, nome, curto, graves, sev, escL, subL, meses, pm, pg, tipos, temas, rec, recA, reinc, esca, prot, protAt, protC, escTodas, fichas, itv, itvAv, crit, horas, semana, mtN: mtCur.length };
+}
+
+/* ---------- mapas em SVG ---------- */
+function apxBBox(polys) { let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; polys.forEach(g => { const cs = g.type === 'MultiPolygon' ? g.coordinates.flat(2) : g.coordinates.flat(1); cs.forEach(([x, y]) => { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }); }); return { x0, x1, y0, y1 }; }
+function apxPath(g, P) { const anel = c => c.map((p, i) => (i ? 'L' : 'M') + P(p[0], p[1]).map(v => v.toFixed(1)).join(',')).join('') + 'Z'; const polys = g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates]; return polys.map(p => p.map(anel).join('')).join(''); }
+function apxMapa(D) {
+    const W = 560;
+    const munsCount = new Map(); D.cur.forEach(r => munsCount.set(r.mun, (munsCount.get(r.mun) || 0) + 1));
+    let foco = MUNS;
+    if (APX.esc === 'dre') { const ks = new Set(ESC_REF.filter(e => e.dre === APX.dre).map(e => e.mun)); D.todos.forEach(r => ks.add(r.mun)); foco = MUNS.filter(m => ks.has(m.k)); }
+    if (APX.esc === 'mun') foco = MUNS.filter(m => m.k === APX.mun);
+    if (!foco.length) foco = MUNS;
+    const bb = APX.esc === 'seduc' ? { x0: -61.7, x1: -50.1, y0: -18.1, y1: -7.3 } : apxBBox(foco.map(m => m.g));
+    if (APX.esc === 'mun') { const ps = D.escL.map(o => A.escolas.get(o.k)).filter(e => e && e.lat != null); if (ps.length >= 2) { const xs = ps.map(e => e.lng), ys = ps.map(e => e.lat), cx = (minDe(xs) + maxDe(xs)) / 2, cy = (minDe(ys) + maxDe(ys)) / 2, h = Math.max(.08, (maxDe(xs) - minDe(xs)) * .75, (maxDe(ys) - minDe(ys)) * .75); Object.assign(bb, { x0: Math.max(bb.x0, cx - h), x1: Math.min(bb.x1, cx + h), y0: Math.max(bb.y0, cy - h), y1: Math.min(bb.y1, cy + h) }); } }
+    const px = (bb.x1 - bb.x0) * .08 + .02, py = (bb.y1 - bb.y0) * .08 + .02; bb.x0 -= px; bb.x1 += px; bb.y0 -= py; bb.y1 += py;
+    const H = Math.min(520, Math.round(W * (bb.y1 - bb.y0) / (bb.x1 - bb.x0)) || 400), W2 = Math.round(H * (bb.x1 - bb.x0) / (bb.y1 - bb.y0)), Wf = Math.min(W, W2) || W;
+    const P = (x, y) => [(x - bb.x0) / (bb.x1 - bb.x0) * Wf, (bb.y1 - y) / (bb.y1 - bb.y0) * H];
+    const mx = maxDe([...munsCount.values()], 1), focoK = new Set(foco.map(m => m.k));
+    const viz = APX.esc === 'seduc' ? MUNS : MUNS.filter(m => { const b = apxBBox([m.g]); return b.x1 > bb.x0 && b.x0 < bb.x1 && b.y1 > bb.y0 && b.y0 < bb.y1; });
+    const polys = viz.map((m, i) => { const n = munsCount.get(m.k) || 0, f = focoK.has(m.k); const a = n ? .18 + .72 * Math.sqrt(n / mx) : 0; return `<path d="${apxPath(m.g, P)}" class="mu${f ? ' f' : ''}" style="--a:${a.toFixed(2)};--an-i:${i % 60}" data-dica="<b>${esc(m.nome)}</b><br>${n} registro(s)"/>`; }).join('');
+    const pts = APX.esc === 'seduc' ? '' : D.escL.map(o => { const e = A.escolas.get(o.k); if (!e || e.lat == null) return ''; const [x, y] = P(e.lng, e.lat); const r = Math.min(16, 4 + Math.sqrt(o.n) * 2); return `<g class="pt${o.g ? ' g' : ''}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" class="onda"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" class="b" data-dica="<b>${esc(o.nome)}</b><br>${o.n} registro(s) · ${o.g} grave(s)"/></g>`; }).join('');
+    const uf = APX.esc === 'seduc' ? `<path d="${apxPath(GEO_MT.uf, P)}" class="uf"/>` : '';
+    return `<svg viewBox="-4 -4 ${Wf + 8} ${H + 8}" class="apx-mapa">${polys}${uf}${pts}</svg>`;
+}
+
+/* ---------- gráficos em SVG ---------- */
+function apxLinha(D) {
+    const W = 760, H = 260, n = D.meses.length, mx = maxDe(D.pm, 1), X = i => 30 + i * (W - 60) / (n - 1), Y = v => H - 30 - v / mx * (H - 60);
+    const d = D.pm.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1)).join(''), g = D.pg.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1)).join('');
+    return `<svg viewBox="0 0 ${W} ${H}" class="apx-linha"><defs><linearGradient id="apx-g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity=".45"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></linearGradient></defs>
+        ${[0, .5, 1].map(f => `<line x1="30" x2="${W - 30}" y1="${Y(mx * f)}" y2="${Y(mx * f)}" class="gr"/><text x="24" y="${Y(mx * f) + 4}" class="ey" text-anchor="end">${Math.round(mx * f)}</text>`).join('')}
+        <path d="${d}L${X(n - 1)},${H - 30}L${X(0)},${H - 30}Z" fill="url(#apx-g1)" class="ar"/><path d="${d}" class="ln"/><path d="${g}" class="ln2"/>
+        ${D.pm.map((v, i) => `<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="${i === n - 1 ? 6 : 3.5}" class="${i === n - 1 ? 'ult' : ''}" data-dica="${MES3[+D.meses[i].slice(5) - 1]}/${D.meses[i].slice(2, 4)}: ${v} registros · ${D.pg[i]} graves"/><text x="${X(i).toFixed(1)}" y="${H - 8}" class="ex">${MES3[+D.meses[i].slice(5) - 1]}</text>`).join('')}</svg>`;
+}
+function apxDonut(D) {
+    const tot = D.cur.length || 1, R = 80, C = 2 * Math.PI * R; let acc = 0;
+    return `<svg viewBox="0 0 200 200" class="apx-donut"><circle r="${R}" cx="100" cy="100" class="trilha"/>${D.crit.map(x => { const f = x.n / tot, s = `<circle r="${R}" cx="100" cy="100" class="arc" style="--c:${corCrit(x.c)};stroke-dasharray:${(f * C).toFixed(1)} ${C.toFixed(1)};stroke-dashoffset:${(-acc * C).toFixed(1)}" data-dica="${x.c}: ${x.n} (${Math.round(f * 100)}%)"/>`; acc += f; return s; }).join('')}
+        <text x="100" y="98" class="n">${Math.round(D.graves.length / tot * 100)}%</text><text x="100" y="120" class="l">graves</text></svg>`;
+}
+const apxVar = (a, b) => { if (!b) return a ? '<span class="apx-var s">novo</span>' : '<span class="apx-var">—</span>'; const v = Math.round((a - b) / b * 100); return `<span class="apx-var ${v > 0 ? 's' : v < 0 ? 'd' : ''}">${v > 0 ? '▲' : v < 0 ? '▼' : '='} ${Math.abs(v)}%</span>`; };
+const apxPeriodo = () => ({ 30: 'últimos 30 dias', 90: 'últimos 90 dias', 180: 'últimos 6 meses', 365: 'últimos 12 meses' })[APX.dias];
+
+/* ---------- conclusões automáticas ---------- */
+function apxConclusoes(D) {
+    const C = [], n = D.cur.length, a = D.prev.length;
+    if (a) { const v = Math.round((n - a) / a * 100); C.push({ i: v > 5 ? 'trend' : 'check', c: v > 5 ? 'var(--c-crit)' : v < -5 ? 'var(--verde)' : 'var(--c-medio)', t: v > 5 ? `Os registros aumentaram ${v}%` : v < -5 ? `Os registros caíram ${-v}%` : 'Os registros ficaram estáveis', s: `${fmtN(n)} no período contra ${fmtN(a)} no período anterior.` }); }
+    const gp = n ? Math.round(D.graves.length / n * 100) : 0; C.push({ i: 'alerta', c: 'var(--c-alto)', t: `${gp}% dos fatos são graves`, s: `${fmtN(D.graves.length)} registros críticos ou altos; ${fmtN(D.sev.length)} de tipos sensíveis.` });
+    const t1 = D.temas.find(x => x.e - x.m > .02) || D.temas[0]; if (t1) C.push({ i: 'target', c: t1.p.cor, t: `${t1.p.t} é o tema em destaque`, s: `${Math.round(t1.e * 100)}% dos registros${APX.esc !== 'seduc' ? ` contra ${Math.round(t1.m * 100)}% na rede estadual` : ''}.` });
+    const s1 = D.subL[0]; if (s1 && n) C.push({ i: 'map', c: 'var(--prim)', t: `${s1.nome} concentra ${Math.round(s1.n / n * 100)}%`, s: `${fmtN(s1.n)} registros, o maior volume ${APX.esc === 'seduc' ? 'entre as DREs' : APX.esc === 'dre' ? 'entre os municípios' : 'entre as escolas'}.` });
+    if (D.protAt.length) C.push({ i: 'check', c: 'var(--c-crit)', t: `${D.protAt.length} protocolo(s) com passo atrasado`, s: 'Casos críticos que precisam de resposta da rede.' });
+    if (D.recA.length) C.push({ i: 'repeat', c: 'var(--roxo)', t: `${D.recA.length} reincidência(s) ativa(s)`, s: 'O mesmo tipo de fato voltando na mesma escola.' });
+    return C.slice(0, 5);
+}
+function apxRecomendacoes(D) {
+    const R = [], temas = D.temas.filter(x => x.e - x.m > .015).slice(0, 3); (temas.length ? temas : D.temas.slice(0, 3)).forEach(x => R.push({ cor: x.p.cor, t: x.p.t, a: x.p.acoes.slice(0, 2), p: typeof PROJ !== 'undefined' && PROJ[x.p.id] ? PROJ[x.p.id][0] : null, ref: x.p.refs[0] || '' }));
+    const g = [];
+    if (D.protAt.length) g.push('Colocar em dia os protocolos atrasados, com responsável e prazo.');
+    if (D.escTodas.length && D.fichas.length / D.escTodas.length < .5) g.push(`Ampliar as fichas de segurança: só ${Math.round(D.fichas.length / D.escTodas.length * 100)}% das escolas têm ficha preenchida.`);
+    if (D.escL[0]) g.push(`Visita técnica e plano de ação nas ${Math.min(5, D.escL.length)} escolas prioritárias.`);
+    g.push('Registrar as intervenções no sistema e avaliar o efeito em 90 dias.');
+    return { R, g };
+}
+
+/* ---------- montagem dos slides ---------- */
+function apxSlides(D) {
+    const n = D.cur.length, cod = APX.cod, idE = idEmissor(), quando = new Date().toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    const perTxt = `${fmtD(D.ini)} a ${fmtD(D.hoje)}`, tot = n || 1;
+    const S = [];
+    S.push({ t: 'Abertura', cls: 'capa', h: `<div class="apx-capa"><div class="apx-orb"><span></span><span></span><span></span>${emblema(92, 'apxe')}</div>
+        <div class="apx-capa-tx"><div class="apx-carimbo">ACESSO RESTRITO<small>Uso exclusivo SEDUC-MT</small></div><small class="k">${DX_ORG[0]} · ${DX_ORG[1]}</small>
+        <h1>Panorama de Segurança Escolar</h1><h2>${esc(D.nome)}</h2><p>${esc(apxPeriodo())} · ${perTxt}</p>
+        <div class="apx-meta"><span>${ic('shield')}Código ${esc(cod)}</span><span>${ic('user')}Apresentado por ${esc(idE)}</span><span>${ic('clock')}${esc(quando)}</span></div></div></div>` });
+    S.push({ t: 'Sigilo', cls: 'sig', h: `<div class="apx-sig"><div class="apx-cad">${ic('shield')}</div><small class="k">Antes de começar</small><h2>Esta apresentação é de acesso restrito</h2>
+        <div class="apx-sig-g"><div>${ic('alerta')}<b>Proibido fotografar, gravar ou compartilhar</b><span>Telas, trechos ou números, por qualquer meio, sem autorização da autoridade competente.</span></div>
+        <div>${ic('users')}<b>Só para quem precisa saber</b><span>Uso exclusivo no planejamento de ações de segurança escolar e de proteção.</span></div>
+        <div>${ic('book')}<b>Base legal</b><span>Lei 12.527/2011 (LAI), arts. 25 e 31 · Lei 13.709/2018 (LGPD) · Lei 8.069/1990 (ECA), arts. 17, 18 e 143.</span></div>
+        <div>${ic('zap')}<b>Sem identificação de pessoas</b><span>Nenhum nome de estudante ou servidor aparece nesta apresentação.</span></div></div>
+        <p class="apx-rast">Sessão rastreável: emissor ${esc(idE)} · código ${esc(cod)} · ${esc(quando)}</p></div>` });
+    S.push({ t: 'Roteiro', cls: 'rot', h: `<div class="apx-txt"><small class="k">Roteiro</small><h2>O que vamos ver</h2></div><ol class="apx-agenda">${['Números-chave', 'Evolução no tempo', 'Gravidade e tipos', 'Território', 'Escolas prioritárias', 'Padrões e reincidência', 'Proteção em andamento', 'Temas em destaque', 'Recomendações', 'Conclusão'].map((x, k) => `<li style="--an-i:${k}"><span>${String(k + 1).padStart(2, '0')}</span>${x}</li>`).join('')}</ol>` });
+    S.push({ t: 'Números-chave', h: `<div class="apx-txt"><small class="k">01 · Números-chave</small><h2>${esc(D.curto)} em ${esc(apxPeriodo())}</h2></div>
+        <div class="apx-kpis">${[['book', 'Registros', n, apxVar(n, D.prev.length), 'var(--prim)'], ['alerta', 'Críticos e altos', D.graves.length, apxVar(D.graves.length, D.prev.filter(r => r.crit === 'CRÍTICO' || r.crit === 'ALTO').length), 'var(--c-crit)'], ['zap', 'Tipos sensíveis', D.sev.length, apxVar(D.sev.length, D.prev.filter(r => ehSevero(r.tipo)).length), 'var(--c-alto)'], ['escola', 'Escolas com registro', D.escL.length, apxVar(D.escL.length, new Set(D.prev.map(r => r.escK)).size), 'var(--roxo)']].map(([i, t, v, va, c], k) => `<div class="apx-kpi" style="--c:${c};--an-i:${k}"><span class="ic">${ic(i)}</span><b data-conta>${fmtN(v)}</b><span class="t">${t}</span>${va}<small>período anterior</small></div>`).join('')}</div>
+        ${APX.esc !== 'seduc' && D.mtN ? `<p class="apx-nota">O escopo responde por <b>${Math.round(n / D.mtN * 100)}%</b> dos registros da rede estadual no mesmo período.</p>` : ''}` });
+    S.push({ t: 'Evolução', h: `<div class="apx-txt"><small class="k">02 · Evolução no tempo</small><h2>Últimos 12 meses</h2><p>Linha azul: todos os registros. Linha vermelha: críticos e altos. Passe o mouse para ver cada mês.</p></div><div class="apx-viz">${apxLinha(D)}</div>` });
+    const mxT = maxDe(D.tipos.map(x => x.n), 1);
+    S.push({ t: 'Gravidade e tipos', h: `<div class="apx-2"><div class="apx-viz">${apxDonut(D)}<div class="apx-leg">${D.crit.map(x => `<span><i style="background:${corCrit(x.c)}"></i>${x.c.charAt(0) + x.c.slice(1).toLowerCase()} <b>${fmtN(x.n)}</b></span>`).join('')}</div></div>
+        <div><div class="apx-txt"><small class="k">03 · Gravidade e tipos</small><h2>O que mais acontece</h2></div><div class="apx-barras">${D.tipos.map((x, k) => `<div style="--an-i:${k}"><span class="nm">${esc(x.t)}</span><span class="br"><i style="width:${(x.n / mxT * 100).toFixed(1)}%"></i></span><b>${fmtN(x.n)}</b>${apxVar(x.n, x.a)}</div>`).join('') || '<p>Sem registros no período.</p>'}</div></div></div>` });
+    const mxS = maxDe(D.subL.map(x => x.n), 1);
+    S.push({ t: 'Território', h: `<div class="apx-2 mapa"><div class="apx-viz">${apxMapa(D)}</div><div><div class="apx-txt"><small class="k">04 · Território</small><h2>${APX.esc === 'seduc' ? 'Onde se concentram' : APX.esc === 'dre' ? 'Municípios da DRE' : 'Escolas do município'}</h2><p>${APX.esc === 'seduc' ? 'Cor mais intensa: mais registros no município.' : 'Pontos vermelhos: escolas com fato grave.'}</p></div>
+        <div class="apx-rank">${D.subL.slice(0, 7).map((x, k) => `<div style="--an-i:${k}"><em>${k + 1}</em><span class="nm">${esc(x.nome)}</span><span class="br"><i style="width:${(x.n / mxS * 100).toFixed(1)}%"></i></span><b>${fmtN(x.n)}</b></div>`).join('')}</div></div></div>` });
+    S.push({ t: 'Escolas prioritárias', h: `<div class="apx-txt"><small class="k">05 · Escolas prioritárias</small><h2>Onde agir primeiro</h2><p>Volume, gravidade e crescimento no período.</p></div>
+        <div class="apx-escs">${D.escL.slice(0, 6).map((o, k) => `<div class="apx-esc" style="--an-i:${k};--c:${o.idx != null ? corIdx(o.idx) : 'var(--c-alto)'}"><span class="pos">${k + 1}</span><div><b>${esc(o.nome)}</b><span>${esc(nomeMun(o.mun))}</span></div><div class="nums"><span><b>${o.n}</b>registros</span><span><b>${o.g}</b>graves</span><span>${apxVar(o.n, o.ant)}</span>${o.idx != null ? `<span><b>${o.idx}</b>índice</span>` : ''}</div></div>`).join('') || '<p>Sem escolas com registro no período.</p>'}</div>` });
+    const hp = D.horas.indexOf(maxDe(D.horas, 0)), dp = D.semana.indexOf(maxDe(D.semana, 0)), mxH = maxDe(D.horas, 1);
+    S.push({ t: 'Padrões', h: `<div class="apx-txt"><small class="k">06 · Padrões e reincidência</small><h2>Como os fatos se repetem</h2></div>
+        <div class="apx-kpis peq">${[['repeat', 'Reincidências ativas', D.recA.length, 'var(--roxo)'], ['users', 'Autores reincidentes', D.reinc.length, 'var(--c-alto)'], ['trend', 'Escolas em escalada', D.esca.length, 'var(--c-crit)'], ['clock', 'Horário de pico', maxDe(D.horas, 0) ? hp + 'h' : '—', 'var(--prim)']].map(([i, t, v, c], k) => `<div class="apx-kpi" style="--c:${c};--an-i:${k}"><span class="ic">${ic(i)}</span><b>${typeof v === 'number' ? fmtN(v) : v}</b><span class="t">${t}</span></div>`).join('')}</div>
+        <div class="apx-horas">${D.horas.map((v, h) => `<i style="height:${(8 + v / mxH * 92).toFixed(0)}%;--an-i:${h}" class="${h === hp && v ? 'pico' : ''}" data-dica="${h}h: ${v}"></i>`).join('')}</div><div class="apx-horas-ex"><span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>23h</span></div>
+        <p class="apx-nota">Dia da semana com mais registros: <b>${MD_DIAS[dp]}</b>. Nomes de pessoas não são exibidos.</p>` });
+    const fichaPct = D.escTodas.length ? Math.round(D.fichas.length / D.escTodas.length * 100) : 0, mediaF = D.fichas.length ? Math.round(D.fichas.reduce((s, f) => s + f.nota, 0) / D.fichas.length * 100) : null;
+    const efeito = D.itvAv.length ? D.itvAv.reduce((s, e) => s + e.varia, 0) / D.itvAv.length : null;
+    S.push({ t: 'Proteção', h: `<div class="apx-txt"><small class="k">07 · Proteção em andamento</small><h2>A resposta da rede</h2></div>
+        <div class="apx-prot">${[['check', 'Protocolos de resposta', D.prot.length ? Math.round(D.protC.length / D.prot.length * 100) : 0, `${D.prot.length} casos · ${D.protAt.length} com atraso`, 'var(--prim)'], ['shield', 'Escolas com ficha de segurança', fichaPct, `${D.fichas.length} de ${D.escTodas.length}${mediaF != null ? ' · proteção média ' + mediaF + '%' : ''}`, 'var(--verde)'], ['zap', 'Intervenções registradas', null, `${D.itv.length} ações${efeito != null ? ' · efeito médio ' + fmtVarP(efeito) : ''}`, 'var(--roxo)']].map(([i, t, p, s, c], k) => `<div class="apx-anel" style="--c:${c};--p:${p == null ? 0 : p};--an-i:${k}"><div class="r">${p == null ? `<b>${fmtN(D.itv.length)}</b>` : `<b>${p}%</b>`}</div><span class="t">${ic(i)}${t}</span><small>${esc(s)}</small></div>`).join('')}</div>` });
+    S.push({ t: 'Temas', h: `<div class="apx-txt"><small class="k">08 · Temas em destaque</small><h2>${APX.esc === 'seduc' ? 'Temas da rede' : 'Comparado com a rede estadual'}</h2><p>${APX.esc === 'seduc' ? 'Parte dos registros em cada tema.' : 'Barra colorida: escopo. Marca branca: média de Mato Grosso.'}</p></div>
+        <div class="apx-temas">${D.temas.slice(0, 7).map((x, k) => `<div style="--c:${x.p.cor};--an-i:${k}"><span class="nm">${esc(x.p.t)}${x.e - x.m > .02 && APX.esc !== 'seduc' ? ' <em>▲</em>' : ''}</span><span class="br"><i style="width:${(x.e * 100 / Math.max(.01, maxDe(D.temas.map(y => Math.max(y.e, y.m)), .01))).toFixed(1)}%"></i>${APX.esc !== 'seduc' ? `<u style="left:${(x.m * 100 / Math.max(.01, maxDe(D.temas.map(y => Math.max(y.e, y.m)), .01))).toFixed(1)}%"></u>` : ''}</span><b>${Math.round(x.e * 100)}%</b></div>`).join('')}</div>` });
+    const REC = apxRecomendacoes(D);
+    S.push({ t: 'Recomendações', h: `<div class="apx-txt"><small class="k">09 · Recomendações</small><h2>O que fazer</h2></div>
+        <div class="apx-recs">${REC.R.map((r, k) => `<div class="apx-rec" style="--c:${r.cor};--an-i:${k}"><b>${esc(r.t)}</b><ul>${r.a.map(a => `<li>${esc(a)}</li>`).join('')}</ul>${r.p ? `<span class="pj">${esc(r.p[0])}: ${esc(r.p[1])} · ${esc(r.p[5])}</span>` : ''}${r.ref ? `<small>${esc(r.ref)}</small>` : ''}</div>`).join('')}</div>
+        <ul class="apx-ger">${REC.g.map((x, k) => `<li style="--an-i:${k + 3}">${ic('check')}${esc(x)}</li>`).join('')}</ul>` });
+    const CON = apxConclusoes(D);
+    S.push({ t: 'Conclusão', cls: 'fim', h: `<div class="apx-txt"><small class="k">10 · Conclusão</small><h2>O que levar desta reunião</h2></div>
+        <div class="apx-con">${CON.map((x, k) => `<div style="--c:${x.c};--an-i:${k}"><span class="ic">${ic(x.i)}</span><div><b>${esc(x.t)}</b><span>${esc(x.s)}</span></div></div>`).join('')}</div>` });
+    S.push({ t: 'Encerramento', cls: 'capa enc', h: `<div class="apx-capa"><div class="apx-selo-f">${typeof dxSelo === 'function' ? dxSelo(cod, conectado()) : ''}</div>
+        <div class="apx-capa-tx"><small class="k">Encerramento</small><h1>Obrigado.</h1><h2>${esc(D.nome)}</h2><p>Informações de acesso restrito. Não reproduza, fotografe ou compartilhe esta apresentação.</p>
+        <div class="apx-meta"><span>${ic('shield')}Código ${esc(cod)}</span><span>${ic('user')}${esc(idE)}</span><span>${ic('book')}Fonte: Livro de Ocorrências · EDUCASEG-PLUS</span></div>${(() => { const q = typeof dxQR === 'function' && typeof dxLinkVerif === 'function' ? dxQR(dxLinkVerif(cod)) : ''; return q ? `<div class="apx-qr">${q}<span>Verifique a autenticidade</span></div>` : ''; })()}</div></div>` });
+    return S;
+}
+
+/* ---------- player ---------- */
+function apxIniciar(i) {
+    if (!A) return;
+    APX.cod = codigoVerificacao('apresentacao|' + APX.esc + '|' + (APX.dre || APX.mun) + '|' + APX.dias);
+    const D = apxDados(), S = apxSlides(D); APX.deck = { D, S };
+    if (conectado()) api('registrarRelatorio', { codigo: APX.cod, titulo: 'Apresentação · Panorama de Segurança Escolar', classificacao: 'ACESSO RESTRITO', recorte: D.curto + ' · ' + apxPeriodo(), registros: D.cur.length, hash: '' }).catch(() => { });
+    let el = $('apx'); if (el) el.remove();
+    el = document.createElement('div'); el.id = 'apx'; el.className = 'apx'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Modo apresentação');
+    const marca = `${'RESTRITO · ' + idEmissor() + ' · ' + APX.cod + '   '}`.repeat(4);
+    el.innerHTML = `<div class="apx-fundo" aria-hidden="true"><i></i><i></i><i></i><canvas id="apx-part"></canvas></div>
+        <div class="apx-dagua" aria-hidden="true">${Array.from({ length: 9 }, () => `<span>${esc(marca)}</span>`).join('')}</div>
+        <header class="apx-topo"><div class="apx-id">${emblema(28, 'apxt')}<span><b>EDUCASEG-PLUS</b>${esc(D.curto)} · ${esc(apxPeriodo())}</span></div><div class="apx-tarja">${ic('shield')}ACESSO RESTRITO</div>
+            <div class="apx-bt"><button data-a="sum" title="Sumário (S)">${ic('grid')}</button><button data-a="auto" title="Passagem automática (P)">${ic(APX.auto ? 'pause' : 'play')}</button><button data-a="fs" title="Tela cheia (F)">${ic('expand')}</button><button data-a="sair" title="Sair (Esc)">${ic('x')}</button></div></header>
+        <main class="apx-palco">${S.map((s, k) => `<section class="apx-s ${s.cls || ''}" data-i="${k}" aria-hidden="true">${s.h}</section>`).join('')}</main>
+        <footer class="apx-rod"><span class="apx-lei">Proibida a reprodução, fotografia ou compartilhamento · Lei 12.527/2011 · LGPD · ECA · Doc. ${esc(APX.cod)}</span><div class="apx-pontos">${S.map((s, k) => `<button data-ir="${k}" title="${esc(s.t)}"></button>`).join('')}</div><span class="apx-cont"></span></footer>
+        <div class="apx-prog"><i></i></div>
+        <button class="apx-lado e" data-a="ant" aria-label="Anterior"></button><button class="apx-lado d" data-a="prox" aria-label="Próximo"></button>
+        <div class="apx-sum" hidden><div class="apx-sum-in"><h3>Sumário</h3><div>${S.map((s, k) => `<button data-ir="${k}"><span>${String(k + 1).padStart(2, '0')}</span>${esc(s.t)}</button>`).join('')}</div></div></div>
+        <div class="apx-cortina" hidden>${ic('shield')}<b>Apresentação protegida</b><span>Clique para continuar</span></div>`;
+    document.body.appendChild(el); document.body.classList.add('sem-rolagem');
+    el.addEventListener('click', e => {
+        const b = e.target.closest('[data-a],[data-ir]'); if (!b) return;
+        if (b.dataset.ir != null) { apxIr(+b.dataset.ir); el.querySelector('.apx-sum').hidden = true; return; }
+        ({ ant: () => apxIr(APX.i - 1), prox: () => apxIr(APX.i + 1), sair: apxSair, fs: apxTela, auto: apxAuto, sum: () => { const s = el.querySelector('.apx-sum'); s.hidden = !s.hidden; } })[b.dataset.a]();
+    });
+    el.querySelector('.apx-sum').addEventListener('click', e => { if (e.target.classList.contains('apx-sum')) e.target.hidden = true; });
+    el.querySelector('.apx-cortina').addEventListener('click', e => { e.currentTarget.hidden = true; });
+    let x0 = null; el.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    el.addEventListener('touchend', e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 60) apxIr(APX.i + (dx < 0 ? 1 : -1)); x0 = null; });
+    if (typeof ligarDicas === 'function') ligarDicas(el);
+    apxParticulas();
+    if (el.requestFullscreen && !/iPhone|iPad/.test(navigator.userAgent)) el.requestFullscreen().catch(() => { });
+    APX.i = 0; apxIr(i || 0);
+}
+function apxIr(i) {
+    const el = $('apx'); if (!el || !APX.deck) return;
+    const N = APX.deck.S.length; i = Math.max(0, Math.min(N - 1, i));
+    const dir = i >= APX.i ? 1 : -1; APX.i = i;
+    el.querySelectorAll('.apx-s').forEach((s, k) => { const on = k === i; s.classList.toggle('on', on); s.classList.toggle('antes', k < i); s.setAttribute('aria-hidden', on ? 'false' : 'true'); if (on) { s.classList.remove('anima'); void s.offsetWidth; s.classList.add('anima'); s.querySelectorAll('[data-conta]').forEach(b => { b._contado = 0; contarAte(b); }); } });
+    el.querySelectorAll('.apx-pontos button').forEach((b, k) => { b.classList.toggle('on', k === i); b.classList.toggle('feito', k < i); });
+    el.querySelector('.apx-cont').textContent = `${i + 1} / ${N}`;
+    el.querySelector('.apx-prog i').style.width = ((i + 1) / N * 100) + '%';
+    el.dataset.dir = dir;
+    clearTimeout(APX.t); if (APX.auto && i < N - 1) APX.t = setTimeout(() => apxIr(APX.i + 1), APX.seg * 1000);
+}
+function apxAuto() { APX.auto = !APX.auto; const b = document.querySelector('#apx [data-a="auto"]'); if (b) b.innerHTML = ic(APX.auto ? 'pause' : 'play'); toast(APX.auto ? `Passagem automática a cada ${APX.seg} s` : 'Passagem automática desligada', APX.auto ? 'play' : 'pause'); apxIr(APX.i); }
+function apxTela() { const el = $('apx'); if (!el) return; if (document.fullscreenElement) document.exitFullscreen().catch(() => { }); else if (el.requestFullscreen) el.requestFullscreen().catch(() => { }); }
+function apxSair() { clearTimeout(APX.t); if (document.fullscreenElement) document.exitFullscreen().catch(() => { }); const el = $('apx'); if (el) el.remove(); document.body.classList.remove('sem-rolagem'); cancelAnimationFrame(APX._raf); }
+document.addEventListener('keydown', e => {
+    if (!$('apx')) return;
+    const k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Enter') { apxIr(APX.i + 1); e.preventDefault(); }
+    else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace') { apxIr(APX.i - 1); e.preventDefault(); }
+    else if (k === 'Home') apxIr(0); else if (k === 'End') apxIr(APX.deck.S.length - 1);
+    else if (k === 'Escape') { const s = document.querySelector('#apx .apx-sum'); if (s && !s.hidden) s.hidden = true; else if (!document.fullscreenElement) apxSair(); }
+    else if (/^[sS]$/.test(k)) { const s = document.querySelector('#apx .apx-sum'); s.hidden = !s.hidden; }
+    else if (/^[pP]$/.test(k)) apxAuto(); else if (/^[fF]$/.test(k)) apxTela();
+});
+document.addEventListener('visibilitychange', () => { const c = document.querySelector('#apx .apx-cortina'); if (c && document.hidden) c.hidden = false; });
+function apxParticulas() {
+    const cv = $('apx-part'); if (!cv || !MOVE()) return;
+    const ctx = cv.getContext('2d'), dpr = devicePixelRatio || 1; let W, H; const P = Array.from({ length: 60 }, () => ({ x: Math.random(), y: Math.random(), vx: (Math.random() - .5) * .0004, vy: (Math.random() - .5) * .0004 }));
+    const tam = () => { W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }; tam(); window.addEventListener('resize', tam);
+    const passo = () => {
+        if (!$('apx')) { window.removeEventListener('resize', tam); return; }
+        ctx.clearRect(0, 0, W, H);
+        P.forEach(p => { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > 1) p.vx *= -1; if (p.y < 0 || p.y > 1) p.vy *= -1; });
+        for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) { const dx = (P[i].x - P[j].x) * W, dy = (P[i].y - P[j].y) * H, d = Math.hypot(dx, dy); if (d < 130) { ctx.strokeStyle = `rgba(56,189,248,${(1 - d / 130) * .18})`; ctx.beginPath(); ctx.moveTo(P[i].x * W, P[i].y * H); ctx.lineTo(P[j].x * W, P[j].y * H); ctx.stroke(); } }
+        ctx.fillStyle = 'rgba(125,211,252,.55)'; P.forEach(p => { ctx.beginPath(); ctx.arc(p.x * W, p.y * H, 1.6, 0, 7); ctx.fill(); });
+        APX._raf = requestAnimationFrame(passo);
+    };
+    passo();
+}
+
+/* ---------- página de configuração ---------- */
+function rApresentacao() {
+    const cont = $('cont-apresentacao'); if (!cont || !A) return;
+    const E = apxEscopos();
+    if (E.restrito && APX.esc === 'seduc') APX.esc = 'dre';
+    if (!APX.dre || !E.D.includes(APX.dre)) APX.dre = E.D[0] || '';
+    if (!APX.mun || !E.M.includes(APX.mun)) APX.mun = E.M[0] || '';
+    $('acoes-apresentacao').innerHTML = `<button class="btn btn-p" onclick="apxIniciar(0)">${ic('play')}Iniciar apresentação</button>`;
+    const D = apxDados(), S = apxSlides(D);
+    const esc3 = [['seduc', 'home', 'SEDUC geral', 'Toda a rede estadual'], ['dre', 'layers', 'DRE', 'Uma diretoria regional'], ['mun', 'pin', 'Município', 'Um município e suas escolas']];
+    cont.innerHTML = `<div class="card card-pad apx-cfg">
+        <div class="apx-esc3">${esc3.map(([v, i, t, s]) => `<button class="${APX.esc === v ? 'ativo' : ''}" ${E.restrito && v === 'seduc' ? 'disabled title="Disponível para Administrador e Inteligência"' : ''} onclick="APX.esc='${v}';rApresentacao()"><span class="ic">${ic(i)}</span><b>${t}</b><small>${s}</small></button>`).join('')}</div>
+        <div class="form-grade" style="margin-top:14px">
+            ${APX.esc === 'dre' ? `<div><label class="rot" for="apx-dre">Diretoria regional</label><select class="campo" id="apx-dre">${E.D.map(k => `<option value="${esc(k)}" ${k === APX.dre ? 'selected' : ''}>${esc(nomeDre(k))}</option>`).join('')}</select></div>` : ''}
+            ${APX.esc === 'mun' ? `<div><label class="rot" for="apx-mun">Município</label><input class="campo" id="apx-mun" list="apx-muns" value="${esc(nomeMun(APX.mun))}" autocomplete="off"><datalist id="apx-muns">${E.M.map(k => `<option value="${esc(nomeMun(k))}">`).join('')}</datalist></div>` : ''}
+            <div><label class="rot">Período</label><div class="seg">${[[30, '30 dias'], [90, '90 dias'], [180, '6 meses'], [365, '12 meses']].map(([v, t]) => `<button class="${APX.dias === v ? 'ativo' : ''}" onclick="APX.dias=${v};rApresentacao()">${t}</button>`).join('')}</div></div>
+            <div><label class="rot" for="apx-seg">Passagem automática</label><div style="display:flex;gap:10px;align-items:center"><label class="sw-l"><input type="checkbox" id="apx-auto" ${APX.auto ? 'checked' : ''}> ligar</label><select class="campo" id="apx-seg" style="width:auto">${[8, 12, 20, 30].map(v => `<option value="${v}" ${APX.seg === v ? 'selected' : ''}>a cada ${v} s</option>`).join('')}</select></div></div></div>
+        <div class="apx-resumo"><div><small>Escopo</small><b>${esc(D.nome)}</b></div><div><small>Registros no período</small><b>${fmtN(D.cur.length)}</b></div><div><small>Escolas</small><b>${fmtN(D.escL.length)}</b></div><div><small>Slides</small><b>${S.length}</b></div></div>
+        <div class="aviso alerta" style="margin:14px 0 0">${ic('shield')}<div><b>Acesso restrito.</b> A apresentação leva selo de sigilo e marca d'água com o seu ID (${esc(idEmissor())}) em todos os slides, é registrada com código de verificação e não mostra nomes de pessoas. Não fotografe nem grave a tela.</div></div></div>
+    <div class="card card-pad apx-rot"><div class="card-tit"><div class="ico" style="--c:var(--roxo)">${ic('layers')}</div><div><h3>Roteiro da apresentação</h3><p>Clique num slide para começar por ele. Na apresentação: setas para navegar, S para o sumário, P para passagem automática, F para tela cheia e Esc para sair.</p></div></div>
+        <div class="apx-thumbs">${S.map((s, k) => `<button onclick="apxIniciar(${k})" style="--an-i:${k}"><span class="n">${String(k + 1).padStart(2, '0')}</span><b>${esc(s.t)}</b><i class="${s.cls ? 'esp' : ''}"></i></button>`).join('')}</div></div>`;
+    const dre = $('apx-dre'); if (dre) dre.onchange = () => { APX.dre = dre.value; rApresentacao(); };
+    const mun = $('apx-mun'); if (mun) mun.onchange = () => { const k = E.M.find(x => nomeMun(x) === mun.value); if (k) { APX.mun = k; rApresentacao(); } };
+    $('apx-auto').onchange = e => { APX.auto = e.target.checked; }; $('apx-seg').onchange = e => { APX.seg = +e.target.value; };
+}
+const _renderAbaApx = renderAba;
+renderAba = function () { if (ABA === 'apresentacao') { if (!A) return; rApresentacao(); if (typeof garantirLegenda === 'function') garantirLegenda('apresentacao'); if (typeof organizarTopicos === 'function') organizarTopicos('apresentacao'); return; } _renderAbaApx(); };
+
+/* =====================================================================
+   EDUCASEG-PLUS 5.0 — Modo apresentação 2: mapa satélite, geolocalização,
+   capa com a bandeira de MT, novo fundo cartográfico, plano de ação e
+   referências oficiais
+   ===================================================================== */
+const APG = { map: null, cam: null, base: null, tourI: 0, tourT: null, cena: '' };
+const SAT_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+const ROT_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}';
+const MT_BB = [[-18.1, -61.7], [-7.3, -50.1]];
+
+/* bandeira de Mato Grosso: campo azul, losango branco, círculo verde e estrela amarela */
+function bandeiraMT(w, cls) {
+    const id = 'bmt' + Math.random().toString(36).slice(2, 7), est = [];
+    for (let i = 0; i < 10; i++) { const r = i % 2 ? 6.2 : 15, a = -Math.PI / 2 + i * Math.PI / 5; est.push((50 + r * Math.cos(a)).toFixed(2) + ',' + (35 + r * Math.sin(a)).toFixed(2)); }
+    return `<svg class="${cls || ''}" width="${w}" viewBox="0 0 100 70" role="img" aria-label="Bandeira de Mato Grosso"><defs><linearGradient id="${id}" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><clipPath id="${id}c"><rect width="100" height="70" rx="2"/></clipPath></defs>
+        <g clip-path="url(#${id}c)"><rect width="100" height="70" fill="#0b3a9e"/><polygon points="50,7 92,35 50,63 8,35" fill="#fff"/><circle cx="50" cy="35" r="17.5" fill="#009b3a"/><polygon points="${est.join(' ')}" fill="#fcd116"/><rect class="brilho" x="-60" width="50" height="70" fill="url(#${id})"/></g></svg>`;
+}
+const dms = (v, pos, neg) => { const a = Math.abs(v), g = Math.floor(a), m = Math.floor((a - g) * 60), s = Math.round(((a - g) * 60 - m) * 60); return `${g}°${String(m).padStart(2, '0')}'${String(s).padStart(2, '0')}"${v < 0 ? neg : pos}`; };
+const kmEntre = (a, b, c, d) => { const R = 6371, r = x => x * Math.PI / 180, dl = r(c - a), dg = r(d - b), h = Math.sin(dl / 2) ** 2 + Math.cos(r(a)) * Math.cos(r(c)) * Math.sin(dg / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+const apgSede = dre => SEDES.find(s => apxDk(s.dre) === apxDk(dre));
+const apgEsc = k => { const e = A.escolas.get(k); return e && e.lat != null && e.lng != null ? e : null; };
+
+/* geometria do escopo */
+function apgEscopo() {
+    if (APX.esc === 'mun') return MUNS.filter(m => m.k === APX.mun);
+    if (APX.esc === 'dre') { const ks = new Set(ESC_REF.filter(e => apxDk(e.dre) === apxDk(APX.dre)).map(e => e.mun)); BASE.forEach(r => { if (r.dre === APX.dre) ks.add(r.mun); }); return MUNS.filter(m => ks.has(m.k)); }
+    return null;
+}
+function apgLimites() {
+    const ms = apgEscopo(); if (!ms || !ms.length) return L.latLngBounds(MT_BB);
+    return L.geoJSON({ type: 'FeatureCollection', features: ms.map(m => ({ type: 'Feature', properties: {}, geometry: m.g })) }).getBounds();
+}
+
+/* ---------- mapa compartilhado ---------- */
+function apgCriar() {
+    if (typeof L === 'undefined' || !$('apx-geo')) return;
+    const m = APG.map = L.map('apx-geo', { zoomControl: false, attributionControl: true, keyboard: false, zoomSnap: .1, zoomDelta: .5, scrollWheelZoom: true, worldCopyJump: false, preferCanvas: false });
+    m.attributionControl.setPrefix(false);
+    L.tileLayer(SAT_URL, { maxZoom: 18, attribution: 'Imagens © Esri, Maxar, Earthstar Geographics', crossOrigin: true }).addTo(m);
+    L.tileLayer(ROT_URL, { maxZoom: 18, opacity: .75 }).addTo(m);
+    L.geoJSON({ type: 'FeatureCollection', features: MUNS.map(x => ({ type: 'Feature', properties: {}, geometry: x.g })) }, { style: { fill: false, color: '#ffffff', weight: .5, opacity: .28 }, interactive: false }).addTo(m);
+    L.geoJSON(GEO_MT.uf, { style: { fill: false, color: '#fcd116', weight: 2.4, opacity: .9, className: 'apg-uf' }, interactive: false }).addTo(m);
+    const ms = apgEscopo();
+    if (ms && ms.length) L.geoJSON({ type: 'FeatureCollection', features: ms.map(x => ({ type: 'Feature', properties: {}, geometry: x.g })) }, { style: { fillColor: '#38bdf8', fillOpacity: .08, color: '#7dd3fc', weight: 2, className: 'apg-esc' }, interactive: false }).addTo(m);
+    APG.cam = L.layerGroup().addTo(m);
+    m.fitBounds(MT_BB, { animate: false });
+}
+function apgVoar(b, opt) {
+    const m = APG.map; if (!m) return; opt = opt || {};
+    const cel = innerWidth < 800, lado = cel ? 0 : (opt.lado === 'e' ? Math.min(520, innerWidth * .38) : opt.lado === 'd' ? Math.min(520, innerWidth * .38) : opt.lado === 'capa' ? innerWidth * .46 : 0);
+    const tl = [opt.lado === 'd' ? 50 : lado + 40, 80], br = [opt.lado === 'd' ? lado + 40 : 50, cel ? innerHeight * .45 : 60];
+    if (b.getCenter) { const o = { paddingTopLeft: tl, paddingBottomRight: br, maxZoom: opt.max || 13 }; if (!MOVE()) m.fitBounds(b, Object.assign(o, { animate: false })); else m.flyToBounds(b, Object.assign(o, { duration: opt.dur || 2.2 })); return; }
+    const z = opt.z || 14, pt = m.project(L.latLng(b), z), dx = opt.lado === 'd' ? lado / 2 : opt.lado === 'e' ? -lado / 2 : 0, dy = cel ? innerHeight * .2 : 0, c = m.unproject(pt.add([dx, dy]), z);
+    if (!MOVE()) m.setView(c, z, { animate: false }); else m.flyTo(c, z, { duration: opt.dur || 2.4 });
+}
+const apgPulso = (lat, lng, cor, tam) => L.marker([lat, lng], { interactive: false, icon: L.divIcon({ className: '', html: `<span class="apg-pulso" style="--c:${cor};--s:${tam || 36}px"></span>`, iconSize: [tam || 36, tam || 36], iconAnchor: [(tam || 36) / 2, (tam || 36) / 2] }) });
+function apgPopup(o) {
+    const e = A.escolas.get(o.k) || {}, tp = new Map(); o.regs.forEach(r => tp.set(tipoCurto(r.tipo), (tp.get(tipoCurto(r.tipo)) || 0) + 1));
+    const t1 = [...tp.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3);
+    return `<div class="apg-pop"><b>${esc(o.nome)}</b><span>${esc(nomeMun(o.mun))} · ${esc(nomeDre(o.dre))}</span><div class="n"><em><b>${o.n}</b>registros</em><em><b>${o.g}</b>graves</em>${e.idx != null ? `<em><b>${e.idx}</b>índice</em>` : ''}</div>${t1.map(([t, n]) => `<i>${esc(t)} · ${n}</i>`).join('')}</div>`;
+}
+
+/* ---------- cenas ---------- */
+function apgCena(nome) {
+    const m = APG.map, D = APX.deck && APX.deck.D; if (!m || !D) return;
+    clearInterval(APG.tourT); APG.cam.clearLayers(); APG.cena = nome;
+    setTimeout(() => m.invalidateSize(), 60);
+    const pts = D.escL.map(o => ({ o, e: apgEsc(o.k) })).filter(x => x.e);
+    if (nome === 'capa' || nome === 'fim') {
+        const b = apgLimites();
+        if (nome === 'fim') { m.fitBounds(b, { animate: false, padding: [60, 60] }); setTimeout(() => apgVoar(L.latLngBounds(MT_BB), { dur: 3.2, lado: 'capa' }), 300); }
+        else { m.fitBounds(L.latLngBounds(MT_BB), { animate: false, padding: [-200, -200] }); setTimeout(() => apgVoar(b, { dur: 4, lado: 'capa', max: APX.esc === 'mun' ? 12 : 9 }), 500); }
+        const cc = b.getCenter(); setTimeout(() => { if (APG.cena === nome) L.marker(cc, { interactive: false, icon: L.divIcon({ className: '', html: `<div class="apg-mira"><i></i><span>${dms(cc.lat, 'N', 'S')} · ${dms(cc.lng, 'L', 'O')}</span></div>`, iconSize: [200, 200], iconAnchor: [100, 100] }) }).addTo(APG.cam); }, nome === 'fim' ? 3400 : 4400);
+        pts.slice(0, 10).forEach((x, i) => setTimeout(() => { if (APG.cena === nome) apgPulso(x.e.lat, x.e.lng, x.o.g ? '#f43f5e' : '#fcd116', 26 + Math.min(30, x.o.n)).addTo(APG.cam); }, 1200 + i * 220));
+        return;
+    }
+    if (nome === 'panorama') {
+        apgVoar(apgLimites(), { lado: 'e', max: APX.esc === 'mun' ? 13 : 10 });
+        const heat = []; pts.forEach(x => heat.push([x.e.lat, x.e.lng, Math.min(1, .25 + x.o.n / 20)]));
+        if (L.heatLayer && heat.length) L.heatLayer(heat, { radius: APX.esc === 'seduc' ? 26 : 34, blur: 22, maxZoom: 12, minOpacity: .35, gradient: { .2: '#22d3ee', .45: '#fcd116', .7: '#fb923c', 1: '#e11d48' } }).addTo(APG.cam);
+        pts.forEach((x, i) => {
+            const pc = x.o.regs.reduce((a, r) => CRIT_ORD.indexOf(r.crit) < CRIT_ORD.indexOf(a) ? r.crit : a, 'BAIXO');
+            const c = L.circleMarker([x.e.lat, x.e.lng], { radius: Math.min(16, 4 + Math.sqrt(x.o.n) * 1.7), color: '#fff', weight: 1.2, fillColor: css(COR_CRIT[pc] || '--prim'), fillOpacity: .9, className: 'apg-pt' });
+            c.bindPopup(apgPopup(x.o), { className: 'apg-popup', maxWidth: 280 }); c.bindTooltip(esc(x.o.nome), { direction: 'top', className: 'apg-tip' });
+            setTimeout(() => { if (APG.cena === nome) c.addTo(APG.cam); }, 900 + Math.min(1800, i * 12));
+        });
+        return;
+    }
+    if (nome === 'tour') {
+        const T = pts.slice(0, 6); if (!T.length) return;
+        T.forEach((x, i) => L.marker([x.e.lat, x.e.lng], { icon: L.divIcon({ className: '', html: `<span class="apg-num">${i + 1}</span>`, iconSize: [30, 30], iconAnchor: [15, 15] }) }).on('click', () => apgTour(i)).addTo(APG.cam));
+        APG.tourT = null; apgTour(0);
+        APG.tourT = setInterval(() => { if (APG.cena !== 'tour') return clearInterval(APG.tourT); apgTour((APG.tourI + 1) % T.length); }, 6500);
+        return;
+    }
+    if (nome === 'sedes') {
+        const L2 = apgLigacoes(D);
+        const b = L.latLngBounds([]); L2.forEach(l => { b.extend([l.s.lat, l.s.lng]); b.extend([l.e.lat, l.e.lng]); });
+        apgVoar(b.isValid() ? b : apgLimites(), { lado: 'e', max: 11 });
+        const sedesV = new Map(); L2.forEach(l => sedesV.set(l.s.dre, l.s));
+        sedesV.forEach(s => { apgPulso(s.lat, s.lng, '#22d3ee', 44).addTo(APG.cam); L.circleMarker([s.lat, s.lng], { radius: 8, color: '#04070d', weight: 3, fillColor: '#22d3ee', fillOpacity: 1 }).bindTooltip(`<b>Sede ${esc(s.nomeDre)}</b><br>${esc(s.sede)}`, { className: 'apg-tip' }).addTo(APG.cam); });
+        L2.forEach((l, i) => setTimeout(() => {
+            if (APG.cena !== nome) return;
+            L.polyline([[l.s.lat, l.s.lng], [l.e.lat, l.e.lng]], { color: l.o.g ? '#f43f5e' : '#fcd116', weight: 2.4, opacity: .95, dashArray: '6 6', className: 'apg-lig' }).addTo(APG.cam);
+            L.circleMarker([l.e.lat, l.e.lng], { radius: 6, color: '#fff', weight: 1.5, fillColor: l.o.g ? '#f43f5e' : '#fcd116', fillOpacity: 1 }).bindPopup(apgPopup(l.o), { className: 'apg-popup' }).addTo(APG.cam);
+            if (i < 10 && l.km >= 15) L.marker([(l.s.lat + l.e.lat) / 2, (l.s.lng + l.e.lng) / 2], { interactive: false, icon: L.divIcon({ className: '', html: `<span class="apg-km">${Math.round(l.km)} km</span>`, iconSize: [60, 20], iconAnchor: [30, 10] }) }).addTo(APG.cam);
+        }, 700 + i * 160));
+    }
+}
+function apgLigacoes(D) {
+    const out = [];
+    if (APX.esc === 'seduc') { const vis = new Set(); D.escL.forEach(o => { if (vis.has(o.dre) || out.length >= 15) return; const e = apgEsc(o.k), s = apgSede(o.dre); if (e && s) { vis.add(o.dre); out.push({ o, e, s, km: kmEntre(s.lat, s.lng, e.lat, e.lng) }); } }); }
+    else D.escL.slice(0, 14).forEach(o => { const e = apgEsc(o.k), s = apgSede(o.dre); if (e && s) out.push({ o, e, s, km: kmEntre(s.lat, s.lng, e.lat, e.lng) }); });
+    return out;
+}
+function apgTour(i) {
+    const D = APX.deck && APX.deck.D; if (!D) return;
+    const T = D.escL.map(o => ({ o, e: apgEsc(o.k) })).filter(x => x.e).slice(0, 6), x = T[i]; if (!x) return;
+    APG.tourI = i; apgVoar([x.e.lat, x.e.lng], { z: 16, dur: 2.8, lado: 'd' });
+    const s = apgSede(x.o.dre), km = s ? kmEntre(s.lat, s.lng, x.e.lat, x.e.lng) : null;
+    const tp = new Map(); x.o.regs.forEach(r => tp.set(tipoCurto(r.tipo), (tp.get(tipoCurto(r.tipo)) || 0) + 1)); const t1 = [...tp.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3);
+    const hs = Array(24).fill(0); x.o.regs.forEach(r => { if (r.dt.getHours() || r.dt.getMinutes()) hs[r.dt.getHours()]++; }); const hp = hs.indexOf(maxDe(hs, 0));
+    const card = document.querySelector('#apx .apg-tour');
+    if (card) card.innerHTML = `<div class="apg-tk"><span>ALVO ${i + 1} / ${T.length}</span><span class="mono">${dms(x.e.lat, 'N', 'S')} ${dms(x.e.lng, 'L', 'O')}</span></div>
+        <h3>${esc(x.o.nome)}</h3><p>${esc(nomeMun(x.o.mun))} · ${esc(nomeDre(x.o.dre))}</p>
+        <div class="apg-ns"><div><b>${x.o.n}</b><small>registros</small></div><div><b>${x.o.g}</b><small>graves</small></div><div><b>${x.e.idx != null ? x.e.idx : '—'}</b><small>índice</small></div><div><b>${km != null ? Math.round(km) : '—'}</b><small>km da sede</small></div></div>
+        <div class="apg-tps">${t1.map(([t, n]) => `<span><i style="width:${(n / t1[0][1] * 100).toFixed(0)}%"></i><em>${esc(t)}</em><b>${n}</b></span>`).join('')}</div>
+        <p class="apg-obs">${maxDe(hs, 0) ? `Horário com mais registros: <b>${hp}h</b>. ` : ''}${x.o.ant ? `Período anterior: ${x.o.ant} registro(s).` : 'Sem registros no período anterior.'}</p>`;
+    document.querySelectorAll('#apx .apg-alvos button').forEach((b, k) => b.classList.toggle('on', k === i));
+}
+
+/* ---------- slides novos ---------- */
+function apgSlides(D, S0) {
+    const n = D.cur.length, idE = idEmissor(), cod = APX.cod, quando = new Date().toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    const b = apgLimites(), c = b.getCenter(), perTxt = `${fmtD(D.ini)} a ${fmtD(D.hoje)}`;
+    const capa = { t: 'Abertura', cls: 'geo capa2', geo: 'capa', h: `<div class="apg-capa"><div class="apg-capa-in">
+        <div class="apg-gov">${bandeiraMT(118, 'apg-bandeira')}<div><b>GOVERNO DE MATO GROSSO</b><span>Secretaria de Estado de Educação · SEDUC-MT</span><span>Unidade de Inteligência de Dados na Educação</span></div></div>
+        <div class="apx-carimbo">ACESSO RESTRITO<small>Uso exclusivo SEDUC-MT</small></div>
+        <small class="k">Briefing de inteligência · segurança escolar</small>
+        <h1>Panorama de Segurança Escolar</h1><h2>${esc(D.nome)}</h2>
+        <div class="apg-chips"><span>${ic('clock')}${esc(apxPeriodo())} · ${perTxt}</span><span>${ic('book')}${fmtN(n)} registros</span><span>${ic('escola')}${fmtN(D.escL.length)} escolas</span></div>
+        <div class="apx-meta"><span>${ic('shield')}Doc. ${esc(cod)}</span><span>${ic('user')}${esc(idE)}</span><span>${ic('clock')}${esc(quando)}</span></div></div>
+</div>` };
+    const ligs = apgLigacoes(D), kmMed = ligs.length ? ligs.reduce((s, l) => s + l.km, 0) / ligs.length : 0, kmMax = ligs.reduce((m, l) => l.km > (m ? m.km : -1) ? l : m, null);
+    const panorama = { t: 'Mapa satélite', cls: 'geo', geo: 'panorama', h: `<aside class="apg-pn"><small class="k">Geointeligência · mapa satélite</small><h2>Onde os fatos acontecem</h2>
+        <p>Calor: concentração de registros. Pontos: escolas, na cor da pior gravidade do período. Clique num ponto para ver os detalhes; arraste e use a rolagem para explorar.</p>
+        <div class="apg-st"><div><b>${fmtN(D.escL.length)}</b><small>escolas com registro</small></div><div><b>${fmtN(new Set(D.cur.map(r => r.mun)).size)}</b><small>municípios</small></div><div><b>${fmtN(D.graves.length)}</b><small>graves</small></div></div>
+        <div class="apg-leg">${CRIT_ORD.map(k => `<span><i style="background:${css(COR_CRIT[k])}"></i>${k.charAt(0) + k.slice(1).toLowerCase()}</span>`).join('')}<span class="h"><i></i>mais registros</span></div></aside>` };
+    const tour = { t: 'Varredura das escolas', cls: 'geo', geo: 'tour', h: `<aside class="apg-pn dir"><small class="k">Varredura · aproximação por satélite</small><div class="apg-tour"></div>
+        <div class="apg-alvos">${D.escL.filter(o => apgEsc(o.k)).slice(0, 6).map((o, i) => `<button onclick="apgTour(${i})"><span>${i + 1}</span>${esc(o.nome)}</button>`).join('')}</div></aside>` };
+    const sedes = { t: 'Alcance das sedes', cls: 'geo', geo: 'sedes', h: `<aside class="apg-pn"><small class="k">Logística · sedes das DREs</small><h2>Distância até as escolas prioritárias</h2>
+        <p>Linhas da sede da DRE até ${APX.esc === 'seduc' ? 'a escola mais crítica de cada diretoria' : 'as escolas prioritárias'}. Vermelho: escola com fato grave.</p>
+        <div class="apg-st"><div><b>${Math.round(kmMed)}</b><small>km em média</small></div><div><b>${kmMax ? Math.round(kmMax.km) : '—'}</b><small>km a mais distante</small></div><div><b>${kmMed ? Math.round(kmMed * 1.3 / 70 * 60) : '—'}</b><small>min de estrada (estim.)</small></div></div>
+        <ol class="apg-lst">${ligs.slice().sort((a, b) => b.km - a.km).slice(0, 6).map(l => `<li><b>${esc(l.o.nome)}</b><span>${esc(nomeMun(l.o.mun))} · ${Math.round(l.km)} km</span></li>`).join('')}</ol></aside>` };
+    // números-chave com mais informação
+    const mxP = maxDe(D.pm, 1), spark = `<svg viewBox="0 0 600 140" class="apg-spark">${D.pm.map((v, i) => `<rect x="${(i * 50 + 6).toFixed(0)}" y="${(126 - v / mxP * 110).toFixed(1)}" width="38" height="${(v / mxP * 110).toFixed(1)}" rx="5" style="--an-i:${i}" class="${i === 11 ? 'u' : ''}" data-dica="${MES3[+D.meses[i].slice(5) - 1]}: ${v}"/><text x="${i * 50 + 25}" y="139">${MES3[+D.meses[i].slice(5) - 1]}</text>`).join('')}</svg>`;
+    const tot = n || 1;
+    const numeros = Object.assign({}, S0[3], { h: S0[3].h + `<div class="apg-row"><div class="apg-box"><small class="k">12 meses</small>${spark}</div>
+        <div class="apg-box"><small class="k">Gravidade no período</small><div class="apg-pilha">${D.crit.map(x => `<i style="flex:${x.n || .0001};background:${corCrit(x.c)}" data-dica="${x.c}: ${x.n}"><b>${Math.round(x.n / tot * 100)}%</b></i>`).join('')}</div>
+            <div class="apg-mini">${D.crit.map(x => `<span><i style="background:${corCrit(x.c)}"></i>${x.c.charAt(0) + x.c.slice(1).toLowerCase()} <b>${fmtN(x.n)}</b></span>`).join('')}</div>
+            ${APX.esc !== 'seduc' && D.mtN ? `<div class="apg-part"><span>Participação no total de MT</span><div><i style="width:${Math.max(1, n / D.mtN * 100).toFixed(1)}%"></i></div><b>${(n / D.mtN * 100).toFixed(1)}%</b></div>` : `<div class="apg-part"><span>Média por dia no período</span><b>${fmt1(n / APX.dias)}</b></div>`}</div></div>` });
+    // plano de ação 30/60/90
+    const t1 = D.temas[0], e1 = D.escL.slice(0, 2).map(o => o.nome).join(' e ');
+    const lane = (q, c, xs) => `<div class="apg-lane" style="--c:${c}"><b>${q}</b>${xs.map(x => `<span>${esc(x)}</span>`).join('')}</div>`;
+    const plano = { t: 'Plano de ação', h: `<div class="apx-txt"><small class="k">Plano de ação</small><h2>Próximos 90 dias</h2></div>
+        <div class="apg-plano">${[['30 dias', 'Responder', [
+            [`Escolas`, [D.protAt.length ? `Concluir os ${D.protAt.length} protocolos atrasados` : 'Manter os protocolos em dia', 'Acolher vítimas e comunicar o Conselho Tutelar nos casos previstos']],
+            ['DRE', [`Visita técnica às escolas prioritárias${e1 ? ': ' + e1 : ''}`, 'Reunião com a rede de proteção do município']],
+            ['SEDUC', ['Validar o plano com as DREs', 'Apoio da Inteligência no monitoramento semanal']]]],
+            ['60 dias', 'Prevenir', [
+            ['Escolas', [t1 ? `Ações do tema "${t1.p.t.toLowerCase()}": ${t1.p.acoes[0].toLowerCase()}` : 'Ações de convivência', 'Preencher ou atualizar a ficha de segurança']],
+            ['DRE', ['Palestras e projetos nas escolas de índice alto', 'Formação de professores no fluxo de comunicação']],
+            ['SEDUC', ['Parcerias: Polícia Militar, Conselhos Tutelares, CAPSi', 'Materiais do Programa Escola que Protege (MEC)']]]],
+            ['90 dias', 'Avaliar', [
+            ['Escolas', ['Registrar as intervenções no sistema', 'Escuta de estudantes e famílias']],
+            ['DRE', ['Comparar os registros antes e depois das ações', 'Ajustar a lista de prioridades']],
+            ['SEDUC', ['Nova apresentação com o resultado', 'Relatório de inteligência para o gabinete']]]]].map(([p, v, ls], i) => `<div class="apg-fase" style="--an-i:${i}"><header><em>${p}</em><b>${v}</b></header>${ls.map(([q, xs], j) => lane(q, ['#fcd116', '#22d3ee', '#4ade80'][j], xs)).join('')}</div>`).join('')}</div>` };
+    const refs = [['Lei 14.643/2023', 'Congresso Nacional', 'Autoriza o Sistema Nacional de Acompanhamento e Combate à Violência nas Escolas (SNAVE) e um canal de denúncia gratuito.'],
+        ['Decreto 12.006/2024', 'Presidência da República', 'Institui o SNAVE e regulamenta a Lei 14.643/2023.'],
+        ['Programa Escola que Protege', 'MEC · Secadi', 'Formação, apoio psicossocial, práticas restaurativas e resposta a casos de violência; adesão de todas as redes estaduais.'],
+        ['Protocolo de enfrentamento do bullying', 'MEC · Escola que Protege', 'Passo a passo para escolas identificarem e responderem à intimidação sistemática.'],
+        ['Lei 13.185/2015 e Lei 14.811/2024', 'Congresso Nacional', 'Programa de combate ao bullying e protocolos de proteção nas escolas; bullying e cyberbullying no Código Penal.'],
+        ['Lei 13.819/2019 · Lei 14.344/2022', 'Congresso Nacional', 'Notificação de autoagressão ao Conselho Tutelar e dever de comunicar violência contra crianças.']];
+    const referencias = { t: 'Referências', h: `<div class="apx-txt"><small class="k">Base e referências</small><h2>Documentos que orientam a ação</h2></div>
+        <div class="apg-docs">${refs.map(([t, o, d], i) => `<div class="apg-doc" style="--an-i:${i}"><span class="ic">${ic('doc')}</span><div><b>${esc(t)}</b><small>${esc(o)}</small><p>${esc(d)}</p></div></div>`).join('')}</div>
+        <p class="apx-nota">Canais: Disque 100 (direitos humanos) · 190 (Polícia Militar) · Conselho Tutelar do município.</p>` };
+    const fim = Object.assign({}, S0[13], { cls: 'geo capa2 enc2', geo: 'fim', h: `<div class="apg-capa"><div class="apg-capa-in">${bandeiraMT(96, 'apg-bandeira')}<small class="k">Encerramento</small><h1>Obrigado.</h1><h2>${esc(D.nome)}</h2>
+        <p class="apg-aviso">${ic('shield')}Informações de acesso restrito. Não reproduza, fotografe ou compartilhe esta apresentação.</p>
+        <div class="apg-fimrow"><div class="apx-selo-f">${typeof dxSelo === 'function' ? dxSelo(cod, conectado()) : ''}</div>${(() => { const q = typeof dxQR === 'function' && typeof dxLinkVerif === 'function' ? dxQR(dxLinkVerif(cod)) : ''; return q ? `<div class="apx-qr">${q}<span>Verifique a autenticidade<br><b class="mono">${esc(cod)}</b></span></div>` : `<div class="apx-meta"><span>${ic('shield')}Doc. ${esc(cod)}</span><span>${ic('user')}${esc(idE)}</span></div>`; })()}</div></div></div>` });
+    const S = [capa, S0[1], null, numeros, panorama, S0[4], S0[5], S0[6], tour, sedes, S0[7], S0[8], S0[9], S0[10], S0[11], plano, referencias, S0[12], fim];
+    const temas = S.map((s, i) => i).filter(i => i >= 3 && i < S.length - 1);
+    S[2] = { t: 'Roteiro', cls: 'rot', h: `<div class="apx-txt"><small class="k">Roteiro</small><h2>O que vamos ver</h2></div><ol class="apx-agenda">${temas.map((i, k) => `<li style="--an-i:${k}" onclick="apxIr(${i})"><span>${String(k + 1).padStart(2, '0')}</span>${esc(S[i].t)}${S[i].geo ? ` <em>${ic('map')}satélite</em>` : ''}</li>`).join('')}</ol>` };
+    temas.forEach((i, k) => { S[i] = Object.assign({}, S[i], { h: S[i].h.replace(/<small class="k">(?:\d\d · )?/, `<small class="k">${String(k + 1).padStart(2, '0')} · `) }); });
+    return S;
+}
+
+/* ---------- ligações com o player ---------- */
+const _apxSlidesV1 = apxSlides;
+apxSlides = function (D) { return apgSlides(D, _apxSlidesV1(D)); };
+apxParticulas = function () { };
+apxLinha = function (D) {
+    const W = 1200, H = 360, n = D.meses.length, mx = maxDe(D.pm, 1), X = i => 50 + i * (W - 100) / (n - 1), Y = v => H - 34 - v / mx * (H - 70);
+    const d = D.pm.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1)).join(''), g = D.pg.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1)).join('');
+    return `<svg viewBox="0 0 ${W} ${H}" class="apx-linha"><defs><linearGradient id="apx-g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity=".4"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient></defs>
+        ${[0, .25, .5, .75, 1].map(f => `<line x1="50" x2="${W - 50}" y1="${Y(mx * f)}" y2="${Y(mx * f)}" class="gr"/><text x="42" y="${Y(mx * f) + 4}" class="ey" text-anchor="end">${Math.round(mx * f)}</text>`).join('')}
+        <path d="${d}L${X(n - 1)},${H - 34}L${X(0)},${H - 34}Z" fill="url(#apx-g1)" class="ar"/><path d="${d}" class="ln"/><path d="${g}" class="ln2"/>
+        ${D.pm.map((v, i) => `<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="${i === n - 1 ? 7 : 4.5}" class="${i === n - 1 ? 'ult' : ''}" data-dica="${MES3[+D.meses[i].slice(5) - 1]}/${D.meses[i].slice(2, 4)}: ${v} registros · ${D.pg[i]} graves"/><text x="${X(i).toFixed(1)}" y="${Y(v) - 14}" class="vl">${v}</text><text x="${X(i).toFixed(1)}" y="${H - 8}" class="ex">${MES3[+D.meses[i].slice(5) - 1]}</text>`).join('')}</svg>`;
+};
+const _apxIniciarV1 = apxIniciar;
+apxIniciar = function (i) {
+    _apxIniciarV1(0);
+    const el = $('apx'); if (!el) return;
+    el.querySelector('.apx-fundo').innerHTML = `<div class="apg-grade"></div><svg class="apg-mt" viewBox="-6 -6 432 ${Math.round(420 * (MDX_BB.y1 - MDX_BB.y0) / (MDX_BB.x1 - MDX_BB.x0)) + 12}"><path d="${mdxContorno(420, Math.round(420 * (MDX_BB.y1 - MDX_BB.y0) / (MDX_BB.x1 - MDX_BB.x0)))}"/></svg><div class="apg-varre"></div>`;
+    el.insertAdjacentHTML('afterbegin', '<div class="apx-geo" id="apx-geo"></div><div class="apg-veu"></div>');
+    const id = el.querySelector('.apx-id'); if (id) id.insertAdjacentHTML('afterbegin', bandeiraMT(34, 'apg-bmini'));
+    try { apgCriar(); } catch (e) { console.error(e); }
+    apxIr(i || 0);
+};
+const _apxIrV1 = apxIr;
+apxIr = function (i) {
+    _apxIrV1(i);
+    const el = $('apx'); if (!el || !APX.deck) return;
+    const s = APX.deck.S[APX.i];
+    el.classList.toggle('modo-geo', !!(s && s.geo));
+    if (s && s.geo && APG.map) { if (APG.cena !== s.geo || s.geo === 'capa' || s.geo === 'fim') apgCena(s.geo); }
+    else { clearInterval(APG.tourT); APG.cena = ''; }
+};
+const _apxSairV1 = apxSair;
+apxSair = function () { clearInterval(APG.tourT); if (APG.map) { try { APG.map.remove(); } catch (e) { } APG.map = null; } APG.cena = ''; _apxSairV1(); };
+LEGENDAS.apresentacao.mostra = ['Apresentação de 19 slides: capa com a bandeira de Mato Grosso sobre o mapa satélite, sigilo, números, mapa satélite com calor e escolas, evolução, gravidade, território, varredura por satélite das escolas prioritárias, alcance das sedes das DREs, padrões, proteção, temas, recomendações, plano de 90 dias, referências oficiais e conclusão.'];
+LEGENDAS.apresentacao.fonte.push('Imagens de satélite: Esri World Imagery (exige internet). Coordenadas das escolas: cadastro georreferenciado da rede estadual.');
 
 </script>
 </body>
