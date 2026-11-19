@@ -3161,6 +3161,74 @@ path.apg-pt { transition: transform .2s; }
 <style>.apg-mira { position: relative; width: 200px; height: 200px; margin: 0; top: 0; right: auto; animation: rtlPop 1s cubic-bezier(.34,1.56,.64,1) both; }
 @media (max-width: 800px) { .apg-mira { right: auto; margin: 0; top: 0; transform: scale(.7); } }</style>
 <style>.apx { grid-template-columns: minmax(0, 1fr); } @media (max-width: 800px) { .apx-tarja { font-size: 9px; padding: 4px 7px; } .apx-topo { gap: 6px; } .apx-bt { gap: 4px; } .apx-bt button { width: 32px; height: 32px; } .apg-pn .apg-alvos { display: none; } .apg-capa-in .apx-meta { display: none; } }</style>
+<style>
+/* 5.1 · apresentação interativa */
+.apx-cl { cursor: pointer; transition: transform .15s, border-color .15s, background .15s; } .apx-kpi.apx-cl:hover, .apx-esc.apx-cl:hover { transform: translateY(-3px); border-color: rgba(252,209,22,.6); }
+.apx-barras > div.apx-cl:hover, .apx-rank > div.apx-cl:hover, .apx-temas > div.apx-cl:hover { background: rgba(255,255,255,.05); border-radius: 10px; } .apx-leg span.apx-cl:hover { color: #fcd116; }
+.apx-trm { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.apx-nuv { display: flex; flex-wrap: wrap; gap: .25em .7em; align-items: baseline; justify-content: center; padding: 22px; border-radius: 22px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); min-height: 40vh; align-content: center; }
+.apx-nuv button { color: #cbd5e1; font-weight: 700; line-height: 1.15; padding: 0 .1em; border-radius: 6px; } .apx-nuv button:hover { color: #fcd116; transform: scale(1.08); } .apx-nuv button.alta { color: #fb7185; }
+.apx-s.anima .apx-nuv button { animation: rtlPop .5s calc(.2s + var(--an-i) * 30ms) cubic-bezier(.34,1.56,.64,1) both; }
+.apx-trm-l { display: flex; flex-direction: column; gap: 14px; }
+.apx-alta { display: grid; grid-template-columns: 1fr auto; gap: 0 10px; text-align: left; padding: 8px 10px; border-radius: 10px; color: #e2e8f0; } .apx-alta:hover { background: rgba(244,63,94,.12); } .apx-alta b { color: #fff; } .apx-alta span { grid-column: 1; font-size: .78em; color: #94a3b8; } .apx-alta em { grid-row: span 2; align-self: center; font-style: normal; font-weight: 800; color: #fb7185; }
+.apx-bigr { display: flex; flex-wrap: wrap; gap: 6px; } .apx-bigr button { display: inline-flex; gap: 6px; align-items: center; padding: 5px 11px; border-radius: 99px; background: rgba(34,211,238,.1); border: 1px solid rgba(34,211,238,.3); color: #e0f2fe; font-size: .85em; } .apx-bigr button:hover { background: rgba(34,211,238,.25); } .apx-bigr b { color: #22d3ee; }
+.apx-rel { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.apx-rel-l { display: flex; flex-direction: column; gap: 8px; } .apx-rel-r { display: flex; flex-direction: column; gap: 14px; } .apx-rel-r .apx-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.apx-not { display: flex; gap: 14px; align-items: center; text-align: left; padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-left: 4px solid #38bdf8; color: #e2e8f0; } .apx-not.v { border-left-color: #f43f5e; } .apx-not:hover { background: rgba(255,255,255,.08); transform: translateX(4px); }
+.apx-not .d { flex: none; font: 800 1.1em var(--f-tit); color: #fcd116; } .apx-not .tx { min-width: 0; } .apx-not b { display: block; color: #fff; font-size: .95em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .apx-not small { color: #94a3b8; font-size: .78em; } .apx-not small em { font-style: normal; color: #a78bfa; font-weight: 700; }
+.apx-s.anima .apx-not { animation: mdxEntra .5s calc(.15s + var(--an-i) * 70ms) both; }
+.apx-rotas { display: flex; flex-direction: column; gap: 4px; }
+.apx-rotas button { display: flex; gap: 10px; align-items: center; text-align: left; padding: 7px 8px; border-radius: 10px; color: #e2e8f0; } .apx-rotas button:hover, .apx-rotas button.on { background: rgba(252,209,22,.12); }
+.apx-rotas .n { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: rgba(252,209,22,.18); color: #fcd116; font-weight: 800; font-size: 12px; } .apx-rotas .at .n { background: rgba(244,63,94,.25); color: #fda4af; }
+.apx-rotas .tx { flex: 1; min-width: 0; } .apx-rotas b { display: block; color: #fff; font-size: .88em; } .apx-rotas small { color: #94a3b8; font-size: .74em; } .apx-rotas em { font-style: normal; font-size: .7em; font-weight: 800; color: #fff; background: #e11d48; padding: 2px 7px; border-radius: 99px; }
+.apg-seta { display: block; width: 0; height: 0; border-left: 14px solid var(--c); border-top: 7px solid transparent; border-bottom: 7px solid transparent; filter: drop-shadow(0 0 4px var(--c)); }
+.apg-ver { display: inline-flex; gap: 6px; align-items: center; justify-content: center; margin-top: 8px; padding: 7px 12px; border-radius: 10px; background: #fcd116; color: #04070d; font-weight: 800; font-size: 12px; } .apg-ver svg { width: 14px; height: 14px; } .apg-ver:hover { filter: brightness(1.1); }
+/* painel de detalhes */
+.apx-det { position: absolute; top: 70px; right: 0; bottom: 44px; width: min(460px, 92vw); z-index: 7; display: flex; flex-direction: column; gap: 10px; padding: 18px; background: rgba(6,10,20,.94); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.12); border-right: 0; border-radius: 20px 0 0 20px; box-shadow: -30px 0 60px -20px rgba(0,0,0,.7); transform: translateX(105%); transition: transform .45s cubic-bezier(.16,1,.3,1); }
+.apx-det.on { transform: none; }
+.apx-det header { display: flex; gap: 10px; align-items: flex-start; } .apx-det header > div { flex: 1; min-width: 0; } .apx-det h3 { margin: 4px 0 2px; color: #fff; font: 800 1.2em/1.25 var(--f-tit); } .apx-det .ct { color: #94a3b8; font-size: .8em; }
+.apx-det .x { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,.08); color: #fff; flex: none; } .apx-det .x svg { width: 16px; height: 16px; }
+.apx-det .fil { display: flex; flex-wrap: wrap; gap: 5px; } .apx-det .fil button { --c: #fcd116; padding: 4px 9px; border-radius: 99px; font-size: .74em; font-weight: 700; color: #cbd5e1; border: 1px solid rgba(255,255,255,.14); } .apx-det .fil button b { color: #fff; } .apx-det .fil button.on { background: var(--c); border-color: var(--c); color: #04070d; } .apx-det .fil button.on b { color: #04070d; }
+.apx-det .det-q { flex: none; width: 100%; box-sizing: border-box; height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color: #fff; padding: 0 12px; font: inherit; font-size: .85em; -webkit-user-select: text; user-select: text; } .apx-det .det-q:focus { outline: 2px solid #fcd116; outline-offset: 0; }
+.apx-det .tps { display: flex; flex-direction: column; gap: 3px; } .apx-det .tps button { position: relative; display: flex; justify-content: space-between; padding: 4px 8px; border-radius: 7px; overflow: hidden; font-size: .76em; color: #fff; text-align: left; } .apx-det .tps i { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(56,189,248,.2); border-radius: 7px; } .apx-det .tps em, .apx-det .tps b { position: relative; font-style: normal; }
+.apx-det .ext:empty { display: none; } .apx-det-link { display: inline-flex; gap: 6px; align-items: center; color: #fcd116; font-weight: 700; font-size: .85em; } .apx-det-link svg { width: 14px; height: 14px; }
+.apx-det .lst { flex: 1; overflow: auto; display: flex; flex-direction: column; gap: 4px; margin-right: -6px; padding-right: 6px; }
+.apx-det .it { display: grid; grid-template-columns: 70px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 10px; background: rgba(255,255,255,.035); border-left: 3px solid var(--c); font-size: .82em; }
+.apx-det .it .d { color: #e2e8f0; font-weight: 700; } .apx-det .it .d small { display: block; color: #64748b; font-weight: 500; } .apx-det .it b { display: block; color: #fff; } .apx-det .it .tx small { color: #94a3b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; } .apx-det .it .c { color: var(--c); font-weight: 800; font-size: .85em; }
+/* filtro geral */
+.apx-bt button.on { background: #fcd116; color: #04070d; border-color: #fcd116; } .apx-fon { font-style: normal; color: #fcd116; font-weight: 700; }
+.apx-filt { position: absolute; top: 64px; right: 24px; z-index: 8; width: 320px; padding: 18px; border-radius: 18px; background: rgba(6,10,20,.96); border: 1px solid rgba(255,255,255,.14); box-shadow: 0 24px 50px rgba(0,0,0,.6); display: flex; flex-direction: column; gap: 8px; animation: mdxEntra .35s both; }
+.apx-filt label { color: #cbd5e1; font-size: .78em; font-weight: 700; margin-top: 4px; } .apx-filt select { height: 36px; border-radius: 10px; background: #0b1220; color: #fff; border: 1px solid rgba(255,255,255,.16); padding: 0 8px; font: inherit; font-size: .85em; }
+.seg2 { display: flex; flex-wrap: wrap; gap: 5px; } .seg2 button { padding: 6px 10px; border-radius: 9px; font-size: .78em; font-weight: 700; color: #cbd5e1; border: 1px solid rgba(255,255,255,.14); } .seg2 button.on { background: #fcd116; color: #04070d; border-color: #fcd116; }
+.apx-filt .bt { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; } .apx-filt .bt button { display: inline-flex; gap: 6px; align-items: center; padding: 8px 14px; border-radius: 10px; font-weight: 800; font-size: .82em; color: #cbd5e1; border: 1px solid rgba(255,255,255,.16); } .apx-filt .bt .ap { background: #fcd116; color: #04070d; border-color: #fcd116; } .apx-filt .bt svg { width: 14px; height: 14px; }
+@media (max-width: 800px) { .apx-trm, .apx-rel { grid-template-columns: minmax(0, 1fr); } .apx-nuv { min-height: 0; padding: 14px; } .apx-det { top: auto; left: 0; right: 0; width: auto; height: 72vh; border-radius: 20px 20px 0 0; border-right: 1px solid rgba(255,255,255,.12); transform: translateY(105%); } .apx-det.on { transform: none; } .apx-filt { right: 10px; left: 10px; width: auto; } }
+</style>
+<style>.apx-s { justify-content: safe center; } .apx-det .lst { min-height: 120px; } .apx-det .tps, .apx-det .fil, .apx-det header { flex: none; }</style>
+<style>
+/* 5.2 · rede de vínculos na apresentação */
+.apx-rede-g { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); gap: 16px; align-items: stretch; }
+.apx-rede-c { position: relative; border-radius: 22px; background: radial-gradient(70% 70% at 50% 50%, rgba(34,211,238,.07), transparent 70%), rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08); overflow: hidden; }
+.apx-rede { width: 100%; height: auto; max-height: 60vh; display: block; touch-action: none; }
+.apx-rede line { stroke: rgba(148,163,184,.45); stroke-width: var(--w); transition: opacity .2s, stroke .2s; }
+.apx-rede line.agrv { stroke: rgba(244,63,94,.55); stroke-dasharray: 6 5; animation: apgDash 1.4s linear infinite; } .apx-rede line.coaut { stroke: rgba(252,209,22,.6); }
+.apx-s.anima .apx-rede line { animation: mdxFade .8s calc(.2s + var(--an-i) * 15ms) both, apgDash 1.4s linear infinite; }
+.apx-rede .nd { cursor: grab; } .apx-rede .nd.arr { cursor: grabbing; }
+.apx-rede .b { fill: #0b1220; stroke: var(--c); stroke-width: 3; transition: r .2s; } .apx-rede .p-A .b { fill: color-mix(in srgb, #f43f5e 55%, #0b1220); } .apx-rede .p-V .b { fill: color-mix(in srgb, #38bdf8 50%, #0b1220); } .apx-rede .p-AV .b { fill: color-mix(in srgb, #a78bfa 60%, #0b1220); }
+.apx-rede .halo { fill: none; stroke: var(--c); stroke-width: 1.5; opacity: 0; }
+.apx-rede .nd:hover .halo, .apx-rede .nd.on .halo { opacity: .8; animation: apxHalo 1.6s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes apxHalo { from { transform: scale(.85); opacity: .9; } to { transform: scale(1.5); opacity: 0; } }
+.apx-rede text { fill: #cbd5e1; font: 700 11px var(--f-dado); text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: #04070d; stroke-width: 3px; }
+.apx-s.anima .apx-rede .nd > * { animation: rtlPop .5s calc(.3s + var(--an-i) * 20ms) cubic-bezier(.34,1.56,.64,1) both; transform-box: fill-box; transform-origin: center; }
+.apx-rede.foco .nd:not(.on) { opacity: .18; } .apx-rede.foco line:not(.on) { opacity: .06; } .apx-rede.foco line.on { stroke-width: calc(var(--w) + 1.5); }
+.apx-rede-leg { position: absolute; left: 14px; bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .78em; color: #94a3b8; }
+.apx-rede-leg i.l { display: inline-block; width: 22px; height: 0; border-top: 2px dashed #f43f5e; vertical-align: middle; margin-right: 5px; } .apx-rede-leg i.l.coaut { border-top: 2px solid #fcd116; } .apx-rede-leg i.c { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.apx-rede-leg button { display: inline-flex; gap: 5px; align-items: center; color: #e2e8f0; padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(255,255,255,.16); } .apx-rede-leg button svg { width: 13px; height: 13px; } .apx-rede-leg button:hover { border-color: #fcd116; color: #fcd116; }
+.apx-rede-p { display: flex; flex-direction: column; gap: 10px; padding: 18px; border-radius: 22px; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.1); overflow: auto; max-height: 64vh; }
+.apx-grp { display: flex; flex-direction: column; gap: 5px; } .apx-grp button { display: flex; gap: 10px; align-items: center; text-align: left; padding: 8px 10px; border-radius: 11px; color: #e2e8f0; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); }
+.apx-grp button:hover { border-color: var(--c); background: rgba(255,255,255,.07); } .apx-grp i { flex: none; width: 12px; height: 12px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); } .apx-grp b { display: block; color: #fff; font-size: .85em; } .apx-grp small { color: #94a3b8; font-size: .74em; }
+@media (max-width: 800px) { .apx-rede-g { grid-template-columns: minmax(0, 1fr); } .apx-rede-p { max-height: none; } .apx-rede-leg { position: static; padding: 8px 12px; } }
+</style>
+<style>.apx-rede-leg { position: static; padding: 8px 14px 12px; }</style>
 
 </head>
 <body>
@@ -3227,7 +3295,7 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '5.0.1+8a3893cf';
+const APP_VERSAO = '5.2.0+68730392';
 const APP_NOTAS = 'Versão 4.6.0 — gráficos inovadores (mosaico, termômetro, fluxo, relógio, corrida, correnteza), guias e legendas recolhidas com botão "Como funciona", Rede de vínculos animada com tela cheia e zoom que não achata, Termos reorganizado, mapa no Release, Comparativo no tempo entre DREs, Reincidência, Verificação e páginas de Proteção (Protocolos, Ameaças, Segurança, Acompanhamento, Intervenções com mapa, Prevenção) renovadas; retiradas Rotas de visita, Risco previsto e Rede de proteção.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
@@ -13812,6 +13880,332 @@ const _apxSairV1 = apxSair;
 apxSair = function () { clearInterval(APG.tourT); if (APG.map) { try { APG.map.remove(); } catch (e) { } APG.map = null; } APG.cena = ''; _apxSairV1(); };
 LEGENDAS.apresentacao.mostra = ['Apresentação de 19 slides: capa com a bandeira de Mato Grosso sobre o mapa satélite, sigilo, números, mapa satélite com calor e escolas, evolução, gravidade, território, varredura por satélite das escolas prioritárias, alcance das sedes das DREs, padrões, proteção, temas, recomendações, plano de 90 dias, referências oficiais e conclusão.'];
 LEGENDAS.apresentacao.fonte.push('Imagens de satélite: Esri World Imagery (exige internet). Coordenadas das escolas: cadastro georreferenciado da rede estadual.');
+
+/* =====================================================================
+   EDUCASEG-PLUS 5.1 — Apresentação interativa: termos, Release, rotas
+   prováveis, painel de detalhes filtrável e filtro geral
+   ===================================================================== */
+Object.assign(APX, { fcrit: '', ftipo: '', reg: [], detR: [], detF: { crit: '', q: '' } });
+const apxR = (t, regs, extra) => { APX.reg.push([t, regs, extra || '']); return `apxDetI(${APX.reg.length - 1})`; };
+function apxDetI(i) { const r = APX.reg[i]; if (r) apxDet(r[0], r[1], r[2]); }
+
+/* ---------- filtro geral (gravidade e tipo) ---------- */
+const _apxDadosF = apxDados;
+apxDados = function () {
+    if (!APX.fcrit && !APX.ftipo) return _apxDadosF();
+    const f = r => (!APX.fcrit || r.crit === 'CRÍTICO' || r.crit === 'ALTO') && (!APX.ftipo || (APX.ftipo === '__SEV' ? ehSevero(r.tipo) : r.tipo === APX.ftipo));
+    const b = BASE; BASE = BASE.filter(f);
+    try { return _apxDadosF(); } finally { BASE = b; }
+};
+const apxFiltroTxt = () => [APX.fcrit ? 'críticos e altos' : '', APX.ftipo ? (APX.ftipo === '__SEV' ? 'tipos sensíveis' : tipoCurto(APX.ftipo)) : ''].filter(Boolean).join(' · ');
+
+/* ---------- termos do escopo ---------- */
+function apxTermos(D) {
+    const nomes = new Set(); A.pessoas.forEach(p => p.k.split(' ').forEach(w => nomes.add(w)));
+    const cur = new Map(), ant = new Map(), bi = new Map(), regsDe = new Map(), escs = new Map();
+    D.cur.forEach(r => { const ws = tokensReg(r, nomes), vis = new Set(); ws.forEach((w, i) => { if (!vis.has(w)) { vis.add(w); cur.set(w, (cur.get(w) || 0) + 1); if (!regsDe.has(w)) regsDe.set(w, []); regsDe.get(w).push(r); if (!escs.has(w)) escs.set(w, new Set()); escs.get(w).add(r.escK); } if (i && ws[i - 1] !== w) { const b = ws[i - 1] + ' ' + w; bi.set(b, (bi.get(b) || 0) + 1); } }); });
+    D.prev.forEach(r => { new Set(tokensReg(r, nomes)).forEach(w => ant.set(w, (ant.get(w) || 0) + 1)); });
+    const lim = Math.max(10, D.cur.length * .25), nC = D.cur.length || 1, nA = D.prev.length || 1;
+    const top = [...cur.entries()].filter(([, n]) => n <= lim).sort((a, b) => b[1] - a[1]).slice(0, 30);
+    const alta = [...cur.entries()].filter(([w, n]) => n >= 3 && (escs.get(w) || new Set()).size >= 2).map(([w, n]) => { const a = ant.get(w) || 0, tx = n / nC, ta = a / nA; return { w, n, a, v: ta ? (tx - ta) / ta : 1 }; }).filter(x => x.v > .3).sort((a, b) => b.v * Math.sqrt(b.n) - a.v * Math.sqrt(a.n)).slice(0, 7);
+    const bigr = [...bi.entries()].filter(([, n]) => n >= 3).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    return { top, alta, bigr, regsDe };
+}
+function apxRegsTermo(D, termo) { const ws = termo.split(' '); return D.cur.filter(r => { const t = tokensReg(r); return ws.length === 1 ? t.includes(termo) : t.join(' ').includes(termo); }); }
+
+/* ---------- Release no escopo ---------- */
+function apxNoticias(D) {
+    if (typeof NWS === 'undefined' || !NWS.d || !NWS.d.noticias) return null;
+    const ms = typeof apgEscopo === 'function' ? apgEscopo() : null, set = ms ? new Set(ms.map(m => m.k)) : null;
+    return NWS.d.noticias.filter(n => n.data >= D.ini && n.data <= new Date(+D.hoje + DIA) && (!set || set.has(n.munK))).sort((a, b) => b.data - a.data);
+}
+
+/* ---------- rotas prováveis no escopo ---------- */
+function apxRotas(D) {
+    if (D._rotas) return D._rotas;
+    const ini = new Date(+D.ini - 30 * DIA), regs = BASE.filter(r => r.dt && r.dt >= ini && r.dt <= new Date(+D.hoje + DIA) && (!APX.fcrit || r.crit === 'CRÍTICO' || r.crit === 'ALTO'));
+    let R; try { R = difusao(regs, { tipo: APX.ftipo || '__SEV', janela: 30, raio: 150 }, A); } catch (e) { R = { arestas: [], nos: new Map() }; }
+    const ms = typeof apgEscopo === 'function' ? apgEscopo() : null, set = ms ? new Set(ms.map(m => m.k)) : null;
+    const ar = R.arestas.filter(a => !set || set.has(a.de) || set.has(a.para)).slice(0, 14);
+    return D._rotas = { ar, nos: R.nos, total: R.arestas.length };
+}
+
+/* ---------- slides novos ---------- */
+function apxSlTermos(D) {
+    const T = apxTermos(D), mx = T.top.length ? T.top[0][1] : 1, alta = new Set(T.alta.map(x => x.w));
+    const nuvem = T.top.slice().sort((a, b) => a[0].localeCompare(b[0])).map(([w, n], i) => `<button class="apx-cl${alta.has(w) ? ' alta' : ''}" style="font-size:${(.8 + 1.35 * Math.sqrt(n / mx)).toFixed(2)}em;--an-i:${i % 20}" onclick="${apxR('Relatos com "' + w.toLowerCase() + '"', T.regsDe.get(w) || [])}" data-dica="${n} registro(s)">${esc(w.toLowerCase())}</button>`).join('');
+    return { t: 'Termos mais encontrados', h: `<div class="apx-txt"><small class="k">Linguagem dos relatos</small><h2>Termos mais encontrados</h2><p>Palavras dos relatos do período (nomes de pessoas são excluídos). Clique numa palavra para ver os registros.</p></div>
+        <div class="apx-trm"><div class="apx-nuv">${nuvem || '<p>Sem relatos no período.</p>'}</div>
+        <div class="apx-trm-l"><div class="apg-box"><small class="k">Em alta contra o período anterior</small>${T.alta.map((x, i) => `<button class="apx-alta apx-cl" style="--an-i:${i}" onclick="${apxR('Relatos com "' + x.w.toLowerCase() + '"', T.regsDe.get(x.w) || [])}"><b>${esc(x.w.toLowerCase())}</b><span>${x.n} agora · ${x.a} antes</span><em>▲ ${x.v >= 1 ? '+' + Math.round(x.v * 100) : Math.round(x.v * 100)}%</em></button>`).join('') || '<p class="apx-nota">Nenhum termo com alta relevante.</p>'}</div>
+            <div class="apg-box"><small class="k">Expressões que se repetem</small><div class="apx-bigr">${T.bigr.map(([b, n]) => `<button class="apx-cl" onclick="${apxR('Relatos com "' + b.toLowerCase() + '"', apxRegsTermo(D, b))}">${esc(b.toLowerCase())}<b>${n}</b></button>`).join('') || '<p class="apx-nota">—</p>'}</div></div></div></div>` };
+}
+function apxSlRelease(D) {
+    const N = apxNoticias(D);
+    if (!N) return { t: 'Release · imprensa', h: `<div class="apx-txt"><small class="k">Release · imprensa</small><h2>Notícias do período</h2><p>O Release não está disponível agora. Ele precisa da conexão com o servidor (aba Release do sistema).</p></div>` };
+    const viol = N.filter(n => typeof rlViol === 'function' && rlViol(n)), cruz = N.filter(n => typeof rlLivro === 'function' && rlLivro(n).length);
+    const cats = new Map(); N.forEach(n => (n.cats || []).forEach(c => cats.set(c, (cats.get(c) || 0) + 1))); const catL = [...cats.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6), mxC = maxDe(catL.map(x => x[1]), 1);
+    const muns = new Map(); N.forEach(n => { if (n.munK) muns.set(n.munK, (muns.get(n.munK) || 0) + 1); });
+    return { t: 'Release · imprensa', h: `<div class="apx-txt"><small class="k">Release · imprensa</small><h2>O que saiu na imprensa</h2><p>Notícias sobre escolas ${APX.esc === 'seduc' ? 'de Mato Grosso' : 'do escopo'} no período. Clique numa notícia para ver os registros do Livro no mesmo município (7 dias antes ou depois).</p></div>
+        <div class="apx-rel"><div class="apx-rel-l">${N.slice(0, 7).map((n, i) => { const lv = typeof rlLivro === 'function' ? rlLivro(n) : []; return `<button class="apx-not apx-cl${typeof rlViol === 'function' && rlViol(n) ? ' v' : ''}" style="--an-i:${i}" onclick="${apxR(n.titulo, lv, `<a class="apx-det-link" href="${esc(n.link)}" target="_blank" rel="noopener">${ic('ext')}Abrir a notícia · ${esc(n.fonte || '')}</a>`)}"><span class="d">${n.data.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}</span><span class="tx"><b>${esc(n.titulo)}</b><small>${esc(n.fonte || '')}${n.mun ? ' · ' + esc(n.mun) : ''}${lv.length ? ` · <em>${lv.length} no Livro</em>` : ''}</small></span></button>`; }).join('') || '<p class="apx-nota">Nenhuma notícia no período.</p>'}</div>
+        <div class="apx-rel-r"><div class="apx-kpis peq">${[['jornal', 'Notícias', N.length, 'var(--prim)'], ['alerta', 'Com violência', viol.length, 'var(--c-crit)'], ['book', 'Cruzam com o Livro', cruz.length, 'var(--roxo)'], ['pin', 'Municípios', muns.size, 'var(--c-alto)']].map(([i, t, v, c], k) => `<div class="apx-kpi" style="--c:${c};--an-i:${k}"><span class="ic">${ic(i)}</span><b>${fmtN(v)}</b><span class="t">${t}</span></div>`).join('')}</div>
+            <div class="apg-box"><small class="k">Assuntos</small><div class="apx-barras">${catL.map(([c, v], k) => `<div style="--an-i:${k}"><span class="nm">${esc(c)}</span><span class="br"><i style="width:${(v / mxC * 100).toFixed(1)}%"></i></span><b>${v}</b></div>`).join('')}</div></div></div></div>` };
+}
+function apxSlRotas(D) {
+    const R = apxRotas(D);
+    return { t: 'Rotas prováveis', cls: 'geo', geo: 'rotas', h: `<aside class="apg-pn"><small class="k">Difusão territorial · ${APX.ftipo && APX.ftipo !== '__SEV' ? esc(tipoCurto(APX.ftipo).toLowerCase()) : 'tipos sensíveis'}</small><h2>Rotas prováveis</h2>
+        <p>Quando um fato acontece num município e, em até 30 dias, se repete num vizinho (até 150 km). Clique numa rota para aproximar e ver os registros.</p>
+        <div class="apg-st"><div><b>${R.ar.length}</b><small>rotas no escopo</small></div><div><b>${R.ar.filter(a => a.recente).length}</b><small>ativas (60 dias)</small></div><div><b>${R.ar.length ? Math.round(R.ar.reduce((s, a) => s + a.km, 0) / R.ar.length) : '—'}</b><small>km em média</small></div></div>
+        <div class="apg-leg"><span><i style="background:#f43f5e"></i>Polo emissor</span><span><i style="background:#38bdf8"></i>Receptor</span><span><i style="background:#fcd116"></i>Corredor</span></div><div class="apx-rotas">${R.ar.slice(0, 8).map((a, i) => `<button class="apx-cl${a.recente ? ' at' : ''}" onclick="apxRotaIr(${i})"><span class="n">${i + 1}</span><span class="tx"><b>${esc(nomeMun(a.de))} → ${esc(nomeMun(a.para))}</b><small>${a.n} sequências · ${Math.round(a.km)} km · ${a.lag.toFixed(0)} dias · ${esc(tipoCurto(a.tipoPred))}</small></span>${a.recente ? '<em>ativa</em>' : ''}</button>`).join('') || '<p class="apx-nota">Nenhuma rota com 2 ou mais sequências no período.</p>'}</div></aside>` };
+}
+function apxRotaIr(i) {
+    const D = APX.deck && APX.deck.D, a = D && apxRotas(D).ar[i]; if (!a) return;
+    const m1 = MUN_POR_K.get(a.de), m2 = MUN_POR_K.get(a.para);
+    if (APG.map && m1 && m2) apgVoar(L.latLngBounds([[m1.lat, m1.lng], [m2.lat, m2.lng]]), { lado: 'e', max: 10, dur: 1.8 });
+    document.querySelectorAll('#apx .apx-rotas button').forEach((b, k) => b.classList.toggle('on', k === i));
+    apxDet(`${nomeMun(a.de)} → ${nomeMun(a.para)}`, a.regs);
+}
+
+/* cena de mapa das rotas */
+const _apgCenaR = apgCena;
+apgCena = function (nome) {
+    if (nome !== 'rotas') return _apgCenaR(nome);
+    const m = APG.map, D = APX.deck && APX.deck.D; if (!m || !D) return;
+    clearInterval(APG.tourT); APG.cam.clearLayers(); APG.cena = nome; setTimeout(() => m.invalidateSize(), 60);
+    const R = apxRotas(D), b = L.latLngBounds([]);
+    R.ar.forEach(a => { const m1 = MUN_POR_K.get(a.de), m2 = MUN_POR_K.get(a.para); if (m1 && m2) { b.extend([m1.lat, m1.lng]); b.extend([m2.lat, m2.lng]); } });
+    apgVoar(b.isValid() ? b : apgLimites(), { lado: 'e', max: 10 });
+    const usados = new Set(); R.ar.forEach(a => { usados.add(a.de); usados.add(a.para); });
+    const corP = { 'Polo emissor': '#f43f5e', 'Receptor': '#38bdf8', 'Corredor': '#fcd116', 'Isolado': '#94a3b8' };
+    usados.forEach(k => { const no = R.nos.get(k), mm = MUN_POR_K.get(k); if (!no || !mm) return; L.circleMarker([mm.lat, mm.lng], { radius: 6 + Math.min(10, (no.out + no.inn) * 1.5), color: '#fff', weight: 1.5, fillColor: corP[no.papel] || '#94a3b8', fillOpacity: .9 }).bindTooltip(`<b>${esc(mm.nome)}</b><br>${no.papel}`, { className: 'apg-tip' }).addTo(APG.cam); });
+    const mxW = maxDe(R.ar.map(a => a.w), 1);
+    R.ar.forEach((a, i) => setTimeout(() => {
+        if (APG.cena !== 'rotas') return;
+        const m1 = MUN_POR_K.get(a.de), m2 = MUN_POR_K.get(a.para); if (!m1 || !m2) return;
+        const dx = m2.lng - m1.lng, dy = m2.lat - m1.lat, cx = (m1.lng + m2.lng) / 2 - dy * .22, cy = (m1.lat + m2.lat) / 2 + dx * .22, pts = [];
+        for (let t = 0; t <= 1.0001; t += .05) pts.push([(1 - t) ** 2 * m1.lat + 2 * (1 - t) * t * cy + t * t * m2.lat, (1 - t) ** 2 * m1.lng + 2 * (1 - t) * t * cx + t * t * m2.lng]);
+        const cor = a.recente ? '#f43f5e' : '#fcd116';
+        L.polyline(pts, { color: cor, weight: 2 + 5 * a.w / mxW, opacity: .95, dashArray: '8 7', className: 'apg-lig' }).on('click', () => apxRotaIr(i)).addTo(APG.cam);
+        const p1 = pts[pts.length - 3], p2 = pts[pts.length - 1], ang = Math.atan2(-(p2[0] - p1[0]), p2[1] - p1[1]) * 180 / Math.PI;
+        L.marker(pts[pts.length - 2], { interactive: false, icon: L.divIcon({ className: '', html: `<span class="apg-seta" style="--c:${cor};transform:rotate(${ang.toFixed(0)}deg)"></span>`, iconSize: [16, 16], iconAnchor: [8, 8] }) }).addTo(APG.cam);
+    }, 600 + i * 180));
+};
+
+/* ---------- painel de detalhes (filtrável) ---------- */
+function apxDet(titulo, regs, extra) {
+    const el = $('apx'); if (!el) return;
+    let g = el.querySelector('.apx-det');
+    if (!g) { el.insertAdjacentHTML('beforeend', `<aside class="apx-det" aria-label="Detalhes"><header><div><small class="k">Detalhes · sem identificação de pessoas</small><h3></h3><span class="ct"></span></div><button class="x" aria-label="Fechar">${ic('x')}</button></header><div class="ext"></div><div class="fil"></div><input class="det-q" placeholder="Filtrar por escola, município ou tipo"><div class="tps"></div><div class="lst"></div></aside>`); g = el.querySelector('.apx-det');
+        g.querySelector('.x').onclick = apxDetFechar; g.querySelector('.det-q').oninput = e => { APX.detF.q = e.target.value; apxDetRender(); };
+        g.querySelector('.fil').onclick = e => { const b = e.target.closest('button'); if (b) { APX.detF.crit = b.dataset.c; apxDetRender(); } };
+        g.querySelector('.tps').onclick = e => { const b = e.target.closest('button'); if (b) { const i = g.querySelector('.det-q'); i.value = APX.detF.q = APX.detF.q === b.dataset.t ? '' : b.dataset.t; apxDetRender(); } }; }
+    APX.detR = [...new Set(regs || [])].filter(r => r.dt).sort((a, b) => b.dt - a.dt); APX.detF = { crit: '', q: '' };
+    g.querySelector('h3').textContent = titulo; g.querySelector('.ext').innerHTML = extra || ''; g.querySelector('.det-q').value = '';
+    g.classList.add('on'); apxDetRender();
+}
+function apxDetFechar() { const g = document.querySelector('#apx .apx-det'); if (g) g.classList.remove('on'); }
+function apxDetRender() {
+    const g = document.querySelector('#apx .apx-det'); if (!g) return;
+    const R = APX.detR, q = chave(APX.detF.q || ''), cn = c => R.filter(r => r.crit === c).length;
+    let L2 = R.filter(r => !APX.detF.crit || (APX.detF.crit === 'CA' ? (r.crit === 'CRÍTICO' || r.crit === 'ALTO') : r.crit === APX.detF.crit));
+    if (q) L2 = L2.filter(r => chave(r.esc + ' ' + nomeMun(r.mun) + ' ' + r.tipo).includes(q));
+    g.querySelector('.ct').textContent = `${fmtN(L2.length)} de ${fmtN(R.length)} registro(s)`;
+    g.querySelector('.fil').innerHTML = [['', 'Todos', R.length], ['CA', 'Crítico + alto', cn('CRÍTICO') + cn('ALTO')]].concat(CRIT_ORD.map(c => [c, c.charAt(0) + c.slice(1).toLowerCase(), cn(c)])).map(([c, t, n]) => `<button data-c="${c}" class="${APX.detF.crit === c ? 'on' : ''}" ${c && c !== 'CA' ? `style="--c:${corCrit(c)}"` : ''}>${t} <b>${n}</b></button>`).join('');
+    const tp = new Map(); L2.forEach(r => tp.set(tipoCurto(r.tipo), (tp.get(tipoCurto(r.tipo)) || 0) + 1)); const tpL = [...tp.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5), mx = maxDe(tpL.map(x => x[1]), 1);
+    g.querySelector('.tps').innerHTML = tpL.map(([t, n]) => `<button data-t="${esc(t)}"><i style="width:${(n / mx * 100).toFixed(0)}%"></i><em>${esc(t)}</em><b>${n}</b></button>`).join('');
+    g.querySelector('.lst').innerHTML = L2.slice(0, 250).map(r => `<div class="it" style="--c:${corCrit(r.crit)}"><span class="d">${fmtD(r.dt)}${mdHora(r.dt) ? '<small>' + mdHora(r.dt) + '</small>' : ''}</span><span class="tx"><b>${esc(tipoCurto(r.tipo))}</b><small>${esc(r.esc)} · ${esc(nomeMun(r.mun))}</small></span><span class="c">${esc(r.crit.charAt(0) + r.crit.slice(1).toLowerCase())}</span></div>`).join('') + (L2.length > 250 ? `<p class="apx-nota">Mostrando 250 de ${fmtN(L2.length)}. Use os filtros para refinar.</p>` : '') || '<p class="apx-nota">Nenhum registro.</p>';
+}
+function apxDetEsc(k) { const D = APX.deck && APX.deck.D, o = D && D.escL.find(x => x.k === k); if (o) apxDet(o.nome, o.regs); }
+
+/* ---------- filtro geral da apresentação ---------- */
+function apxFiltroAbrir() {
+    const el = $('apx'); if (!el) return; let f = el.querySelector('.apx-filt');
+    if (f) { f.remove(); return; }
+    const tp = new Map(); BASE.forEach(r => { if (r.dt && r.dt >= new Date(+A.hoje - 365 * DIA)) tp.set(r.tipo, (tp.get(r.tipo) || 0) + 1); });
+    const tipos = [...tp.entries()].sort((a, b) => b[1] - a[1]).slice(0, 25).map(x => x[0]);
+    el.insertAdjacentHTML('beforeend', `<div class="apx-filt"><small class="k">Filtrar a apresentação</small>
+        <label>Período</label><div class="seg2">${[[30, '30 dias'], [90, '90 dias'], [180, '6 meses'], [365, '12 meses']].map(([v, t]) => `<button data-p="${v}" class="${APX.dias === v ? 'on' : ''}">${t}</button>`).join('')}</div>
+        <label>Gravidade</label><div class="seg2">${[['', 'Todas'], ['CA', 'Crítico + alto']].map(([v, t]) => `<button data-g="${v}" class="${APX.fcrit === v ? 'on' : ''}">${t}</button>`).join('')}</div>
+        <label for="apx-ft">Tipo de ocorrência</label><select id="apx-ft"><option value="">Todos os tipos</option><option value="__SEV" ${APX.ftipo === '__SEV' ? 'selected' : ''}>Tipos sensíveis</option>${tipos.map(t => `<option value="${esc(t)}" ${APX.ftipo === t ? 'selected' : ''}>${esc(tipoCurto(t))}</option>`).join('')}</select>
+        <div class="bt"><button class="lp">Limpar</button><button class="ap">${ic('check')}Aplicar</button></div></div>`);
+    f = el.querySelector('.apx-filt'); const st = { p: APX.dias, g: APX.fcrit };
+    f.onclick = e => { const b = e.target.closest('button'); if (!b) return;
+        if (b.dataset.p) { st.p = +b.dataset.p; f.querySelectorAll('[data-p]').forEach(x => x.classList.toggle('on', x === b)); }
+        else if (b.dataset.g != null) { st.g = b.dataset.g; f.querySelectorAll('[data-g]').forEach(x => x.classList.toggle('on', x === b)); }
+        else if (b.classList.contains('lp')) { APX.fcrit = ''; APX.ftipo = ''; apxRefazer(); }
+        else if (b.classList.contains('ap')) { APX.dias = st.p; APX.fcrit = st.g; APX.ftipo = $('apx-ft').value; apxRefazer(); } };
+}
+function apxRefazer() { const i = APX.i; clearInterval(APG.tourT); if (APG.map) { try { APG.map.remove(); } catch (e) { } APG.map = null; } APG.cena = ''; apxIniciar(i); const t = apxFiltroTxt(); toast(t ? 'Filtro aplicado: ' + t : 'Filtro removido', 'filter'); }
+
+/* ---------- montagem ---------- */
+const _apxSlidesI = apxSlides;
+apxSlides = function (D) {
+    APX.reg = [];
+    const S = _apxSlidesI(D);
+    const ix = t => S.findIndex(s => s.t === t);
+    const iRel = ix('Padrões'); if (iRel >= 0) S.splice(iRel + 1, 0, apxSlRelease(D));
+    const iRot = ix('Alcance das sedes'); if (iRot >= 0) S.splice(iRot + 1, 0, apxSlRotas(D));
+    const iTer = ix('Gravidade e tipos'); if (iTer >= 0) S.splice(iTer + 1, 0, apxSlTermos(D));
+    const temas = S.map((s, i) => i).filter(i => i >= 3 && i < S.length - 1);
+    S[2] = { t: 'Roteiro', cls: 'rot', h: `<div class="apx-txt"><small class="k">Roteiro</small><h2>O que vamos ver</h2>${apxFiltroTxt() ? `<p>Filtro: ${esc(apxFiltroTxt())}</p>` : ''}</div><ol class="apx-agenda">${temas.map((i, k) => `<li style="--an-i:${k}" onclick="apxIr(${i})"><span>${String(k + 1).padStart(2, '0')}</span>${esc(S[i].t)}${S[i].geo ? ` <em>${ic('map')}satélite</em>` : ''}</li>`).join('')}</ol>` };
+    temas.forEach((i, k) => { S[i] = Object.assign({}, S[i], { h: S[i].h.replace(/<small class="k">(?:\d\d · )?/, `<small class="k">${String(k + 1).padStart(2, '0')} · `) }); });
+    return S;
+};
+/* liga os cliques nos slides originais */
+function apxLigar() {
+    const el = $('apx'), D = APX.deck && APX.deck.D; if (!el || !D) return;
+    const sl = t => { const i = APX.deck.S.findIndex(s => s.t === t); return i >= 0 ? el.querySelectorAll('.apx-palco > .apx-s')[i] : null; };
+    const liga = (nodes, fn) => nodes.forEach((n, k) => { const v = fn(k); if (!v) return; n.classList.add('apx-cl'); n.addEventListener('click', () => apxDet(v[0], v[1])); });
+    const nk = sl('Números-chave'); if (nk) liga(nk.querySelectorAll('.apx-kpis .apx-kpi'), k => [['Registros do período', D.cur], ['Críticos e altos', D.graves], ['Tipos sensíveis', D.sev], ['Registros do período', D.cur]][k]);
+    const gt = sl('Gravidade e tipos'); if (gt) { liga(gt.querySelectorAll('.apx-barras > div'), k => D.tipos[k] && [D.tipos[k].t, D.cur.filter(r => tipoCurto(r.tipo) === D.tipos[k].t)]); liga(gt.querySelectorAll('.apx-leg span'), k => D.crit[k] && [D.crit[k].c, D.cur.filter(r => r.crit === D.crit[k].c)]); }
+    const subF = APX.esc === 'seduc' ? (r, k) => r.dre === k : APX.esc === 'dre' ? (r, k) => r.mun === k : (r, k) => r.escK === k;
+    const tr = sl('Território'); if (tr) liga(tr.querySelectorAll('.apx-rank > div'), k => D.subL[k] && [D.subL[k].nome, D.cur.filter(r => subF(r, D.subL[k].k))]);
+    const ep = sl('Escolas prioritárias'); if (ep) liga(ep.querySelectorAll('.apx-esc'), k => D.escL[k] && [D.escL[k].nome, D.escL[k].regs]);
+    const tm = sl('Temas'); if (tm) liga(tm.querySelectorAll('.apx-temas > div'), k => D.temas[k] && [D.temas[k].p.t, D.cur.filter(r => D.temas[k].p.re.test(chave(r.tipo)))]);
+    const pd = sl('Padrões'); if (pd) liga(pd.querySelectorAll('.apx-kpis .apx-kpi'), k => k === 0 ? ['Reincidências ativas', D.recA.flatMap(c => c.regs)] : k === 2 ? ['Escolas em escalada', D.cur.filter(r => D.esca.some(e => e.k === r.escK))] : null);
+    const ec = sl('Escolas prioritárias'); if (ec) ec.querySelectorAll('.apx-esc').forEach(n => n.title = 'Clique para ver os registros');
+    // botão de filtro no topo
+    const bt = el.querySelector('.apx-bt'); if (bt && !bt.querySelector('[data-a2="filt"]')) bt.insertAdjacentHTML('afterbegin', `<button data-a2="filt" title="Filtrar a apresentação" class="${apxFiltroTxt() ? 'on' : ''}">${ic('filter')}</button>`);
+    bt.querySelector('[data-a2="filt"]').onclick = e => { e.stopPropagation(); apxFiltroAbrir(); };
+    const sub = el.querySelector('.apx-id span'); if (sub && apxFiltroTxt()) sub.insertAdjacentHTML('beforeend', ` · <em class="apx-fon">${esc(apxFiltroTxt())}</em>`);
+}
+const _apxIniciarI = apxIniciar;
+apxIniciar = function (i) { _apxIniciarI(i); try { apxLigar(); } catch (e) { console.error(e); } };
+/* popups do mapa e varredura com "ver registros" */
+const _apgPopupI = apgPopup;
+apgPopup = function (o) { return _apgPopupI(o).replace(/<\/div>$/, `<button class="apg-ver" onclick="apxDetEsc('${esc(o.k)}')">${ic('book')}Ver registros</button></div>`); };
+const _apgTourI = apgTour;
+apgTour = function (i) {
+    _apgTourI(i);
+    const D = APX.deck && APX.deck.D, x = D && D.escL.filter(o => apgEsc(o.k))[i], c = document.querySelector('#apx .apg-tour');
+    if (x && c && !c.querySelector('.apg-ver')) c.insertAdjacentHTML('beforeend', `<button class="apg-ver" onclick="apxDetEsc('${esc(x.k)}')">${ic('book')}Ver os ${x.n} registros desta escola</button>`);
+};
+/* teclado: Esc fecha detalhes e filtro; digitação nos campos não troca de slide */
+document.addEventListener('keydown', e => {
+    const el = $('apx'); if (!el) return;
+    if (e.target.closest && e.target.closest('#apx .apx-det, #apx .apx-filt')) { if (e.key === 'Escape') { apxDetFechar(); const f = el.querySelector('.apx-filt'); if (f) f.remove(); e.target.blur(); } e.stopImmediatePropagation(); return; }
+    if (e.key === 'Escape') { const f = el.querySelector('.apx-filt'), g = el.querySelector('.apx-det.on'); if (f || g) { if (f) f.remove(); apxDetFechar(); e.stopImmediatePropagation(); e.preventDefault(); } }
+}, true);
+/* Release: carrega ao abrir a página de apresentação */
+const _rApresentacaoI = rApresentacao;
+rApresentacao = function () {
+    _rApresentacaoI();
+    if (typeof rlServidor === 'function' && rlServidor() && typeof NWS !== 'undefined' && !(NWS.d && NWS.d.noticias) && !NWS.carregando && !APX._nws) { APX._nws = true; carregarRelease().then(() => { if (ABA === 'apresentacao') rApresentacao(); }).catch(() => { }); }
+};
+LEGENDAS.apresentacao.mostra = ['Apresentação de 22 slides: capa com a bandeira de Mato Grosso sobre o satélite, sigilo, números, mapa satélite, evolução, gravidade, termos mais encontrados, território, varredura das escolas, alcance das sedes, rotas prováveis, escolas prioritárias, padrões, Release, proteção, temas, recomendações, plano de 90 dias, referências e conclusão.'];
+LEGENDAS.apresentacao.usar.push('Quase tudo é clicável: números, tipos, termos, municípios, escolas, rotas e notícias abrem um painel de registros com filtros por gravidade, tipo e busca. O botão de filtro no topo refaz a apresentação para um período, gravidade ou tipo de ocorrência.');
+
+/* =====================================================================
+   EDUCASEG-PLUS 5.2 — Apresentação: rede de vínculos interativa
+   (pessoas codificadas, sem nomes; arrastar, destacar, abrir registros)
+   ===================================================================== */
+const APN = { rede: null, sel: null };
+function apxRede(D) {
+    if (D._rede) return D._rede;
+    const nos = new Map(), ar = new Map();
+    const no = (n, papel, r) => { const k = chave(n); if (k.length < 5) return null; let o = nos.get(k); if (!o) { o = { k, agr: 0, vit: 0, regs: new Set(), escs: new Set() }; nos.set(k, o); } o[papel]++; o.regs.add(r); o.escs.add(r.escK); return o; };
+    const lig = (a, b, t, r) => { if (!a || !b || a === b) return; const k = a.k < b.k ? a.k + '§' + b.k : b.k + '§' + a.k; let e = ar.get(k); if (!e) { e = { a: a.k, b: b.k, n: 0, t, regs: new Set() }; ar.set(k, e); } e.n++; e.regs.add(r); if (t === 'coaut') e.t = 'coaut'; };
+    D.cur.forEach(r => { const ag = (r.agr || []).map(n => no(n, 'agr', r)).filter(Boolean), vi = (r.vit || []).map(n => no(n, 'vit', r)).filter(Boolean); for (let i = 0; i < ag.length; i++) for (let j = i + 1; j < ag.length; j++) lig(ag[i], ag[j], 'coaut', r); ag.forEach(a => vi.forEach(v => lig(a, v, 'agrv', r))); });
+    const grau = new Map(); ar.forEach(e => { grau.set(e.a, (grau.get(e.a) || 0) + 1); grau.set(e.b, (grau.get(e.b) || 0) + 1); });
+    let N = [...grau.keys()].map(k => Object.assign(nos.get(k), { grau: grau.get(k) })).sort((a, b) => b.grau - a.grau || b.regs.size - a.regs.size).slice(0, 70);
+    const ks = new Set(N.map(n => n.k)); let E = [...ar.values()].filter(e => ks.has(e.a) && ks.has(e.b));
+    const usados = new Set(); E.forEach(e => { usados.add(e.a); usados.add(e.b); }); N = N.filter(n => usados.has(n.k));
+    // grupos (componentes)
+    const pai = new Map(N.map(n => [n.k, n.k])), raiz = k => { while (pai.get(k) !== k) { pai.set(k, pai.get(pai.get(k))); k = pai.get(k); } return k; };
+    E.forEach(e => { const a = raiz(e.a), b = raiz(e.b); if (a !== b) pai.set(a, b); });
+    const comp = new Map(); N.forEach(n => { const r = raiz(n.k); if (!comp.has(r)) comp.set(r, []); comp.get(r).push(n); });
+    const cores = ['#fcd116', '#22d3ee', '#a78bfa', '#4ade80', '#fb923c', '#f472b6', '#38bdf8', '#facc15'];
+    const grupos = [...comp.values()].sort((a, b) => b.length - a.length).map((m, i) => { const regs = new Set(); m.forEach(n => n.regs.forEach(r => regs.add(r))); const escs = new Set(); m.forEach(n => n.escs.forEach(x => escs.add(x))); const tp = new Map(); regs.forEach(r => tp.set(tipoCurto(r.tipo), (tp.get(tipoCurto(r.tipo)) || 0) + 1)); return { i, m, regs: [...regs], escs, cor: m.length >= 3 ? cores[i % cores.length] : '#64748b', tipo: [...tp.entries()].sort((a, b) => b[1] - a[1])[0] }; });
+    grupos.forEach(g => g.m.forEach(n => { n.g = g.i; n.cor = g.cor; }));
+    // códigos sem nome
+    const cnt = { A: 0, V: 0, AV: 0 };
+    N.slice().sort((a, b) => b.regs.size - a.regs.size).forEach(n => { n.papel = n.agr && n.vit ? 'AV' : n.agr ? 'A' : 'V'; n.cod = n.papel + '-' + String(++cnt[n.papel]).padStart(2, '0'); });
+    // posições (força)
+    const W = 1000, H = 600, idx = new Map(N.map((n, i) => [n.k, i]));
+    N.forEach(n => { const a = (hashStr(n.k) % 6283) / 1000, r = 60 + (hashStr(n.k + 'r') % 1000) / 1000 * 220; n.x = W / 2 + Math.cos(a) * r; n.y = H / 2 + Math.sin(a) * r * .8; });
+    const Ls = E.map(e => [idx.get(e.a), idx.get(e.b)]);
+    for (let t = 0; t < 400; t++) {
+        const al = 1 - t / 400;
+        for (let i = 0; i < N.length; i++) for (let j = i + 1; j < N.length; j++) { const a = N[i], b = N[j]; let dx = a.x - b.x, dy = a.y - b.y, d2 = Math.max(100, dx * dx + dy * dy); const f = Math.min(.5, 700 / d2) * al; a.x += dx * f; a.y += dy * f; b.x -= dx * f; b.y -= dy * f; }
+        Ls.forEach(([i, j]) => { const a = N[i], b = N[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1, f = (d - 50) / d * .1 * al; a.x += dx * f; a.y += dy * f; b.x -= dx * f; b.y -= dy * f; });
+        N.forEach(n => { n.x += (W / 2 - n.x) * .012; n.y += (H / 2 - n.y) * .016; n.x = Math.max(30, Math.min(W - 30, n.x)); n.y = Math.max(30, Math.min(H - 30, n.y)); });
+    }
+    const pontes = N.filter(n => n.escs.size >= 2).sort((a, b) => b.escs.size - a.escs.size || b.grau - a.grau).slice(0, 5);
+    return D._rede = { N, E, grupos, pontes, idx, W, H, total: grau.size };
+}
+function apxSlRede(D) {
+    const R = apxRede(D), g3 = R.grupos.filter(g => g.m.length >= 3), mxR = maxDe(R.N.map(n => n.regs.size), 1);
+    const svg = R.N.length ? `<svg class="apx-rede" viewBox="0 0 ${R.W} ${R.H}" role="img" aria-label="Rede de vínculos">
+        ${R.E.map((e, i) => { const a = R.N[R.idx.get(e.a)], b = R.N[R.idx.get(e.b)]; return `<line data-a="${R.idx.get(e.a)}" data-b="${R.idx.get(e.b)}" x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" class="${e.t}" style="--w:${Math.min(5, 1 + e.n)};--an-i:${i % 40}"/>`; }).join('')}
+        ${R.N.map((n, i) => { const r = 7 + 11 * Math.sqrt(n.regs.size / mxR); return `<g class="nd p-${n.papel}" data-i="${i}" transform="translate(${n.x.toFixed(1)},${n.y.toFixed(1)})" style="--c:${n.cor};--an-i:${i % 40}" data-dica="<b>${n.cod}</b> · ${n.papel === 'AV' ? 'autor e vítima' : n.papel === 'A' ? 'autor' : 'vítima'}<br>${n.regs.size} registro(s) · ${n.escs.size} escola(s) · ${n.grau} vínculo(s)"><circle r="${(r + 6).toFixed(1)}" class="halo"/><circle r="${r.toFixed(1)}" class="b"/><text y="${(r + 14).toFixed(1)}">${n.cod}</text></g>`; }).join('')}</svg>` : '<div class="apx-nota" style="padding:40px;text-align:center">Nenhum vínculo entre pessoas no período.</div>';
+    return { t: 'Rede de vínculos', cls: 'rede', h: `<div class="apx-txt"><small class="k">Rede de vínculos</small><h2>Quem se liga a quem</h2><p>Pessoas citadas nos registros, identificadas só por código (A: autor · V: vítima · AV: os dois papéis). Arraste para reorganizar, passe o mouse para ver as ligações e clique para abrir os registros.</p></div>
+        <div class="apx-rede-g"><div class="apx-rede-c">${svg}<div class="apx-rede-leg"><span><i class="l agrv"></i>autor → vítima</span><span><i class="l coaut"></i>coautoria</span><span><i class="c" style="background:#fcd116"></i>cor = grupo</span><button onclick="apxRedeSoltar()">${ic('repeat')}Reorganizar</button></div></div>
+        <aside class="apx-rede-p"><div class="apg-st"><div><b>${fmtN(R.total)}</b><small>pessoas com vínculo</small></div><div><b>${fmtN(R.E.length)}</b><small>ligações exibidas</small></div><div><b>${g3.length}</b><small>grupos de 3+</small></div></div>
+            <small class="k">Grupos</small><div class="apx-grp">${g3.slice(0, 6).map(g => `<button onclick="apxRedeGrupo(${g.i})" style="--c:${g.cor}"><i></i><span><b>${g.m.length} pessoas · ${g.regs.length} registro(s)</b><small>${g.escs.size} escola(s)${g.tipo ? ' · ' + esc(g.tipo[0]) : ''}</small></span></button>`).join('') || '<p class="apx-nota">Nenhum grupo com 3 ou mais pessoas.</p>'}</div>
+            ${R.pontes.length ? `<small class="k">Pessoas-ponte (várias escolas)</small><div class="apx-grp">${R.pontes.map(n => `<button onclick="apxRedeNo(${R.N.indexOf(n)})" style="--c:${n.cor}"><i></i><span><b>${n.cod}</b><small>${n.escs.size} escolas · ${n.regs.size} registros</small></span></button>`).join('')}</div>` : ''}</aside></div>` };
+}
+function apxRedeNo(i) {
+    const R = APX.deck && APX.deck.D && apxRede(APX.deck.D), n = R && R.N[i]; if (!n) return;
+    apxRedeFoco(new Set([i].concat(R.E.filter(e => e.a === n.k || e.b === n.k).map(e => R.idx.get(e.a === n.k ? e.b : e.a)))));
+    apxDet(`${n.cod} · ${n.papel === 'AV' ? 'autor e vítima' : n.papel === 'A' ? 'autor' : 'vítima'}`, [...n.regs]);
+}
+function apxRedeGrupo(gi) {
+    const R = APX.deck && APX.deck.D && apxRede(APX.deck.D), g = R && R.grupos[gi]; if (!g) return;
+    apxRedeFoco(new Set(g.m.map(n => R.N.indexOf(n)))); apxDet(`Grupo de ${g.m.length} pessoas`, g.regs);
+}
+function apxRedeFoco(set) {
+    const s = document.querySelector('#apx .apx-rede'); if (!s) return;
+    if (!set) { s.classList.remove('foco'); s.querySelectorAll('.on').forEach(x => x.classList.remove('on')); return; }
+    s.classList.add('foco'); s.querySelectorAll('.nd').forEach(g => g.classList.toggle('on', set.has(+g.dataset.i)));
+    s.querySelectorAll('line').forEach(l => l.classList.toggle('on', set.has(+l.dataset.a) && set.has(+l.dataset.b)));
+}
+function apxRedeSoltar() {
+    const D = APX.deck && APX.deck.D, s = document.querySelector('#apx .apx-rede'); if (!D || !s) return;
+    const R = apxRede(D); R.N.forEach(n => { n.x = R.W / 2 + (Math.random() - .5) * 300; n.y = R.H / 2 + (Math.random() - .5) * 220; });
+    let t = 0; const Ls = R.E.map(e => [R.idx.get(e.a), R.idx.get(e.b)]);
+    const passo = () => {
+        const al = 1 - t / 160;
+        for (let k = 0; k < 2; k++) {
+            for (let i = 0; i < R.N.length; i++) for (let j = i + 1; j < R.N.length; j++) { const a = R.N[i], b = R.N[j]; let dx = a.x - b.x, dy = a.y - b.y, d2 = Math.max(100, dx * dx + dy * dy); const f = Math.min(.5, 700 / d2) * al; a.x += dx * f; a.y += dy * f; b.x -= dx * f; b.y -= dy * f; }
+            Ls.forEach(([i, j]) => { const a = R.N[i], b = R.N[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1, f = (d - 50) / d * .1 * al; a.x += dx * f; a.y += dy * f; b.x -= dx * f; b.y -= dy * f; });
+            R.N.forEach(n => { n.x += (R.W / 2 - n.x) * .012; n.y += (R.H / 2 - n.y) * .016; n.x = Math.max(30, Math.min(R.W - 30, n.x)); n.y = Math.max(30, Math.min(R.H - 30, n.y)); });
+        }
+        apxRedePos(s, R); if (++t < 160 && s.isConnected) requestAnimationFrame(passo);
+    };
+    passo();
+}
+function apxRedePos(s, R) {
+    s.querySelectorAll('.nd').forEach(g => { const n = R.N[+g.dataset.i]; g.setAttribute('transform', `translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`); });
+    s.querySelectorAll('line').forEach(l => { const a = R.N[+l.dataset.a], b = R.N[+l.dataset.b]; l.setAttribute('x1', a.x.toFixed(1)); l.setAttribute('y1', a.y.toFixed(1)); l.setAttribute('x2', b.x.toFixed(1)); l.setAttribute('y2', b.y.toFixed(1)); });
+}
+function apxRedeLigar() {
+    const s = document.querySelector('#apx .apx-rede'), D = APX.deck && APX.deck.D; if (!s || !D) return;
+    const R = apxRede(D); let arr = null, moveu = false;
+    const pt = e => { const p = s.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; return p.matrixTransform(s.getScreenCTM().inverse()); };
+    s.addEventListener('pointerdown', e => { const g = e.target.closest('.nd'); if (!g) return; arr = +g.dataset.i; moveu = false; s.setPointerCapture(e.pointerId); g.classList.add('arr'); e.stopPropagation(); });
+    s.addEventListener('pointermove', e => {
+        if (arr == null) { const g = e.target.closest('.nd'); if (g) { const i = +g.dataset.i, n = R.N[i]; apxRedeFoco(new Set([i].concat(R.E.filter(x => x.a === n.k || x.b === n.k).map(x => R.idx.get(x.a === n.k ? x.b : x.a))))); } else if (!s._fixo) apxRedeFoco(null); return; }
+        const p = pt(e), n = R.N[arr]; if (Math.abs(p.x - n.x) + Math.abs(p.y - n.y) > 3) moveu = true; n.x = Math.max(20, Math.min(R.W - 20, p.x)); n.y = Math.max(20, Math.min(R.H - 20, p.y));
+        R.E.forEach(x => { const o = x.a === n.k ? R.N[R.idx.get(x.b)] : x.b === n.k ? R.N[R.idx.get(x.a)] : null; if (o) { o.x += (n.x - o.x) * .04; o.y += (n.y - o.y) * .04; } });
+        apxRedePos(s, R);
+    });
+    s.addEventListener('pointerup', e => { if (arr == null) return; const i = arr; arr = null; s.querySelectorAll('.arr').forEach(x => x.classList.remove('arr')); if (!moveu) apxRedeNo(i); });
+    s.addEventListener('pointerleave', () => { if (arr == null) apxRedeFoco(null); });
+}
+/* inserção no deck */
+const _apxSlidesRede = apxSlides;
+apxSlides = function (D) {
+    const S = _apxSlidesRede(D), i = S.findIndex(s => s.t === 'Padrões');
+    if (i >= 0) {
+        S.splice(i + 1, 0, apxSlRede(D));
+        const temas = S.map((s, k) => k).filter(k => k >= 3 && k < S.length - 1);
+        S[2] = Object.assign({}, S[2], { h: S[2].h.replace(/<ol class="apx-agenda">[\s\S]*<\/ol>/, `<ol class="apx-agenda">${temas.map((k, n) => `<li style="--an-i:${n}" onclick="apxIr(${k})"><span>${String(n + 1).padStart(2, '0')}</span>${esc(S[k].t)}${S[k].geo ? ` <em>${ic('map')}satélite</em>` : ''}</li>`).join('')}</ol>`) });
+        temas.forEach((k, n) => { S[k] = Object.assign({}, S[k], { h: S[k].h.replace(/<small class="k">(?:\d\d · )?/, `<small class="k">${String(n + 1).padStart(2, '0')} · `) }); });
+    }
+    return S;
+};
+const _apxIniciarRede = apxIniciar;
+apxIniciar = function (i) { _apxIniciarRede(i); try { apxRedeLigar(); } catch (e) { console.error(e); } };
+LEGENDAS.apresentacao.mostra = [LEGENDAS.apresentacao.mostra[0].replace('padrões, Release', 'padrões, rede de vínculos (pessoas codificadas, sem nomes), Release').replace('22 slides', '23 slides')];
 
 </script>
 </body>
