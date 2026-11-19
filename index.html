@@ -3168,7 +3168,7 @@ path.apg-pt { transition: transform .2s; }
 <aside id="lateral" aria-label="Menu principal">
     <div class="lat-topo">
         <div class="lat-ic" data-ico="shield"></div>
-        <div class="marca-txt">EDUCASEG<span>-PLUS</span><small>INTELIGÊNCIA · SEDUC-MT</small></div>
+        <div class="marca-txt">EDUCASEG<span>-PLUS</span><small>UNIDE · SEDUC-MT</small></div>
     </div>
     <nav class="lat-nav" id="lat-nav"></nav>
     <div class="lat-rodape">
@@ -3227,7 +3227,7 @@ const ESCOLAS_REF=[["EE 19 DE MAIO","DRE ALTA FLORESTA","ALTA FLORESTA",-9.8765,
 const DRES_REF=[["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","CUIABA",-15.5986,-56.1051],["DRE METROPOLITANA","RUBENS CARLOS CORREA","rubens.correa@edu.mt.gov.br","(65) 9 8121-8518","VARZEA GRANDE",-15.6564,-56.1302],["DRE BARRA DO GARÇAS","MATHEUS SOARES LIMA","matheus.lima@edu.mt.gov.br","(66) 9 9930-6969","BARRA DO GARCAS",-15.8875,-52.2702],["DRE ALTA FLORESTA","ROGÉRIO DA ROCHA DE SOUZA","rogerio.r.souza@edu.mt.gov.br","(66) 9 9231-5055","ALTA FLORESTA",-9.8791,-56.0765],["DRE CÁCERES","REGIANE CRISTINA PEREIRA","regiane-cristina.pereira@edu.mt.gov.br","(65) 9 9930-7934","CACERES",-16.0839,-57.6846],["DRE CONFRESA","PAULO HENRIQUE DE SOUZA SANTOS","paulo-henrique.souza@edu.mt.gov.br","(66) 9 9681-1292","CONFRESA",-10.6424,-51.5619],["DRE DIAMANTINO","TIAGO ALINOR HOISSA CESCA BENFICA","tiago.benfica@edu.mt.gov.br","(66) 9 8407-6613","DIAMANTINO",-14.4113,-56.445],["DRE SINOP","ITAMAR BAZAN DE ALMEIDA","itamar.almeida@edu.mt.gov.br","(66) 9 9609-3013","SINOP",-11.8603,-55.4998],["DRE PONTES E LACERDA","aguardando atribuição","aguardando atribuição","aguardando","PONTES E LACERDA",-15.2403,-59.3332],["DRE JUÍNA","VIVIANE ASSUNÇÃO DA SILVA","viviane.assuncao@edu.mt.gov.br","(65) 9 9802-2818","JUINA",-11.4169,-58.7529],["DRE RONDONÓPOLIS","WARLES RODRIGUES DE OLIVEIRA","warles.oliveira@edu.mt.gov.br","(65) 9 9809-6947","RONDONOPOLIS",-16.4311,-54.6161],["DRE MATUPÁ","EVERTON EDUARDO NETO DA SILVA","everton.silva@edu.mt.gov.br","(66) 9 9985-9569","MATUPA",-10.1793,-54.9311],["DRE PRIMAVERA DO LESTE","DONIZETE APARECIDO LEMOS DOS SANTOS","donizete.lemos@edu.mt.gov.br","(66) 9 9661-6235","PRIMAVERA DO LESTE",-15.5637,-54.3026],["DRE TANGARÁ DA SERRA","DEIZIMARY STELLA DE ARAÚJO","deizimary.araujo@edu.mt.gov.br","(65) 9 9697-7002","TANGARA DA SERRA",-14.6183,-57.4827]];
 </script>
 <script>
-const APP_VERSAO = '5.0.0+00f61ebd';
+const APP_VERSAO = '5.0.1+8a3893cf';
 const APP_NOTAS = 'Versão 4.6.0 — gráficos inovadores (mosaico, termômetro, fluxo, relógio, corrida, correnteza), guias e legendas recolhidas com botão "Como funciona", Rede de vínculos animada com tela cheia e zoom que não achata, Termos reorganizado, mapa no Release, Comparativo no tempo entre DREs, Reincidência, Verificação e páginas de Proteção (Protocolos, Ameaças, Segurança, Acompanhamento, Intervenções com mapa, Prevenção) renovadas; retiradas Rotas de visita, Risco previsto e Rede de proteção.';
 /* =====================================================================
    EDUCASEG-PLUS — núcleo de dados e análise (sem DOM)
@@ -4662,7 +4662,7 @@ function folhaRelatorio() {
     const tag = c => `<span class="tag" style="background:${{ 'CRÍTICO': '#be123c', 'ALTO': '#ea580c', 'MÉDIO': '#ca8a04', 'BAIXO': '#0f9488' }[c]}">${c}</span>`;
     const tagI = i => `<span class="tag" style="background:${i >= 75 ? '#be123c' : i >= 50 ? '#ea580c' : i >= 25 ? '#ca8a04' : '#0f9488'}">${i}</span>`;
     let h = `<div class="rel-folha" id="rel-doc"><div class="rel-marca">${esc(RL.cls)}</div>
-        <div class="rel-capa"><span class="cls">${esc(RL.cls)}</span><div class="org">Governo de Mato Grosso · Secretaria de Estado de Educação · Unidade de Inteligência de Dados na Educação</div>
+        <div class="rel-capa"><span class="cls">${esc(RL.cls)}</span><div class="org">Governo de Mato Grosso · Secretaria de Estado de Educação · Unidade de Inteligência de Dados na Educação – UNIDE</div>
             <h1>${esc(RL.titulo)}</h1><div class="sub">Recorte: ${esc(descRecorte())}</div>
             <div class="meta"><div><small>Emissão</small><b>${new Date().toLocaleString('pt-BR')}</b></div><div><small>Data de referência</small><b>${fmtD(A.hoje)}</b></div><div><small>Código de verificação</small><b style="font-family:var(--f-dado)">${codigo}</b></div>
             <div><small>Fonte</small><b>${esc(FONTE.nome)}</b></div><div><small>Registros analisados</small><b>${fmtN(n)}</b></div><div><small>Selo da fonte</small><b>${esc(FONTE.selo || '—')}</b></div></div></div>`;
@@ -4932,7 +4932,7 @@ function mostrarLogin(msg) {
     const sess = lerSessao();
     const url = (sess && sess.url) || ls.get('esp_api') || API_PADRAO || '';
     const l = $('login'); l.hidden = false;
-    l.innerHTML = `<div class="login-arte"><div class="login-marca"><div class="lat-ic">${ic('shield')}</div><div class="marca-txt">EDUCASEG<span>-PLUS</span><small>INTELIGÊNCIA · SEDUC-MT</small></div></div>
+    l.innerHTML = `<div class="login-arte"><div class="login-marca"><div class="lat-ic">${ic('shield')}</div><div class="marca-txt">EDUCASEG<span>-PLUS</span><small>UNIDE · SEDUC-MT</small></div></div>
             ${contornoMT()}
             <div class="login-tese"><b>142 municípios. 15 DREs. Um só quadro.</b><span>Verificação de rotas, fragilidades, recorrências e problemas da segurança escolar em Mato Grosso.</span></div></div>
         <div class="login-form"><form id="form-login" class="login-caixa" novalidate>
@@ -6350,7 +6350,7 @@ mostrarLogin = function (msg) {
     l.classList.add('login-v2');
     const marca = l.querySelector('.login-marca .lat-ic'); if (marca) { marca.innerHTML = emblema(46); marca.classList.add('lat-emblema'); }
     const tese = l.querySelector('.login-tese');
-    if (tese) tese.innerHTML = `<span class="eyebrow">Unidade de Inteligência de Dados na Educação</span><b>Dados que protegem quem aprende.</b><span>Verificação de rotas, fragilidades, recorrências e problemas da segurança escolar nos 142 municípios de Mato Grosso.</span>
+    if (tese) tese.innerHTML = `<span class="eyebrow">Unidade de Inteligência de Dados na Educação – UNIDE</span><b>Dados que protegem quem aprende.</b><span>Verificação de rotas, fragilidades, recorrências e problemas da segurança escolar nos 142 municípios de Mato Grosso.</span>
         <div class="login-numeros"><div><b>142</b><small>municípios</small></div><div><b>15</b><small>DREs</small></div><div><b>${fmtN(ESC_REF.length)}</b><small>escolas mapeadas</small></div></div>`;
     const h1 = l.querySelector('.login-caixa h1'); if (h1) h1.innerHTML = `<span class="login-cadeado">${ic('shield')}</span>Acesso restrito`;
     const p = l.querySelector('.login-caixa > p'); if (p) p.textContent = 'Entre com o e-mail e a senha cadastrados pela Unidade de Inteligência.';
@@ -7629,7 +7629,7 @@ const DX_CSS = `
 (function () { const s = document.createElement('style'); s.id = 'dx-css'; s.textContent = DX_CSS; document.head.appendChild(s); })();
 
 const DX_DIG = {};
-const DX_ORG = ['GOVERNO DO ESTADO DE MATO GROSSO', 'Secretaria de Estado de Educação · SEDUC-MT', 'Unidade de Inteligência de Dados na Educação'];
+const DX_ORG = ['GOVERNO DO ESTADO DE MATO GROSSO', 'Secretaria de Estado de Educação · SEDUC-MT', 'Unidade de Inteligência de Dados na Educação – UNIDE'];
 function dxImpressao(t) { const a = hashStr(t).toString(16).padStart(8, '0'), b = hashStr(t.split('').reverse().join('') + t.length).toString(16).padStart(8, '0'); return (a + b).toUpperCase().match(/.{4}/g).join('-'); }
 function dxQR(url) {
     if (!url || typeof qrcode !== 'function') return '';
@@ -13490,10 +13490,10 @@ function apxIniciar(i) {
     const marca = `${'RESTRITO · ' + idEmissor() + ' · ' + APX.cod + '   '}`.repeat(4);
     el.innerHTML = `<div class="apx-fundo" aria-hidden="true"><i></i><i></i><i></i><canvas id="apx-part"></canvas></div>
         <div class="apx-dagua" aria-hidden="true">${Array.from({ length: 9 }, () => `<span>${esc(marca)}</span>`).join('')}</div>
-        <header class="apx-topo"><div class="apx-id">${emblema(28, 'apxt')}<span><b>EDUCASEG-PLUS</b>${esc(D.curto)} · ${esc(apxPeriodo())}</span></div><div class="apx-tarja">${ic('shield')}ACESSO RESTRITO</div>
+        <header class="apx-topo"><div class="apx-id">${emblema(28, 'apxt')}<span><b>EDUCASEG-PLUS · UNIDE</b>${esc(D.curto)} · ${esc(apxPeriodo())}</span></div><div class="apx-tarja">${ic('shield')}ACESSO RESTRITO</div>
             <div class="apx-bt"><button data-a="sum" title="Sumário (S)">${ic('grid')}</button><button data-a="auto" title="Passagem automática (P)">${ic(APX.auto ? 'pause' : 'play')}</button><button data-a="fs" title="Tela cheia (F)">${ic('expand')}</button><button data-a="sair" title="Sair (Esc)">${ic('x')}</button></div></header>
         <main class="apx-palco">${S.map((s, k) => `<section class="apx-s ${s.cls || ''}" data-i="${k}" aria-hidden="true">${s.h}</section>`).join('')}</main>
-        <footer class="apx-rod"><span class="apx-lei">Proibida a reprodução, fotografia ou compartilhamento · Lei 12.527/2011 · LGPD · ECA · Doc. ${esc(APX.cod)}</span><div class="apx-pontos">${S.map((s, k) => `<button data-ir="${k}" title="${esc(s.t)}"></button>`).join('')}</div><span class="apx-cont"></span></footer>
+        <footer class="apx-rod"><span class="apx-lei">UNIDE · SEDUC-MT · Proibida a reprodução, fotografia ou compartilhamento · Lei 12.527/2011 · LGPD · ECA · Doc. ${esc(APX.cod)}</span><div class="apx-pontos">${S.map((s, k) => `<button data-ir="${k}" title="${esc(s.t)}"></button>`).join('')}</div><span class="apx-cont"></span></footer>
         <div class="apx-prog"><i></i></div>
         <button class="apx-lado e" data-a="ant" aria-label="Anterior"></button><button class="apx-lado d" data-a="prox" aria-label="Próximo"></button>
         <div class="apx-sum" hidden><div class="apx-sum-in"><h3>Sumário</h3><div>${S.map((s, k) => `<button data-ir="${k}"><span>${String(k + 1).padStart(2, '0')}</span>${esc(s.t)}</button>`).join('')}</div></div></div>
@@ -13717,7 +13717,7 @@ function apgSlides(D, S0) {
     const n = D.cur.length, idE = idEmissor(), cod = APX.cod, quando = new Date().toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
     const b = apgLimites(), c = b.getCenter(), perTxt = `${fmtD(D.ini)} a ${fmtD(D.hoje)}`;
     const capa = { t: 'Abertura', cls: 'geo capa2', geo: 'capa', h: `<div class="apg-capa"><div class="apg-capa-in">
-        <div class="apg-gov">${bandeiraMT(118, 'apg-bandeira')}<div><b>GOVERNO DE MATO GROSSO</b><span>Secretaria de Estado de Educação · SEDUC-MT</span><span>Unidade de Inteligência de Dados na Educação</span></div></div>
+        <div class="apg-gov">${bandeiraMT(118, 'apg-bandeira')}<div><b>GOVERNO DE MATO GROSSO</b><span>Secretaria de Estado de Educação · SEDUC-MT</span><span>Unidade de Inteligência de Dados na Educação – UNIDE</span></div></div>
         <div class="apx-carimbo">ACESSO RESTRITO<small>Uso exclusivo SEDUC-MT</small></div>
         <small class="k">Briefing de inteligência · segurança escolar</small>
         <h1>Panorama de Segurança Escolar</h1><h2>${esc(D.nome)}</h2>
